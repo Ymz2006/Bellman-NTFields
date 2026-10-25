@@ -1,0 +1,517 @@
+{
+  "source_repository": "/home/exx/Documents/ntfields-g1",
+  "source_baseline": "/home/exx/Documents/ntfields-g1/research/bellman600_clean",
+  "runtime_source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919",
+  "files": {
+    "method/speed.py": {
+      "source": "/home/exx/Documents/ntfields-g1/research/bellman600_clean/method/speed.py",
+      "source_sha256": "43b9d4050fbca2c52543a166a23d4b872c716c672ce364b57b1d8cc99886b355",
+      "export_sha256": "43b9d4050fbca2c52543a166a23d4b872c716c672ce364b57b1d8cc99886b355",
+      "unchanged": true
+    },
+    "method/common.py": {
+      "source": "/home/exx/Documents/ntfields-g1/research/bellman600_clean/method/common.py",
+      "source_sha256": "641507dccb7ee58c7a8c26ac7aba297a148174306ca53f13554f63204f450481",
+      "export_sha256": "641507dccb7ee58c7a8c26ac7aba297a148174306ca53f13554f63204f450481",
+      "unchanged": true
+    },
+    "method/training.py": {
+      "source": "/home/exx/Documents/ntfields-g1/research/bellman600_clean/method/training.py",
+      "source_sha256": "65ae4a845b2f26b1f22181eb21c284807be73fc6fdac041f6b6c70e42ed5db47",
+      "export_sha256": "65ae4a845b2f26b1f22181eb21c284807be73fc6fdac041f6b6c70e42ed5db47",
+      "unchanged": true
+    },
+    "method/optimizer.py": {
+      "source": "/home/exx/Documents/ntfields-g1/research/bellman600_clean/method/optimizer.py",
+      "source_sha256": "de53b7d3fc5b670c69df29651b4ea11e2535f82d4017c3b4f077b951db40347b",
+      "export_sha256": "de53b7d3fc5b670c69df29651b4ea11e2535f82d4017c3b4f077b951db40347b",
+      "unchanged": true
+    },
+    "method/evaluate.py": {
+      "source": "/home/exx/Documents/ntfields-g1/research/bellman600_clean/method/evaluate.py",
+      "source_sha256": "970a0fb33a536857960ad6c4775656f02701e80036db98f3f1bb0f8bc4b79fe6",
+      "export_sha256": "db2e22b7ce8e7bf72b94b3baef9c455ef67a3eef60f69e8a13dfe9ccfe2a4485",
+      "unchanged": false
+    },
+    "method/network.py": {
+      "source": "/home/exx/Documents/ntfields-g1/research/bellman600_clean/method/network.py",
+      "source_sha256": "93d4ad3212233a666e60b182cd7146160fa4be6f096f94fd7e55c0c4ebf13d5b",
+      "export_sha256": "93d4ad3212233a666e60b182cd7146160fa4be6f096f94fd7e55c0c4ebf13d5b",
+      "unchanged": true
+    },
+    "method/loss.py": {
+      "source": "/home/exx/Documents/ntfields-g1/research/bellman600_clean/method/loss.py",
+      "source_sha256": "774f51784db985c09501bb36642f4bee2339376617ef4d941d1454d4d769a56f",
+      "export_sha256": "774f51784db985c09501bb36642f4bee2339376617ef4d941d1454d4d769a56f",
+      "unchanged": true
+    },
+    "runtime/README.md": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/README.md",
+      "source_sha256": "b3663283f98dcfb5d7a799573b7f9b8b66886e0a7d0be4e64439dc43ffacaeeb",
+      "export_sha256": "8120dbcf5cf1d301cd8a9816a8e25097c95d92ba914efac2df18330f87b53137",
+      "unchanged": false
+    },
+    "runtime/method/norm_readouts.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/method/norm_readouts.py",
+      "source_sha256": "603d1fc867a38cb4185b87bfe09ff86e76a5ef2d50c4dc09651f39fd5263ab7d",
+      "export_sha256": "603d1fc867a38cb4185b87bfe09ff86e76a5ef2d50c4dc09651f39fd5263ab7d",
+      "unchanged": true
+    },
+    "runtime/method/fk.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/method/fk.py",
+      "source_sha256": "480a51c5f56f5ae5a76eb8e8ad85bc9b5ca0774eee867db22738c6ed10b6ea0d",
+      "export_sha256": "480a51c5f56f5ae5a76eb8e8ad85bc9b5ca0774eee867db22738c6ed10b6ea0d",
+      "unchanged": true
+    },
+    "runtime/method/model.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/method/model.py",
+      "source_sha256": "ca900342b001b3aeca61df5f4d9b6de807475ef75b8778282e3a686748e23260",
+      "export_sha256": "ca900342b001b3aeca61df5f4d9b6de807475ef75b8778282e3a686748e23260",
+      "unchanged": true
+    },
+    "runtime/method/checkpoint_compat.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/method/checkpoint_compat.py",
+      "source_sha256": "e656d655c97d7116a4ac49c4799b625f42f0dc1a8ba54c3ad728a96389247bbc",
+      "export_sha256": "e656d655c97d7116a4ac49c4799b625f42f0dc1a8ba54c3ad728a96389247bbc",
+      "unchanged": true
+    },
+    "runtime/method/legacy_model.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/method/legacy_model.py",
+      "source_sha256": "1413c92180f15d4f641dc77572e4a5843d98a75ce71fd340c190638a744417a2",
+      "export_sha256": "1413c92180f15d4f641dc77572e4a5843d98a75ce71fd340c190638a744417a2",
+      "unchanged": true
+    },
+    "runtime/method/evaluate.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/method/evaluate.py",
+      "source_sha256": "8ea952d10625507c7781835603e75c67a8e199155ae377650b5cdd16e292753f",
+      "export_sha256": "8ea952d10625507c7781835603e75c67a8e199155ae377650b5cdd16e292753f",
+      "unchanged": true
+    },
+    "runtime/method/parameter_cleanup.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/method/parameter_cleanup.py",
+      "source_sha256": "6a1e219089cc0b898492ec2ea5a5c887ba50f3c2d7bf947f234517be9dc1f789",
+      "export_sha256": "6a1e219089cc0b898492ec2ea5a5c887ba50f3c2d7bf947f234517be9dc1f789",
+      "unchanged": true
+    },
+    "runtime/configs/joint_normalization.npz": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/configs/joint_normalization.npz",
+      "source_sha256": "2e02415a26c8b338e60a5a510abe83c6dfb4dde278f16f0cfe1de9a61cd65b70",
+      "export_sha256": "2e02415a26c8b338e60a5a510abe83c6dfb4dde278f16f0cfe1de9a61cd65b70",
+      "unchanged": true
+    },
+    "runtime/configs/scene.yml": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/configs/scene.yml",
+      "source_sha256": "a26ff58be1a5ac6ebdc646ed4f0b619c4469a0864cba6df15b6abf3f6a5fac17",
+      "export_sha256": "a26ff58be1a5ac6ebdc646ed4f0b619c4469a0864cba6df15b6abf3f6a5fac17",
+      "unchanged": true
+    },
+    "runtime/tests/suite_manifest.json": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/tests/suite_manifest.json",
+      "source_sha256": "be4b2b891204391b4143bd72f3e89f25482715b736979f7cf0539d647cb3d082",
+      "export_sha256": "be4b2b891204391b4143bd72f3e89f25482715b736979f7cf0539d647cb3d082",
+      "unchanged": true
+    },
+    "runtime/tests/suites/repaired_eval_cutting_100.npz": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/tests/suites/repaired_eval_cutting_100.npz",
+      "source_sha256": "c6b701bffd0f9c4e8771f685f7c89713ba75c3caf1d4d6d81dde016ed432806b",
+      "export_sha256": "c6b701bffd0f9c4e8771f685f7c89713ba75c3caf1d4d6d81dde016ed432806b",
+      "unchanged": true
+    },
+    "runtime/tests/suites/repaired_eval_hammering_100.npz": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/tests/suites/repaired_eval_hammering_100.npz",
+      "source_sha256": "f240dc045e4721f29b949d12fdc0d74eb08bb098864c12719fdbdca1ce14abb6",
+      "export_sha256": "f240dc045e4721f29b949d12fdc0d74eb08bb098864c12719fdbdca1ce14abb6",
+      "unchanged": true
+    },
+    "runtime/tests/suites/repaired_eval_screwdriver_100.npz": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/tests/suites/repaired_eval_screwdriver_100.npz",
+      "source_sha256": "30a69f338dc9a055b7f6dc8f21c852ef68f6453302c48707b3c1857c9190fc5f",
+      "export_sha256": "30a69f338dc9a055b7f6dc8f21c852ef68f6453302c48707b3c1857c9190fc5f",
+      "unchanged": true
+    },
+    "runtime/tests/suites/repaired_eval_wiping_100.npz": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/tests/suites/repaired_eval_wiping_100.npz",
+      "source_sha256": "175b71b0288176a7f035a2f71e2feef5b2e656076a2f407719279fc10a341df4",
+      "export_sha256": "175b71b0288176a7f035a2f71e2feef5b2e656076a2f407719279fc10a341df4",
+      "unchanged": true
+    },
+    "runtime/tests/suites/repaired_eval_ur5e_mixed_c30_p30_x40_certified100.npz": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/tests/suites/repaired_eval_ur5e_mixed_c30_p30_x40_certified100.npz",
+      "source_sha256": "e9ada569b399e3930f3fbb507b63880ad34949fe32942acb02039f0f6c290ccd",
+      "export_sha256": "e9ada569b399e3930f3fbb507b63880ad34949fe32942acb02039f0f6c290ccd",
+      "unchanged": true
+    },
+    "runtime/tests/suites/repaired_eval_stirring_100.npz": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/tests/suites/repaired_eval_stirring_100.npz",
+      "source_sha256": "600c8540dff909065ca2f1795b62db9c78228ef30989be4d55409ffc00ea1548",
+      "export_sha256": "600c8540dff909065ca2f1795b62db9c78228ef30989be4d55409ffc00ea1548",
+      "unchanged": true
+    },
+    "runtime/vendor/README.md": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/README.md",
+      "source_sha256": "8aae90ad1b73d8be0368d265141d59a3f380c3c42f61ca4ee4c55d3ced9497d7",
+      "export_sha256": "8aae90ad1b73d8be0368d265141d59a3f380c3c42f61ca4ee4c55d3ced9497d7",
+      "unchanged": true
+    },
+    "runtime/vendor/planner/ur5e_task_axes.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/planner/ur5e_task_axes.py",
+      "source_sha256": "f5e45d86fad8effbd93b2065f8d3ecf5de1c7a991f08224a6556749b527f9d82",
+      "export_sha256": "f5e45d86fad8effbd93b2065f8d3ecf5de1c7a991f08224a6556749b527f9d82",
+      "unchanged": true
+    },
+    "runtime/vendor/planner/train_collision_oracle.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/planner/train_collision_oracle.py",
+      "source_sha256": "d59ce8fa2208ba1f1b96ec5693af5c2e515998af2355a46dcb028281ecadf994",
+      "export_sha256": "d59ce8fa2208ba1f1b96ec5693af5c2e515998af2355a46dcb028281ecadf994",
+      "unchanged": true
+    },
+    "runtime/vendor/planner/constraint_utils.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/planner/constraint_utils.py",
+      "source_sha256": "8a8583b4a537afc455c011b7aee41416d7b123cecff1e674f2941c5498fd5691",
+      "export_sha256": "8a8583b4a537afc455c011b7aee41416d7b123cecff1e674f2941c5498fd5691",
+      "unchanged": true
+    },
+    "runtime/vendor/planner/scene_ur5e_tabletop_noobs_ov10.yml": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/planner/scene_ur5e_tabletop_noobs_ov10.yml",
+      "source_sha256": "a26ff58be1a5ac6ebdc646ed4f0b619c4469a0864cba6df15b6abf3f6a5fac17",
+      "export_sha256": "a26ff58be1a5ac6ebdc646ed4f0b619c4469a0864cba6df15b6abf3f6a5fac17",
+      "unchanged": true
+    },
+    "runtime/vendor/planner/physical_geometry.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/planner/physical_geometry.py",
+      "source_sha256": "4e301e903ddbbc30a5c66aa521a7a3faf5619f0bc7384a40323185a5ce88cddf",
+      "export_sha256": "4e301e903ddbbc30a5c66aa521a7a3faf5619f0bc7384a40323185a5ce88cddf",
+      "unchanged": true
+    },
+    "runtime/vendor/planner/mppi_update_utils.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/planner/mppi_update_utils.py",
+      "source_sha256": "86f7c35dff177548d437020142ca490b492c8a8cb16985b65c366d103b03e38f",
+      "export_sha256": "86f7c35dff177548d437020142ca490b492c8a8cb16985b65c366d103b03e38f",
+      "unchanged": true
+    },
+    "runtime/vendor/planner/morph_orient.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/planner/morph_orient.py",
+      "source_sha256": "8684cffebd4a951ada556be39c1c258a68d094680937c0c44c406dde3bbe6d8b",
+      "export_sha256": "8684cffebd4a951ada556be39c1c258a68d094680937c0c44c406dde3bbe6d8b",
+      "unchanged": true
+    },
+    "runtime/vendor/planner/tabletop_eval_groups.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/planner/tabletop_eval_groups.py",
+      "source_sha256": "577a5650b36bd687b2be54ce32485633bd23e7ab6876909b6b73dab40d674c94",
+      "export_sha256": "577a5650b36bd687b2be54ce32485633bd23e7ab6876909b6b73dab40d674c94",
+      "unchanged": true
+    },
+    "runtime/vendor/planner/ur5e_arm.yml": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/planner/ur5e_arm.yml",
+      "source_sha256": "aa514d2fcdb4d83c6b5361645017dee254f5ace1fdbb8c5b56e555fbd7056c34",
+      "export_sha256": "aa514d2fcdb4d83c6b5361645017dee254f5ace1fdbb8c5b56e555fbd7056c34",
+      "unchanged": true
+    },
+    "runtime/vendor/planner/collision_utils.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/planner/collision_utils.py",
+      "source_sha256": "233cc4c388d3509b8c2da26dec4692af3b3cab0fdcbe21c3cf8173737b44a9a4",
+      "export_sha256": "233cc4c388d3509b8c2da26dec4692af3b3cab0fdcbe21c3cf8173737b44a9a4",
+      "unchanged": true
+    },
+    "runtime/vendor/planner/ur5e_plan_eval_multi.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/planner/ur5e_plan_eval_multi.py",
+      "source_sha256": "837c2d15fa339c272d4a39f73d70d4faa765affae52636efcfc0ba4af48e3550",
+      "export_sha256": "837c2d15fa339c272d4a39f73d70d4faa765affae52636efcfc0ba4af48e3550",
+      "unchanged": true
+    },
+    "runtime/vendor/planner/score_cross_suite.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/planner/score_cross_suite.py",
+      "source_sha256": "4299245127411f8339898b802a2fd87cd11871d7649bc3b6c6eadc5ca8afdf0a",
+      "export_sha256": "4299245127411f8339898b802a2fd87cd11871d7649bc3b6c6eadc5ca8afdf0a",
+      "unchanged": true
+    },
+    "runtime/vendor/planner/spheres_ur5e_arm.yml": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/planner/spheres_ur5e_arm.yml",
+      "source_sha256": "ea6e9a93c8bffd01f9969dd369b0ec8b3c15107640ef4c564ab5eec277023601",
+      "export_sha256": "ea6e9a93c8bffd01f9969dd369b0ec8b3c15107640ef4c564ab5eec277023601",
+      "unchanged": true
+    },
+    "runtime/vendor/planner/visualize.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/planner/visualize.py",
+      "source_sha256": "779f754b12b9d47f4579b79d466e7769b8cbea11ea09bb005d605acb2cb5849b",
+      "export_sha256": "779f754b12b9d47f4579b79d466e7769b8cbea11ea09bb005d605acb2cb5849b",
+      "unchanged": true
+    },
+    "runtime/vendor/planner/viser_utils.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/planner/viser_utils.py",
+      "source_sha256": "f9f517e105827a33614c02aab1d0e9e81f5c7070d41b2c27cdd6d4a005e5f072",
+      "export_sha256": "f9f517e105827a33614c02aab1d0e9e81f5c7070d41b2c27cdd6d4a005e5f072",
+      "unchanged": true
+    },
+    "runtime/vendor/planner/Experiments/.gitkeep": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/planner/Experiments/.gitkeep",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "export_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unchanged": true
+    },
+    "runtime/vendor/planner/configs/.gitkeep": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/planner/configs/.gitkeep",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "export_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unchanged": true
+    },
+    "runtime/vendor/planner/train/.gitkeep": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/planner/train/.gitkeep",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "export_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unchanged": true
+    },
+    "runtime/vendor/planner/models/.gitkeep": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/planner/models/.gitkeep",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "export_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unchanged": true
+    },
+    "runtime/vendor/planner/datasets/.gitkeep": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/planner/datasets/.gitkeep",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "export_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unchanged": true
+    },
+    "runtime/vendor/ntrl/train/train_g1_multi.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/ntrl/train/train_g1_multi.py",
+      "source_sha256": "f2e19106f41cfc69ad4a84d3f98d6c8360d42a8d0d222f6b6d85472f09a02714",
+      "export_sha256": "f2e19106f41cfc69ad4a84d3f98d6c8360d42a8d0d222f6b6d85472f09a02714",
+      "unchanged": true
+    },
+    "runtime/vendor/ntrl/train/__init__.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/ntrl/train/__init__.py",
+      "source_sha256": "6d523e18f60ecef0a097eec699da54682e4fcb55dfb9e47fd4233138029387e0",
+      "export_sha256": "6d523e18f60ecef0a097eec699da54682e4fcb55dfb9e47fd4233138029387e0",
+      "unchanged": true
+    },
+    "runtime/vendor/ntrl/models/data_mlp_multi.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/ntrl/models/data_mlp_multi.py",
+      "source_sha256": "07a11c50c060040c159ef3a5a41148cc963b958896f2f370dd22faee12f28289",
+      "export_sha256": "07a11c50c060040c159ef3a5a41148cc963b958896f2f370dd22faee12f28289",
+      "unchanged": true
+    },
+    "runtime/vendor/ntrl/models/__init__.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/ntrl/models/__init__.py",
+      "source_sha256": "c055ae6df938632600c35536d9a55d302899f77e1e7a8e1227e0105b681471ed",
+      "export_sha256": "c055ae6df938632600c35536d9a55d302899f77e1e7a8e1227e0105b681471ed",
+      "unchanged": true
+    },
+    "runtime/vendor/ntrl/models/metric_arm/semantic_relation_gate.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/ntrl/models/metric_arm/semantic_relation_gate.py",
+      "source_sha256": "bcd9d5caa2e7c5502912f78ebec9a0bfe35efc4c95a496e46823b794e9e7a0e0",
+      "export_sha256": "bcd9d5caa2e7c5502912f78ebec9a0bfe35efc4c95a496e46823b794e9e7a0e0",
+      "unchanged": true
+    },
+    "runtime/vendor/ntrl/models/metric_arm/model_function_multi.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/ntrl/models/metric_arm/model_function_multi.py",
+      "source_sha256": "697920a7be9dc179ad2ab0ae6dbfdfbe20d003835f26da8311140c7a6151fb31",
+      "export_sha256": "697920a7be9dc179ad2ab0ae6dbfdfbe20d003835f26da8311140c7a6151fb31",
+      "unchanged": true
+    },
+    "runtime/vendor/ntrl/models/metric_arm/model_network_multi.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/ntrl/models/metric_arm/model_network_multi.py",
+      "source_sha256": "253051a2032d057bd8a2aae6d7388e554852323e7b8ff8865d689a6a84590f1c",
+      "export_sha256": "253051a2032d057bd8a2aae6d7388e554852323e7b8ff8865d689a6a84590f1c",
+      "unchanged": true
+    },
+    "runtime/vendor/ntrl/models/metric_arm/zone_router.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/ntrl/models/metric_arm/zone_router.py",
+      "source_sha256": "23607574ce107d6affab14b35ecd1a40a8a87bb1a437d623381c29cab1b34d98",
+      "export_sha256": "23607574ce107d6affab14b35ecd1a40a8a87bb1a437d623381c29cab1b34d98",
+      "unchanged": true
+    },
+    "runtime/vendor/ntrl/models/metric_arm/path_loss.py": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/vendor/ntrl/models/metric_arm/path_loss.py",
+      "source_sha256": "f1f2602a02f862991f95a827d9705d3e815c33dfff4a218c813c0dd9d81d5c16",
+      "export_sha256": "f1f2602a02f862991f95a827d9705d3e815c33dfff4a218c813c0dd9d81d5c16",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/ur5e_robotiq_2f_140.urdf": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/ur5e_robotiq_2f_140.urdf",
+      "source_sha256": "01b435be8adf92f868c849dead3fc01e4979b18cc3bfce71bf1c144a0658d76c",
+      "export_sha256": "01b435be8adf92f868c849dead3fc01e4979b18cc3bfce71bf1c144a0658d76c",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/ur5e.urdf": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/ur5e.urdf",
+      "source_sha256": "00d13bdf4e9f28f8a54bd15771fa89e22702cd3666f6480219b2364f5d75e56e",
+      "export_sha256": "00d13bdf4e9f28f8a54bd15771fa89e22702cd3666f6480219b2364f5d75e56e",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_coupling.stl": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_coupling.stl",
+      "source_sha256": "5ca9ffc28ed04193854b005358599dd9c3dc6fa92c8403e661fda94732d9ac25",
+      "export_sha256": "5ca9ffc28ed04193854b005358599dd9c3dc6fa92c8403e661fda94732d9ac25",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_140_inner_knuckle.stl": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_140_inner_knuckle.stl",
+      "source_sha256": "d341d986aa8aca7262565c039c04fb6b4c0f2f5c93443519eb7ca9bfc67ba17c",
+      "export_sha256": "d341d986aa8aca7262565c039c04fb6b4c0f2f5c93443519eb7ca9bfc67ba17c",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_base_link.stl": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_base_link.stl",
+      "source_sha256": "111e37f13a664989dd54226f80f521b32ea0b71c975282a16696b14be7cc9249",
+      "export_sha256": "111e37f13a664989dd54226f80f521b32ea0b71c975282a16696b14be7cc9249",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_140_outer_knuckle.stl": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_140_outer_knuckle.stl",
+      "source_sha256": "37c1779f71fb5504a5898048a36f9f4bfce0f5e7039ff1dce53808b95c229777",
+      "export_sha256": "37c1779f71fb5504a5898048a36f9f4bfce0f5e7039ff1dce53808b95c229777",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_140_inner_finger.stl": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_140_inner_finger.stl",
+      "source_sha256": "043901d9c22b38d09b30d11326108ab3ef1445b4bd655ef313f94199f25f57ed",
+      "export_sha256": "043901d9c22b38d09b30d11326108ab3ef1445b4bd655ef313f94199f25f57ed",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_140_outer_finger.stl": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_140_outer_finger.stl",
+      "source_sha256": "bd7da1b31b73f1aa1d61b26a582cea10f16f17396d54b8937890fa51547d26b0",
+      "export_sha256": "bd7da1b31b73f1aa1d61b26a582cea10f16f17396d54b8937890fa51547d26b0",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_coupling.stl": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_coupling.stl",
+      "source_sha256": "4281e83002a25c20dc07c68b8d77da30a13e9a8401f157f6848ed8287d7cce44",
+      "export_sha256": "4281e83002a25c20dc07c68b8d77da30a13e9a8401f157f6848ed8287d7cce44",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_140_inner_knuckle.stl": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_140_inner_knuckle.stl",
+      "source_sha256": "d61e9c5304d8015333856e4a26d99e32b695b6ada993253986b1afe8e396ab11",
+      "export_sha256": "d61e9c5304d8015333856e4a26d99e32b695b6ada993253986b1afe8e396ab11",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_base_link.stl": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_base_link.stl",
+      "source_sha256": "74a62de75ae10cf77c60f2c49749b5d11f4c265f8624bbe7697a941fa86f6b3b",
+      "export_sha256": "74a62de75ae10cf77c60f2c49749b5d11f4c265f8624bbe7697a941fa86f6b3b",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_140_outer_knuckle.stl": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_140_outer_knuckle.stl",
+      "source_sha256": "f042edc44ede9773e7cad00f7d7354d0b7c1c6a6353fe897b2ca2e6ac71107fc",
+      "export_sha256": "f042edc44ede9773e7cad00f7d7354d0b7c1c6a6353fe897b2ca2e6ac71107fc",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_140_inner_finger.stl": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_140_inner_finger.stl",
+      "source_sha256": "be21c5e18c901d4747cbc8fa1a2af15dad7173ff701482a8517e33278432bb21",
+      "export_sha256": "be21c5e18c901d4747cbc8fa1a2af15dad7173ff701482a8517e33278432bb21",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_140_outer_finger.stl": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_140_outer_finger.stl",
+      "source_sha256": "666a92ee075f6f320ffb13b39995a5b374657cee90ded4c52c23ede20a812f34",
+      "export_sha256": "666a92ee075f6f320ffb13b39995a5b374657cee90ded4c52c23ede20a812f34",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/collision/wrist2.stl": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/ur5e/collision/wrist2.stl",
+      "source_sha256": "2964a63f60ce3e3cf3ad55bcf190d7876d50e373cb64b70a57cea5885eaf3c86",
+      "export_sha256": "2964a63f60ce3e3cf3ad55bcf190d7876d50e373cb64b70a57cea5885eaf3c86",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/collision/upperarm.stl": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/ur5e/collision/upperarm.stl",
+      "source_sha256": "ee893044caf00075cb55b4cf666d1f1311c7979786212a501009f33bee945209",
+      "export_sha256": "ee893044caf00075cb55b4cf666d1f1311c7979786212a501009f33bee945209",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/collision/base.stl": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/ur5e/collision/base.stl",
+      "source_sha256": "9a145e0d46f2130afdf2a2e8825a00a929870c4c3d6d8e4d1adc5f04db3aac1b",
+      "export_sha256": "9a145e0d46f2130afdf2a2e8825a00a929870c4c3d6d8e4d1adc5f04db3aac1b",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/collision/wrist3.stl": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/ur5e/collision/wrist3.stl",
+      "source_sha256": "83b3666b4ae2badd54af0d2c25a921682ecbc29e849eec646c3ed55fb74c78a3",
+      "export_sha256": "83b3666b4ae2badd54af0d2c25a921682ecbc29e849eec646c3ed55fb74c78a3",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/collision/shoulder.stl": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/ur5e/collision/shoulder.stl",
+      "source_sha256": "ceb92532177daa77682f5fbd628e01c2137d168f949a7a706ce1dabe9f002387",
+      "export_sha256": "ceb92532177daa77682f5fbd628e01c2137d168f949a7a706ce1dabe9f002387",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/collision/forearm.stl": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/ur5e/collision/forearm.stl",
+      "source_sha256": "2e7423cab807c34160ec4f770daee5e747d70e777eb01b7beeace2b8c5751816",
+      "export_sha256": "2e7423cab807c34160ec4f770daee5e747d70e777eb01b7beeace2b8c5751816",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/collision/wrist1.stl": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/ur5e/collision/wrist1.stl",
+      "source_sha256": "f8c9f9337b6fd98c75f052e96de10e14a107ddb6874ba6b904e546f8a4e4f43a",
+      "export_sha256": "f8c9f9337b6fd98c75f052e96de10e14a107ddb6874ba6b904e546f8a4e4f43a",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/visual/forearm.dae": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/ur5e/visual/forearm.dae",
+      "source_sha256": "6cb2f094ffba59f124f70881cabea985abfd399f2fbbe76fba7c18d2ece943b9",
+      "export_sha256": "6cb2f094ffba59f124f70881cabea985abfd399f2fbbe76fba7c18d2ece943b9",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/visual/wrist3.dae": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/ur5e/visual/wrist3.dae",
+      "source_sha256": "9f5d4f544ae72698a41f75ed4897a76386a91b814dff22e30e93a5bd105a717c",
+      "export_sha256": "9f5d4f544ae72698a41f75ed4897a76386a91b814dff22e30e93a5bd105a717c",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/visual/wrist2.dae": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/ur5e/visual/wrist2.dae",
+      "source_sha256": "c99f5538357a7b42a9b207a12e52e713dd3eb7e587645144bde7ab31c1cfc76b",
+      "export_sha256": "c99f5538357a7b42a9b207a12e52e713dd3eb7e587645144bde7ab31c1cfc76b",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/visual/upperarm.dae": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/ur5e/visual/upperarm.dae",
+      "source_sha256": "6486526456e11585a41080958b97a0c8821da856e93b2059c74b07f8102bf6cd",
+      "export_sha256": "6486526456e11585a41080958b97a0c8821da856e93b2059c74b07f8102bf6cd",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/visual/wrist1.dae": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/ur5e/visual/wrist1.dae",
+      "source_sha256": "c36649cf4deec6da427d72d45163a059dcb668eb61aac760d5f2f979948fa13a",
+      "export_sha256": "c36649cf4deec6da427d72d45163a059dcb668eb61aac760d5f2f979948fa13a",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/visual/base.dae": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/ur5e/visual/base.dae",
+      "source_sha256": "a7d37bb19bd062ca80ea00dfcd758b1145455c5cfad87d41756b101ac5b2a8a4",
+      "export_sha256": "a7d37bb19bd062ca80ea00dfcd758b1145455c5cfad87d41756b101ac5b2a8a4",
+      "unchanged": true
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/visual/shoulder.dae": {
+      "source": "/home/exx/Documents/ntfields-releases/pure-l2-half-goalcost4-beta12-repro-20260919/assets/runtime/robot/meshes/ur5e/visual/shoulder.dae",
+      "source_sha256": "b2b58abbef50ce03d4704465d3b619a7da5b2ecb2efc236eadfd221116cbbef0",
+      "export_sha256": "b2b58abbef50ce03d4704465d3b619a7da5b2ecb2efc236eadfd221116cbbef0",
+      "unchanged": true
+    },
+    "gui/viewer.py": {
+      "source": "/home/exx/Documents/ntfields-g1/research/bellman600_clean/gui/viewer.py",
+      "source_sha256": "b0c91534c4dd1c1ac970ba813085ab6a8e580c0563f6e4d72e9d6dc437d38b92",
+      "export_sha256": "85d70144a9e80f01d76914b55d1bbe95653ad6827440d0568a98801534064536",
+      "unchanged": false
+    },
+    "gui/helpers.py": {
+      "source": "/home/exx/Documents/ntfields-g1/research/bellman600_clean/gui/helpers.py",
+      "source_sha256": "b92470ba025db92a1595a5c423018c0dfae09d994e307a27229e41c3a0935ece",
+      "export_sha256": "b92470ba025db92a1595a5c423018c0dfae09d994e307a27229e41c3a0935ece",
+      "unchanged": true
+    }
+  },
+  "changes": [
+    "Portable relative host paths and bundled runtime/registry",
+    "GUI shows only Bellman MPPI and RK4, default localhost:8901",
+    "Evaluation report wording removes obsolete pruning threshold; computation unchanged",
+    "Large assets distributed separately with SHA256 manifest"
+  ]
+}

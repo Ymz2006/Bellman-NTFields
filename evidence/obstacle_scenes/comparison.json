@@ -1,0 +1,934 @@
+{
+  "runs": {
+    "no_wall": "/media/4tbssd/jeffrey/bellman-ntfield/results/registered_20261009T042727Z-c1d4e622",
+    "platforms": "/media/4tbssd/jeffrey/bellman-ntfield/results/registered_20261013T194621Z-1978fc0c",
+    "clutter": "/media/4tbssd/jeffrey/bellman-ntfield/results/registered_20261013T210624Z-f04a0fc2"
+  },
+  "scenes": {
+    "platforms": {
+      "obstacles": [
+        {
+          "name": "cup_platform",
+          "pose": [
+            0.65,
+            0.35,
+            0.04,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "dims": [
+            0.5,
+            0.4,
+            0.15
+          ],
+          "color": [
+            96,
+            125,
+            160
+          ]
+        },
+        {
+          "name": "pour_platform",
+          "pose": [
+            0.65,
+            -0.35,
+            0.04,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "dims": [
+            0.5,
+            0.4,
+            0.15
+          ],
+          "color": [
+            96,
+            125,
+            160
+          ]
+        }
+      ],
+      "valid_endpoints": 438,
+      "blocked_by_type": {
+        "cupping": 42,
+        "pouring": 46,
+        "cross": 74
+      }
+    },
+    "clutter": {
+      "obstacles": [
+        {
+          "name": "bottle_left",
+          "pose": [
+            0.48,
+            0.28,
+            0.115,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "dims": [
+            0.08,
+            0.08,
+            0.3
+          ],
+          "color": [
+            60,
+            150,
+            90
+          ]
+        },
+        {
+          "name": "jar_center",
+          "pose": [
+            0.62,
+            0.0,
+            0.045,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "dims": [
+            0.1,
+            0.1,
+            0.16
+          ],
+          "color": [
+            220,
+            160,
+            40
+          ]
+        },
+        {
+          "name": "kettle_right",
+          "pose": [
+            0.7,
+            -0.33,
+            0.085,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "dims": [
+            0.18,
+            0.16,
+            0.24
+          ],
+          "color": [
+            170,
+            60,
+            60
+          ]
+        }
+      ],
+      "valid_endpoints": 497,
+      "blocked_by_type": {
+        "cupping": 44,
+        "pouring": 11,
+        "cross": 48
+      }
+    }
+  },
+  "results": {
+    "no_wall": {
+      "status": {
+        "complete": true,
+        "stage": "complete",
+        "smoke": false,
+        "timing": {
+          "sample": 314.16949174899855,
+          "prepare": 900.9407608969996,
+          "training": 977.3664440989996,
+          "evaluate": 839.5826438859986
+        },
+        "elapsed_seconds": 3032.0613016199986,
+        "mppi_successes": [
+          533,
+          531,
+          533
+        ],
+        "native_success": 535,
+        "precomputed_training_assets_read": false,
+        "original_pose_pool_read": false,
+        "evaluation_data_fixed": true,
+        "mode": "from-source"
+      },
+      "methods": {
+        "mppi": {
+          "n": 1800,
+          "success": 1597,
+          "subsets": {
+            "platforms": {
+              "n": 1314,
+              "success": 1204,
+              "by_type": {
+                "cupping": {
+                  "n": 414,
+                  "success": 403
+                },
+                "pouring": {
+                  "n": 402,
+                  "success": 398
+                },
+                "cross": {
+                  "n": 498,
+                  "success": 403
+                }
+              }
+            },
+            "clutter": {
+              "n": 1491,
+              "success": 1347,
+              "by_type": {
+                "cupping": {
+                  "n": 408,
+                  "success": 399
+                },
+                "pouring": {
+                  "n": 507,
+                  "success": 500
+                },
+                "cross": {
+                  "n": 576,
+                  "success": 448
+                }
+              }
+            }
+          },
+          "by_type": {
+            "cupping": {
+              "success": 523,
+              "n": 540
+            },
+            "pouring": {
+              "success": 533,
+              "n": 540
+            },
+            "cross": {
+              "success": 541,
+              "n": 720
+            }
+          },
+          "by_task": {
+            "cutting": 288,
+            "hammering": 273,
+            "mixed": 212,
+            "screwdriver": 270,
+            "stirring": 276,
+            "wiping": 278
+          },
+          "failure_reasons": {
+            "tilt": 167,
+            "collision": 69
+          }
+        },
+        "rk4": {
+          "n": 600,
+          "success": 535,
+          "subsets": {
+            "platforms": {
+              "n": 438,
+              "success": 396,
+              "by_type": {
+                "cupping": {
+                  "n": 138,
+                  "success": 132
+                },
+                "pouring": {
+                  "n": 134,
+                  "success": 132
+                },
+                "cross": {
+                  "n": 166,
+                  "success": 132
+                }
+              }
+            },
+            "clutter": {
+              "n": 497,
+              "success": 448,
+              "by_type": {
+                "cupping": {
+                  "n": 136,
+                  "success": 131
+                },
+                "pouring": {
+                  "n": 169,
+                  "success": 167
+                },
+                "cross": {
+                  "n": 192,
+                  "success": 150
+                }
+              }
+            }
+          },
+          "by_type": {
+            "cupping": {
+              "success": 171,
+              "n": 180
+            },
+            "pouring": {
+              "success": 178,
+              "n": 180
+            },
+            "cross": {
+              "success": 186,
+              "n": 240
+            }
+          },
+          "by_task": {
+            "cutting": 96,
+            "hammering": 93,
+            "mixed": 77,
+            "screwdriver": 90,
+            "stirring": 90,
+            "wiping": 89
+          },
+          "failure_reasons": {
+            "endpoint": 34,
+            "tilt": 27,
+            "collision": 11
+          }
+        }
+      },
+      "bank": {
+        "anchors": 399752,
+        "safe_edge_fraction": 0.28348421874999996
+      },
+      "speed_validation": [
+        {
+          "source": "original",
+          "endpoint_count": 20000,
+          "mae": 0.022284941747784615,
+          "p95": 0.09601952880620956,
+          "log_rmse": 0.12483560293912888
+        },
+        {
+          "source": "augmentation",
+          "endpoint_count": 20002,
+          "mae": 0.011791895143687725,
+          "p95": 0.06672307103872299,
+          "log_rmse": 0.1067330613732338
+        }
+      ],
+      "sampling": {
+        "pool_size_each": 2000000,
+        "original_pairs": 1000000,
+        "augmentation_pairs": 1000005
+      }
+    },
+    "platforms": {
+      "status": {
+        "complete": true,
+        "stage": "complete",
+        "smoke": false,
+        "scene": "/clean/experiments/obstacle_scenes/scenes/platforms.yml",
+        "scene_sha256": "fc5eb7678e0a71205cc0b8a9a18b0efdf42f6ff4f669547b6079633c97913af6",
+        "timing": {
+          "audit": 7.225775377002719,
+          "sample": 411.1779613260005,
+          "prepare": 554.0560406579971,
+          "training": 493.28527076700266,
+          "evaluate": 264.881732216003
+        },
+        "elapsed_seconds": 1730.6398575280036,
+        "mppi_successes": [
+          388,
+          388,
+          387
+        ],
+        "native_success": 396,
+        "endpoint_valid_queries": 438,
+        "precomputed_training_assets_read": false,
+        "evaluation_data_fixed": true,
+        "mode": "obstacle-scene-from-source"
+      },
+      "methods": {
+        "mppi": {
+          "n": 1800,
+          "success": 1163,
+          "subsets": {
+            "platforms": {
+              "n": 1314,
+              "success": 1163,
+              "by_type": {
+                "cupping": {
+                  "n": 414,
+                  "success": 396
+                },
+                "pouring": {
+                  "n": 402,
+                  "success": 399
+                },
+                "cross": {
+                  "n": 498,
+                  "success": 368
+                }
+              }
+            },
+            "clutter": {
+              "n": 1491,
+              "success": 1088,
+              "by_type": {
+                "cupping": {
+                  "n": 408,
+                  "success": 357
+                },
+                "pouring": {
+                  "n": 507,
+                  "success": 387
+                },
+                "cross": {
+                  "n": 576,
+                  "success": 344
+                }
+              }
+            }
+          },
+          "by_type": {
+            "cupping": {
+              "success": 396,
+              "n": 540
+            },
+            "pouring": {
+              "success": 399,
+              "n": 540
+            },
+            "cross": {
+              "success": 368,
+              "n": 720
+            }
+          },
+          "by_task": {
+            "cutting": 222,
+            "hammering": 177,
+            "mixed": 156,
+            "screwdriver": 185,
+            "stirring": 186,
+            "wiping": 237
+          },
+          "failure_reasons": {
+            "collision": 541,
+            "tilt": 189
+          }
+        },
+        "rk4": {
+          "n": 600,
+          "success": 396,
+          "subsets": {
+            "platforms": {
+              "n": 438,
+              "success": 396,
+              "by_type": {
+                "cupping": {
+                  "n": 138,
+                  "success": 131
+                },
+                "pouring": {
+                  "n": 134,
+                  "success": 133
+                },
+                "cross": {
+                  "n": 166,
+                  "success": 132
+                }
+              }
+            },
+            "clutter": {
+              "n": 497,
+              "success": 369,
+              "by_type": {
+                "cupping": {
+                  "n": 136,
+                  "success": 117
+                },
+                "pouring": {
+                  "n": 169,
+                  "success": 129
+                },
+                "cross": {
+                  "n": 192,
+                  "success": 123
+                }
+              }
+            }
+          },
+          "by_type": {
+            "cupping": {
+              "success": 131,
+              "n": 180
+            },
+            "pouring": {
+              "success": 133,
+              "n": 180
+            },
+            "cross": {
+              "success": 132,
+              "n": 240
+            }
+          },
+          "by_task": {
+            "cutting": 74,
+            "hammering": 59,
+            "mixed": 54,
+            "screwdriver": 68,
+            "stirring": 65,
+            "wiping": 76
+          },
+          "failure_reasons": {
+            "endpoint": 41,
+            "collision": 165,
+            "tilt": 26
+          }
+        }
+      },
+      "bank": {
+        "anchors": 399661,
+        "safe_edge_fraction": 0.28246609375
+      },
+      "speed_validation": [
+        {
+          "source": "original",
+          "endpoint_count": 20000,
+          "mae": 0.022594988346099854,
+          "p95": 0.09666739404201508,
+          "log_rmse": 0.12921367585659027
+        },
+        {
+          "source": "augmentation",
+          "endpoint_count": 20002,
+          "mae": 0.012569881044328213,
+          "p95": 0.06873162090778351,
+          "log_rmse": 0.11651647090911865
+        }
+      ],
+      "sampling": {
+        "pool_size_each": 2000000,
+        "original_pairs": 1000000,
+        "augmentation_pairs": 1000005
+      }
+    },
+    "clutter": {
+      "status": {
+        "complete": true,
+        "stage": "complete",
+        "smoke": false,
+        "scene": "/clean/experiments/obstacle_scenes/scenes/clutter.yml",
+        "scene_sha256": "8e7b8d09f4f235bc4e1093e93d82ab5c89e08886c8e426e8de8b6b15f76b762f",
+        "timing": {
+          "audit": 6.432149762003974,
+          "sample": 636.8662593339977,
+          "prepare": 574.4545843470041,
+          "training": 527.9841732080022,
+          "evaluate": 271.84333719999995,
+          "scene_tests": 292.45921828599967
+        },
+        "elapsed_seconds": 2310.0445821050016,
+        "mppi_successes": [
+          412,
+          410,
+          410
+        ],
+        "native_success": 420,
+        "endpoint_valid_queries": 497,
+        "scene_tests_mppi_successes": [
+          403,
+          403,
+          403
+        ],
+        "scene_tests_native_success": 414,
+        "precomputed_training_assets_read": false,
+        "evaluation_data_fixed": true,
+        "mode": "obstacle-scene-from-source"
+      },
+      "methods": {
+        "mppi": {
+          "n": 1800,
+          "success": 1232,
+          "subsets": {
+            "platforms": {
+              "n": 1314,
+              "success": 1045,
+              "by_type": {
+                "cupping": {
+                  "n": 414,
+                  "success": 341
+                },
+                "pouring": {
+                  "n": 402,
+                  "success": 384
+                },
+                "cross": {
+                  "n": 498,
+                  "success": 320
+                }
+              }
+            },
+            "clutter": {
+              "n": 1491,
+              "success": 1232,
+              "by_type": {
+                "cupping": {
+                  "n": 408,
+                  "success": 374
+                },
+                "pouring": {
+                  "n": 507,
+                  "success": 488
+                },
+                "cross": {
+                  "n": 576,
+                  "success": 370
+                }
+              }
+            }
+          },
+          "by_type": {
+            "cupping": {
+              "success": 374,
+              "n": 540
+            },
+            "pouring": {
+              "success": 488,
+              "n": 540
+            },
+            "cross": {
+              "success": 370,
+              "n": 720
+            }
+          },
+          "by_task": {
+            "cutting": 227,
+            "hammering": 181,
+            "mixed": 160,
+            "screwdriver": 193,
+            "stirring": 213,
+            "wiping": 258
+          },
+          "failure_reasons": {
+            "collision": 463,
+            "tilt": 194
+          }
+        },
+        "rk4": {
+          "n": 600,
+          "success": 420,
+          "subsets": {
+            "platforms": {
+              "n": 438,
+              "success": 353,
+              "by_type": {
+                "cupping": {
+                  "n": 138,
+                  "success": 114
+                },
+                "pouring": {
+                  "n": 134,
+                  "success": 128
+                },
+                "cross": {
+                  "n": 166,
+                  "success": 111
+                }
+              }
+            },
+            "clutter": {
+              "n": 497,
+              "success": 420,
+              "by_type": {
+                "cupping": {
+                  "n": 136,
+                  "success": 125
+                },
+                "pouring": {
+                  "n": 169,
+                  "success": 165
+                },
+                "cross": {
+                  "n": 192,
+                  "success": 130
+                }
+              }
+            }
+          },
+          "by_type": {
+            "cupping": {
+              "success": 125,
+              "n": 180
+            },
+            "pouring": {
+              "success": 165,
+              "n": 180
+            },
+            "cross": {
+              "success": 130,
+              "n": 240
+            }
+          },
+          "by_task": {
+            "cutting": 77,
+            "hammering": 63,
+            "mixed": 60,
+            "screwdriver": 67,
+            "stirring": 70,
+            "wiping": 83
+          },
+          "failure_reasons": {
+            "endpoint": 30,
+            "collision": 139,
+            "tilt": 34
+          }
+        }
+      },
+      "bank": {
+        "anchors": 399585,
+        "safe_edge_fraction": 0.28055359375
+      },
+      "speed_validation": [
+        {
+          "source": "original",
+          "endpoint_count": 20000,
+          "mae": 0.026189900934696198,
+          "p95": 0.11384949088096619,
+          "log_rmse": 0.14604035019874573
+        },
+        {
+          "source": "augmentation",
+          "endpoint_count": 20002,
+          "mae": 0.014395260252058506,
+          "p95": 0.0797700583934784,
+          "log_rmse": 0.13801725208759308
+        }
+      ],
+      "sampling": {
+        "pool_size_each": 2000000,
+        "original_pairs": 1000000,
+        "augmentation_pairs": 1000005
+      }
+    }
+  },
+  "paired": {
+    "platforms": {
+      "mppi": {
+        "both_succeed": 1155,
+        "lost": 49,
+        "gained": 8,
+        "both_fail": 102,
+        "failure_reasons": {
+          "collision": 55,
+          "tilt": 114
+        },
+        "no_wall_failure_reasons": {
+          "tilt": 98,
+          "collision": 27
+        }
+      },
+      "rk4": {
+        "both_succeed": 383,
+        "lost": 13,
+        "gained": 13,
+        "both_fail": 29,
+        "failure_reasons": {
+          "endpoint": 26,
+          "tilt": 17,
+          "collision": 10
+        },
+        "no_wall_failure_reasons": {
+          "endpoint": 20,
+          "tilt": 20,
+          "collision": 4
+        }
+      }
+    },
+    "clutter": {
+      "mppi": {
+        "both_succeed": 1225,
+        "lost": 122,
+        "gained": 7,
+        "both_fail": 137,
+        "failure_reasons": {
+          "collision": 154,
+          "tilt": 147
+        },
+        "no_wall_failure_reasons": {
+          "tilt": 123,
+          "collision": 42
+        }
+      },
+      "rk4": {
+        "both_succeed": 413,
+        "lost": 35,
+        "gained": 7,
+        "both_fail": 42,
+        "failure_reasons": {
+          "endpoint": 22,
+          "collision": 38,
+          "tilt": 29
+        },
+        "no_wall_failure_reasons": {
+          "endpoint": 24,
+          "tilt": 23,
+          "collision": 6
+        }
+      }
+    }
+  },
+  "scene_tests": {
+    "platforms": {
+      "evaluation": "/media/4tbssd/jeffrey/bellman-ntfield/results/registered_20261013T210736Z-4a8e8aed/evaluation",
+      "mppi_successes": [
+        433,
+        436,
+        432
+      ],
+      "native_success": 456,
+      "suites": [
+        {
+          "suite": "general_cupping",
+          "pair_type": "cupping",
+          "n": 100,
+          "direct_line": 75,
+          "rk4": 90,
+          "mppi": 274
+        },
+        {
+          "suite": "general_pouring",
+          "pair_type": "pouring",
+          "n": 100,
+          "direct_line": 78,
+          "rk4": 97,
+          "mppi": 297
+        },
+        {
+          "suite": "general_cross",
+          "pair_type": "cross",
+          "n": 100,
+          "direct_line": 8,
+          "rk4": 49,
+          "mppi": 109
+        },
+        {
+          "suite": "platform_cupping",
+          "pair_type": "cupping",
+          "n": 100,
+          "direct_line": 59,
+          "rk4": 91,
+          "mppi": 275
+        },
+        {
+          "suite": "platform_pouring",
+          "pair_type": "pouring",
+          "n": 100,
+          "direct_line": 56,
+          "rk4": 96,
+          "mppi": 282
+        },
+        {
+          "suite": "platform_cross",
+          "pair_type": "cross",
+          "n": 100,
+          "direct_line": 1,
+          "rk4": 33,
+          "mppi": 64
+        }
+      ]
+    },
+    "clutter": {
+      "evaluation": "/media/4tbssd/jeffrey/bellman-ntfield/results/registered_20261013T210624Z-f04a0fc2/scene_tests",
+      "mppi_successes": [
+        403,
+        403,
+        403
+      ],
+      "native_success": 414,
+      "suites": [
+        {
+          "suite": "general_cupping",
+          "pair_type": "cupping",
+          "n": 100,
+          "direct_line": 63,
+          "rk4": 86,
+          "mppi": 264
+        },
+        {
+          "suite": "general_pouring",
+          "pair_type": "pouring",
+          "n": 100,
+          "direct_line": 66,
+          "rk4": 90,
+          "mppi": 280
+        },
+        {
+          "suite": "general_cross",
+          "pair_type": "cross",
+          "n": 100,
+          "direct_line": 13,
+          "rk4": 49,
+          "mppi": 124
+        },
+        {
+          "suite": "low_cupping",
+          "pair_type": "cupping",
+          "n": 100,
+          "direct_line": 48,
+          "rk4": 67,
+          "mppi": 201
+        },
+        {
+          "suite": "low_pouring",
+          "pair_type": "pouring",
+          "n": 100,
+          "direct_line": 83,
+          "rk4": 94,
+          "mppi": 288
+        },
+        {
+          "suite": "low_cross",
+          "pair_type": "cross",
+          "n": 100,
+          "direct_line": 3,
+          "rk4": 28,
+          "mppi": 52
+        }
+      ]
+    }
+  },
+  "reference_mixed": {
+    "mppi": {
+      "cupping": {
+        "n": 90,
+        "success": 76
+      },
+      "pouring": {
+        "n": 90,
+        "success": 87
+      },
+      "cross": {
+        "n": 120,
+        "success": 49
+      }
+    },
+    "rk4": {
+      "cupping": {
+        "n": 30,
+        "success": 22
+      },
+      "pouring": {
+        "n": 30,
+        "success": 29
+      },
+      "cross": {
+        "n": 40,
+        "success": 26
+      }
+    }
+  }
+}

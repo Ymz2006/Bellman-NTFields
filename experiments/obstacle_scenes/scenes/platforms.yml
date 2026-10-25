@@ -1,0 +1,57 @@
+# Frozen600 no-wall scene plus two raised platforms, one under each task region.
+# cup_platform  x 0.40-0.90, y +0.15-+0.55; pour_platform x 0.40-0.90, y -0.55--0.15.
+# Both are 0.15 m tall: they stand on the table top (z = -0.035) and reach z = 0.115.
+# The gap between them (|y| <= 0.15, containing the transition band) stays at table height.
+# Zones, task axes and sampling are unchanged.
+
+cuboids:
+  - name: table
+    pose: [0.65, 0.0, -0.06, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.80, 1.20, 0.05]
+
+  - name: cup_platform
+    pose: [0.65, 0.35, 0.04, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.50, 0.40, 0.15]
+    color: [96, 125, 160]
+
+  - name: pour_platform
+    pose: [0.65, -0.35, 0.04, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.50, 0.40, 0.15]
+    color: [96, 125, 160]
+
+viz_table:
+  name: viz_tabletop
+  pose: [0.75, 0.0, -0.06, 1.0, 0.0, 0.0, 0.0]
+  dims: [1.00, 1.20, 0.05]
+
+sampling:
+  x: [0.29, 0.85]
+  y: [-0.55, 0.55]
+
+zones:
+  type: corner_table
+  layout: y_split
+  y_divide: 0.0
+  overlap: 0.10
+  x_center: 0.75
+  cup_side: 1
+  cup_region:
+    label: CUPPING LEFT (+Y) — 15 CM PLATFORM
+    x: [0.29, 0.85]
+    y: [0.10, 0.55]
+  pour_region:
+    label: POURING RIGHT (-Y) — 15 CM PLATFORM
+    x: [0.29, 0.85]
+    y: [-0.55, -0.10]
+  overlap_region:
+    label: TRANSITION (2x WIDE) — TABLE HEIGHT
+    x: [0.29, 0.85]
+    y: [-0.10, 0.10]
+
+task_axes:
+  cup:
+    local_axis: [-1.0, 0.0, 0.0]
+    world_axis: [0.0, 0.0, 1.0]
+  pour:
+    local_axis: [0.0, 0.0, 1.0]
+    world_axis: [1.0, 0.0, 0.0]

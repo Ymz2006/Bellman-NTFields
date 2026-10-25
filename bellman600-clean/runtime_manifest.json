@@ -1,0 +1,306 @@
+{
+  "schema_version": 1,
+  "purpose": "Frozen evaluation600, scene, normalization, robot and planner/scorer runtime. No trained inputs.",
+  "files": {
+    "runtime/README.md": {
+      "bytes": 968,
+      "sha256": "8120dbcf5cf1d301cd8a9816a8e25097c95d92ba914efac2df18330f87b53137"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_140_inner_finger.stl": {
+      "bytes": 7284,
+      "sha256": "043901d9c22b38d09b30d11326108ab3ef1445b4bd655ef313f94199f25f57ed"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_140_inner_knuckle.stl": {
+      "bytes": 5484,
+      "sha256": "d341d986aa8aca7262565c039c04fb6b4c0f2f5c93443519eb7ca9bfc67ba17c"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_140_outer_finger.stl": {
+      "bytes": 11684,
+      "sha256": "bd7da1b31b73f1aa1d61b26a582cea10f16f17396d54b8937890fa51547d26b0"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_140_outer_knuckle.stl": {
+      "bytes": 9784,
+      "sha256": "37c1779f71fb5504a5898048a36f9f4bfce0f5e7039ff1dce53808b95c229777"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_base_link.stl": {
+      "bytes": 86384,
+      "sha256": "111e37f13a664989dd54226f80f521b32ea0b71c975282a16696b14be7cc9249"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_coupling.stl": {
+      "bytes": 21184,
+      "sha256": "5ca9ffc28ed04193854b005358599dd9c3dc6fa92c8403e661fda94732d9ac25"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_140_inner_finger.stl": {
+      "bytes": 33984,
+      "sha256": "be21c5e18c901d4747cbc8fa1a2af15dad7173ff701482a8517e33278432bb21"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_140_inner_knuckle.stl": {
+      "bytes": 43484,
+      "sha256": "d61e9c5304d8015333856e4a26d99e32b695b6ada993253986b1afe8e396ab11"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_140_outer_finger.stl": {
+      "bytes": 76084,
+      "sha256": "666a92ee075f6f320ffb13b39995a5b374657cee90ded4c52c23ede20a812f34"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_140_outer_knuckle.stl": {
+      "bytes": 78384,
+      "sha256": "f042edc44ede9773e7cad00f7d7354d0b7c1c6a6353fe897b2ca2e6ac71107fc"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_base_link.stl": {
+      "bytes": 1054984,
+      "sha256": "74a62de75ae10cf77c60f2c49749b5d11f4c265f8624bbe7697a941fa86f6b3b"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_coupling.stl": {
+      "bytes": 160684,
+      "sha256": "4281e83002a25c20dc07c68b8d77da30a13e9a8401f157f6848ed8287d7cce44"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/collision/base.stl": {
+      "bytes": 21084,
+      "sha256": "9a145e0d46f2130afdf2a2e8825a00a929870c4c3d6d8e4d1adc5f04db3aac1b"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/collision/forearm.stl": {
+      "bytes": 53284,
+      "sha256": "2e7423cab807c34160ec4f770daee5e747d70e777eb01b7beeace2b8c5751816"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/collision/shoulder.stl": {
+      "bytes": 70084,
+      "sha256": "ceb92532177daa77682f5fbd628e01c2137d168f949a7a706ce1dabe9f002387"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/collision/upperarm.stl": {
+      "bytes": 99684,
+      "sha256": "ee893044caf00075cb55b4cf666d1f1311c7979786212a501009f33bee945209"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/collision/wrist1.stl": {
+      "bytes": 59584,
+      "sha256": "f8c9f9337b6fd98c75f052e96de10e14a107ddb6874ba6b904e546f8a4e4f43a"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/collision/wrist2.stl": {
+      "bytes": 67584,
+      "sha256": "2964a63f60ce3e3cf3ad55bcf190d7876d50e373cb64b70a57cea5885eaf3c86"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/collision/wrist3.stl": {
+      "bytes": 7184,
+      "sha256": "83b3666b4ae2badd54af0d2c25a921682ecbc29e849eec646c3ed55fb74c78a3"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/visual/base.dae": {
+      "bytes": 358055,
+      "sha256": "a7d37bb19bd062ca80ea00dfcd758b1145455c5cfad87d41756b101ac5b2a8a4"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/visual/forearm.dae": {
+      "bytes": 1140936,
+      "sha256": "6cb2f094ffba59f124f70881cabea985abfd399f2fbbe76fba7c18d2ece943b9"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/visual/shoulder.dae": {
+      "bytes": 1797082,
+      "sha256": "b2b58abbef50ce03d4704465d3b619a7da5b2ecb2efc236eadfd221116cbbef0"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/visual/upperarm.dae": {
+      "bytes": 3082485,
+      "sha256": "6486526456e11585a41080958b97a0c8821da856e93b2059c74b07f8102bf6cd"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/visual/wrist1.dae": {
+      "bytes": 1334662,
+      "sha256": "c36649cf4deec6da427d72d45163a059dcb668eb61aac760d5f2f979948fa13a"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/visual/wrist2.dae": {
+      "bytes": 1554838,
+      "sha256": "c99f5538357a7b42a9b207a12e52e713dd3eb7e587645144bde7ab31c1cfc76b"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/visual/wrist3.dae": {
+      "bytes": 66076,
+      "sha256": "9f5d4f544ae72698a41f75ed4897a76386a91b814dff22e30e93a5bd105a717c"
+    },
+    "runtime/assets/runtime/robot/ur5e.urdf": {
+      "bytes": 13713,
+      "sha256": "00d13bdf4e9f28f8a54bd15771fa89e22702cd3666f6480219b2364f5d75e56e"
+    },
+    "runtime/assets/runtime/robot/ur5e_robotiq_2f_140.urdf": {
+      "bytes": 26350,
+      "sha256": "01b435be8adf92f868c849dead3fc01e4979b18cc3bfce71bf1c144a0658d76c"
+    },
+    "runtime/configs/joint_normalization.npz": {
+      "bytes": 1096,
+      "sha256": "2e02415a26c8b338e60a5a510abe83c6dfb4dde278f16f0cfe1de9a61cd65b70"
+    },
+    "runtime/configs/scene.yml": {
+      "bytes": 1232,
+      "sha256": "a26ff58be1a5ac6ebdc646ed4f0b619c4469a0864cba6df15b6abf3f6a5fac17"
+    },
+    "runtime/method/checkpoint_compat.py": {
+      "bytes": 2027,
+      "sha256": "e656d655c97d7116a4ac49c4799b625f42f0dc1a8ba54c3ad728a96389247bbc"
+    },
+    "runtime/method/evaluate.py": {
+      "bytes": 4048,
+      "sha256": "8ea952d10625507c7781835603e75c67a8e199155ae377650b5cdd16e292753f"
+    },
+    "runtime/method/fk.py": {
+      "bytes": 3333,
+      "sha256": "480a51c5f56f5ae5a76eb8e8ad85bc9b5ca0774eee867db22738c6ed10b6ea0d"
+    },
+    "runtime/method/legacy_model.py": {
+      "bytes": 10420,
+      "sha256": "1413c92180f15d4f641dc77572e4a5843d98a75ce71fd340c190638a744417a2"
+    },
+    "runtime/method/model.py": {
+      "bytes": 2032,
+      "sha256": "ca900342b001b3aeca61df5f4d9b6de807475ef75b8778282e3a686748e23260"
+    },
+    "runtime/method/norm_readouts.py": {
+      "bytes": 1003,
+      "sha256": "603d1fc867a38cb4185b87bfe09ff86e76a5ef2d50c4dc09651f39fd5263ab7d"
+    },
+    "runtime/method/parameter_cleanup.py": {
+      "bytes": 3562,
+      "sha256": "6a1e219089cc0b898492ec2ea5a5c887ba50f3c2d7bf947f234517be9dc1f789"
+    },
+    "runtime/tests/suite_manifest.json": {
+      "bytes": 7946,
+      "sha256": "be4b2b891204391b4143bd72f3e89f25482715b736979f7cf0539d647cb3d082"
+    },
+    "runtime/tests/suites/repaired_eval_cutting_100.npz": {
+      "bytes": 32223,
+      "sha256": "c6b701bffd0f9c4e8771f685f7c89713ba75c3caf1d4d6d81dde016ed432806b"
+    },
+    "runtime/tests/suites/repaired_eval_hammering_100.npz": {
+      "bytes": 33329,
+      "sha256": "f240dc045e4721f29b949d12fdc0d74eb08bb098864c12719fdbdca1ce14abb6"
+    },
+    "runtime/tests/suites/repaired_eval_screwdriver_100.npz": {
+      "bytes": 31455,
+      "sha256": "30a69f338dc9a055b7f6dc8f21c852ef68f6453302c48707b3c1857c9190fc5f"
+    },
+    "runtime/tests/suites/repaired_eval_stirring_100.npz": {
+      "bytes": 31949,
+      "sha256": "600c8540dff909065ca2f1795b62db9c78228ef30989be4d55409ffc00ea1548"
+    },
+    "runtime/tests/suites/repaired_eval_ur5e_mixed_c30_p30_x40_certified100.npz": {
+      "bytes": 66400,
+      "sha256": "e9ada569b399e3930f3fbb507b63880ad34949fe32942acb02039f0f6c290ccd"
+    },
+    "runtime/tests/suites/repaired_eval_wiping_100.npz": {
+      "bytes": 31885,
+      "sha256": "175b71b0288176a7f035a2f71e2feef5b2e656076a2f407719279fc10a341df4"
+    },
+    "runtime/vendor/README.md": {
+      "bytes": 1182,
+      "sha256": "8aae90ad1b73d8be0368d265141d59a3f380c3c42f61ca4ee4c55d3ced9497d7"
+    },
+    "runtime/vendor/ntrl/models/__init__.py": {
+      "bytes": 253,
+      "sha256": "c055ae6df938632600c35536d9a55d302899f77e1e7a8e1227e0105b681471ed"
+    },
+    "runtime/vendor/ntrl/models/data_mlp_multi.py": {
+      "bytes": 14218,
+      "sha256": "07a11c50c060040c159ef3a5a41148cc963b958896f2f370dd22faee12f28289"
+    },
+    "runtime/vendor/ntrl/models/metric_arm/model_function_multi.py": {
+      "bytes": 307540,
+      "sha256": "697920a7be9dc179ad2ab0ae6dbfdfbe20d003835f26da8311140c7a6151fb31"
+    },
+    "runtime/vendor/ntrl/models/metric_arm/model_network_multi.py": {
+      "bytes": 434374,
+      "sha256": "253051a2032d057bd8a2aae6d7388e554852323e7b8ff8865d689a6a84590f1c"
+    },
+    "runtime/vendor/ntrl/models/metric_arm/path_loss.py": {
+      "bytes": 11552,
+      "sha256": "f1f2602a02f862991f95a827d9705d3e815c33dfff4a218c813c0dd9d81d5c16"
+    },
+    "runtime/vendor/ntrl/models/metric_arm/semantic_relation_gate.py": {
+      "bytes": 21684,
+      "sha256": "bcd9d5caa2e7c5502912f78ebec9a0bfe35efc4c95a496e46823b794e9e7a0e0"
+    },
+    "runtime/vendor/ntrl/models/metric_arm/zone_router.py": {
+      "bytes": 16126,
+      "sha256": "23607574ce107d6affab14b35ecd1a40a8a87bb1a437d623381c29cab1b34d98"
+    },
+    "runtime/vendor/ntrl/train/__init__.py": {
+      "bytes": 47,
+      "sha256": "6d523e18f60ecef0a097eec699da54682e4fcb55dfb9e47fd4233138029387e0"
+    },
+    "runtime/vendor/ntrl/train/train_g1_multi.py": {
+      "bytes": 358940,
+      "sha256": "f2e19106f41cfc69ad4a84d3f98d6c8360d42a8d0d222f6b6d85472f09a02714"
+    },
+    "runtime/vendor/planner/Experiments/.gitkeep": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "runtime/vendor/planner/collision_utils.py": {
+      "bytes": 14445,
+      "sha256": "233cc4c388d3509b8c2da26dec4692af3b3cab0fdcbe21c3cf8173737b44a9a4"
+    },
+    "runtime/vendor/planner/configs/.gitkeep": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "runtime/vendor/planner/constraint_utils.py": {
+      "bytes": 16894,
+      "sha256": "8a8583b4a537afc455c011b7aee41416d7b123cecff1e674f2941c5498fd5691"
+    },
+    "runtime/vendor/planner/datasets/.gitkeep": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "runtime/vendor/planner/models/.gitkeep": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "runtime/vendor/planner/morph_orient.py": {
+      "bytes": 5110,
+      "sha256": "8684cffebd4a951ada556be39c1c258a68d094680937c0c44c406dde3bbe6d8b"
+    },
+    "runtime/vendor/planner/mppi_update_utils.py": {
+      "bytes": 1581,
+      "sha256": "86f7c35dff177548d437020142ca490b492c8a8cb16985b65c366d103b03e38f"
+    },
+    "runtime/vendor/planner/physical_geometry.py": {
+      "bytes": 137997,
+      "sha256": "4e301e903ddbbc30a5c66aa521a7a3faf5619f0bc7384a40323185a5ce88cddf"
+    },
+    "runtime/vendor/planner/scene_ur5e_tabletop_noobs_ov10.yml": {
+      "bytes": 1232,
+      "sha256": "a26ff58be1a5ac6ebdc646ed4f0b619c4469a0864cba6df15b6abf3f6a5fac17"
+    },
+    "runtime/vendor/planner/score_cross_suite.py": {
+      "bytes": 7064,
+      "sha256": "4299245127411f8339898b802a2fd87cd11871d7649bc3b6c6eadc5ca8afdf0a"
+    },
+    "runtime/vendor/planner/spheres_ur5e_arm.yml": {
+      "bytes": 3765,
+      "sha256": "ea6e9a93c8bffd01f9969dd369b0ec8b3c15107640ef4c564ab5eec277023601"
+    },
+    "runtime/vendor/planner/tabletop_eval_groups.py": {
+      "bytes": 3441,
+      "sha256": "577a5650b36bd687b2be54ce32485633bd23e7ab6876909b6b73dab40d674c94"
+    },
+    "runtime/vendor/planner/train/.gitkeep": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "runtime/vendor/planner/train_collision_oracle.py": {
+      "bytes": 4726,
+      "sha256": "d59ce8fa2208ba1f1b96ec5693af5c2e515998af2355a46dcb028281ecadf994"
+    },
+    "runtime/vendor/planner/ur5e_arm.yml": {
+      "bytes": 5778,
+      "sha256": "aa514d2fcdb4d83c6b5361645017dee254f5ace1fdbb8c5b56e555fbd7056c34"
+    },
+    "runtime/vendor/planner/ur5e_plan_eval_multi.py": {
+      "bytes": 173690,
+      "sha256": "837c2d15fa339c272d4a39f73d70d4faa765affae52636efcfc0ba4af48e3550"
+    },
+    "runtime/vendor/planner/ur5e_task_axes.py": {
+      "bytes": 7374,
+      "sha256": "f5e45d86fad8effbd93b2065f8d3ecf5de1c7a991f08224a6556749b527f9d82"
+    },
+    "runtime/vendor/planner/viser_utils.py": {
+      "bytes": 20163,
+      "sha256": "f9f517e105827a33614c02aab1d0e9e81f5c7070d41b2c27cdd6d4a005e5f072"
+    },
+    "runtime/vendor/planner/visualize.py": {
+      "bytes": 50778,
+      "sha256": "779f754b12b9d47f4579b79d466e7769b8cbea11ea09bb005d605acb2cb5849b"
+    }
+  }
+}

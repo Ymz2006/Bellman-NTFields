@@ -1,0 +1,30 @@
+{
+  "training": {
+    "steps": 20000,
+    "seed": 87358,
+    "scene_sha256": "b9c7e259d31d1133420012365349321b7d88c6a6fe4b6f4242226ec74a3903f0",
+    "architecture": "Fourier128_harmonics4_width512_blocks6_two_training_speed_outputs",
+    "label_sources": "Wall25 physical relabeling of original and augmentation training poses,50/50",
+    "validation_split": "pair index modulo100==0",
+    "scalar_composition": "FK-Y smoothstep",
+    "evaluation_rows_read": false,
+    "smoke": false
+  },
+  "validation": [
+    {
+      "source": "original",
+      "endpoint_count": 20000,
+      "mae": 0.02490055188536644,
+      "p95": 0.10742636024951935,
+      "log_rmse": 0.14495263993740082
+    },
+    {
+      "source": "augmentation",
+      "endpoint_count": 20002,
+      "mae": 0.013861351646482944,
+      "p95": 0.07746197283267975,
+      "log_rmse": 0.12999936938285828
+    }
+  ],
+  "seconds": 75.36634120694362
+}

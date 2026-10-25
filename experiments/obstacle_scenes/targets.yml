@@ -1,0 +1,44 @@
+# Grasp-frame regions for scene-specific query endpoints, per scene. Used only by design.py and
+# preview.py (and any later scene-specific query suite); never read by training or the frozen-600
+# evaluation, so changing them does not change a scene file or its hash.
+
+# Scene-specific query endpoints: grasp frame within 0.15 m above a platform top, 0.02 m inside its edges.
+platforms:
+  - name: cup_platform_top
+    x: [0.42, 0.88]
+    y: [0.17, 0.53]
+    z: [0.115, 0.265]
+  - name: pour_platform_top
+    x: [0.42, 0.88]
+    y: [-0.53, -0.17]
+    z: [0.115, 0.265]
+
+# Scene-specific query goals: grasp frame inside a compartment, at least 0.04 m past the opening.
+shelf:
+  - name: shelf_bottom
+    x: [0.60, 0.86]
+    y: [0.15, 0.51]
+    z: [-0.035, 0.19]
+  - name: shelf_middle
+    x: [0.60, 0.86]
+    y: [0.15, 0.51]
+    z: [0.21, 0.42]
+  - name: shelf_top
+    x: [0.60, 0.86]
+    y: [0.15, 0.51]
+    z: [0.44, 0.645]
+
+# Scene-specific query endpoints: grasp frame at object height (z <= 0.25 m) in each task region.
+clutter:
+  - name: low_cupping
+    x: [0.29, 0.85]
+    y: [0.10, 0.55]
+    z: [-0.035, 0.25]
+  - name: low_transition
+    x: [0.29, 0.85]
+    y: [-0.10, 0.10]
+    z: [-0.035, 0.25]
+  - name: low_pouring
+    x: [0.29, 0.85]
+    y: [-0.55, -0.10]
+    z: [-0.035, 0.25]

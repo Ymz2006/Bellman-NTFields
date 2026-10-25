@@ -1,0 +1,96 @@
+{
+  "scene": "cabinet_plus20",
+  "suites": {
+    "free_to_free": {
+      "n": 100,
+      "witnesses_accepted": 100,
+      "direct_line": 83,
+      "cspace_l2_median": 3.3808226585388184,
+      "witness_cspace_length_median": 3.5549564361572266,
+      "start_regions": {
+        "free": 100
+      },
+      "goal_regions": {
+        "free": 100
+      }
+    },
+    "free_to_compartment": {
+      "n": 100,
+      "witnesses_accepted": 100,
+      "direct_line": 15,
+      "cspace_l2_median": 3.2751805782318115,
+      "witness_cspace_length_median": 5.4031500816345215,
+      "start_regions": {
+        "free": 100
+      },
+      "goal_regions": {
+        "bottom": 29,
+        "middle": 29,
+        "top": 42
+      }
+    },
+    "compartment_to_free": {
+      "n": 100,
+      "witnesses_accepted": 100,
+      "direct_line": 12,
+      "cspace_l2_median": 3.3783745765686035,
+      "witness_cspace_length_median": 5.510549545288086,
+      "start_regions": {
+        "bottom": 25,
+        "middle": 34,
+        "top": 41
+      },
+      "goal_regions": {
+        "free": 100
+      }
+    },
+    "compartment_to_compartment": {
+      "n": 100,
+      "witnesses_accepted": 100,
+      "direct_line": 0,
+      "cspace_l2_median": 3.053100109100342,
+      "witness_cspace_length_median": 9.482038497924805,
+      "start_regions": {
+        "bottom": 26,
+        "middle": 38,
+        "top": 36
+      },
+      "goal_regions": {
+        "bottom": 35,
+        "middle": 34,
+        "top": 31
+      }
+    },
+    "same_compartment": {
+      "n": 100,
+      "witnesses_accepted": 100,
+      "direct_line": 21,
+      "cspace_l2_median": 2.8265767097473145,
+      "witness_cspace_length_median": 4.073768615722656,
+      "start_regions": {
+        "bottom": 31,
+        "middle": 28,
+        "top": 41
+      },
+      "goal_regions": {
+        "bottom": 31,
+        "middle": 28,
+        "top": 41
+      }
+    },
+    "anywhere": {
+      "n": 100,
+      "witnesses_accepted": 100,
+      "direct_line": 77,
+      "cspace_l2_median": 3.282698631286621,
+      "witness_cspace_length_median": 3.439810276031494,
+      "start_regions": {
+        "box": 100
+      },
+      "goal_regions": {
+        "box": 100
+      }
+    }
+  },
+  "all_accepted": true
+}

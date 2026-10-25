@@ -1,0 +1,528 @@
+{
+  "boundary": "raw CPU start/goal radians -> complete CPU trajectory radians",
+  "includes": [
+    "CPU normalization",
+    "pair concatenation",
+    "H2D",
+    "MPPI",
+    "denormalization",
+    "D2H"
+  ],
+  "excludes": [
+    "checkpoint loading",
+    "startup",
+    "warmup",
+    "native or independent scoring",
+    "serialization"
+  ],
+  "query_count": 100,
+  "all_failures_included": true,
+  "raw_normalization_bitwise_matches_frozen_suite": true,
+  "returned_paths_bitwise_match_saved": true,
+  "warmup_seconds": [
+    0.10879644891247153,
+    0.0021761038806289434
+  ],
+  "rows": [
+    {
+      "query_id": 0,
+      "seconds": 0.034134238958358765,
+      "waypoints": 30
+    },
+    {
+      "query_id": 1,
+      "seconds": 0.04838718194514513,
+      "waypoints": 40
+    },
+    {
+      "query_id": 2,
+      "seconds": 0.13488359889015555,
+      "waypoints": 106
+    },
+    {
+      "query_id": 3,
+      "seconds": 0.019889855990186334,
+      "waypoints": 18
+    },
+    {
+      "query_id": 4,
+      "seconds": 0.05498367897234857,
+      "waypoints": 47
+    },
+    {
+      "query_id": 5,
+      "seconds": 0.00835040002129972,
+      "waypoints": 8
+    },
+    {
+      "query_id": 6,
+      "seconds": 0.053574315970763564,
+      "waypoints": 46
+    },
+    {
+      "query_id": 7,
+      "seconds": 0.03781304694712162,
+      "waypoints": 33
+    },
+    {
+      "query_id": 8,
+      "seconds": 0.07003741199150681,
+      "waypoints": 60
+    },
+    {
+      "query_id": 9,
+      "seconds": 0.008966362802311778,
+      "waypoints": 9
+    },
+    {
+      "query_id": 10,
+      "seconds": 0.04017138201743364,
+      "waypoints": 35
+    },
+    {
+      "query_id": 11,
+      "seconds": 0.03499469207599759,
+      "waypoints": 31
+    },
+    {
+      "query_id": 12,
+      "seconds": 0.00667100609280169,
+      "waypoints": 7
+    },
+    {
+      "query_id": 13,
+      "seconds": 0.024340755073353648,
+      "waypoints": 22
+    },
+    {
+      "query_id": 14,
+      "seconds": 0.06456263805739582,
+      "waypoints": 55
+    },
+    {
+      "query_id": 15,
+      "seconds": 0.03983369283378124,
+      "waypoints": 32
+    },
+    {
+      "query_id": 16,
+      "seconds": 0.09637665911577642,
+      "waypoints": 81
+    },
+    {
+      "query_id": 17,
+      "seconds": 0.011984953191131353,
+      "waypoints": 11
+    },
+    {
+      "query_id": 18,
+      "seconds": 0.05945303593762219,
+      "waypoints": 49
+    },
+    {
+      "query_id": 19,
+      "seconds": 0.047574534080922604,
+      "waypoints": 39
+    },
+    {
+      "query_id": 20,
+      "seconds": 0.027755099115893245,
+      "waypoints": 20
+    },
+    {
+      "query_id": 21,
+      "seconds": 0.0305966439191252,
+      "waypoints": 25
+    },
+    {
+      "query_id": 22,
+      "seconds": 0.02218395797535777,
+      "waypoints": 20
+    },
+    {
+      "query_id": 23,
+      "seconds": 0.09202079381793737,
+      "waypoints": 79
+    },
+    {
+      "query_id": 24,
+      "seconds": 0.014494942035526037,
+      "waypoints": 13
+    },
+    {
+      "query_id": 25,
+      "seconds": 0.024284426122903824,
+      "waypoints": 19
+    },
+    {
+      "query_id": 26,
+      "seconds": 0.0151192641351372,
+      "waypoints": 13
+    },
+    {
+      "query_id": 27,
+      "seconds": 0.059535247972235084,
+      "waypoints": 51
+    },
+    {
+      "query_id": 28,
+      "seconds": 0.0792244819458574,
+      "waypoints": 68
+    },
+    {
+      "query_id": 29,
+      "seconds": 0.04936631303280592,
+      "waypoints": 42
+    },
+    {
+      "query_id": 30,
+      "seconds": 0.056607801001518965,
+      "waypoints": 48
+    },
+    {
+      "query_id": 31,
+      "seconds": 0.056673608953133225,
+      "waypoints": 48
+    },
+    {
+      "query_id": 32,
+      "seconds": 0.054934068815782666,
+      "waypoints": 48
+    },
+    {
+      "query_id": 33,
+      "seconds": 0.014777973992750049,
+      "waypoints": 14
+    },
+    {
+      "query_id": 34,
+      "seconds": 0.021004762034863234,
+      "waypoints": 19
+    },
+    {
+      "query_id": 35,
+      "seconds": 0.06543938699178398,
+      "waypoints": 56
+    },
+    {
+      "query_id": 36,
+      "seconds": 0.053558998042717576,
+      "waypoints": 43
+    },
+    {
+      "query_id": 37,
+      "seconds": 0.05878979805856943,
+      "waypoints": 48
+    },
+    {
+      "query_id": 38,
+      "seconds": 0.0798137339297682,
+      "waypoints": 68
+    },
+    {
+      "query_id": 39,
+      "seconds": 0.013484535971656442,
+      "waypoints": 13
+    },
+    {
+      "query_id": 40,
+      "seconds": 0.09070766111835837,
+      "waypoints": 75
+    },
+    {
+      "query_id": 41,
+      "seconds": 0.055054937954992056,
+      "waypoints": 44
+    },
+    {
+      "query_id": 42,
+      "seconds": 0.015878872945904732,
+      "waypoints": 13
+    },
+    {
+      "query_id": 43,
+      "seconds": 0.020687006879597902,
+      "waypoints": 19
+    },
+    {
+      "query_id": 44,
+      "seconds": 0.0414350600913167,
+      "waypoints": 36
+    },
+    {
+      "query_id": 45,
+      "seconds": 0.02819021209143102,
+      "waypoints": 25
+    },
+    {
+      "query_id": 46,
+      "seconds": 0.0381288209464401,
+      "waypoints": 32
+    },
+    {
+      "query_id": 47,
+      "seconds": 0.004361104918643832,
+      "waypoints": 5
+    },
+    {
+      "query_id": 48,
+      "seconds": 0.044211704982444644,
+      "waypoints": 38
+    },
+    {
+      "query_id": 49,
+      "seconds": 0.047351401997730136,
+      "waypoints": 41
+    },
+    {
+      "query_id": 50,
+      "seconds": 0.040308231953531504,
+      "waypoints": 35
+    },
+    {
+      "query_id": 51,
+      "seconds": 0.031016747932881117,
+      "waypoints": 27
+    },
+    {
+      "query_id": 52,
+      "seconds": 0.06737394700758159,
+      "waypoints": 57
+    },
+    {
+      "query_id": 53,
+      "seconds": 0.050815294962376356,
+      "waypoints": 43
+    },
+    {
+      "query_id": 54,
+      "seconds": 0.05121284583583474,
+      "waypoints": 44
+    },
+    {
+      "query_id": 55,
+      "seconds": 0.021138308802619576,
+      "waypoints": 18
+    },
+    {
+      "query_id": 56,
+      "seconds": 0.049586780834943056,
+      "waypoints": 41
+    },
+    {
+      "query_id": 57,
+      "seconds": 0.12891365098766983,
+      "waypoints": 109
+    },
+    {
+      "query_id": 58,
+      "seconds": 0.012245158897712827,
+      "waypoints": 11
+    },
+    {
+      "query_id": 59,
+      "seconds": 0.026825742097571492,
+      "waypoints": 23
+    },
+    {
+      "query_id": 60,
+      "seconds": 0.01325663784518838,
+      "waypoints": 12
+    },
+    {
+      "query_id": 61,
+      "seconds": 0.07104838686063886,
+      "waypoints": 61
+    },
+    {
+      "query_id": 62,
+      "seconds": 0.16375410603359342,
+      "waypoints": 138
+    },
+    {
+      "query_id": 63,
+      "seconds": 0.13076877687126398,
+      "waypoints": 109
+    },
+    {
+      "query_id": 64,
+      "seconds": 0.011244339868426323,
+      "waypoints": 11
+    },
+    {
+      "query_id": 65,
+      "seconds": 0.049073697067797184,
+      "waypoints": 42
+    },
+    {
+      "query_id": 66,
+      "seconds": 0.07208046806044877,
+      "waypoints": 60
+    },
+    {
+      "query_id": 67,
+      "seconds": 0.04085709806531668,
+      "waypoints": 35
+    },
+    {
+      "query_id": 68,
+      "seconds": 0.027704832842573524,
+      "waypoints": 25
+    },
+    {
+      "query_id": 69,
+      "seconds": 0.020751713076606393,
+      "waypoints": 18
+    },
+    {
+      "query_id": 70,
+      "seconds": 0.032180628972128034,
+      "waypoints": 28
+    },
+    {
+      "query_id": 71,
+      "seconds": 0.051485567120835185,
+      "waypoints": 43
+    },
+    {
+      "query_id": 72,
+      "seconds": 0.026648652972653508,
+      "waypoints": 20
+    },
+    {
+      "query_id": 73,
+      "seconds": 0.018628499004989862,
+      "waypoints": 17
+    },
+    {
+      "query_id": 74,
+      "seconds": 0.017439219867810607,
+      "waypoints": 16
+    },
+    {
+      "query_id": 75,
+      "seconds": 0.044687184039503336,
+      "waypoints": 38
+    },
+    {
+      "query_id": 76,
+      "seconds": 0.06354815582744777,
+      "waypoints": 52
+    },
+    {
+      "query_id": 77,
+      "seconds": 0.06344133894890547,
+      "waypoints": 54
+    },
+    {
+      "query_id": 78,
+      "seconds": 0.01130401692353189,
+      "waypoints": 11
+    },
+    {
+      "query_id": 79,
+      "seconds": 0.012430778937414289,
+      "waypoints": 12
+    },
+    {
+      "query_id": 80,
+      "seconds": 0.04514115583151579,
+      "waypoints": 39
+    },
+    {
+      "query_id": 81,
+      "seconds": 0.03800530708394945,
+      "waypoints": 33
+    },
+    {
+      "query_id": 82,
+      "seconds": 0.03154950309544802,
+      "waypoints": 27
+    },
+    {
+      "query_id": 83,
+      "seconds": 0.016233554109930992,
+      "waypoints": 13
+    },
+    {
+      "query_id": 84,
+      "seconds": 0.03549304511398077,
+      "waypoints": 31
+    },
+    {
+      "query_id": 85,
+      "seconds": 0.011356656905263662,
+      "waypoints": 11
+    },
+    {
+      "query_id": 86,
+      "seconds": 0.10198506899178028,
+      "waypoints": 83
+    },
+    {
+      "query_id": 87,
+      "seconds": 0.09986063791438937,
+      "waypoints": 83
+    },
+    {
+      "query_id": 88,
+      "seconds": 0.012293108040466905,
+      "waypoints": 10
+    },
+    {
+      "query_id": 89,
+      "seconds": 0.056446594186127186,
+      "waypoints": 42
+    },
+    {
+      "query_id": 90,
+      "seconds": 0.0166223649866879,
+      "waypoints": 15
+    },
+    {
+      "query_id": 91,
+      "seconds": 0.011696896981447935,
+      "waypoints": 11
+    },
+    {
+      "query_id": 92,
+      "seconds": 0.07545234193094075,
+      "waypoints": 64
+    },
+    {
+      "query_id": 93,
+      "seconds": 0.02702290005981922,
+      "waypoints": 23
+    },
+    {
+      "query_id": 94,
+      "seconds": 0.023030669894069433,
+      "waypoints": 20
+    },
+    {
+      "query_id": 95,
+      "seconds": 0.019995281007140875,
+      "waypoints": 18
+    },
+    {
+      "query_id": 96,
+      "seconds": 0.06873225700110197,
+      "waypoints": 59
+    },
+    {
+      "query_id": 97,
+      "seconds": 0.018523321952670813,
+      "waypoints": 16
+    },
+    {
+      "query_id": 98,
+      "seconds": 0.025610768934711814,
+      "waypoints": 21
+    },
+    {
+      "query_id": 99,
+      "seconds": 0.04559826315380633,
+      "waypoints": 40
+    }
+  ]
+}

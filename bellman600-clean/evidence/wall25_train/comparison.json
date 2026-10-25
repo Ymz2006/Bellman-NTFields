@@ -1,0 +1,1355 @@
+{
+  "run_id": "registered_20260930T013432Z-7905f45e",
+  "checkpoint_sha256": "8d6d01b319a55cda6c8deb7577714d5b6b5f51713f544f2ad63cd57ecfe77e4b",
+  "mppi_successes": [
+    492,
+    491,
+    492
+  ],
+  "native_success": 494,
+  "status": {
+    "complete": true,
+    "stage": "complete",
+    "smoke": false,
+    "timing": {
+      "prepare": 359.8970802251715,
+      "training": 256.31706811115146,
+      "evaluate": 161.55906646791846
+    },
+    "elapsed_seconds": 777.7760862910654,
+    "mppi_successes": [
+      492,
+      491,
+      492
+    ],
+    "native_success": 494
+  },
+  "training": {
+    "model": {
+      "dimension": 6,
+      "harmonics": 4,
+      "state_width": 256,
+      "state_blocks": 2,
+      "pair_width": 64,
+      "pair_blocks": 1
+    },
+    "losses": {
+      "bellman": 6.0,
+      "eikonal": 2.0,
+      "direction": 2.0
+    },
+    "seed": 87358,
+    "rounds": 5,
+    "epochs_per_round": 2,
+    "batch_size": 256,
+    "learning_rate": 0.0002,
+    "weight_decay": 1e-06,
+    "gradient_clip": 2.0,
+    "bank_manifest_sha256": "6a3c0d42f696db2e0693efbf6c058b0b508da3404f3892d180b6864172a6cf27",
+    "speed_sha256": "f9f06da56aae359d0b00e53847d421660fdb8a0baf88a08cc4d3ffcf788ec20f",
+    "smoke": false,
+    "source_count": 399674,
+    "scene_sha256": "b9c7e259d31d1133420012365349321b7d88c6a6fe4b6f4242226ec74a3903f0",
+    "expected_updates": 15620
+  },
+  "bank": {
+    "anchors": 399674,
+    "actions_per_anchor": 32,
+    "elapsed_seconds": 276.97256636898965
+  },
+  "speed_audit": {
+    "training": {
+      "steps": 20000,
+      "seed": 87358,
+      "scene_sha256": "b9c7e259d31d1133420012365349321b7d88c6a6fe4b6f4242226ec74a3903f0",
+      "architecture": "Fourier128_harmonics4_width512_blocks6_two_training_speed_outputs",
+      "label_sources": "Wall25 physical relabeling of original and augmentation training poses,50/50",
+      "validation_split": "pair index modulo100==0",
+      "scalar_composition": "FK-Y smoothstep",
+      "evaluation_rows_read": false,
+      "smoke": false
+    },
+    "validation": [
+      {
+        "source": "original",
+        "endpoint_count": 20000,
+        "mae": 0.02490055188536644,
+        "p95": 0.10742636024951935,
+        "log_rmse": 0.14495263993740082
+      },
+      {
+        "source": "augmentation",
+        "endpoint_count": 20002,
+        "mae": 0.013861351646482944,
+        "p95": 0.07746197283267975,
+        "log_rmse": 0.12999936938285828
+      }
+    ],
+    "seconds": 75.36634120694362
+  },
+  "physical_label_audit": {
+    "sources": [
+      {
+        "source": "original",
+        "pairs": 1000000,
+        "no_wall_label_max_error": 6.318092346191406e-06,
+        "wall_changed_pairs": 91168,
+        "max_speed_increase": 1.0132789611816406e-05
+      },
+      {
+        "source": "augmentation",
+        "pairs": 1000005,
+        "no_wall_label_max_error": 6.318092346191406e-06,
+        "wall_changed_pairs": 43994,
+        "max_speed_increase": 1.049041748046875e-05
+      }
+    ],
+    "seconds": 2.1242140440735966,
+    "scene_sha256": "b9c7e259d31d1133420012365349321b7d88c6a6fe4b6f4242226ec74a3903f0",
+    "evaluation_rows_read": false
+  },
+  "comparisons": {
+    "mppi": {
+      "n": 1800,
+      "eligible_n": 1716,
+      "no_wall_success": 1597,
+      "transfer_success": 1494,
+      "wall_trained_success": 1475,
+      "no_wall_eligible": 1525,
+      "transfer_eligible": 1494,
+      "wall_trained_eligible": 1475,
+      "rescued": 18,
+      "regressed": 37,
+      "wall_affected_executions": 31,
+      "wall_affected_rescued": 6,
+      "failure_reason_counts": {
+        "tilt": 194,
+        "collision": 175
+      },
+      "differences": [
+        {
+          "label": "bellman_mppi_cutting_seed0",
+          "query_id": 7,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "collision"
+          ]
+        },
+        {
+          "label": "bellman_mppi_cutting_seed0",
+          "query_id": 29,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "collision"
+          ]
+        },
+        {
+          "label": "bellman_mppi_cutting_seed0",
+          "query_id": 99,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_mppi_cutting_seed1",
+          "query_id": 7,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "collision"
+          ]
+        },
+        {
+          "label": "bellman_mppi_cutting_seed1",
+          "query_id": 29,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "collision"
+          ]
+        },
+        {
+          "label": "bellman_mppi_cutting_seed1",
+          "query_id": 99,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_mppi_cutting_seed2",
+          "query_id": 7,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "collision"
+          ]
+        },
+        {
+          "label": "bellman_mppi_cutting_seed2",
+          "query_id": 29,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "collision"
+          ]
+        },
+        {
+          "label": "bellman_mppi_cutting_seed2",
+          "query_id": 99,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_mppi_hammering_seed0",
+          "query_id": 8,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "collision"
+          ]
+        },
+        {
+          "label": "bellman_mppi_hammering_seed0",
+          "query_id": 33,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "collision"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_mppi_hammering_seed1",
+          "query_id": 8,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "collision"
+          ]
+        },
+        {
+          "label": "bellman_mppi_hammering_seed1",
+          "query_id": 31,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "collision"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_mppi_hammering_seed1",
+          "query_id": 33,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "collision"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_mppi_hammering_seed2",
+          "query_id": 31,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "collision"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_mppi_hammering_seed2",
+          "query_id": 33,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "collision"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_mppi_mixed_seed0",
+          "query_id": 71,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_mppi_mixed_seed0",
+          "query_id": 72,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_mppi_mixed_seed0",
+          "query_id": 89,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "tilt"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_mppi_mixed_seed1",
+          "query_id": 71,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_mppi_mixed_seed1",
+          "query_id": 72,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_mppi_mixed_seed1",
+          "query_id": 76,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_mppi_mixed_seed1",
+          "query_id": 84,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_mppi_mixed_seed1",
+          "query_id": 89,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "tilt"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_mppi_mixed_seed1",
+          "query_id": 98,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_mppi_mixed_seed2",
+          "query_id": 71,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_mppi_mixed_seed2",
+          "query_id": 72,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_mppi_mixed_seed2",
+          "query_id": 76,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_mppi_mixed_seed2",
+          "query_id": 84,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_mppi_mixed_seed2",
+          "query_id": 89,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "tilt"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_mppi_mixed_seed2",
+          "query_id": 98,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_mppi_screwdriver_seed0",
+          "query_id": 1,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "collision"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_mppi_screwdriver_seed0",
+          "query_id": 5,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "collision"
+          ]
+        },
+        {
+          "label": "bellman_mppi_screwdriver_seed0",
+          "query_id": 21,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "tilt"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_mppi_screwdriver_seed0",
+          "query_id": 56,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "collision"
+          ]
+        },
+        {
+          "label": "bellman_mppi_screwdriver_seed1",
+          "query_id": 1,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "collision"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_mppi_screwdriver_seed1",
+          "query_id": 21,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "tilt"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_mppi_screwdriver_seed1",
+          "query_id": 56,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "collision"
+          ]
+        },
+        {
+          "label": "bellman_mppi_screwdriver_seed2",
+          "query_id": 1,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "collision"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_mppi_screwdriver_seed2",
+          "query_id": 5,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "collision"
+          ]
+        },
+        {
+          "label": "bellman_mppi_screwdriver_seed2",
+          "query_id": 21,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "tilt"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_mppi_screwdriver_seed2",
+          "query_id": 56,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "collision"
+          ]
+        },
+        {
+          "label": "bellman_mppi_stirring_seed0",
+          "query_id": 65,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "collision"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_mppi_stirring_seed0",
+          "query_id": 90,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_mppi_stirring_seed1",
+          "query_id": 14,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_mppi_stirring_seed1",
+          "query_id": 65,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "collision"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_mppi_stirring_seed2",
+          "query_id": 12,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_mppi_stirring_seed2",
+          "query_id": 65,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "collision"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_mppi_stirring_seed2",
+          "query_id": 81,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "collision"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_mppi_wiping_seed0",
+          "query_id": 4,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_mppi_wiping_seed0",
+          "query_id": 5,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_mppi_wiping_seed1",
+          "query_id": 4,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_mppi_wiping_seed1",
+          "query_id": 5,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_mppi_wiping_seed2",
+          "query_id": 4,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_mppi_wiping_seed2",
+          "query_id": 5,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        }
+      ]
+    },
+    "rk4": {
+      "n": 600,
+      "eligible_n": 572,
+      "no_wall_success": 549,
+      "transfer_success": 508,
+      "wall_trained_success": 494,
+      "no_wall_eligible": 522,
+      "transfer_eligible": 508,
+      "wall_trained_eligible": 494,
+      "rescued": 16,
+      "regressed": 30,
+      "wall_affected_executions": 14,
+      "wall_affected_rescued": 5,
+      "failure_reason_counts": {
+        "endpoint": 32,
+        "collision": 50,
+        "tilt": 38
+      },
+      "differences": [
+        {
+          "label": "bellman_rk4_cutting",
+          "query_id": 7,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "collision"
+          ]
+        },
+        {
+          "label": "bellman_rk4_cutting",
+          "query_id": 26,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "endpoint",
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_rk4_cutting",
+          "query_id": 29,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "collision"
+          ]
+        },
+        {
+          "label": "bellman_rk4_cutting",
+          "query_id": 88,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "endpoint"
+          ]
+        },
+        {
+          "label": "bellman_rk4_cutting",
+          "query_id": 98,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "collision"
+          ]
+        },
+        {
+          "label": "bellman_rk4_hammering",
+          "query_id": 23,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "collision"
+          ]
+        },
+        {
+          "label": "bellman_rk4_hammering",
+          "query_id": 31,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "collision"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_rk4_hammering",
+          "query_id": 35,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "endpoint",
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_rk4_hammering",
+          "query_id": 56,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "collision"
+          ]
+        },
+        {
+          "label": "bellman_rk4_hammering",
+          "query_id": 66,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "endpoint"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_rk4_hammering",
+          "query_id": 86,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "collision"
+          ]
+        },
+        {
+          "label": "bellman_rk4_hammering",
+          "query_id": 87,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "collision"
+          ]
+        },
+        {
+          "label": "bellman_rk4_mixed",
+          "query_id": 27,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "collision"
+          ]
+        },
+        {
+          "label": "bellman_rk4_mixed",
+          "query_id": 55,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "tilt"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_rk4_mixed",
+          "query_id": 61,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "endpoint",
+            "tilt"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_rk4_mixed",
+          "query_id": 63,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_rk4_mixed",
+          "query_id": 65,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_rk4_mixed",
+          "query_id": 71,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "endpoint"
+          ]
+        },
+        {
+          "label": "bellman_rk4_mixed",
+          "query_id": 72,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_rk4_mixed",
+          "query_id": 78,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "endpoint"
+          ]
+        },
+        {
+          "label": "bellman_rk4_mixed",
+          "query_id": 79,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "tilt"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_rk4_mixed",
+          "query_id": 82,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_rk4_mixed",
+          "query_id": 86,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_rk4_mixed",
+          "query_id": 87,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "tilt"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_rk4_mixed",
+          "query_id": 88,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_rk4_mixed",
+          "query_id": 91,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "endpoint",
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_rk4_mixed",
+          "query_id": 92,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "collision"
+          ]
+        },
+        {
+          "label": "bellman_rk4_screwdriver",
+          "query_id": 1,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "collision"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_rk4_screwdriver",
+          "query_id": 5,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "collision"
+          ]
+        },
+        {
+          "label": "bellman_rk4_screwdriver",
+          "query_id": 27,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "tilt"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_rk4_screwdriver",
+          "query_id": 28,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "collision"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_rk4_screwdriver",
+          "query_id": 54,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_rk4_screwdriver",
+          "query_id": 58,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "collision"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_rk4_screwdriver",
+          "query_id": 59,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "collision"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_rk4_screwdriver",
+          "query_id": 86,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_rk4_stirring",
+          "query_id": 2,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "endpoint"
+          ]
+        },
+        {
+          "label": "bellman_rk4_stirring",
+          "query_id": 12,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_rk4_stirring",
+          "query_id": 14,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_rk4_stirring",
+          "query_id": 32,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "tilt"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_rk4_stirring",
+          "query_id": 34,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "tilt"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_rk4_stirring",
+          "query_id": 45,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "endpoint"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_rk4_stirring",
+          "query_id": 65,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "collision"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_rk4_stirring",
+          "query_id": 95,
+          "transfer_success": false,
+          "wall_trained_success": true,
+          "eligible": true,
+          "old_reasons": [
+            "tilt"
+          ],
+          "new_reasons": []
+        },
+        {
+          "label": "bellman_rk4_wiping",
+          "query_id": 4,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_rk4_wiping",
+          "query_id": 5,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        },
+        {
+          "label": "bellman_rk4_wiping",
+          "query_id": 61,
+          "transfer_success": true,
+          "wall_trained_success": false,
+          "eligible": true,
+          "old_reasons": [],
+          "new_reasons": [
+            "tilt"
+          ]
+        }
+      ]
+    }
+  },
+  "tasks": {
+    "cutting": {
+      "mppi": {
+        "n": 300,
+        "transfer_success": 282,
+        "wall_trained_success": 273,
+        "eligible_n": 294
+      },
+      "rk4": {
+        "n": 100,
+        "transfer_success": 96,
+        "wall_trained_success": 91,
+        "eligible_n": 98
+      }
+    },
+    "hammering": {
+      "mppi": {
+        "n": 300,
+        "transfer_success": 246,
+        "wall_trained_success": 249,
+        "eligible_n": 282
+      },
+      "rk4": {
+        "n": 100,
+        "transfer_success": 84,
+        "wall_trained_success": 81,
+        "eligible_n": 94
+      }
+    },
+    "mixed": {
+      "mppi": {
+        "n": 300,
+        "transfer_success": 194,
+        "wall_trained_success": 185,
+        "eligible_n": 279
+      },
+      "rk4": {
+        "n": 100,
+        "transfer_success": 72,
+        "wall_trained_success": 65,
+        "eligible_n": 93
+      }
+    },
+    "screwdriver": {
+      "mppi": {
+        "n": 300,
+        "transfer_success": 239,
+        "wall_trained_success": 240,
+        "eligible_n": 285
+      },
+      "rk4": {
+        "n": 100,
+        "transfer_success": 79,
+        "wall_trained_success": 81,
+        "eligible_n": 95
+      }
+    },
+    "stirring": {
+      "mppi": {
+        "n": 300,
+        "transfer_success": 260,
+        "wall_trained_success": 261,
+        "eligible_n": 282
+      },
+      "rk4": {
+        "n": 100,
+        "transfer_success": 85,
+        "wall_trained_success": 87,
+        "eligible_n": 94
+      }
+    },
+    "wiping": {
+      "mppi": {
+        "n": 300,
+        "transfer_success": 273,
+        "wall_trained_success": 267,
+        "eligible_n": 294
+      },
+      "rk4": {
+        "n": 100,
+        "transfer_success": 92,
+        "wall_trained_success": 89,
+        "eligible_n": 98
+      }
+    }
+  }
+}

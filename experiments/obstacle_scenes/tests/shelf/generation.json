@@ -1,0 +1,118 @@
+{
+  "scene": "shelf",
+  "rounds": [
+    {
+      "round": 0,
+      "candidates": 960,
+      "direct": 226,
+      "rrt_queries": 734,
+      "rrt_found": 438,
+      "rrt_certified": 438,
+      "rrt_iterations": 10000,
+      "rrt_seconds": 455.210411469001
+    },
+    {
+      "round": 1,
+      "candidates": 320,
+      "direct": 0,
+      "rrt_queries": 320,
+      "rrt_found": 157,
+      "rrt_certified": 157,
+      "rrt_iterations": 10000,
+      "rrt_seconds": 363.5684506310063
+    }
+  ],
+  "strata": {
+    "general_cupping": {
+      "pair_type": 0,
+      "start_pool": "cup",
+      "goal_pool": "cup",
+      "candidates": 160,
+      "certified": 136,
+      "uncertified": 24,
+      "certified_direct": 77,
+      "selected_direct": 56
+    },
+    "general_pouring": {
+      "pair_type": 1,
+      "start_pool": "pour",
+      "goal_pool": "pour",
+      "candidates": 160,
+      "certified": 148,
+      "uncertified": 12,
+      "certified_direct": 114,
+      "selected_direct": 74
+    },
+    "general_cross": {
+      "pair_type": 2,
+      "start_pool": "cup",
+      "goal_pool": "pour",
+      "candidates": 160,
+      "certified": 114,
+      "uncertified": 46,
+      "certified_direct": 17,
+      "selected_direct": 16
+    },
+    "shelf_from_cupping": {
+      "pair_type": 0,
+      "start_pool": "cup_outside_cupboard",
+      "goal_pool": "shelf",
+      "candidates": 160,
+      "certified": 108,
+      "uncertified": 52,
+      "certified_direct": 17,
+      "selected_direct": 16
+    },
+    "shelf_from_pouring": {
+      "pair_type": 2,
+      "start_pool": "pour",
+      "goal_pool": "shelf",
+      "candidates": 320,
+      "certified": 150,
+      "uncertified": 170,
+      "certified_direct": 1,
+      "selected_direct": 1
+    },
+    "shelf_to_shelf": {
+      "pair_type": 0,
+      "start_pool": "shelf",
+      "goal_pool": "shelf",
+      "candidates": 320,
+      "certified": 165,
+      "uncertified": 155,
+      "certified_direct": 0,
+      "selected_direct": 0
+    }
+  },
+  "pool_sizes": {
+    "cup": 186474,
+    "pour": 715242,
+    "shelf_bottom": 714,
+    "shelf_middle": 1477,
+    "shelf_top": 2317,
+    "cup_outside_cupboard": 177226,
+    "shelf": [
+      714,
+      1477,
+      2317
+    ]
+  },
+  "rrt_targets": 300000,
+  "timing": {
+    "pools": 105.70843186999991,
+    "total": 939.4348842199979
+  },
+  "parameters": {
+    "samples": 400000000,
+    "round_size": 160,
+    "max_rounds": 6,
+    "rrt_iterations": 10000,
+    "rrt_step": 0.2,
+    "rrt_capacity": 10500,
+    "goal_bias": 0.1,
+    "min_cspace_l2": 0.02,
+    "max_cspace_l2": 4.0,
+    "per_stratum": 100
+  },
+  "complete": true
+}

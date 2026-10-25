@@ -1,0 +1,20 @@
+{
+  "complete": true,
+  "stage": "complete",
+  "smoke": true,
+  "timing": {
+    "sample": 13.40988444071263,
+    "prepare": 14.623828016221523,
+    "training": 2.6750088152475655,
+    "evaluate": 4.608644073829055
+  },
+  "elapsed_seconds": 35.31885261600837,
+  "mppi_successes": [
+    2
+  ],
+  "native_success": 2,
+  "precomputed_training_assets_read": false,
+  "original_pose_pool_read": false,
+  "evaluation_data_fixed": true,
+  "mode": "from-source"
+}

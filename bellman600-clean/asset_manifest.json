@@ -1,0 +1,457 @@
+{
+  "schema_version": 1,
+  "files": {
+    "assets/bank/action_step_size.npy": {
+      "bytes": 256,
+      "sha256": "429285a1077a0996e3664d25c1b8628a8301cba831b07deab015fab8cc62844f"
+    },
+    "assets/bank/continued_action.npy": {
+      "bytes": 1599028,
+      "sha256": "7002ca18b928e5f6333a1705309100d4a0125a838218134ea1c7214294f47317"
+    },
+    "assets/bank/exact_safe.npy": {
+      "bytes": 12791328,
+      "sha256": "8fe24bcd8f4a227635e0ff8c6d1bcbe4ab253aaaf492426a3171ce6db0147217"
+    },
+    "assets/bank/in_domain.npy": {
+      "bytes": 12791328,
+      "sha256": "236079cb34528d17f2a41d41361797d2f9247b1fff3de3cd2cfb02bfdc307f9e"
+    },
+    "assets/bank/local_cost.npy": {
+      "bytes": 51164928,
+      "sha256": "958f28897a5ecc8a03184a64c383936be7037268f7bcb5b2cadcd9d44cc511e6"
+    },
+    "assets/bank/manifest.json": {
+      "bytes": 7241,
+      "sha256": "c185060f6b8d4974ae4da8d24961a318b71d7e18577cd0501ef70752ae49a8ae"
+    },
+    "assets/bank/minimum_speed.npy": {
+      "bytes": 51164928,
+      "sha256": "a652d6fc58f821207915e65712c67f64df492369d8ef9cb07a1d8f9e91b00a55"
+    },
+    "assets/bank/rollforward_generation.npy": {
+      "bytes": 399853,
+      "sha256": "bfcdc605b7f5974a92184d77b3a5dc254acd956d185d54e60192f75623d095da"
+    },
+    "assets/bank/safe.npy": {
+      "bytes": 12791328,
+      "sha256": "8fe24bcd8f4a227635e0ff8c6d1bcbe4ab253aaaf492426a3171ce6db0147217"
+    },
+    "assets/bank/source_q.npy": {
+      "bytes": 9593528,
+      "sha256": "7f832fd7c785145c79ac666c2d7a780b1f00f441b8ddf03cc189df7f4c1aeb0e"
+    },
+    "assets/bank/source_rows.npy": {
+      "bytes": 3197928,
+      "sha256": "b0ec2b172592518a89d7c5590b4a849d1b0a78fac764d3809377ce3c2ee7f439"
+    },
+    "assets/bank/successor_q.npy": {
+      "bytes": 306988928,
+      "sha256": "87acc46468832fdbfe6d55f089f0b34109b96d40be24d27e36ed52ec145ff9f1"
+    },
+    "assets/checkpoint.pt": {
+      "bytes": 1362146,
+      "sha256": "572d74fed6384d5e0211315147e8276cff35c2bcff5fd3da645bec1c4ea68a85"
+    },
+    "assets/equivalence.json": {
+      "bytes": 619,
+      "sha256": "51162a4902d44d05089fe8b8c87eb4e07b2f12c35f3db76c63669ed82c769e87"
+    },
+    "assets/reference/REPORT.md": {
+      "bytes": 813,
+      "sha256": "c3038231683bbafdde961cab8a76b40aa9348cb12b24993c19c159d8a197622c"
+    },
+    "assets/reference/bellman_mppi_cutting_seed0.npz": {
+      "bytes": 121048,
+      "sha256": "d3b3be61c75b82e7827e825462f4b87c51d4026c42350a2603fa6001242006aa"
+    },
+    "assets/reference/bellman_mppi_cutting_seed0.raw_timing.json": {
+      "bytes": 10106,
+      "sha256": "6a420520b39e53daebbd14346a025075e80c8e6d818c10f3305e5f0606f19ed0"
+    },
+    "assets/reference/bellman_mppi_cutting_seed0.score.json": {
+      "bytes": 16009,
+      "sha256": "3153dc4cf0f6a2648dc605e702446aeb79ce1942f8c177f30c7b81db4163755c"
+    },
+    "assets/reference/bellman_mppi_cutting_seed1.npz": {
+      "bytes": 121120,
+      "sha256": "ff25817b7ab5c56a26dcd24c273405e4d4f56666ba1cebb4881cab0f610f1081"
+    },
+    "assets/reference/bellman_mppi_cutting_seed1.raw_timing.json": {
+      "bytes": 10103,
+      "sha256": "68ed675f1a42ba14b7122500cb0a1e34328263bd048a762849a9779c1c99db62"
+    },
+    "assets/reference/bellman_mppi_cutting_seed1.score.json": {
+      "bytes": 16009,
+      "sha256": "bb66d9c31e5704276533f76667eb52a1d0815f91a6e97dd864a70bc2d31e7657"
+    },
+    "assets/reference/bellman_mppi_cutting_seed2.npz": {
+      "bytes": 121000,
+      "sha256": "490ec498a5a15d90fab7d31679a4e64cbe50065f3aabfa5062233db052b65afc"
+    },
+    "assets/reference/bellman_mppi_cutting_seed2.raw_timing.json": {
+      "bytes": 10106,
+      "sha256": "d6faa9a9b8cb83128eb0c712970e549befa05bfee5d53415bb7acc082433e334"
+    },
+    "assets/reference/bellman_mppi_cutting_seed2.score.json": {
+      "bytes": 16010,
+      "sha256": "aba09c682edb9c672d56d7bc4828e8247ba82c71c99b109e03db600f1d41f5fe"
+    },
+    "assets/reference/bellman_mppi_hammering_seed0.npz": {
+      "bytes": 123579,
+      "sha256": "e6cee73b9a96d3b89d475cc26136d29dd100ac6668f69ee799489554b141fe3f"
+    },
+    "assets/reference/bellman_mppi_hammering_seed0.raw_timing.json": {
+      "bytes": 10125,
+      "sha256": "04d4d248beda935517bde19998f5f5096aa9793e3ee05580c727723236b02184"
+    },
+    "assets/reference/bellman_mppi_hammering_seed0.score.json": {
+      "bytes": 16103,
+      "sha256": "e90b5b2a5302a72ac5425245d40d7a5b03595d727dd8fe5735df5599900aa295"
+    },
+    "assets/reference/bellman_mppi_hammering_seed1.npz": {
+      "bytes": 123435,
+      "sha256": "cd418ced7ae3a824f4d2b23f87a9df004fbd208b61766f89cd5dcc1d9956fc50"
+    },
+    "assets/reference/bellman_mppi_hammering_seed1.raw_timing.json": {
+      "bytes": 10126,
+      "sha256": "7d28ca163cfe25e1a228aba669593de86ddddce2f52384a109b8cdd7529d4900"
+    },
+    "assets/reference/bellman_mppi_hammering_seed1.score.json": {
+      "bytes": 16094,
+      "sha256": "92cbb75e1e09777de2107af9820743fe0f693c590a760869534f721b451511aa"
+    },
+    "assets/reference/bellman_mppi_hammering_seed2.npz": {
+      "bytes": 123555,
+      "sha256": "fb5808ddab50e98d0061cf337875db7153f3a3a89dd0195937335fc6137697a6"
+    },
+    "assets/reference/bellman_mppi_hammering_seed2.raw_timing.json": {
+      "bytes": 10123,
+      "sha256": "f8a4a6cd12d45d75826c1fed6cd199c6fdbf8eff50bc2708c451b4923b933f77"
+    },
+    "assets/reference/bellman_mppi_hammering_seed2.score.json": {
+      "bytes": 16103,
+      "sha256": "4cde83a868f5623c4ed1a025c1e8acc8d0b43ec6a218896ee13e254d0046824f"
+    },
+    "assets/reference/bellman_mppi_mixed_seed0.npz": {
+      "bytes": 169750,
+      "sha256": "ebfca17676632625f0eea9b5695d88879dc6aec089efd1e0183d5c42133b6303"
+    },
+    "assets/reference/bellman_mppi_mixed_seed0.raw_timing.json": {
+      "bytes": 10112,
+      "sha256": "904b5bca79054ff3636285cc38ea0bf6a5c764f99a6ca1e0f3e7d284655f7221"
+    },
+    "assets/reference/bellman_mppi_mixed_seed0.score.json": {
+      "bytes": 16388,
+      "sha256": "4290dfb6f4850533feec54aeb56dbcb12865653f41b6e2665784439496066268"
+    },
+    "assets/reference/bellman_mppi_mixed_seed1.npz": {
+      "bytes": 169918,
+      "sha256": "fb31a88c95eb70652bd9e6d78f684b7be1cb2124754c0d439e5d23ea30e6d1c0"
+    },
+    "assets/reference/bellman_mppi_mixed_seed1.raw_timing.json": {
+      "bytes": 10098,
+      "sha256": "ff060e91bc41269bc233d150e86f07624b0d92d35031b2223787943b1b95ba0d"
+    },
+    "assets/reference/bellman_mppi_mixed_seed1.score.json": {
+      "bytes": 16377,
+      "sha256": "90cb1c29b633d4dd1d6b89d7640e6a06ae20942fd19139d73560374142da232d"
+    },
+    "assets/reference/bellman_mppi_mixed_seed2.npz": {
+      "bytes": 169942,
+      "sha256": "284a1b9f38da02725103c770c940824baa185ed3c76d157ba83359ef279edf66"
+    },
+    "assets/reference/bellman_mppi_mixed_seed2.raw_timing.json": {
+      "bytes": 10110,
+      "sha256": "50a44322f7c566d53cd94b229c6fb84bf9a4fbfd34a6859d3724b836ee2caf73"
+    },
+    "assets/reference/bellman_mppi_mixed_seed2.score.json": {
+      "bytes": 16379,
+      "sha256": "21fd032db205a2004c80f0a732e578dbcb5259d5ddd677b11939b3b6899e7989"
+    },
+    "assets/reference/bellman_mppi_screwdriver_seed0.npz": {
+      "bytes": 132818,
+      "sha256": "78499ce039e76b23e3e4b904cdfec6279f439df3a0069a7540e5e793459c80d7"
+    },
+    "assets/reference/bellman_mppi_screwdriver_seed0.raw_timing.json": {
+      "bytes": 10121,
+      "sha256": "8ad9b79ea21f23292a139d36cbb1bf88f87a5508525e33a097232e180fe32930"
+    },
+    "assets/reference/bellman_mppi_screwdriver_seed0.score.json": {
+      "bytes": 16147,
+      "sha256": "b2343acf150f3424df9d5377cd8e8571b42ff8764772e64579d093893ffe12e8"
+    },
+    "assets/reference/bellman_mppi_screwdriver_seed1.npz": {
+      "bytes": 132746,
+      "sha256": "203f64d4f581e06cd21fc01fb460b67953410465c83595f57ca0354c7acd61ad"
+    },
+    "assets/reference/bellman_mppi_screwdriver_seed1.raw_timing.json": {
+      "bytes": 10110,
+      "sha256": "8259c709800858a444514398e208eb9193adcf8ba07d552db389ce0185a25dd1"
+    },
+    "assets/reference/bellman_mppi_screwdriver_seed1.score.json": {
+      "bytes": 16154,
+      "sha256": "398c953ba52c43ecde4e32b040f02210518665b48b9e533c0b30cd28ccacfdc0"
+    },
+    "assets/reference/bellman_mppi_screwdriver_seed2.npz": {
+      "bytes": 132914,
+      "sha256": "fd8e1dfbaf12a05319b44d0e3d31d4bc98bc2f1580b4266576bfa3c80fdc312e"
+    },
+    "assets/reference/bellman_mppi_screwdriver_seed2.raw_timing.json": {
+      "bytes": 10115,
+      "sha256": "2575ecd521748942d406db1d9b265918e1c321a64198c1bed90fec5aedf38172"
+    },
+    "assets/reference/bellman_mppi_screwdriver_seed2.score.json": {
+      "bytes": 16159,
+      "sha256": "c812f8677f2e2cfa9163e335cbc3ccd1b8e5b9d3907b164e013d4b0e76f5fae6"
+    },
+    "assets/reference/bellman_mppi_stirring_seed0.npz": {
+      "bytes": 150812,
+      "sha256": "bed1258cf163c394710ae8dac95da8dc266c06b4c242eb6d1bc8f43be3e92602"
+    },
+    "assets/reference/bellman_mppi_stirring_seed0.raw_timing.json": {
+      "bytes": 10122,
+      "sha256": "6701e195ef7ba42633f1f0bf7bb30ecde94196ee7ba03c440e2a8582f2b77275"
+    },
+    "assets/reference/bellman_mppi_stirring_seed0.score.json": {
+      "bytes": 16119,
+      "sha256": "3de5a9b9a7b607550cb951736e6911c0ed53329a31198a0bc1690bfff9409407"
+    },
+    "assets/reference/bellman_mppi_stirring_seed1.npz": {
+      "bytes": 150836,
+      "sha256": "1ffac5c90a2dcb218ba4897b033159377d590c5efdd17542b841663e75277421"
+    },
+    "assets/reference/bellman_mppi_stirring_seed1.raw_timing.json": {
+      "bytes": 10105,
+      "sha256": "d9b343fc09119919d31d5d5d0c937817007000f5f3a2d19c22c9fb8987db457b"
+    },
+    "assets/reference/bellman_mppi_stirring_seed1.score.json": {
+      "bytes": 16111,
+      "sha256": "643cc5deb9b63b686c409e03b238ffbf8fb78abe977d46a55102b824c2d89459"
+    },
+    "assets/reference/bellman_mppi_stirring_seed2.npz": {
+      "bytes": 150692,
+      "sha256": "2ce84dd999532209c8747a145491c45c5580c7a618a3408148e49bac9752bb88"
+    },
+    "assets/reference/bellman_mppi_stirring_seed2.raw_timing.json": {
+      "bytes": 10120,
+      "sha256": "0de63c6823461641b6279e74781fc559f3ec838401b381da851b41334c3462be"
+    },
+    "assets/reference/bellman_mppi_stirring_seed2.score.json": {
+      "bytes": 16127,
+      "sha256": "04535721f2b4a5fb5fbe22fc959334d359f3707f3c5422b10e8595655c922309"
+    },
+    "assets/reference/bellman_mppi_wiping_seed0.npz": {
+      "bytes": 154590,
+      "sha256": "20773a1b3cdb75252f19cd94a44ecdc88eafd8fdfd5e64796c63382aadbec767"
+    },
+    "assets/reference/bellman_mppi_wiping_seed0.raw_timing.json": {
+      "bytes": 10120,
+      "sha256": "35ee2f1e932dece9bf22e82ac0960b4a48205a611bd5aa9c1a8221f45eacad81"
+    },
+    "assets/reference/bellman_mppi_wiping_seed0.score.json": {
+      "bytes": 16084,
+      "sha256": "037ef03066533fe0c44b4eb7a3371ddf0b5dad7b3004a2e269fe854536332c91"
+    },
+    "assets/reference/bellman_mppi_wiping_seed1.npz": {
+      "bytes": 154638,
+      "sha256": "c0f5561eae07f318204fd16a89195e1bd3a637430d138d1ea5e0f20f931ea9ac"
+    },
+    "assets/reference/bellman_mppi_wiping_seed1.raw_timing.json": {
+      "bytes": 10109,
+      "sha256": "b774517f9cc6b9937eaf1fd836246ff2092d255e425a7efe5c356610a311244c"
+    },
+    "assets/reference/bellman_mppi_wiping_seed1.score.json": {
+      "bytes": 16099,
+      "sha256": "ccabeeb409b19e7947b1f149275805c075081f4e5ae9ff4336d35b56fd584451"
+    },
+    "assets/reference/bellman_mppi_wiping_seed2.npz": {
+      "bytes": 154782,
+      "sha256": "a1027f26340d7190e309562434761ac48e46a04ecc425df963c7c79dada50ecd"
+    },
+    "assets/reference/bellman_mppi_wiping_seed2.raw_timing.json": {
+      "bytes": 10105,
+      "sha256": "caa458b3bdf1ea38343bce12f23e75391a53ada37a364836d143bb489ba16db7"
+    },
+    "assets/reference/bellman_mppi_wiping_seed2.score.json": {
+      "bytes": 16102,
+      "sha256": "63e9bc748ac6f8d9450c68a6fee30f791e86bff3447a175d638b09b4dd97bf11"
+    },
+    "assets/reference/bellman_rk4_cutting.npz": {
+      "bytes": 74688,
+      "sha256": "05440581a16ade22e73ef71eada112b9c17b6c034a6bbc8200b45aaadce957ef"
+    },
+    "assets/reference/bellman_rk4_cutting.score.json": {
+      "bytes": 15971,
+      "sha256": "da58e5a2b100c10fea9dfec10e2eb9cfc5388be6aa057ad694cbf65e0b51e020"
+    },
+    "assets/reference/bellman_rk4_hammering.npz": {
+      "bytes": 84949,
+      "sha256": "607ed2cc83ffcb916a640f56b2079a92cc078405ba9b1158fb8ce3505dc165a0"
+    },
+    "assets/reference/bellman_rk4_hammering.score.json": {
+      "bytes": 16046,
+      "sha256": "71744d17b461d8081e19df6134114bff061aa77e76ff83244b9e88c506af9945"
+    },
+    "assets/reference/bellman_rk4_mixed.npz": {
+      "bytes": 196815,
+      "sha256": "68928f332c5037b318ea5783cbaa4927c5d8ebec41517ebb6193118e1801e0c8"
+    },
+    "assets/reference/bellman_rk4_mixed.score.json": {
+      "bytes": 16347,
+      "sha256": "d5361a1496b96c1cd6632cbe3e9c5377192a18455c26c1bae88f1bb06317fac6"
+    },
+    "assets/reference/bellman_rk4_screwdriver.npz": {
+      "bytes": 99494,
+      "sha256": "0ae8804dd5ddb40ebf297e01d0b9ece4be28f63476d5ea2911592f808e5a547d"
+    },
+    "assets/reference/bellman_rk4_screwdriver.score.json": {
+      "bytes": 16088,
+      "sha256": "7984a9dde8ca4e00933b360743ca2965749532dadebabe587f41741729049cda"
+    },
+    "assets/reference/bellman_rk4_stirring.npz": {
+      "bytes": 111700,
+      "sha256": "33c98dcd81cc91132129150c51e0a81636aa2b3eae3c97a3e4ef2da5a8ba3adb"
+    },
+    "assets/reference/bellman_rk4_stirring.score.json": {
+      "bytes": 16094,
+      "sha256": "75f614c622a0b654a661d58ba7040c297be1ff65dfaa8f9059eec36a4c36a2c5"
+    },
+    "assets/reference/bellman_rk4_wiping.npz": {
+      "bytes": 106800,
+      "sha256": "77b60bac3053b66bf33abb991d7e5eecac1e0b9e8ea22cc91be9f777f2a922f5"
+    },
+    "assets/reference/bellman_rk4_wiping.score.json": {
+      "bytes": 16048,
+      "sha256": "fae0658ead79e34c57055c18be41e094c23615b2d056eae81090811a14884f07"
+    },
+    "assets/reference/evaluation.json": {
+      "bytes": 18529,
+      "sha256": "56c8795bf3f4c6e8bb4bfd3b3dcf08bb5239f9ab5fb4c7dd199bf48217286bce"
+    },
+    "assets/retrained_checkpoint.pt": {
+      "bytes": 1362850,
+      "sha256": "6a4f28557b1ec655a0eb813f00774f6ed02586ad93410a282efe705ee3294cab"
+    },
+    "assets/speed.pt": {
+      "bytes": 13297708,
+      "sha256": "b9b659592ab7d384fb50839452ab6a0f56f250bc91b15b4f4936f37bc29c9fd9"
+    },
+    "assets/structural_checks.json": {
+      "bytes": 113,
+      "sha256": "830de402beb2994f9f507a85027aac5e3f41a3598be4a11b4ff913084077065a"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_140_inner_finger.stl": {
+      "bytes": 7284,
+      "sha256": "043901d9c22b38d09b30d11326108ab3ef1445b4bd655ef313f94199f25f57ed"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_140_inner_knuckle.stl": {
+      "bytes": 5484,
+      "sha256": "d341d986aa8aca7262565c039c04fb6b4c0f2f5c93443519eb7ca9bfc67ba17c"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_140_outer_finger.stl": {
+      "bytes": 11684,
+      "sha256": "bd7da1b31b73f1aa1d61b26a582cea10f16f17396d54b8937890fa51547d26b0"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_140_outer_knuckle.stl": {
+      "bytes": 9784,
+      "sha256": "37c1779f71fb5504a5898048a36f9f4bfce0f5e7039ff1dce53808b95c229777"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_base_link.stl": {
+      "bytes": 86384,
+      "sha256": "111e37f13a664989dd54226f80f521b32ea0b71c975282a16696b14be7cc9249"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/collision/robotiq_arg2f_coupling.stl": {
+      "bytes": 21184,
+      "sha256": "5ca9ffc28ed04193854b005358599dd9c3dc6fa92c8403e661fda94732d9ac25"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_140_inner_finger.stl": {
+      "bytes": 33984,
+      "sha256": "be21c5e18c901d4747cbc8fa1a2af15dad7173ff701482a8517e33278432bb21"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_140_inner_knuckle.stl": {
+      "bytes": 43484,
+      "sha256": "d61e9c5304d8015333856e4a26d99e32b695b6ada993253986b1afe8e396ab11"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_140_outer_finger.stl": {
+      "bytes": 76084,
+      "sha256": "666a92ee075f6f320ffb13b39995a5b374657cee90ded4c52c23ede20a812f34"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_140_outer_knuckle.stl": {
+      "bytes": 78384,
+      "sha256": "f042edc44ede9773e7cad00f7d7354d0b7c1c6a6353fe897b2ca2e6ac71107fc"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_base_link.stl": {
+      "bytes": 1054984,
+      "sha256": "74a62de75ae10cf77c60f2c49749b5d11f4c265f8624bbe7697a941fa86f6b3b"
+    },
+    "runtime/assets/runtime/robot/meshes/robotiq_2f_140/visual/robotiq_arg2f_coupling.stl": {
+      "bytes": 160684,
+      "sha256": "4281e83002a25c20dc07c68b8d77da30a13e9a8401f157f6848ed8287d7cce44"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/collision/base.stl": {
+      "bytes": 21084,
+      "sha256": "9a145e0d46f2130afdf2a2e8825a00a929870c4c3d6d8e4d1adc5f04db3aac1b"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/collision/forearm.stl": {
+      "bytes": 53284,
+      "sha256": "2e7423cab807c34160ec4f770daee5e747d70e777eb01b7beeace2b8c5751816"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/collision/shoulder.stl": {
+      "bytes": 70084,
+      "sha256": "ceb92532177daa77682f5fbd628e01c2137d168f949a7a706ce1dabe9f002387"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/collision/upperarm.stl": {
+      "bytes": 99684,
+      "sha256": "ee893044caf00075cb55b4cf666d1f1311c7979786212a501009f33bee945209"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/collision/wrist1.stl": {
+      "bytes": 59584,
+      "sha256": "f8c9f9337b6fd98c75f052e96de10e14a107ddb6874ba6b904e546f8a4e4f43a"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/collision/wrist2.stl": {
+      "bytes": 67584,
+      "sha256": "2964a63f60ce3e3cf3ad55bcf190d7876d50e373cb64b70a57cea5885eaf3c86"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/collision/wrist3.stl": {
+      "bytes": 7184,
+      "sha256": "83b3666b4ae2badd54af0d2c25a921682ecbc29e849eec646c3ed55fb74c78a3"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/visual/base.dae": {
+      "bytes": 358055,
+      "sha256": "a7d37bb19bd062ca80ea00dfcd758b1145455c5cfad87d41756b101ac5b2a8a4"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/visual/forearm.dae": {
+      "bytes": 1140936,
+      "sha256": "6cb2f094ffba59f124f70881cabea985abfd399f2fbbe76fba7c18d2ece943b9"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/visual/shoulder.dae": {
+      "bytes": 1797082,
+      "sha256": "b2b58abbef50ce03d4704465d3b619a7da5b2ecb2efc236eadfd221116cbbef0"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/visual/upperarm.dae": {
+      "bytes": 3082485,
+      "sha256": "6486526456e11585a41080958b97a0c8821da856e93b2059c74b07f8102bf6cd"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/visual/wrist1.dae": {
+      "bytes": 1334662,
+      "sha256": "c36649cf4deec6da427d72d45163a059dcb668eb61aac760d5f2f979948fa13a"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/visual/wrist2.dae": {
+      "bytes": 1554838,
+      "sha256": "c99f5538357a7b42a9b207a12e52e713dd3eb7e587645144bde7ab31c1cfc76b"
+    },
+    "runtime/assets/runtime/robot/meshes/ur5e/visual/wrist3.dae": {
+      "bytes": 66076,
+      "sha256": "9f5d4f544ae72698a41f75ed4897a76386a91b814dff22e30e93a5bd105a717c"
+    },
+    "runtime/assets/runtime/robot/ur5e.urdf": {
+      "bytes": 13713,
+      "sha256": "00d13bdf4e9f28f8a54bd15771fa89e22702cd3666f6480219b2364f5d75e56e"
+    },
+    "runtime/assets/runtime/robot/ur5e_robotiq_2f_140.urdf": {
+      "bytes": 26350,
+      "sha256": "01b435be8adf92f868c849dead3fc01e4979b18cc3bfce71bf1c144a0658d76c"
+    }
+  }
+}

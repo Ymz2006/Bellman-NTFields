@@ -1,0 +1,82 @@
+{
+  "run_id": "20260929T232502Z-30bc0ba2",
+  "registry_state": "succeeded",
+  "experiment_fingerprint": "a4664ab8b5c6a30c433ac83c2104defda3ef58e1209f95a3466600d7b56d582e",
+  "training": {
+    "complete": true,
+    "round": 5,
+    "optimizer_steps": 15620,
+    "elapsed_seconds": 253.72757053375244
+  },
+  "mppi_successes": [
+    532,
+    533,
+    532
+  ],
+  "native_success": 548,
+  "comparisons": {
+    "prior_clean_retraining": {
+      "mppi": {
+        "n": 1800,
+        "rescued": 0,
+        "regressed": 0,
+        "differences": []
+      },
+      "rk4": {
+        "n": 600,
+        "rescued": 0,
+        "regressed": 0,
+        "differences": []
+      }
+    },
+    "frozen_baseline": {
+      "mppi": {
+        "n": 1800,
+        "rescued": 1,
+        "regressed": 1,
+        "differences": [
+          {
+            "label": "bellman_mppi_mixed_seed2",
+            "query_id": "84",
+            "current_success": false,
+            "reference_success": true
+          },
+          {
+            "label": "bellman_mppi_stirring_seed2",
+            "query_id": "81",
+            "current_success": true,
+            "reference_success": false
+          }
+        ]
+      },
+      "rk4": {
+        "n": 600,
+        "rescued": 1,
+        "regressed": 2,
+        "differences": [
+          {
+            "label": "bellman_rk4_mixed",
+            "query_id": "80",
+            "current_success": false,
+            "reference_success": true
+          },
+          {
+            "label": "bellman_rk4_mixed",
+            "query_id": "95",
+            "current_success": true,
+            "reference_success": false
+          },
+          {
+            "label": "bellman_rk4_screwdriver",
+            "query_id": "57",
+            "current_success": false,
+            "reference_success": true
+          }
+        ]
+      }
+    }
+  },
+  "checkpoint_sha256": "6a4f28557b1ec655a0eb813f00774f6ed02586ad93410a282efe705ee3294cab",
+  "prior_checkpoint_sha256": "6a4f28557b1ec655a0eb813f00774f6ed02586ad93410a282efe705ee3294cab",
+  "frozen_checkpoint_sha256": "572d74fed6384d5e0211315147e8276cff35c2bcff5fd3da645bec1c4ea68a85"
+}

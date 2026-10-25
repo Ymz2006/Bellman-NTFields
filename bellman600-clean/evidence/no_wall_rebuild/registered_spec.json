@@ -1,0 +1,59 @@
+{
+  "name": "Clean Bellman600 no-wall input rebuild full",
+  "kind": "pipeline",
+  "root": "/tmp/bellman-rebuild-work",
+  "config": {
+    "action": "rebuild-reproduce",
+    "smoke": false,
+    "scene": "no_wall_overlap010",
+    "speed_seed": 87358,
+    "bank_seed": 87344,
+    "training_seed": 87358,
+    "speed_steps": 20000,
+    "walkers": 50000,
+    "generations": 8,
+    "training_rounds": 5,
+    "epochs_per_round": 2,
+    "training_updates": "4 smoke; otherwise10*ceil(retained_bank_sources/256)",
+    "loss_weights": {
+      "bellman": 6,
+      "eikonal": 2,
+      "direction": 2
+    },
+    "planning_seeds": [
+      0,
+      1,
+      2
+    ]
+  },
+  "environment": {
+    "docker_context": "default",
+    "docker_image_id": "sha256:e7749bdb59fb8ef51a462ab56c5febfd55aec43ec199eb99cec1e013e1dc0828"
+  },
+  "inputs": {
+    "experiment": "/tmp/bellman-rebuild-work/experiments/no_wall_rebuild",
+    "scene": "/tmp/bellman-rebuild-work/runtime/configs/scene.yml",
+    "method": "/tmp/bellman-rebuild-work/method",
+    "launcher": "/tmp/bellman-rebuild-work/launch.py",
+    "training_sources": "/tmp/bellman-rebuild-work/training_inputs/no_wall_seed_pool",
+    "reference": "/tmp/bellman-rebuild-work/assets/reference",
+    "runtime": "/tmp/bellman-rebuild-work/runtime",
+    "entrypoint": "/tmp/bellman-rebuild-work/run.py"
+  },
+  "command": [
+    "/usr/bin/python3",
+    "/tmp/bellman-rebuild-work/launch.py",
+    "rebuild-reproduce",
+    "--output",
+    "{output}"
+  ],
+  "required_outputs": [
+    "status.json",
+    "prepared/complete.json",
+    "prepared/speed.pt",
+    "prepared/bank/manifest.json",
+    "training/checkpoint.pt",
+    "evaluation/evaluation.json"
+  ],
+  "validation": "files"
+}

@@ -1,0 +1,112 @@
+{
+  "scene": "clutter",
+  "rounds": [
+    {
+      "round": 0,
+      "candidates": 960,
+      "direct": 399,
+      "rrt_queries": 561,
+      "rrt_found": 385,
+      "rrt_certified": 385,
+      "rrt_iterations": 10000,
+      "rrt_seconds": 322.11433390200546
+    },
+    {
+      "round": 1,
+      "candidates": 160,
+      "direct": 3,
+      "rrt_queries": 157,
+      "rrt_found": 90,
+      "rrt_certified": 90,
+      "rrt_iterations": 10000,
+      "rrt_seconds": 148.4670100250005
+    }
+  ],
+  "strata": {
+    "general_cupping": {
+      "pair_type": 0,
+      "start_pool": "cup",
+      "goal_pool": "cup",
+      "candidates": 160,
+      "certified": 144,
+      "uncertified": 16,
+      "certified_direct": 95,
+      "selected_direct": 63
+    },
+    "general_pouring": {
+      "pair_type": 1,
+      "start_pool": "pour",
+      "goal_pool": "pour",
+      "candidates": 160,
+      "certified": 149,
+      "uncertified": 11,
+      "certified_direct": 105,
+      "selected_direct": 66
+    },
+    "general_cross": {
+      "pair_type": 2,
+      "start_pool": "cup",
+      "goal_pool": "pour",
+      "candidates": 160,
+      "certified": 132,
+      "uncertified": 28,
+      "certified_direct": 15,
+      "selected_direct": 13
+    },
+    "low_cupping": {
+      "pair_type": 0,
+      "start_pool": "low_cupping",
+      "goal_pool": "low_cupping",
+      "candidates": 160,
+      "certified": 112,
+      "uncertified": 48,
+      "certified_direct": 54,
+      "selected_direct": 48
+    },
+    "low_pouring": {
+      "pair_type": 1,
+      "start_pool": "low_pouring",
+      "goal_pool": "low_pouring",
+      "candidates": 160,
+      "certified": 157,
+      "uncertified": 3,
+      "certified_direct": 126,
+      "selected_direct": 83
+    },
+    "low_cross": {
+      "pair_type": 2,
+      "start_pool": "low_cupping",
+      "goal_pool": "low_pouring",
+      "candidates": 320,
+      "certified": 183,
+      "uncertified": 137,
+      "certified_direct": 7,
+      "selected_direct": 3
+    }
+  },
+  "pool_sizes": {
+    "cup": 239578,
+    "pour": 697655,
+    "low_cupping": 40513,
+    "low_transition": 52943,
+    "low_pouring": 176759
+  },
+  "rrt_targets": 300000,
+  "timing": {
+    "pools": 153.23004905400012,
+    "total": 639.4577844539963
+  },
+  "parameters": {
+    "samples": 400000000,
+    "round_size": 160,
+    "max_rounds": 6,
+    "rrt_iterations": 10000,
+    "rrt_step": 0.2,
+    "rrt_capacity": 10500,
+    "goal_bias": 0.1,
+    "min_cspace_l2": 0.02,
+    "max_cspace_l2": 4.0,
+    "per_stratum": 100
+  },
+  "complete": true
+}

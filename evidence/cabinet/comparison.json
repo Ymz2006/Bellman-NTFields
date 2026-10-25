@@ -1,0 +1,252 @@
+{
+  "scene": "cabinet",
+  "bellman_run": "registered_20261019T034213Z-f9c501f9",
+  "metric_run": "registered_20261019T034237Z-30d4d872",
+  "bellman_evaluation": "registered_20261019T041026Z-39d9dafe",
+  "metric_evaluation": "registered_20261019T041045Z-9baa751f",
+  "tests": {
+    "source_run": "registered_20261019T033428Z-1342d9d2",
+    "scene": "cabinet",
+    "scene_sha256": "b9d15d491f2860c116db5ea98a261a8fa21282a1854c8641c4c8f6fa60920aa9",
+    "generator_sha256": "8fd5ea5de9d25b3b266aa1df7b16b5870c9b0848c22f2d507cecb77d96e95315",
+    "suite_manifest_sha256": "82e3397ce0816701541c8354ea7b813fb4b129056a010a7072936b121278f394",
+    "total": 600,
+    "note": "Frozen testing data: never resample or edit; evaluate.py checks these hashes."
+  },
+  "suites": [
+    "free_to_free",
+    "free_to_compartment",
+    "compartment_to_free",
+    "compartment_to_compartment",
+    "same_compartment",
+    "anywhere"
+  ],
+  "queries_per_suite": 100,
+  "results": {
+    "bellman/native_rk4": {
+      "label": "Bellman, RK4 (native)",
+      "total": 229,
+      "n": 600,
+      "per_suite": {
+        "free_to_free": [
+          91,
+          100
+        ],
+        "free_to_compartment": [
+          22,
+          100
+        ],
+        "compartment_to_free": [
+          22,
+          100
+        ],
+        "compartment_to_compartment": [
+          3,
+          100
+        ],
+        "same_compartment": [
+          5,
+          100
+        ],
+        "anywhere": [
+          86,
+          100
+        ]
+      },
+      "per_seed": [],
+      "failures": {
+        "collision": 367,
+        "endpoint": 6
+      }
+    },
+    "bellman/matched_mppi": {
+      "label": "Bellman, release MPPI",
+      "total": 688,
+      "n": 1800,
+      "per_suite": {
+        "free_to_free": [
+          268,
+          300
+        ],
+        "free_to_compartment": [
+          66,
+          300
+        ],
+        "compartment_to_free": [
+          63,
+          300
+        ],
+        "compartment_to_compartment": [
+          3,
+          300
+        ],
+        "same_compartment": [
+          24,
+          300
+        ],
+        "anywhere": [
+          264,
+          300
+        ]
+      },
+      "per_seed": [
+        0,
+        1,
+        2
+      ],
+      "failures": {
+        "collision": 1112
+      }
+    },
+    "metric/native_rk4": {
+      "label": "Metric NTFields, RK4",
+      "total": 182,
+      "n": 600,
+      "per_suite": {
+        "free_to_free": [
+          81,
+          100
+        ],
+        "free_to_compartment": [
+          10,
+          100
+        ],
+        "compartment_to_free": [
+          10,
+          100
+        ],
+        "compartment_to_compartment": [
+          1,
+          100
+        ],
+        "same_compartment": [
+          9,
+          100
+        ],
+        "anywhere": [
+          71,
+          100
+        ]
+      },
+      "per_seed": [],
+      "failures": {
+        "collision": 410,
+        "endpoint": 26
+      }
+    },
+    "metric/matched_mppi": {
+      "label": "Metric NTFields, release MPPI",
+      "total": 595,
+      "n": 1800,
+      "per_suite": {
+        "free_to_free": [
+          254,
+          300
+        ],
+        "free_to_compartment": [
+          49,
+          300
+        ],
+        "compartment_to_free": [
+          29,
+          300
+        ],
+        "compartment_to_compartment": [
+          3,
+          300
+        ],
+        "same_compartment": [
+          34,
+          300
+        ],
+        "anywhere": [
+          226,
+          300
+        ]
+      },
+      "per_seed": [
+        0,
+        1,
+        2
+      ],
+      "failures": {
+        "collision": 1205
+      }
+    },
+    "metric/ntrl_mppi": {
+      "label": "Metric NTFields, ntrl-demo MPPI (native)",
+      "total": 509,
+      "n": 1800,
+      "per_suite": {
+        "free_to_free": [
+          235,
+          300
+        ],
+        "free_to_compartment": [
+          24,
+          300
+        ],
+        "compartment_to_free": [
+          29,
+          300
+        ],
+        "compartment_to_compartment": [
+          1,
+          300
+        ],
+        "same_compartment": [
+          9,
+          300
+        ],
+        "anywhere": [
+          211,
+          300
+        ]
+      },
+      "per_seed": [
+        0,
+        1,
+        2
+      ],
+      "failures": {
+        "collision": 1275,
+        "joint_limits": 62
+      }
+    }
+  },
+  "paired": {
+    "native_rk4": {
+      "both": 164,
+      "bellman_only": 65,
+      "metric_only": 18,
+      "neither": 353
+    },
+    "matched_mppi": {
+      "both": 544,
+      "bellman_only": 144,
+      "metric_only": 51,
+      "neither": 1061
+    }
+  },
+  "timing": {
+    "bellman": {
+      "sample": 205.50835410199943,
+      "prepare": 628.3282697860122,
+      "training": 598.2142883419874,
+      "evaluate": 473.005749
+    },
+    "metric": {
+      "data": 35.25714501099719,
+      "training": 1425.4737580059882,
+      "evaluate": 631.721115
+    }
+  },
+  "gpus": {
+    "bellman": [
+      "device=2"
+    ],
+    "metric": [
+      "device=2"
+    ]
+  }
+}

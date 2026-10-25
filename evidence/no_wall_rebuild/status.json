@@ -1,0 +1,17 @@
+{
+  "complete": true,
+  "stage": "complete",
+  "smoke": false,
+  "timing": {
+    "prepare": 380.9511533868499,
+    "training": 272.4986461950466,
+    "evaluate": 177.8326117922552
+  },
+  "elapsed_seconds": 833.3741017812863,
+  "mppi_successes": [
+    532,
+    533,
+    532
+  ],
+  "native_success": 548
+}

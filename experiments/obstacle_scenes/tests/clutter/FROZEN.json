@@ -1,0 +1,9 @@
+{
+  "source_run": "registered_20261013T205357Z-a7474a7c",
+  "scene": "clutter",
+  "scene_sha256": "8e7b8d09f4f235bc4e1093e93d82ab5c89e08886c8e426e8de8b6b15f76b762f",
+  "generator_sha256": "ce8a277da2fdcd509854a48abc76196b80904c08b4da59391cadbdfd09ee5cf0",
+  "suite_manifest_sha256": "ea1d4ddc158023adaf1e251b7b3f1887e7b7d34e432e9bcad2eb8194c4cf9338",
+  "total": 600,
+  "note": "Frozen testing data: never resample or edit; evaluate_tests.py checks these hashes."
+}

@@ -1,0 +1,20 @@
+{
+  "source": "/media/4tbssd/jeffrey/ntrl-demo",
+  "git_commit": "5ed065f6040bac0003fc0cf69874e1bdfbc50a6a",
+  "git_branch": "main",
+  "copied": "2026-10-18",
+  "note": "Unmodified copies of the metric NTFields baseline (ntrl-demo). Only the files the cabinet experiment uses or follows are kept. The repository has no license file; models/__init__.py names EikoNet and GPL v3.0. No new license is granted.",
+  "files": {
+    "Dockerfile": "aafbfe5b5161805deaa5061748f4c62d005fd6e55c394963e97aa1caca0bb729",
+    "README.md": "b57588d2b0e93715d3b3a5ac893afc494eae32c4e6a082a1d737f175abdad002",
+    "configs/arm.txt": "8c448f2478e33f521667d58f94456c8c3ff940bb46320368f3c95e03c5224fd0",
+    "dataprocessing/speed_sampling_arm_normal.py": "c147db1cb1239cfb093c09478a4afda2b2c43a247d27f6bef6315dbd88029473",
+    "models/__init__.py": "c055ae6df938632600c35536d9a55d302899f77e1e7a8e1227e0105b681471ed",
+    "models/data_mlp.py": "7e099232334a5b2a5a3a51bfc5221c68a25e3beb23a5efdfb96a2a678fb767ff",
+    "models/metric/model_function_metric.py": "873143f6905aff2ed961614fb330dda26e8d2ce11bc54fafecc905d900371385",
+    "models/metric/model_network_metric.py": "6f45de4432ffe1f90d124bee3b24e8d1402020a755376162ef52907e2e27f006",
+    "models/metric/model_train_metric.py": "9cd3a5178960d7b9f2589ec9a85a806c736e060dcf1e2e1484eb3bc52ce9d2c8",
+    "tests/arm_plan_stat.py": "db3a201db2efede1ff656dfe88623ed406b0d052fe19c0ae6f8daca4d15fb5b3",
+    "train/train_arm.py": "c603494807a9e51f500e686e9002198664ee7ca262add60965fbcf8a239c7533"
+  }
+}

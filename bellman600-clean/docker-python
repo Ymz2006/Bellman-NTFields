@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+# Drop-in replacement for `python3` when the host Python is older than 3.10.
+# Runs `python3 ARGS...` in a Python 3.11 container (environment/host/Dockerfile):
+#
+#   ./docker-python tools/runtime_assets.py unpack dist/bellman600-runtime.tar.gz
+#   ./docker-python run.py doctor-source
+#   ./docker-python run.py from-source --smoke
+#   ./docker-python gui/viewer.py --evaluation-dir results/registered_<id>/evaluation --port 8901
+#
+# GPUs the pinned image has no cuRobo kernels for (e.g. RTX 3090, sm_86) need the
+# opt-in derived environment from environment/sm86/Dockerfile, built on first use:
+#
+#   BELLMAN600_DERIVED_IMAGE=bellman600-env:sm86 ./docker-python run.py from-source --smoke
+#
+# The repository and registry are mounted at their host paths and the container
+# runs as the host user, so the GPU containers launch.py starts through the host
+# Docker daemon see the same paths and write files owned by you. Host network and
+# PID namespaces keep the registry's hostname and process liveness checks valid
+# and expose the GUI on the host's localhost.
+set -euo pipefail
+
+ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)
+IMAGE=${BELLMAN600_HOST_IMAGE:-bellman600-host:py3.11}
+SOCK=/var/run/docker.sock
+REGISTRY=${NTFIELDS_REGISTRY:-$HOME/.local/share/ntfields-experiments}
+
+# Cached after the first build; picks up Dockerfile/requirements changes.
+docker --context default build -q -t "$IMAGE" \
+  -f "$ROOT/environment/host/Dockerfile" "$ROOT/environment" >/dev/null
+
+mkdir -p "$REGISTRY"
+REGISTRY=$(cd "$REGISTRY" && pwd -P)
+
+case "$PWD/" in "$ROOT"/*) WORKDIR=$PWD ;; *) WORKDIR=$ROOT ;; esac
+
+# Drivers older than the pinned image's CUDA 12.4 compat libcuda (550) get the
+# compat library mounted, which fails on GeForce GPUs (CUDA error 804). Hand the
+# host driver's own libraries to the docker shim (environment/host/docker-image-alias.sh).
+DRIVER_LIBS=
+DRIVER=$(nvidia-smi --query-gpu=driver_version --format=csv,noheader 2>/dev/null | sed -n 1p || true)
+if [ -n "$DRIVER" ] && [ "${DRIVER%%.*}" -lt 550 ]; then
+  for so in libcuda.so.1 libnvidia-ptxjitcompiler.so.1; do
+    lib=$(PATH=$PATH:/sbin:/usr/sbin ldconfig -p | awk -v so="$so" '$1 == so && /x86-64/ && !n++ {print $NF}')
+    [ -n "$lib" ] && DRIVER_LIBS+="${DRIVER_LIBS:+,}$so=$(readlink -f "$lib")"
+  done
+fi
+
+# Opt-in derived environment; the docker shim checks its label and records its use.
+DERIVED=${BELLMAN600_DERIVED_IMAGE:-}
+if [ -n "$DERIVED" ] && ! docker --context default image inspect "$DERIVED" >/dev/null 2>&1; then
+  if [ "$DERIVED" != bellman600-env:sm86 ]; then
+    echo "docker-python: derived image $DERIVED not found" >&2; exit 1
+  fi
+  BASE=sha256:e7749bdb59fb8ef51a462ab56c5febfd55aec43ec199eb99cec1e013e1dc0828
+  docker --context default image inspect "$BASE" >/dev/null 2>&1 \
+    || BASE=sha256:fc21d92e72630699e9456a5cecc6f785ea8cb8f5eaacf9a26c815ea1a53dca32
+  echo "docker-python: building $DERIVED from $BASE (one time; recompiles cuRobo)" >&2
+  DOCKER_BUILDKIT=0 docker --context default build -t "$DERIVED" \
+    --build-arg BASE="$BASE" "$ROOT/environment/sm86" >&2
+fi
+
+TTY=()
+if [ -t 0 ] && [ -t 1 ]; then TTY=(-it); fi
+
+exec docker --context default run --rm --init "${TTY[@]}" \
+  --user "$(id -u):$(id -g)" --group-add "$(stat -c %g "$SOCK")" \
+  --network host --pid host \
+  -e HOME=/tmp -e NTFIELDS_REGISTRY="$REGISTRY" \
+  -e BELLMAN600_HOST_DRIVER_LIBS="$DRIVER_LIBS" -e BELLMAN600_DERIVED_IMAGE="$DERIVED" \
+  -v "$SOCK:$SOCK" -v "$ROOT:$ROOT" -v "$REGISTRY:$REGISTRY" \
+  -w "$WORKDIR" \
+  "$IMAGE" python3 "$@"

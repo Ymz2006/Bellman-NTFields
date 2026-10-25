@@ -1,0 +1,5476 @@
+{
+  "complete": true,
+  "scene_sha256": "b9c7e259d31d1133420012365349321b7d88c6a6fe4b6f4242226ec74a3903f0",
+  "wall": {
+    "name": "cup_left_wall",
+    "pose": [
+      0.65,
+      0.28,
+      0.09,
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "dims": [
+      0.24,
+      0.04,
+      0.25
+    ]
+  },
+  "tasks": {
+    "mixed": {
+      "n": 100,
+      "baseline_valid": 100,
+      "wall_valid": 93,
+      "per_query": [
+        {
+          "query_id": 0,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.32286518812179565,
+          "goal_wall_clearance": 0.05661047250032425,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 1,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.18448218703269958,
+          "goal_wall_clearance": 0.20054970681667328,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 2,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": 0.004517468623816967,
+          "goal_wall_clearance": 0.21844571828842163,
+          "start_valid": false,
+          "goal_valid": true
+        },
+        {
+          "query_id": 3,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.05620720237493515,
+          "goal_wall_clearance": 0.12681975960731506,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 4,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.20368748903274536,
+          "goal_wall_clearance": 0.33293092250823975,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 5,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36318135261535645,
+          "goal_wall_clearance": 0.2721206247806549,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 6,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.24920214712619781,
+          "goal_wall_clearance": 0.09152961522340775,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 7,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.28723710775375366,
+          "goal_wall_clearance": 0.11507394909858704,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 8,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.10656190663576126,
+          "goal_wall_clearance": 0.37008386850357056,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 9,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": 0.09169873595237732,
+          "goal_wall_clearance": -0.04800000041723251,
+          "start_valid": true,
+          "goal_valid": false
+        },
+        {
+          "query_id": 10,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2587028443813324,
+          "goal_wall_clearance": 0.2574273347854614,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 11,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2751959264278412,
+          "goal_wall_clearance": 0.1833379715681076,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 12,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.12443311512470245,
+          "goal_wall_clearance": 0.20812809467315674,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 13,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": 0.2734833359718323,
+          "goal_wall_clearance": -0.014999999664723873,
+          "start_valid": true,
+          "goal_valid": false
+        },
+        {
+          "query_id": 14,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.15942123532295227,
+          "goal_wall_clearance": 0.38963037729263306,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 15,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.09494660049676895,
+          "goal_wall_clearance": 0.16629068553447723,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 16,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3689427375793457,
+          "goal_wall_clearance": 0.1300305277109146,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 17,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.17785793542861938,
+          "goal_wall_clearance": 0.07713935524225235,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 18,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.28487637639045715,
+          "goal_wall_clearance": 0.3653936982154846,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 19,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.1751146763563156,
+          "goal_wall_clearance": 0.14437195658683777,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 20,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.24716585874557495,
+          "goal_wall_clearance": 0.10975593328475952,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 21,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": 0.3901248872280121,
+          "goal_wall_clearance": 0.00322810560464859,
+          "start_valid": true,
+          "goal_valid": false
+        },
+        {
+          "query_id": 22,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3609743118286133,
+          "goal_wall_clearance": 0.27308839559555054,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 23,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.38611555099487305,
+          "goal_wall_clearance": 0.19859343767166138,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 24,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.27756160497665405,
+          "goal_wall_clearance": 0.17728444933891296,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 25,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.14673754572868347,
+          "goal_wall_clearance": 0.22288712859153748,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 26,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.18510347604751587,
+          "goal_wall_clearance": 0.37590786814689636,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 27,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.08219989389181137,
+          "goal_wall_clearance": 0.2115732729434967,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 28,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.19600270688533783,
+          "goal_wall_clearance": 0.34792110323905945,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 29,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.30318641662597656,
+          "goal_wall_clearance": 0.03475210815668106,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 30,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3668597340583801,
+          "goal_wall_clearance": 0.4095637798309326,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 31,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3624425530433655,
+          "goal_wall_clearance": 0.43234559893608093,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 32,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36479270458221436,
+          "goal_wall_clearance": 0.40518897771835327,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 33,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.370254248380661,
+          "goal_wall_clearance": 0.3653630316257477,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 34,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3670058250427246,
+          "goal_wall_clearance": 0.44362565875053406,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 35,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3956839144229889,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 36,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.39346620440483093,
+          "goal_wall_clearance": 0.3699813187122345,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 37,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.39477574825286865,
+          "goal_wall_clearance": 0.40527209639549255,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 38,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3653971552848816,
+          "goal_wall_clearance": 0.36235925555229187,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 39,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36432531476020813,
+          "goal_wall_clearance": 0.3710176348686218,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 40,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.38452285528182983,
+          "goal_wall_clearance": 0.3839848041534424,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 41,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.40990567207336426,
+          "goal_wall_clearance": 0.39366334676742554,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 42,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.22135815024375916,
+          "goal_wall_clearance": 0.38153910636901855,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 43,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3595903813838959,
+          "goal_wall_clearance": 0.3796156942844391,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 44,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3675720691680908,
+          "goal_wall_clearance": 0.42284393310546875,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 45,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4035649299621582,
+          "goal_wall_clearance": 0.36354944109916687,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 46,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37943947315216064,
+          "goal_wall_clearance": 0.37728285789489746,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 47,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3909623622894287,
+          "goal_wall_clearance": 0.3306591510772705,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 48,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4087565243244171,
+          "goal_wall_clearance": 0.3713020980358124,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 49,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3643854558467865,
+          "goal_wall_clearance": 0.37081751227378845,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 50,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3678431808948517,
+          "goal_wall_clearance": 0.37582769989967346,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 51,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3805936574935913,
+          "goal_wall_clearance": 0.3959633708000183,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 52,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.42049917578697205,
+          "goal_wall_clearance": 0.39705029129981995,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 53,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.41003552079200745,
+          "goal_wall_clearance": 0.4012441635131836,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 54,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3637502193450928,
+          "goal_wall_clearance": 0.3599235713481903,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 55,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36335229873657227,
+          "goal_wall_clearance": 0.3643682599067688,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 56,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3950243890285492,
+          "goal_wall_clearance": 0.3681173026561737,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 57,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36633360385894775,
+          "goal_wall_clearance": 0.37259286642074585,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 58,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.402363657951355,
+          "goal_wall_clearance": 0.391088604927063,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 59,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37333163619041443,
+          "goal_wall_clearance": 0.40203675627708435,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 60,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.11109286546707153,
+          "goal_wall_clearance": 0.4049328863620758,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 61,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.25582408905029297,
+          "goal_wall_clearance": 0.364964097738266,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 62,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.030855931341648102,
+          "goal_wall_clearance": 0.39088255167007446,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 63,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2760869860649109,
+          "goal_wall_clearance": 0.4070911705493927,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 64,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.14141125977039337,
+          "goal_wall_clearance": 0.1769363284111023,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 65,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.06427498161792755,
+          "goal_wall_clearance": 0.4065825939178467,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 66,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.01664825901389122,
+          "goal_wall_clearance": 0.36367368698120117,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 67,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.15415643155574799,
+          "goal_wall_clearance": 0.366486519575119,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 68,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.18374872207641602,
+          "goal_wall_clearance": 0.36403775215148926,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 69,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2197795957326889,
+          "goal_wall_clearance": 0.392205148935318,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 70,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.22591188549995422,
+          "goal_wall_clearance": 0.3623262941837311,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 71,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.23418214917182922,
+          "goal_wall_clearance": 0.36451661586761475,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 72,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3822023868560791,
+          "goal_wall_clearance": 0.362399160861969,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 73,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.12545350193977356,
+          "goal_wall_clearance": 0.3327416777610779,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 74,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.23704968392848969,
+          "goal_wall_clearance": 0.3627723157405853,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 75,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.0909259095788002,
+          "goal_wall_clearance": 0.39414140582084656,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 76,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.1664915382862091,
+          "goal_wall_clearance": 0.3674926161766052,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 77,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": -0.014999999664723873,
+          "goal_wall_clearance": 0.3741152584552765,
+          "start_valid": false,
+          "goal_valid": true
+        },
+        {
+          "query_id": 78,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.02299610897898674,
+          "goal_wall_clearance": 0.3876248598098755,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 79,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.18749205768108368,
+          "goal_wall_clearance": 0.40928876399993896,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 80,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": -0.003667074255645275,
+          "goal_wall_clearance": 0.3862250745296478,
+          "start_valid": false,
+          "goal_valid": true
+        },
+        {
+          "query_id": 81,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.11610454320907593,
+          "goal_wall_clearance": 0.39293596148490906,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 82,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3326442539691925,
+          "goal_wall_clearance": 0.39974379539489746,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 83,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.26593729853630066,
+          "goal_wall_clearance": 0.3616673946380615,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 84,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.1996089071035385,
+          "goal_wall_clearance": 0.37997451424598694,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 85,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.20109468698501587,
+          "goal_wall_clearance": 0.3552488684654236,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 86,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.257854700088501,
+          "goal_wall_clearance": 0.3691501319408417,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 87,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.047570936381816864,
+          "goal_wall_clearance": 0.3031691312789917,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 88,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.13713690638542175,
+          "goal_wall_clearance": 0.36233776807785034,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 89,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.09137585759162903,
+          "goal_wall_clearance": 0.42676934599876404,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 90,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": -0.015833940356969833,
+          "goal_wall_clearance": 0.42459699511528015,
+          "start_valid": false,
+          "goal_valid": true
+        },
+        {
+          "query_id": 91,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.23860158026218414,
+          "goal_wall_clearance": 0.3814592957496643,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 92,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.013885133899748325,
+          "goal_wall_clearance": 0.41372427344322205,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 93,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3349428176879883,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 94,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.33870306611061096,
+          "goal_wall_clearance": 0.4213082194328308,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 95,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2112848460674286,
+          "goal_wall_clearance": 0.409309446811676,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 96,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.13275998830795288,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 97,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.04383623227477074,
+          "goal_wall_clearance": 0.2979356348514557,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 98,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.07129921019077301,
+          "goal_wall_clearance": 0.38569730520248413,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 99,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2897190749645233,
+          "goal_wall_clearance": 0.36342260241508484,
+          "start_valid": true,
+          "goal_valid": true
+        }
+      ]
+    },
+    "screwdriver": {
+      "n": 100,
+      "baseline_valid": 100,
+      "wall_valid": 95,
+      "per_query": [
+        {
+          "query_id": 0,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 1,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.16091176867485046,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 2,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.20443998277187347,
+          "goal_wall_clearance": 0.1507071852684021,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 3,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3918985426425934,
+          "goal_wall_clearance": 0.2491334229707718,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 4,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4063558578491211,
+          "goal_wall_clearance": 0.4185217618942261,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 5,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.050128914415836334,
+          "goal_wall_clearance": 0.01686869189143181,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 6,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.415357381105423,
+          "goal_wall_clearance": 0.38065120577812195,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 7,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3839418590068817,
+          "goal_wall_clearance": 0.3857903778553009,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 8,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3857903778553009,
+          "goal_wall_clearance": 0.24143856763839722,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 9,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.24143856763839722,
+          "goal_wall_clearance": 0.13878843188285828,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 10,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3486712574958801,
+          "goal_wall_clearance": 0.37562382221221924,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 11,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37562382221221924,
+          "goal_wall_clearance": 0.08687932044267654,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 12,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.08687932044267654,
+          "goal_wall_clearance": 0.14859434962272644,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 13,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2499900907278061,
+          "goal_wall_clearance": 0.41056299209594727,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 14,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3624109625816345,
+          "goal_wall_clearance": 0.4476422965526581,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 15,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.14069025218486786,
+          "goal_wall_clearance": 0.1141199916601181,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 16,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3513447642326355,
+          "goal_wall_clearance": 0.3661639392375946,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 17,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3900907337665558,
+          "goal_wall_clearance": 0.36717575788497925,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 18,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.0528683215379715,
+          "goal_wall_clearance": 0.08164147287607193,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 19,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.05212079733610153,
+          "goal_wall_clearance": 0.08164147287607193,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 20,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.388124018907547,
+          "goal_wall_clearance": 0.37787187099456787,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 21,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.266562283039093,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 22,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.266562283039093,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 23,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2558839023113251,
+          "goal_wall_clearance": 0.266562283039093,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 24,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3347693681716919,
+          "goal_wall_clearance": 0.38804715871810913,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 25,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2696019411087036,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 26,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37660664319992065,
+          "goal_wall_clearance": 0.36880746483802795,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 27,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36880746483802795,
+          "goal_wall_clearance": 0.13740003108978271,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 28,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.13740003108978271,
+          "goal_wall_clearance": 0.36880746483802795,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 29,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3916771113872528,
+          "goal_wall_clearance": 0.37572181224823,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 30,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3623618185520172,
+          "goal_wall_clearance": 0.22100284695625305,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 31,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.38026025891304016,
+          "goal_wall_clearance": 0.3676769733428955,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 32,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3676769733428955,
+          "goal_wall_clearance": 0.08091158419847488,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 33,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.397046834230423,
+          "goal_wall_clearance": 0.44182565808296204,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 34,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.10112360864877701,
+          "goal_wall_clearance": 0.08798406273126602,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 35,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.09836455434560776,
+          "goal_wall_clearance": 0.10112360864877701,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 36,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3751892149448395,
+          "goal_wall_clearance": 0.36599183082580566,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 37,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2531161308288574,
+          "goal_wall_clearance": 0.27221453189849854,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 38,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2531161308288574,
+          "goal_wall_clearance": 0.27027931809425354,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 39,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3805849552154541,
+          "goal_wall_clearance": 0.39696693420410156,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 40,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.39696693420410156,
+          "goal_wall_clearance": 0.23733694851398468,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 41,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.23733694851398468,
+          "goal_wall_clearance": 0.39696693420410156,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 42,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.19751931726932526,
+          "goal_wall_clearance": 0.23733694851398468,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 43,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36520466208457947,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 44,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.32932934165000916,
+          "goal_wall_clearance": 0.37847691774368286,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 45,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.29382720589637756,
+          "goal_wall_clearance": 0.32932934165000916,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 46,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4045879542827606,
+          "goal_wall_clearance": 0.4123099148273468,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 47,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.38949882984161377,
+          "goal_wall_clearance": 0.3960040509700775,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 48,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.387174516916275,
+          "goal_wall_clearance": 0.410361647605896,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 49,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36717575788497925,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 50,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.07824026793241501,
+          "goal_wall_clearance": 0.30745729804039,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 51,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": 0.4263565242290497,
+          "goal_wall_clearance": -0.051692280918359756,
+          "start_valid": true,
+          "goal_valid": false
+        },
+        {
+          "query_id": 52,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36457937955856323,
+          "goal_wall_clearance": 0.37606170773506165,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 53,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.12713514268398285,
+          "goal_wall_clearance": 0.1261838674545288,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 54,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36233535408973694,
+          "goal_wall_clearance": 0.2412564605474472,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 55,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2412564605474472,
+          "goal_wall_clearance": 0.36233535408973694,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 56,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3623580038547516,
+          "goal_wall_clearance": 0.37943339347839355,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 57,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": -0.003970075398683548,
+          "goal_wall_clearance": 0.37943339347839355,
+          "start_valid": false,
+          "goal_valid": true
+        },
+        {
+          "query_id": 58,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.30223044753074646,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 59,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.30223044753074646,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 60,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.30223044753074646,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 61,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3817073702812195,
+          "goal_wall_clearance": 0.4041306972503662,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 62,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4041306972503662,
+          "goal_wall_clearance": 0.21079155802726746,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 63,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3626227378845215,
+          "goal_wall_clearance": 0.37524521350860596,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 64,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.06758356839418411,
+          "goal_wall_clearance": 0.37524521350860596,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 65,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.10460608452558517,
+          "goal_wall_clearance": 0.2610153257846832,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 66,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3623535633087158,
+          "goal_wall_clearance": 0.366216242313385,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 67,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.39081871509552,
+          "goal_wall_clearance": 0.41241583228111267,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 68,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3629310131072998,
+          "goal_wall_clearance": 0.3623349666595459,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 69,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36653873324394226,
+          "goal_wall_clearance": 0.2997569739818573,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 70,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2997569739818573,
+          "goal_wall_clearance": 0.36653873324394226,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 71,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3975561857223511,
+          "goal_wall_clearance": 0.40263357758522034,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 72,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": -0.04665534198284149,
+          "start_valid": true,
+          "goal_valid": false
+        },
+        {
+          "query_id": 73,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": -0.04665534198284149,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": false,
+          "goal_valid": true
+        },
+        {
+          "query_id": 74,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": -0.04665534198284149,
+          "goal_wall_clearance": -0.05700000002980232,
+          "start_valid": false,
+          "goal_valid": false
+        },
+        {
+          "query_id": 75,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.1577840894460678,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 76,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.1577840894460678,
+          "goal_wall_clearance": 0.20520304143428802,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 77,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.20520304143428802,
+          "goal_wall_clearance": 0.1577840894460678,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 78,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.386470228433609,
+          "goal_wall_clearance": 0.08889269083738327,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 79,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37606170773506165,
+          "goal_wall_clearance": 0.3623349666595459,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 80,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.36717575788497925,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 81,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2649911046028137,
+          "goal_wall_clearance": 0.23356933891773224,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 82,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.23356933891773224,
+          "goal_wall_clearance": 0.2649911046028137,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 83,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 84,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.1372964233160019,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 85,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.1372964233160019,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 86,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.21393346786499023,
+          "goal_wall_clearance": 0.186509907245636,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 87,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.31199365854263306,
+          "goal_wall_clearance": 0.37602943181991577,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 88,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.370461106300354,
+          "goal_wall_clearance": 0.34758877754211426,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 89,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2684541344642639,
+          "goal_wall_clearance": 0.34758877754211426,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 90,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2684541344642639,
+          "goal_wall_clearance": 0.34758877754211426,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 91,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2684541344642639,
+          "goal_wall_clearance": 0.2893107831478119,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 92,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2684541344642639,
+          "goal_wall_clearance": 0.28995639085769653,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 93,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.42842724919319153,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 94,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.42842724919319153,
+          "goal_wall_clearance": 0.22005222737789154,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 95,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.16454952955245972,
+          "goal_wall_clearance": 0.22005222737789154,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 96,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.18319730460643768,
+          "goal_wall_clearance": 0.22005222737789154,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 97,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.13868841528892517,
+          "goal_wall_clearance": 0.09514950960874557,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 98,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4844258725643158,
+          "goal_wall_clearance": 0.47433915734291077,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 99,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.005750567652285099,
+          "goal_wall_clearance": 0.011495395563542843,
+          "start_valid": true,
+          "goal_valid": true
+        }
+      ]
+    },
+    "cutting": {
+      "n": 100,
+      "baseline_valid": 100,
+      "wall_valid": 98,
+      "per_query": [
+        {
+          "query_id": 0,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4422537684440613,
+          "goal_wall_clearance": 0.45772412419319153,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 1,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.45772412419319153,
+          "goal_wall_clearance": 0.14189420640468597,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 2,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.37944725155830383,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 3,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3714045584201813,
+          "goal_wall_clearance": 0.37217918038368225,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 4,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.40348485112190247,
+          "goal_wall_clearance": 0.10113305598497391,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 5,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.04044806957244873,
+          "goal_wall_clearance": 0.040451545268297195,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 6,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36294877529144287,
+          "goal_wall_clearance": 0.3661024272441864,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 7,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3650076389312744,
+          "goal_wall_clearance": 0.15162725746631622,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 8,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": 0.07614953070878983,
+          "goal_wall_clearance": -0.011734071187675,
+          "start_valid": true,
+          "goal_valid": false
+        },
+        {
+          "query_id": 9,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.07686822861433029,
+          "goal_wall_clearance": 0.29348140954971313,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 10,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.29348140954971313,
+          "goal_wall_clearance": 0.07686822861433029,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 11,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.07672383636236191,
+          "goal_wall_clearance": 0.07494517415761948,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 12,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.38012683391571045,
+          "goal_wall_clearance": 0.3756551146507263,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 13,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3756551146507263,
+          "goal_wall_clearance": 0.21671803295612335,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 14,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.31209027767181396,
+          "goal_wall_clearance": 0.3730807304382324,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 15,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3730807304382324,
+          "goal_wall_clearance": 0.3635854125022888,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 16,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3636701703071594,
+          "goal_wall_clearance": 0.2843792140483856,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 17,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3910796046257019,
+          "goal_wall_clearance": 0.3950909376144409,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 18,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3224847912788391,
+          "goal_wall_clearance": 0.3950909376144409,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 19,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.32310807704925537,
+          "goal_wall_clearance": 0.24840833246707916,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 20,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.24365536868572235,
+          "goal_wall_clearance": 0.3218114972114563,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 21,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3984261155128479,
+          "goal_wall_clearance": 0.41231927275657654,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 22,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2604241371154785,
+          "goal_wall_clearance": 0.41231927275657654,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 23,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2604241371154785,
+          "goal_wall_clearance": 0.41231927275657654,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 24,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.41231927275657654,
+          "goal_wall_clearance": 0.2604241371154785,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 25,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37043434381484985,
+          "goal_wall_clearance": 0.36246800422668457,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 26,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.33860236406326294,
+          "goal_wall_clearance": 0.36246800422668457,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 27,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.338611900806427,
+          "goal_wall_clearance": 0.28457051515579224,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 28,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.313328355550766,
+          "goal_wall_clearance": 0.3385853171348572,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 29,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.20841442048549652,
+          "goal_wall_clearance": 0.3726519048213959,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 30,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.2260897159576416,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 31,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.17980948090553284,
+          "goal_wall_clearance": 0.23841913044452667,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 32,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37379851937294006,
+          "goal_wall_clearance": 0.39905136823654175,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 33,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4114243984222412,
+          "goal_wall_clearance": 0.2981029152870178,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 34,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.15078330039978027,
+          "goal_wall_clearance": 0.14639049768447876,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 35,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3895840048789978,
+          "goal_wall_clearance": 0.3233215808868408,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 36,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4228419363498688,
+          "goal_wall_clearance": 0.37344881892204285,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 37,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.24092130362987518,
+          "goal_wall_clearance": 0.37344881892204285,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 38,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.19960257411003113,
+          "goal_wall_clearance": 0.24117471277713776,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 39,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.19128291308879852,
+          "goal_wall_clearance": 0.24706225097179413,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 40,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.382037878036499,
+          "goal_wall_clearance": 0.41762521862983704,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 41,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.1923850178718567,
+          "goal_wall_clearance": 0.41762521862983704,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 42,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3727346658706665,
+          "goal_wall_clearance": 0.04853639006614685,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 43,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37344881892204285,
+          "goal_wall_clearance": 0.24092130362987518,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 44,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.11383701860904694,
+          "goal_wall_clearance": 0.10393005609512329,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 45,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 46,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2992579936981201,
+          "goal_wall_clearance": 0.24936719238758087,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 47,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3739411532878876,
+          "goal_wall_clearance": 0.28872016072273254,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 48,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3539051115512848,
+          "goal_wall_clearance": 0.4250500202178955,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 49,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4250500202178955,
+          "goal_wall_clearance": 0.15350934863090515,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 50,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.15574444830417633,
+          "goal_wall_clearance": 0.10412808507680893,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 51,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37492865324020386,
+          "goal_wall_clearance": 0.286997526884079,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 52,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.048107244074344635,
+          "goal_wall_clearance": 0.0481056347489357,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 53,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.40685510635375977,
+          "goal_wall_clearance": 0.40348485112190247,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 54,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37447911500930786,
+          "goal_wall_clearance": 0.3650773763656616,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 55,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.02198910340666771,
+          "goal_wall_clearance": 0.06540746241807938,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 56,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.02309926226735115,
+          "goal_wall_clearance": 0.0728561282157898,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 57,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 58,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.19878165423870087,
+          "goal_wall_clearance": 0.3708377182483673,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 59,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.39200007915496826,
+          "goal_wall_clearance": 0.05489261448383331,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 60,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.05480381101369858,
+          "goal_wall_clearance": 0.04276341199874878,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 61,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36511117219924927,
+          "goal_wall_clearance": 0.32908231019973755,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 62,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.32908231019973755,
+          "goal_wall_clearance": 0.36511117219924927,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 63,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36511117219924927,
+          "goal_wall_clearance": 0.32908231019973755,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 64,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.327135294675827,
+          "goal_wall_clearance": 0.27605947852134705,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 65,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.03979777544736862,
+          "goal_wall_clearance": 0.06748175621032715,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 66,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3832564651966095,
+          "goal_wall_clearance": 0.3823874592781067,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 67,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3823874592781067,
+          "goal_wall_clearance": 0.3542346954345703,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 68,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3542346954345703,
+          "goal_wall_clearance": 0.3823874592781067,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 69,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": -0.014999999664723873,
+          "goal_wall_clearance": 0.034001003950834274,
+          "start_valid": false,
+          "goal_valid": true
+        },
+        {
+          "query_id": 70,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.01835518702864647,
+          "goal_wall_clearance": 0.01835515722632408,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 71,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3780408203601837,
+          "goal_wall_clearance": 0.3698362112045288,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 72,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.33878853917121887,
+          "goal_wall_clearance": 0.2565864324569702,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 73,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2565864324569702,
+          "goal_wall_clearance": 0.33878853917121887,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 74,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2503657937049866,
+          "goal_wall_clearance": 0.36466649174690247,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 75,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2985790967941284,
+          "goal_wall_clearance": 0.4432465732097626,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 76,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4432465732097626,
+          "goal_wall_clearance": 0.2985790967941284,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 77,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.19462786614894867,
+          "goal_wall_clearance": 0.11706560850143433,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 78,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3686775267124176,
+          "goal_wall_clearance": 0.3327479958534241,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 79,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.34391260147094727,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 80,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.34391260147094727,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 81,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3647676706314087,
+          "goal_wall_clearance": 0.31001484394073486,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 82,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.1331450641155243,
+          "goal_wall_clearance": 0.13005340099334717,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 83,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3755488991737366,
+          "goal_wall_clearance": 0.40384119749069214,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 84,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.38132989406585693,
+          "goal_wall_clearance": 0.17874875664710999,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 85,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.401654988527298,
+          "goal_wall_clearance": 0.4114243984222412,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 86,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2981029152870178,
+          "goal_wall_clearance": 0.4114243984222412,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 87,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.39905136823654175,
+          "goal_wall_clearance": 0.14608290791511536,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 88,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.07219880074262619,
+          "goal_wall_clearance": 0.2823527455329895,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 89,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.07944012433290482,
+          "goal_wall_clearance": 0.07245367020368576,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 90,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.39727988839149475,
+          "goal_wall_clearance": 0.36238062381744385,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 91,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.28300386667251587,
+          "goal_wall_clearance": 0.3550782799720764,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 92,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3835315704345703,
+          "goal_wall_clearance": 0.36480462551116943,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 93,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36480462551116943,
+          "goal_wall_clearance": 0.20173534750938416,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 94,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.25946852564811707,
+          "goal_wall_clearance": 0.3545248210430145,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 95,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.39266008138656616,
+          "goal_wall_clearance": 0.363847553730011,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 96,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.363847553730011,
+          "goal_wall_clearance": 0.265240341424942,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 97,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2648444175720215,
+          "goal_wall_clearance": 0.20132431387901306,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 98,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3682704567909241,
+          "goal_wall_clearance": 0.3689020276069641,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 99,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.34853148460388184,
+          "goal_wall_clearance": 0.3689020276069641,
+          "start_valid": true,
+          "goal_valid": true
+        }
+      ]
+    },
+    "hammering": {
+      "n": 100,
+      "baseline_valid": 100,
+      "wall_valid": 94,
+      "per_query": [
+        {
+          "query_id": 0,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3624383807182312,
+          "goal_wall_clearance": 0.3908643424510956,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 1,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3908643424510956,
+          "goal_wall_clearance": 0.13455577194690704,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 2,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": -0.019631603732705116,
+          "goal_wall_clearance": 0.4096255302429199,
+          "start_valid": false,
+          "goal_valid": true
+        },
+        {
+          "query_id": 3,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.1329975724220276,
+          "goal_wall_clearance": 0.1919175386428833,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 4,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37530866265296936,
+          "goal_wall_clearance": 0.03672921285033226,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 5,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.09752048552036285,
+          "goal_wall_clearance": 0.03667619451880455,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 6,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3739806115627289,
+          "goal_wall_clearance": 0.12178796529769897,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 7,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4061104655265808,
+          "goal_wall_clearance": 0.391984760761261,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 8,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.391984760761261,
+          "goal_wall_clearance": 0.1271081566810608,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 9,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.23249422013759613,
+          "goal_wall_clearance": 0.13119901716709137,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 10,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3944867253303528,
+          "goal_wall_clearance": 0.36234050989151,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 11,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": -0.014926321804523468,
+          "goal_wall_clearance": 0.36234050989151,
+          "start_valid": false,
+          "goal_valid": true
+        },
+        {
+          "query_id": 12,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.14862492680549622,
+          "goal_wall_clearance": 0.15113316476345062,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 13,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.326629638671875,
+          "goal_wall_clearance": 0.37537986040115356,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 14,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37537986040115356,
+          "goal_wall_clearance": 0.14186812937259674,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 15,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.43289732933044434,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 16,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.41722527146339417,
+          "goal_wall_clearance": 0.021843042224645615,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 17,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.1546507626771927,
+          "goal_wall_clearance": 0.17227046191692352,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 18,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37260544300079346,
+          "goal_wall_clearance": 0.33251339197158813,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 19,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.39489197731018066,
+          "goal_wall_clearance": 0.39733317494392395,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 20,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3779382109642029,
+          "goal_wall_clearance": 0.37811335921287537,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 21,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3960689902305603,
+          "goal_wall_clearance": 0.10652969032526016,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 22,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.38530275225639343,
+          "goal_wall_clearance": 0.404884397983551,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 23,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.404884397983551,
+          "goal_wall_clearance": 0.18578967452049255,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 24,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.18626436591148376,
+          "goal_wall_clearance": 0.29659682512283325,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 25,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.18489117920398712,
+          "goal_wall_clearance": 0.3683948814868927,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 26,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.043400827795267105,
+          "goal_wall_clearance": 0.021842744201421738,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 27,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36416536569595337,
+          "goal_wall_clearance": 0.09512928128242493,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 28,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37542614340782166,
+          "goal_wall_clearance": 0.0919085144996643,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 29,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3727640211582184,
+          "goal_wall_clearance": 0.3923282325267792,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 30,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.06254414469003677,
+          "goal_wall_clearance": 0.3923282325267792,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 31,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3923282325267792,
+          "goal_wall_clearance": 0.06254414469003677,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 32,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.06254414469003677,
+          "goal_wall_clearance": 0.3923282325267792,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 33,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.06266874074935913,
+          "goal_wall_clearance": 0.104057177901268,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 34,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4031694531440735,
+          "goal_wall_clearance": 0.3885822892189026,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 35,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.23864443600177765,
+          "goal_wall_clearance": 0.3885822892189026,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 36,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.16067752242088318,
+          "goal_wall_clearance": 0.40464353561401367,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 37,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.37157878279685974,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 38,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3228166103363037,
+          "goal_wall_clearance": 0.10729936510324478,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 39,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.22521169483661652,
+          "goal_wall_clearance": 0.2211640477180481,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 40,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36848169565200806,
+          "goal_wall_clearance": 0.15856988728046417,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 41,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.13074515759944916,
+          "goal_wall_clearance": 0.3243030309677124,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 42,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.13055405020713806,
+          "goal_wall_clearance": 0.2972733974456787,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 43,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3912784159183502,
+          "goal_wall_clearance": 0.39085033535957336,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 44,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.39085033535957336,
+          "goal_wall_clearance": 0.10318013280630112,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 45,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.38385653495788574,
+          "goal_wall_clearance": 0.39452582597732544,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 46,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.38097313046455383,
+          "goal_wall_clearance": 0.36247166991233826,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 47,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.1818365752696991,
+          "goal_wall_clearance": 0.20108528435230255,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 48,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.4491879940032959,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 49,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": 0.4491879940032959,
+          "goal_wall_clearance": -0.002912587486207485,
+          "start_valid": true,
+          "goal_valid": false
+        },
+        {
+          "query_id": 50,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.38921353220939636,
+          "goal_wall_clearance": 0.3814113438129425,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 51,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.17941780388355255,
+          "goal_wall_clearance": 0.3772876560688019,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 52,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.014858060516417027,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 53,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.33480924367904663,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 54,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.15214776992797852,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 55,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.4362255036830902,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 56,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3243030309677124,
+          "goal_wall_clearance": 0.13074515759944916,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 57,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": 0.4096255302429199,
+          "goal_wall_clearance": -0.019631603732705116,
+          "start_valid": true,
+          "goal_valid": false
+        },
+        {
+          "query_id": 58,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": -0.019137606024742126,
+          "goal_wall_clearance": 0.10504519939422607,
+          "start_valid": false,
+          "goal_valid": true
+        },
+        {
+          "query_id": 59,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.28709980845451355,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 60,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.210860475897789,
+          "goal_wall_clearance": 0.04017502814531326,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 61,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.38377660512924194,
+          "goal_wall_clearance": 0.3623555600643158,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 62,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3623555600643158,
+          "goal_wall_clearance": 0.04001396521925926,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 63,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.04001396521925926,
+          "goal_wall_clearance": 0.3623555600643158,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 64,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.09419187903404236,
+          "goal_wall_clearance": 0.2005978375673294,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 65,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3623303472995758,
+          "goal_wall_clearance": 0.37125977873802185,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 66,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37125977873802185,
+          "goal_wall_clearance": 0.09310700744390488,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 67,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.38657456636428833,
+          "goal_wall_clearance": 0.3960689902305603,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 68,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.10652969032526016,
+          "goal_wall_clearance": 0.3960689902305603,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 69,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.12154091894626617,
+          "goal_wall_clearance": 0.3568022847175598,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 70,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.39430299401283264,
+          "goal_wall_clearance": 0.37903350591659546,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 71,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.40464353561401367,
+          "goal_wall_clearance": 0.16067752242088318,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 72,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36990177631378174,
+          "goal_wall_clearance": 0.3664030134677887,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 73,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2024259716272354,
+          "goal_wall_clearance": 0.334839403629303,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 74,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2104990929365158,
+          "goal_wall_clearance": 0.33561012148857117,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 75,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.1760331690311432,
+          "goal_wall_clearance": 0.37611687183380127,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 76,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3675508201122284,
+          "goal_wall_clearance": 0.40869036316871643,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 77,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.40869036316871643,
+          "goal_wall_clearance": 0.034014299511909485,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 78,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.046832695603370667,
+          "goal_wall_clearance": 0.1964576542377472,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 79,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.18769237399101257,
+          "goal_wall_clearance": 0.022988200187683105,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 80,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.380643367767334,
+          "goal_wall_clearance": 0.41367456316947937,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 81,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3820168077945709,
+          "goal_wall_clearance": 0.3772876560688019,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 82,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3772876560688019,
+          "goal_wall_clearance": 0.17941780388355255,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 83,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.18532197177410126,
+          "goal_wall_clearance": 0.3162856101989746,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 84,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4074350595474243,
+          "goal_wall_clearance": 0.3626481890678406,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 85,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": -0.00537682231515646,
+          "goal_wall_clearance": 0.0636761263012886,
+          "start_valid": false,
+          "goal_valid": true
+        },
+        {
+          "query_id": 86,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.28714340925216675,
+          "goal_wall_clearance": 0.24538879096508026,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 87,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.28714340925216675,
+          "goal_wall_clearance": 0.24538879096508026,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 88,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.33840057253837585,
+          "goal_wall_clearance": 0.24540041387081146,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 89,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.03502408042550087,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 90,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.035947151482105255,
+          "goal_wall_clearance": 0.13649997115135193,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 91,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.01318806130439043,
+          "goal_wall_clearance": 0.16939859092235565,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 92,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.16686975955963135,
+          "goal_wall_clearance": 0.34671056270599365,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 93,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36391258239746094,
+          "goal_wall_clearance": 0.16697029769420624,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 94,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.16943371295928955,
+          "goal_wall_clearance": 0.36602574586868286,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 95,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3550666868686676,
+          "goal_wall_clearance": 0.1684301793575287,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 96,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.014858060516417027,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 97,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.12151490151882172,
+          "goal_wall_clearance": 0.02607577294111252,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 98,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.16955339908599854,
+          "goal_wall_clearance": 0.10480187088251114,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 99,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        }
+      ]
+    },
+    "stirring": {
+      "n": 100,
+      "baseline_valid": 100,
+      "wall_valid": 94,
+      "per_query": [
+        {
+          "query_id": 0,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37988612055778503,
+          "goal_wall_clearance": 0.37088653445243835,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 1,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37088653445243835,
+          "goal_wall_clearance": 0.1214437410235405,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 2,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.11535441130399704,
+          "goal_wall_clearance": 0.37687283754348755,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 3,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.15923213958740234,
+          "goal_wall_clearance": 0.17332112789154053,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 4,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.42146751284599304,
+          "goal_wall_clearance": 0.36318540573120117,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 5,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36318540573120117,
+          "goal_wall_clearance": 0.35607853531837463,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 6,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3716685175895691,
+          "goal_wall_clearance": 0.3733668923377991,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 7,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3657504618167877,
+          "goal_wall_clearance": 0.32915744185447693,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 8,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.32915744185447693,
+          "goal_wall_clearance": 0.14602822065353394,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 9,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.32915744185447693,
+          "goal_wall_clearance": 0.14602822065353394,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 10,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.08286265283823013,
+          "goal_wall_clearance": 0.14557236433029175,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 11,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3966226279735565,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 12,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.21164953708648682,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 13,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.21164953708648682,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 14,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.21164953708648682,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 15,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.21164953708648682,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 16,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.16395792365074158,
+          "goal_wall_clearance": 0.29705584049224854,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 17,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.388162225484848,
+          "goal_wall_clearance": 0.37014058232307434,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 18,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37014058232307434,
+          "goal_wall_clearance": 0.11143885552883148,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 19,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.11143885552883148,
+          "goal_wall_clearance": 0.37014058232307434,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 20,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.11143885552883148,
+          "goal_wall_clearance": 0.37014058232307434,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 21,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36353814601898193,
+          "goal_wall_clearance": 0.4114626348018646,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 22,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2696339190006256,
+          "goal_wall_clearance": 0.4114626348018646,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 23,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4114626348018646,
+          "goal_wall_clearance": 0.2696339190006256,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 24,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.26540857553482056,
+          "goal_wall_clearance": 0.36479225754737854,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 25,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.26492491364479065,
+          "goal_wall_clearance": 0.3648153245449066,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 26,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.23979789018630981,
+          "goal_wall_clearance": 0.3663778007030487,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 27,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.12712925672531128,
+          "goal_wall_clearance": 0.23979789018630981,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 28,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.32230043411254883,
+          "goal_wall_clearance": 0.36338743567466736,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 29,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.1557299792766571,
+          "goal_wall_clearance": 0.32230043411254883,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 30,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.3460206687450409,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 31,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3460206687450409,
+          "goal_wall_clearance": 0.14752048254013062,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 32,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.14752048254013062,
+          "goal_wall_clearance": 0.3460206687450409,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 33,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3460206687450409,
+          "goal_wall_clearance": 0.14752048254013062,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 34,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.14752048254013062,
+          "goal_wall_clearance": 0.3460206687450409,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 35,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.1158580482006073,
+          "goal_wall_clearance": 0.16931644082069397,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 36,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.31940051913261414,
+          "goal_wall_clearance": 0.2742730379104614,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 37,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36745601892471313,
+          "goal_wall_clearance": 0.40072572231292725,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 38,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.40072572231292725,
+          "goal_wall_clearance": 0.2162512242794037,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 39,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2162512242794037,
+          "goal_wall_clearance": 0.40072572231292725,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 40,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.40072572231292725,
+          "goal_wall_clearance": 0.2162512242794037,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 41,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.25152555108070374,
+          "goal_wall_clearance": 0.3381454348564148,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 42,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3382630944252014,
+          "goal_wall_clearance": 0.1696772575378418,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 43,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.1352081596851349,
+          "goal_wall_clearance": 0.24997735023498535,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 44,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37683385610580444,
+          "goal_wall_clearance": 0.3623950183391571,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 45,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36956721544265747,
+          "goal_wall_clearance": 0.3623950183391571,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 46,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.38041922450065613,
+          "goal_wall_clearance": 0.3727573752403259,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 47,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3727573752403259,
+          "goal_wall_clearance": 0.23950593173503876,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 48,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.16298365592956543,
+          "goal_wall_clearance": 0.23454545438289642,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 49,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2583393454551697,
+          "goal_wall_clearance": 0.15739482641220093,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 50,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4125496745109558,
+          "goal_wall_clearance": 0.3931199312210083,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 51,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.16360102593898773,
+          "goal_wall_clearance": 0.3931199312210083,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 52,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36572346091270447,
+          "goal_wall_clearance": 0.3723026216030121,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 53,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2293083667755127,
+          "goal_wall_clearance": 0.3399987816810608,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 54,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.39700445532798767,
+          "goal_wall_clearance": 0.38167864084243774,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 55,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.39141154289245605,
+          "goal_wall_clearance": 0.37444615364074707,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 56,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.25229233503341675,
+          "goal_wall_clearance": 0.1342267394065857,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 57,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.20708909630775452,
+          "goal_wall_clearance": 0.24894271790981293,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 58,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.09560612589120865,
+          "goal_wall_clearance": 0.20708909630775452,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 59,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36323028802871704,
+          "goal_wall_clearance": 0.3848426043987274,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 60,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37444615364074707,
+          "goal_wall_clearance": 0.1633092164993286,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 61,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": -0.052000001072883606,
+          "goal_wall_clearance": 0.003261539153754711,
+          "start_valid": false,
+          "goal_valid": false
+        },
+        {
+          "query_id": 62,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.40091702342033386,
+          "goal_wall_clearance": 0.3884536325931549,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 63,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.04300842806696892,
+          "goal_wall_clearance": 0.3884536325931549,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 64,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.43714091181755066,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 65,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.14694803953170776,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 66,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.359933078289032,
+          "goal_wall_clearance": 0.44834065437316895,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 67,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.09177305549383163,
+          "goal_wall_clearance": 0.44834065437316895,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 68,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": 0.4017346501350403,
+          "goal_wall_clearance": -0.03605705127120018,
+          "start_valid": true,
+          "goal_valid": false
+        },
+        {
+          "query_id": 69,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": -0.0145247308537364,
+          "goal_wall_clearance": -0.014999999664723873,
+          "start_valid": false,
+          "goal_valid": false
+        },
+        {
+          "query_id": 70,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4054507613182068,
+          "goal_wall_clearance": 0.3944944143295288,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 71,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.28129905462265015,
+          "goal_wall_clearance": 0.2384350448846817,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 72,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.43318429589271545,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 73,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.01800236478447914,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 74,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.01800236478447914,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 75,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36244261264801025,
+          "goal_wall_clearance": 0.37112751603126526,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 76,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37112751603126526,
+          "goal_wall_clearance": 0.1523289829492569,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 77,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3966791331768036,
+          "goal_wall_clearance": 0.3945348858833313,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 78,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3945348858833313,
+          "goal_wall_clearance": 0.1328975409269333,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 79,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3945348858833313,
+          "goal_wall_clearance": 0.1328975409269333,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 80,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.05293755978345871,
+          "goal_wall_clearance": 0.0568881556391716,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 81,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36245521903038025,
+          "goal_wall_clearance": 0.37547022104263306,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 82,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": 0.38734471797943115,
+          "goal_wall_clearance": -0.011166863143444061,
+          "start_valid": true,
+          "goal_valid": false
+        },
+        {
+          "query_id": 83,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": -0.011166863143444061,
+          "goal_wall_clearance": 0.38734471797943115,
+          "start_valid": false,
+          "goal_valid": true
+        },
+        {
+          "query_id": 84,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": -0.050469450652599335,
+          "goal_wall_clearance": -0.03230666369199753,
+          "start_valid": false,
+          "goal_valid": false
+        },
+        {
+          "query_id": 85,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4029563069343567,
+          "goal_wall_clearance": 0.465400367975235,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 86,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.32275649905204773,
+          "goal_wall_clearance": 0.465400367975235,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 87,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36671358346939087,
+          "goal_wall_clearance": 0.322923481464386,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 88,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3802335858345032,
+          "goal_wall_clearance": 0.36835190653800964,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 89,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.1328975409269333,
+          "goal_wall_clearance": 0.3945348858833313,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 90,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.465400367975235,
+          "goal_wall_clearance": 0.32275649905204773,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 91,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3859342336654663,
+          "goal_wall_clearance": 0.34948301315307617,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 92,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4107426702976227,
+          "goal_wall_clearance": 0.3631647527217865,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 93,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.38224101066589355,
+          "goal_wall_clearance": 0.36289751529693604,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 94,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36289751529693604,
+          "goal_wall_clearance": 0.10125348716974258,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 95,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.03605525940656662,
+          "goal_wall_clearance": 0.13038848340511322,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 96,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.38026735186576843,
+          "goal_wall_clearance": 0.37687283754348755,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 97,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.08731848746538162,
+          "goal_wall_clearance": 0.12716804444789886,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 98,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.12504535913467407,
+          "goal_wall_clearance": 0.12744656205177307,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 99,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.10733810067176819,
+          "goal_wall_clearance": 0.08254166692495346,
+          "start_valid": true,
+          "goal_valid": true
+        }
+      ]
+    },
+    "wiping": {
+      "n": 100,
+      "baseline_valid": 100,
+      "wall_valid": 98,
+      "per_query": [
+        {
+          "query_id": 0,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36274126172065735,
+          "goal_wall_clearance": 0.36091309785842896,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 1,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36091309785842896,
+          "goal_wall_clearance": 0.36274126172065735,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 2,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2378399670124054,
+          "goal_wall_clearance": 0.35868072509765625,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 3,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3622340261936188,
+          "goal_wall_clearance": 0.18774601817131042,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 4,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.18159911036491394,
+          "goal_wall_clearance": 0.35994336009025574,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 5,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.18159911036491394,
+          "goal_wall_clearance": 0.35994336009025574,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 6,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.17625555396080017,
+          "goal_wall_clearance": 0.15465936064720154,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 7,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.18038491904735565,
+          "goal_wall_clearance": 0.18221701681613922,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 8,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3787482976913452,
+          "goal_wall_clearance": 0.3879220485687256,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 9,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.13087794184684753,
+          "goal_wall_clearance": 0.25924351811408997,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 10,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.14924076199531555,
+          "goal_wall_clearance": 0.26982375979423523,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 11,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4037061333656311,
+          "goal_wall_clearance": 0.4039125144481659,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 12,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.12735390663146973,
+          "goal_wall_clearance": 0.1656227558851242,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 13,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.1656227558851242,
+          "goal_wall_clearance": 0.12735390663146973,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 14,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.4166555106639862,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 15,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.08931142091751099,
+          "goal_wall_clearance": 0.4166555106639862,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 16,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37289613485336304,
+          "goal_wall_clearance": 0.3702392876148224,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 17,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.1992117315530777,
+          "goal_wall_clearance": 0.3702392876148224,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 18,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3702392876148224,
+          "goal_wall_clearance": 0.1992117315530777,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 19,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.19824451208114624,
+          "goal_wall_clearance": 0.20079044997692108,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 20,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4204194247722626,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 21,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3763642907142639,
+          "goal_wall_clearance": 0.3783928155899048,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 22,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36913520097732544,
+          "goal_wall_clearance": 0.3000151515007019,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 23,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36446264386177063,
+          "goal_wall_clearance": 0.27130940556526184,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 24,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.364909291267395,
+          "goal_wall_clearance": 0.3631715774536133,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 25,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3781210780143738,
+          "goal_wall_clearance": 0.3989723324775696,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 26,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.27995702624320984,
+          "goal_wall_clearance": 0.3989723324775696,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 27,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2695678174495697,
+          "goal_wall_clearance": 0.29636672139167786,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 28,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 29,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.2778885066509247,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 30,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.386888325214386,
+          "goal_wall_clearance": 0.4082120656967163,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 31,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4082120656967163,
+          "goal_wall_clearance": 0.24092935025691986,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 32,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.387935608625412,
+          "goal_wall_clearance": 0.36270150542259216,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 33,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36270150542259216,
+          "goal_wall_clearance": 0.36809173226356506,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 34,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37623369693756104,
+          "goal_wall_clearance": 0.37579992413520813,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 35,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.37379488348960876,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 36,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.23977644741535187,
+          "goal_wall_clearance": 0.37379488348960876,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 37,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37379488348960876,
+          "goal_wall_clearance": 0.23977644741535187,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 38,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.23517857491970062,
+          "goal_wall_clearance": 0.13311083614826202,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 39,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.13311083614826202,
+          "goal_wall_clearance": 0.23517857491970062,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 40,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4020223021507263,
+          "goal_wall_clearance": 0.40809085965156555,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 41,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.40809085965156555,
+          "goal_wall_clearance": 0.06978602707386017,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 42,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36635109782218933,
+          "goal_wall_clearance": 0.39188632369041443,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 43,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.08233567327260971,
+          "goal_wall_clearance": 0.39188632369041443,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 44,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.044963058084249496,
+          "goal_wall_clearance": 0.06710493564605713,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 45,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2957177460193634,
+          "goal_wall_clearance": 0.4633857309818268,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 46,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4633857309818268,
+          "goal_wall_clearance": 0.11979615688323975,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 47,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.11979615688323975,
+          "goal_wall_clearance": 0.4633857309818268,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 48,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3659285008907318,
+          "goal_wall_clearance": 0.37766125798225403,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 49,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37766125798225403,
+          "goal_wall_clearance": 0.28792235255241394,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 50,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.28791916370391846,
+          "goal_wall_clearance": 0.19859743118286133,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 51,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3779134750366211,
+          "goal_wall_clearance": 0.36914584040641785,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 52,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3666403293609619,
+          "goal_wall_clearance": 0.22988638281822205,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 53,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.0762796476483345,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 54,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.07543101161718369,
+          "goal_wall_clearance": 0.13013318181037903,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 55,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4029957950115204,
+          "goal_wall_clearance": 0.39878740906715393,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 56,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.39878740906715393,
+          "goal_wall_clearance": 0.24967552721500397,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 57,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3572210371494293,
+          "goal_wall_clearance": 0.3445007801055908,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 58,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3445007801055908,
+          "goal_wall_clearance": 0.3572210371494293,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 59,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36383625864982605,
+          "goal_wall_clearance": 0.3656609058380127,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 60,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 61,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.2508352994918823,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 62,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.25176507234573364,
+          "goal_wall_clearance": 0.25495755672454834,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 63,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.25238436460494995,
+          "goal_wall_clearance": 0.26564013957977295,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 64,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.38078564405441284,
+          "goal_wall_clearance": 0.39190763235092163,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 65,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.4339141547679901,
+          "goal_wall_clearance": 0.29502710700035095,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 66,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3812289834022522,
+          "goal_wall_clearance": 0.1638631522655487,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 67,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.15870606899261475,
+          "goal_wall_clearance": 0.23257958889007568,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 68,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3936787545681,
+          "goal_wall_clearance": 0.3836119771003723,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 69,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.36507365107536316,
+          "goal_wall_clearance": 0.3836119771003723,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 70,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3836119771003723,
+          "goal_wall_clearance": 0.36507365107536316,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 71,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.33478474617004395,
+          "goal_wall_clearance": 0.3622761368751526,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 72,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.38685154914855957,
+          "goal_wall_clearance": 0.2772435247898102,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 73,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.27724316716194153,
+          "goal_wall_clearance": 0.23995375633239746,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 74,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.48533883690834045,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 75,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.2209436595439911,
+          "goal_wall_clearance": 0.48533883690834045,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 76,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.22610239684581757,
+          "goal_wall_clearance": 0.21237431466579437,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 77,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3818684220314026,
+          "goal_wall_clearance": 0.39492401480674744,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 78,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3414376378059387,
+          "goal_wall_clearance": 0.39492401480674744,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 79,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3414376378059387,
+          "goal_wall_clearance": 0.39492401480674744,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 80,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.39492401480674744,
+          "goal_wall_clearance": 0.3414376378059387,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 81,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3425973653793335,
+          "goal_wall_clearance": 0.22535988688468933,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 82,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37874123454093933,
+          "goal_wall_clearance": 0.37044915556907654,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 83,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.37044915556907654,
+          "goal_wall_clearance": 0.12026453018188477,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 84,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.12026453018188477,
+          "goal_wall_clearance": 0.37044915556907654,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 85,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.11101487278938293,
+          "goal_wall_clearance": 0.08584024012088776,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 86,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.08584024012088776,
+          "goal_wall_clearance": 0.11101487278938293,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 87,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3868342638015747,
+          "goal_wall_clearance": 0.3247449994087219,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 88,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.12726904451847076,
+          "goal_wall_clearance": 0.3247449994087219,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 89,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3247449994087219,
+          "goal_wall_clearance": 0.12726904451847076,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 90,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": 0.12746459245681763,
+          "goal_wall_clearance": -0.005590301007032394,
+          "start_valid": true,
+          "goal_valid": false
+        },
+        {
+          "query_id": 91,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": false,
+          "start_wall_clearance": -0.014999999664723873,
+          "goal_wall_clearance": 0.12538425624370575,
+          "start_valid": false,
+          "goal_valid": true
+        },
+        {
+          "query_id": 92,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.01509780902415514,
+          "goal_wall_clearance": 0.36032018065452576,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 93,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.3679939806461334,
+          "goal_wall_clearance": 0.3900320529937744,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 94,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.15348856151103973,
+          "goal_wall_clearance": 0.3900320529937744,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 95,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.12621720135211945,
+          "goal_wall_clearance": 0.12716232240200043,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 96,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.28148123621940613,
+          "goal_wall_clearance": 0.28771281242370605,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 97,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.38724663853645325,
+          "goal_wall_clearance": 0.38789430260658264,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 98,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.18336157500743866,
+          "goal_wall_clearance": 0.38789430260658264,
+          "start_valid": true,
+          "goal_valid": true
+        },
+        {
+          "query_id": 99,
+          "baseline_endpoints_valid": true,
+          "wall_endpoints_valid": true,
+          "start_wall_clearance": 0.38789430260658264,
+          "goal_wall_clearance": 0.18336157500743866,
+          "start_valid": true,
+          "goal_valid": true
+        }
+      ]
+    }
+  },
+  "total": 600,
+  "protocol": {
+    "tilt_deg": 20,
+    "overlap_logic": "or",
+    "overlap": 0.1,
+    "obstacle_margin": 0.005,
+    "self_margin": 0.002
+  },
+  "caveat": "Valid endpoints do not certify a collision-free path exists with the added wall.",
+  "baseline_valid": 600,
+  "wall_valid": 572
+}

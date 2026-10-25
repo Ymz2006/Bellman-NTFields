@@ -1,0 +1,381 @@
+{
+  "scenes": [
+    {
+      "scene": "cabinet",
+      "scale": 1.0,
+      "evidence": "evidence/cabinet",
+      "tests": "experiments/cabinet/tests",
+      "opening_width": 0.36,
+      "heights": {
+        "bottom": 0.225,
+        "middle": 0.21,
+        "top": 0.205
+      },
+      "cupboard": {
+        "depth": 0.32,
+        "width": 0.4,
+        "height": 0.7
+      },
+      "sampling": {
+        "x": [
+          0.08,
+          0.88
+        ],
+        "y": [
+          0.03,
+          0.63
+        ],
+        "z": [
+          -0.035,
+          0.665
+        ]
+      }
+    },
+    {
+      "scene": "cabinet_plus10",
+      "scale": 1.1,
+      "evidence": "evidence/cabinet/plus10",
+      "tests": "experiments/cabinet/tests_plus10",
+      "opening_width": 0.396,
+      "heights": {
+        "bottom": 0.2475,
+        "middle": 0.231,
+        "top": 0.2255
+      },
+      "cupboard": {
+        "depth": 0.32,
+        "width": 0.436,
+        "height": 0.764
+      },
+      "sampling": {
+        "x": [
+          0.08,
+          0.88
+        ],
+        "y": [
+          0.003,
+          0.657
+        ],
+        "z": [
+          -0.035,
+          0.729
+        ]
+      }
+    },
+    {
+      "scene": "cabinet_plus20",
+      "scale": 1.2,
+      "evidence": "evidence/cabinet/plus20",
+      "tests": "experiments/cabinet/tests_plus20",
+      "opening_width": 0.432,
+      "heights": {
+        "bottom": 0.27,
+        "middle": 0.252,
+        "top": 0.246
+      },
+      "cupboard": {
+        "depth": 0.32,
+        "width": 0.472,
+        "height": 0.828
+      },
+      "sampling": {
+        "x": [
+          0.08,
+          0.88
+        ],
+        "y": [
+          -0.024,
+          0.684
+        ],
+        "z": [
+          -0.035,
+          0.793
+        ]
+      }
+    }
+  ],
+  "results": {
+    "cabinet": {
+      "bellman/native_rk4": {
+        "success": 229,
+        "n": 600,
+        "compartment": [
+          52,
+          400
+        ],
+        "open": [
+          177,
+          200
+        ]
+      },
+      "bellman/matched_mppi": {
+        "success": 688,
+        "n": 1800,
+        "compartment": [
+          156,
+          1200
+        ],
+        "open": [
+          532,
+          600
+        ]
+      },
+      "metric/native_rk4": {
+        "success": 182,
+        "n": 600,
+        "compartment": [
+          30,
+          400
+        ],
+        "open": [
+          152,
+          200
+        ]
+      },
+      "metric/matched_mppi": {
+        "success": 595,
+        "n": 1800,
+        "compartment": [
+          115,
+          1200
+        ],
+        "open": [
+          480,
+          600
+        ]
+      },
+      "metric/ntrl_mppi": {
+        "success": 509,
+        "n": 1800,
+        "compartment": [
+          63,
+          1200
+        ],
+        "open": [
+          446,
+          600
+        ]
+      }
+    },
+    "cabinet_plus10": {
+      "bellman/native_rk4": {
+        "success": 224,
+        "n": 600,
+        "compartment": [
+          50,
+          400
+        ],
+        "open": [
+          174,
+          200
+        ]
+      },
+      "bellman/matched_mppi": {
+        "success": 682,
+        "n": 1800,
+        "compartment": [
+          145,
+          1200
+        ],
+        "open": [
+          537,
+          600
+        ]
+      },
+      "metric/native_rk4": {
+        "success": 183,
+        "n": 600,
+        "compartment": [
+          27,
+          400
+        ],
+        "open": [
+          156,
+          200
+        ]
+      },
+      "metric/matched_mppi": {
+        "success": 600,
+        "n": 1800,
+        "compartment": [
+          118,
+          1200
+        ],
+        "open": [
+          482,
+          600
+        ]
+      },
+      "metric/ntrl_mppi": {
+        "success": 513,
+        "n": 1800,
+        "compartment": [
+          65,
+          1200
+        ],
+        "open": [
+          448,
+          600
+        ]
+      }
+    },
+    "cabinet_plus20": {
+      "bellman/native_rk4": {
+        "success": 223,
+        "n": 600,
+        "compartment": [
+          46,
+          400
+        ],
+        "open": [
+          177,
+          200
+        ]
+      },
+      "bellman/matched_mppi": {
+        "success": 646,
+        "n": 1800,
+        "compartment": [
+          124,
+          1200
+        ],
+        "open": [
+          522,
+          600
+        ]
+      },
+      "metric/native_rk4": {
+        "success": 194,
+        "n": 600,
+        "compartment": [
+          38,
+          400
+        ],
+        "open": [
+          156,
+          200
+        ]
+      },
+      "metric/matched_mppi": {
+        "success": 615,
+        "n": 1800,
+        "compartment": [
+          130,
+          1200
+        ],
+        "open": [
+          485,
+          600
+        ]
+      },
+      "metric/ntrl_mppi": {
+        "success": 549,
+        "n": 1800,
+        "compartment": [
+          86,
+          1200
+        ],
+        "open": [
+          463,
+          600
+        ]
+      }
+    }
+  },
+  "straight_line": {
+    "cabinet": {
+      "free_to_free": 82,
+      "free_to_compartment": 17,
+      "compartment_to_free": 11,
+      "compartment_to_compartment": 1,
+      "same_compartment": 17,
+      "anywhere": 74,
+      "total": 202
+    },
+    "cabinet_plus10": {
+      "free_to_free": 72,
+      "free_to_compartment": 10,
+      "compartment_to_free": 13,
+      "compartment_to_compartment": 0,
+      "same_compartment": 18,
+      "anywhere": 73,
+      "total": 186
+    },
+    "cabinet_plus20": {
+      "free_to_free": 83,
+      "free_to_compartment": 15,
+      "compartment_to_free": 12,
+      "compartment_to_compartment": 0,
+      "same_compartment": 21,
+      "anywhere": 77,
+      "total": 208
+    }
+  },
+  "paired": {
+    "cabinet": {
+      "native_rk4": {
+        "both": 164,
+        "bellman_only": 65,
+        "metric_only": 18,
+        "neither": 353
+      },
+      "matched_mppi": {
+        "both": 544,
+        "bellman_only": 144,
+        "metric_only": 51,
+        "neither": 1061
+      }
+    },
+    "cabinet_plus10": {
+      "native_rk4": {
+        "both": 163,
+        "bellman_only": 61,
+        "metric_only": 20,
+        "neither": 356
+      },
+      "matched_mppi": {
+        "both": 546,
+        "bellman_only": 136,
+        "metric_only": 54,
+        "neither": 1064
+      }
+    },
+    "cabinet_plus20": {
+      "native_rk4": {
+        "both": 173,
+        "bellman_only": 50,
+        "metric_only": 21,
+        "neither": 356
+      },
+      "matched_mppi": {
+        "both": 558,
+        "bellman_only": 88,
+        "metric_only": 57,
+        "neither": 1097
+      }
+    }
+  },
+  "runs": {
+    "cabinet": {
+      "bellman": "registered_20261019T034213Z-f9c501f9",
+      "metric": "registered_20261019T034237Z-30d4d872",
+      "bellman_evaluation": "registered_20261019T041026Z-39d9dafe",
+      "metric_evaluation": "registered_20261019T041045Z-9baa751f",
+      "tests": "registered_20261019T033428Z-1342d9d2"
+    },
+    "cabinet_plus10": {
+      "bellman": "registered_20261019T171925Z-c5ebfc5b",
+      "metric": "registered_20261019T172013Z-4aa0e26a",
+      "bellman_evaluation": "registered_20261019T171925Z-c5ebfc5b",
+      "metric_evaluation": "registered_20261019T172013Z-4aa0e26a",
+      "tests": "registered_20261019T171426Z-986a0e88"
+    },
+    "cabinet_plus20": {
+      "bellman": "registered_20261019T171949Z-c41ae437",
+      "metric": "registered_20261019T172037Z-75a8efe5",
+      "bellman_evaluation": "registered_20261019T171949Z-c41ae437",
+      "metric_evaluation": "registered_20261019T172037Z-75a8efe5",
+      "tests": "registered_20261019T171445Z-37602704"
+    }
+  }
+}

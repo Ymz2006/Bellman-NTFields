@@ -1,0 +1,78 @@
+# Frozen600 no-wall scene plus a standing cupboard on the cupping side (+Y), open towards
+# the robot (-X). Outer box x 0.56-0.88, y 0.13-0.53, z -0.035-0.665 (0.70 m tall), built
+# from 0.02 m panels: back, two sides, top and two shelf boards. Three compartments, each
+# 0.30 m deep x 0.36 m wide (y 0.15-0.51):
+#   bottom z -0.035-0.19, middle z 0.21-0.42, top z 0.44-0.645.
+# Zones, task axes and sampling are unchanged.
+
+cuboids:
+  - name: table
+    pose: [0.65, 0.0, -0.06, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.80, 1.20, 0.05]
+
+  - name: shelf_back
+    pose: [0.87, 0.33, 0.315, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.02, 0.40, 0.70]
+    color: [150, 105, 60]
+
+  - name: shelf_side_inner
+    pose: [0.71, 0.14, 0.315, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.30, 0.02, 0.70]
+    color: [150, 105, 60]
+
+  - name: shelf_side_outer
+    pose: [0.71, 0.52, 0.315, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.30, 0.02, 0.70]
+    color: [150, 105, 60]
+
+  - name: shelf_top
+    pose: [0.71, 0.33, 0.655, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.30, 0.36, 0.02]
+    color: [150, 105, 60]
+
+  - name: shelf_board_low
+    pose: [0.71, 0.33, 0.20, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.30, 0.36, 0.02]
+    color: [170, 125, 75]
+
+  - name: shelf_board_high
+    pose: [0.71, 0.33, 0.43, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.30, 0.36, 0.02]
+    color: [170, 125, 75]
+
+viz_table:
+  name: viz_tabletop
+  pose: [0.75, 0.0, -0.06, 1.0, 0.0, 0.0, 0.0]
+  dims: [1.00, 1.20, 0.05]
+
+sampling:
+  x: [0.29, 0.85]
+  y: [-0.55, 0.55]
+
+zones:
+  type: corner_table
+  layout: y_split
+  y_divide: 0.0
+  overlap: 0.10
+  x_center: 0.75
+  cup_side: 1
+  cup_region:
+    label: CUPPING LEFT (+Y) — CUPBOARD
+    x: [0.29, 0.85]
+    y: [0.10, 0.55]
+  pour_region:
+    label: POURING RIGHT (-Y) — CLEAR
+    x: [0.29, 0.85]
+    y: [-0.55, -0.10]
+  overlap_region:
+    label: TRANSITION (2x WIDE)
+    x: [0.29, 0.85]
+    y: [-0.10, 0.10]
+
+task_axes:
+  cup:
+    local_axis: [-1.0, 0.0, 0.0]
+    world_axis: [0.0, 0.0, 1.0]
+  pour:
+    local_axis: [0.0, 0.0, 1.0]
+    world_axis: [1.0, 0.0, 0.0]

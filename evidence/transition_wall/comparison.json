@@ -1,0 +1,467 @@
+{
+  "runs": {
+    "no_wall": "/home/yuchenliu/jeffrey/bellman600-clean/results/registered_20261009T042727Z-c1d4e622",
+    "wall40": "/home/yuchenliu/jeffrey/bellman600-clean/results/registered_20261010T205523Z-0a390379",
+    "wall80": "/home/yuchenliu/jeffrey/bellman600-clean/results/registered_20261010T205528Z-978ed9d1"
+  },
+  "scenes": {
+    "wall40": {
+      "walls": [
+        {
+          "name": "transition_wall",
+          "pose": [
+            0.57,
+            0.0,
+            0.165,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "dims": [
+            0.4,
+            0.05,
+            0.4
+          ]
+        }
+      ],
+      "valid_endpoints": 528,
+      "blocked_by_type": {
+        "cupping": 31,
+        "pouring": 9,
+        "cross": 32
+      }
+    },
+    "wall80": {
+      "walls": [
+        {
+          "name": "transition_wall",
+          "pose": [
+            0.57,
+            0.0,
+            0.365,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "dims": [
+            0.4,
+            0.05,
+            0.8
+          ]
+        }
+      ],
+      "valid_endpoints": 477,
+      "blocked_by_type": {
+        "cupping": 44,
+        "pouring": 20,
+        "cross": 59
+      }
+    }
+  },
+  "results": {
+    "no_wall": {
+      "status": {
+        "complete": true,
+        "stage": "complete",
+        "smoke": false,
+        "timing": {
+          "sample": 314.16949174899855,
+          "prepare": 900.9407608969996,
+          "training": 977.3664440989996,
+          "evaluate": 839.5826438859986
+        },
+        "elapsed_seconds": 3032.0613016199986,
+        "mppi_successes": [
+          533,
+          531,
+          533
+        ],
+        "native_success": 535,
+        "precomputed_training_assets_read": false,
+        "original_pose_pool_read": false,
+        "evaluation_data_fixed": true,
+        "mode": "from-source"
+      },
+      "methods": {
+        "mppi": {
+          "n": 1800,
+          "success": 1597,
+          "subsets": {
+            "wall40": {
+              "n": 1584,
+              "success": 1422
+            },
+            "wall80": {
+              "n": 1431,
+              "success": 1296
+            }
+          },
+          "by_type": {
+            "cupping": {
+              "success": 523,
+              "n": 540
+            },
+            "pouring": {
+              "success": 533,
+              "n": 540
+            },
+            "cross": {
+              "success": 541,
+              "n": 720
+            }
+          },
+          "by_task": {
+            "cutting": 288,
+            "hammering": 273,
+            "mixed": 212,
+            "screwdriver": 270,
+            "stirring": 276,
+            "wiping": 278
+          },
+          "failure_reasons": {
+            "tilt": 167,
+            "collision": 69
+          }
+        },
+        "rk4": {
+          "n": 600,
+          "success": 535,
+          "subsets": {
+            "wall40": {
+              "n": 528,
+              "success": 478
+            },
+            "wall80": {
+              "n": 477,
+              "success": 433
+            }
+          },
+          "by_type": {
+            "cupping": {
+              "success": 171,
+              "n": 180
+            },
+            "pouring": {
+              "success": 178,
+              "n": 180
+            },
+            "cross": {
+              "success": 186,
+              "n": 240
+            }
+          },
+          "by_task": {
+            "cutting": 96,
+            "hammering": 93,
+            "mixed": 77,
+            "screwdriver": 90,
+            "stirring": 90,
+            "wiping": 89
+          },
+          "failure_reasons": {
+            "endpoint": 34,
+            "tilt": 27,
+            "collision": 11
+          }
+        }
+      },
+      "bank": {
+        "anchors": 399752,
+        "safe_edge_fraction": 0.28348421874999996
+      },
+      "speed_validation": [
+        {
+          "source": "original",
+          "endpoint_count": 20000,
+          "mae": 0.022284941747784615,
+          "p95": 0.09601952880620956,
+          "log_rmse": 0.12483560293912888
+        },
+        {
+          "source": "augmentation",
+          "endpoint_count": 20002,
+          "mae": 0.011791895143687725,
+          "p95": 0.06672307103872299,
+          "log_rmse": 0.1067330613732338
+        }
+      ],
+      "sampling": {
+        "pool_size_each": 2000000,
+        "original_pairs": 1000000,
+        "augmentation_pairs": 1000005
+      }
+    },
+    "wall40": {
+      "status": {
+        "complete": true,
+        "stage": "complete",
+        "smoke": false,
+        "scene": "/clean/experiments/transition_wall/scenes/wall40.yml",
+        "scene_sha256": "537ffbd145e8ac8f11bcbb5d5834db0172ab45944a4afcda9a1076cc0222f321",
+        "timing": {
+          "audit": 9.079066805000366,
+          "sample": 813.9183786889998,
+          "prepare": 1109.4415785809997,
+          "training": 779.2091533340008,
+          "evaluate": 455.2584761190001
+        },
+        "elapsed_seconds": 3166.9136049549998,
+        "mppi_successes": [
+          425,
+          427,
+          425
+        ],
+        "native_success": 430,
+        "endpoint_valid_queries": 528,
+        "precomputed_training_assets_read": false,
+        "evaluation_data_fixed": true,
+        "mode": "transition-wall-from-source"
+      },
+      "methods": {
+        "mppi": {
+          "n": 1800,
+          "success": 1277,
+          "subsets": {
+            "wall40": {
+              "n": 1584,
+              "success": 1277
+            },
+            "wall80": {
+              "n": 1431,
+              "success": 1163
+            }
+          },
+          "by_type": {
+            "cupping": {
+              "success": 435,
+              "n": 540
+            },
+            "pouring": {
+              "success": 513,
+              "n": 540
+            },
+            "cross": {
+              "success": 329,
+              "n": 720
+            }
+          },
+          "by_task": {
+            "cutting": 244,
+            "hammering": 216,
+            "mixed": 151,
+            "screwdriver": 177,
+            "stirring": 238,
+            "wiping": 251
+          },
+          "failure_reasons": {
+            "tilt": 208,
+            "collision": 435
+          }
+        },
+        "rk4": {
+          "n": 600,
+          "success": 430,
+          "subsets": {
+            "wall40": {
+              "n": 528,
+              "success": 430
+            },
+            "wall80": {
+              "n": 477,
+              "success": 391
+            }
+          },
+          "by_type": {
+            "cupping": {
+              "success": 142,
+              "n": 180
+            },
+            "pouring": {
+              "success": 169,
+              "n": 180
+            },
+            "cross": {
+              "success": 119,
+              "n": 240
+            }
+          },
+          "by_task": {
+            "cutting": 82,
+            "hammering": 73,
+            "mixed": 53,
+            "screwdriver": 59,
+            "stirring": 78,
+            "wiping": 85
+          },
+          "failure_reasons": {
+            "endpoint": 44,
+            "collision": 131,
+            "tilt": 37
+          }
+        }
+      },
+      "bank": {
+        "anchors": 399575,
+        "safe_edge_fraction": 0.280336171875
+      },
+      "speed_validation": [
+        {
+          "source": "original",
+          "endpoint_count": 20000,
+          "mae": 0.025940433144569397,
+          "p95": 0.10989160090684891,
+          "log_rmse": 0.14687621593475342
+        },
+        {
+          "source": "augmentation",
+          "endpoint_count": 20002,
+          "mae": 0.014186901040375233,
+          "p95": 0.07915478199720383,
+          "log_rmse": 0.13269831240177155
+        }
+      ],
+      "sampling": {
+        "pool_size_each": 2000000,
+        "original_pairs": 1000000,
+        "augmentation_pairs": 1000005
+      }
+    },
+    "wall80": {
+      "status": {
+        "complete": true,
+        "stage": "complete",
+        "smoke": false,
+        "scene": "/clean/experiments/transition_wall/scenes/wall80.yml",
+        "scene_sha256": "34e815972dc34ae938d28b774a82671ce9e83d639bfe63438be6090ea85e5e5d",
+        "timing": {
+          "audit": 7.6100395180001215,
+          "sample": 923.5719369190001,
+          "prepare": 1162.5291887049998,
+          "training": 794.7553755899999,
+          "evaluate": 327.7835886359999
+        },
+        "elapsed_seconds": 3216.2604088400003,
+        "mppi_successes": [
+          298,
+          298,
+          299
+        ],
+        "native_success": 297,
+        "endpoint_valid_queries": 477,
+        "precomputed_training_assets_read": false,
+        "evaluation_data_fixed": true,
+        "mode": "transition-wall-from-source"
+      },
+      "methods": {
+        "mppi": {
+          "n": 1800,
+          "success": 895,
+          "subsets": {
+            "wall40": {
+              "n": 1584,
+              "success": 895
+            },
+            "wall80": {
+              "n": 1431,
+              "success": 895
+            }
+          },
+          "by_type": {
+            "cupping": {
+              "success": 400,
+              "n": 540
+            },
+            "pouring": {
+              "success": 477,
+              "n": 540
+            },
+            "cross": {
+              "success": 18,
+              "n": 720
+            }
+          },
+          "by_task": {
+            "cutting": 156,
+            "hammering": 165,
+            "mixed": 129,
+            "screwdriver": 115,
+            "stirring": 159,
+            "wiping": 171
+          },
+          "failure_reasons": {
+            "collision": 877,
+            "tilt": 337
+          }
+        },
+        "rk4": {
+          "n": 600,
+          "success": 297,
+          "subsets": {
+            "wall40": {
+              "n": 528,
+              "success": 297
+            },
+            "wall80": {
+              "n": 477,
+              "success": 297
+            }
+          },
+          "by_type": {
+            "cupping": {
+              "success": 131,
+              "n": 180
+            },
+            "pouring": {
+              "success": 159,
+              "n": 180
+            },
+            "cross": {
+              "success": 7,
+              "n": 240
+            }
+          },
+          "by_task": {
+            "cutting": 52,
+            "hammering": 54,
+            "mixed": 41,
+            "screwdriver": 40,
+            "stirring": 54,
+            "wiping": 56
+          },
+          "failure_reasons": {
+            "collision": 246,
+            "endpoint": 113,
+            "tilt": 59
+          }
+        }
+      },
+      "bank": {
+        "anchors": 398673,
+        "safe_edge_fraction": 0.265574609375
+      },
+      "speed_validation": [
+        {
+          "source": "original",
+          "endpoint_count": 20000,
+          "mae": 0.027988506481051445,
+          "p95": 0.11773999780416489,
+          "log_rmse": 0.15580660104751587
+        },
+        {
+          "source": "augmentation",
+          "endpoint_count": 20002,
+          "mae": 0.013430828228592873,
+          "p95": 0.07964655756950378,
+          "log_rmse": 0.13393773138523102
+        }
+      ],
+      "sampling": {
+        "pool_size_each": 2000000,
+        "original_pairs": 1000000,
+        "augmentation_pairs": 1000005
+      }
+    }
+  }
+}

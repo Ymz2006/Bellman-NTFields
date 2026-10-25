@@ -1,0 +1,18 @@
+{
+  "sources": [
+    {
+      "source": "original",
+      "pairs": 1000000,
+      "max_absolute_error": 1.1563301086425781e-05,
+      "bitwise_equal": false
+    },
+    {
+      "source": "augmentation",
+      "pairs": 1000005,
+      "max_absolute_error": 1.055002212524414e-05,
+      "bitwise_equal": false
+    }
+  ],
+  "seconds": 1.9095990052446723,
+  "evaluation_rows_read": false
+}

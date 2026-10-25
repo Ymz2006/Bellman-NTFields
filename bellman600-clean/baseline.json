@@ -1,0 +1,40 @@
+{
+  "name": "Clean Bellman + Eikonal + direction baseline",
+  "checkpoint": "assets/checkpoint.pt",
+  "checkpoint_sha256": "572d74fed6384d5e0211315147e8276cff35c2bcff5fd3da645bec1c4ea68a85",
+  "evaluation": "evidence/baseline/evaluation",
+  "successes": [
+    532,
+    533,
+    532
+  ],
+  "success": 1597,
+  "n": 1800,
+  "SR_percent": 88.72222222222223,
+  "native_success": 549,
+  "parameters": 338177,
+  "training_rounds": 5,
+  "training_steps": 15620,
+  "training_seed": 87358,
+  "planning_seeds": [
+    0,
+    1,
+    2
+  ],
+  "architecture": {
+    "state_blocks": 2,
+    "state_width": 256,
+    "pair_blocks": 1,
+    "pair_width": 64,
+    "random_features": 0
+  },
+  "loss_weights": {
+    "bellman": 6,
+    "eikonal": 2,
+    "direction": 2
+  },
+  "implementation": "method",
+  "reference_note": "Frozen migrated checkpoint re-evaluated with clean code: identical MPPI per-query success labels across1800 executions; RK4549/600. Independent clean-code retraining also gives1597/1800; RK4 differs by one query.",
+  "evaluation_run_id": "20260928T165304Z-de0753d1",
+  "clean_training_verification_run_id": "20260928T164436Z-c994ee97"
+}

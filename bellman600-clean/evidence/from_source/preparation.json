@@ -1,0 +1,13 @@
+{
+  "complete": true,
+  "smoke": false,
+  "speed_steps": 20000,
+  "bank_anchors": 399725,
+  "elapsed_seconds": 347.6266660839319,
+  "stages": {
+    "relabel_seconds": 1.8785666418261826,
+    "speed_seconds": 72.40974630089477,
+    "bank_seconds": 270.77049486199394
+  },
+  "evaluation_rows_read": false
+}

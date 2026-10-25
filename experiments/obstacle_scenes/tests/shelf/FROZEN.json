@@ -1,0 +1,9 @@
+{
+  "source_run": "registered_20261013T210448Z-651bed01",
+  "scene": "shelf",
+  "scene_sha256": "49a92b0b473121fd89cf3c3041fbd4aa8dbd888bf242f1e05f4357673a49b406",
+  "generator_sha256": "ce8a277da2fdcd509854a48abc76196b80904c08b4da59391cadbdfd09ee5cf0",
+  "suite_manifest_sha256": "8fffc0dd3f1dcdb2ae86619428683a4e1f611f1f4a99d38f5a17f57e20fa02cb",
+  "total": 600,
+  "note": "Frozen testing data: never resample or edit; evaluate_tests.py checks these hashes."
+}

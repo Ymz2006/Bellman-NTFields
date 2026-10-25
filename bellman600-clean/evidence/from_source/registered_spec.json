@@ -1,0 +1,64 @@
+{
+  "name": "Clean Bellman600 independent from-source full",
+  "kind": "pipeline",
+  "root": "/tmp/bellman-source-delivery",
+  "config": {
+    "action": "from-source",
+    "smoke": false,
+    "fk_seed": 42,
+    "pair_seed": 42,
+    "coverage_seed": 20260912,
+    "speed_seed": 87358,
+    "bank_seed": 87344,
+    "training_seed": 87358,
+    "fk_pool_each": 2000000,
+    "speed_steps": 20000,
+    "bank_walkers": 50000,
+    "bank_generations": 8,
+    "losses": {
+      "bellman": 6,
+      "eikonal": 2,
+      "direction": 2
+    },
+    "rounds": 5,
+    "precomputed_training_inputs": false,
+    "planning_seeds": [
+      0,
+      1,
+      2
+    ]
+  },
+  "environment": {
+    "docker_context": "default",
+    "docker_image_id": "sha256:e7749bdb59fb8ef51a462ab56c5febfd55aec43ec199eb99cec1e013e1dc0828"
+  },
+  "inputs": {
+    "data_generation": "/tmp/bellman-source-delivery/data_generation",
+    "method": "/tmp/bellman-source-delivery/method",
+    "experiment": "/tmp/bellman-source-delivery/experiments/from_source",
+    "runtime": "/tmp/bellman-source-delivery/runtime",
+    "launcher": "/tmp/bellman-source-delivery/launch.py",
+    "entrypoint": "/tmp/bellman-source-delivery/run.py",
+    "runtime_manifest": "/tmp/bellman-source-delivery/runtime_manifest.json",
+    "runtime_tools": "/tmp/bellman-source-delivery/tools/runtime_assets.py",
+    "registry": "/tmp/bellman-source-delivery/tools/experiment_registry/registry.py"
+  },
+  "command": [
+    "/usr/bin/python3",
+    "/tmp/bellman-source-delivery/launch.py",
+    "from-source",
+    "--output",
+    "{output}"
+  ],
+  "required_outputs": [
+    "status.json",
+    "sampled/complete.json",
+    "sampled/inputs/source_manifest.json",
+    "prepared/complete.json",
+    "prepared/speed.pt",
+    "prepared/bank/manifest.json",
+    "training/checkpoint.pt",
+    "evaluation/evaluation.json"
+  ],
+  "validation": "files"
+}

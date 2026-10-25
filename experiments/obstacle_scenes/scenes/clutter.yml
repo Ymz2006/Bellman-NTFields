@@ -1,0 +1,62 @@
+# Frozen600 no-wall scene plus one household object per task region, standing on the table top (z = -0.035):
+#   bottle_left    0.08 x 0.08 x 0.30 at (0.48, +0.28)   cupping region
+#   jar_center     0.10 x 0.10 x 0.16 at (0.62,  0.00)   transition band
+#   kettle_right   0.18 x 0.16 x 0.24 at (0.70, -0.33)   pouring region
+# Zones, task axes and sampling are unchanged.
+
+cuboids:
+  - name: table
+    pose: [0.65, 0.0, -0.06, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.80, 1.20, 0.05]
+
+  - name: bottle_left
+    pose: [0.48, 0.28, 0.115, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.08, 0.08, 0.30]
+    color: [60, 150, 90]
+
+  - name: jar_center
+    pose: [0.62, 0.0, 0.045, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.10, 0.10, 0.16]
+    color: [220, 160, 40]
+
+  - name: kettle_right
+    pose: [0.70, -0.33, 0.085, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.18, 0.16, 0.24]
+    color: [170, 60, 60]
+
+viz_table:
+  name: viz_tabletop
+  pose: [0.75, 0.0, -0.06, 1.0, 0.0, 0.0, 0.0]
+  dims: [1.00, 1.20, 0.05]
+
+sampling:
+  x: [0.29, 0.85]
+  y: [-0.55, 0.55]
+
+zones:
+  type: corner_table
+  layout: y_split
+  y_divide: 0.0
+  overlap: 0.10
+  x_center: 0.75
+  cup_side: 1
+  cup_region:
+    label: CUPPING LEFT (+Y) — BOTTLE
+    x: [0.29, 0.85]
+    y: [0.10, 0.55]
+  pour_region:
+    label: POURING RIGHT (-Y) — KETTLE
+    x: [0.29, 0.85]
+    y: [-0.55, -0.10]
+  overlap_region:
+    label: TRANSITION (2x WIDE) — JAR
+    x: [0.29, 0.85]
+    y: [-0.10, 0.10]
+
+task_axes:
+  cup:
+    local_axis: [-1.0, 0.0, 0.0]
+    world_axis: [0.0, 0.0, 1.0]
+  pour:
+    local_axis: [0.0, 0.0, 1.0]
+    world_axis: [1.0, 0.0, 0.0]

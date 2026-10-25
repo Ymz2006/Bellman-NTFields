@@ -1,0 +1,101 @@
+{
+  "scene": "platforms",
+  "rounds": [
+    {
+      "round": 0,
+      "candidates": 960,
+      "direct": 394,
+      "rrt_queries": 566,
+      "rrt_found": 420,
+      "rrt_certified": 420,
+      "rrt_iterations": 10000,
+      "rrt_seconds": 298.12319786100124
+    }
+  ],
+  "strata": {
+    "general_cupping": {
+      "pair_type": 0,
+      "start_pool": "cup",
+      "goal_pool": "cup",
+      "candidates": 160,
+      "certified": 143,
+      "uncertified": 17,
+      "certified_direct": 100,
+      "selected_direct": 75
+    },
+    "general_pouring": {
+      "pair_type": 1,
+      "start_pool": "pour",
+      "goal_pool": "pour",
+      "candidates": 160,
+      "certified": 151,
+      "uncertified": 9,
+      "certified_direct": 116,
+      "selected_direct": 78
+    },
+    "general_cross": {
+      "pair_type": 2,
+      "start_pool": "cup",
+      "goal_pool": "pour",
+      "candidates": 160,
+      "certified": 131,
+      "uncertified": 29,
+      "certified_direct": 10,
+      "selected_direct": 8
+    },
+    "platform_cupping": {
+      "pair_type": 0,
+      "start_pool": "cup_platform_top",
+      "goal_pool": "cup_platform_top",
+      "candidates": 160,
+      "certified": 127,
+      "uncertified": 33,
+      "certified_direct": 77,
+      "selected_direct": 59
+    },
+    "platform_pouring": {
+      "pair_type": 1,
+      "start_pool": "pour_platform_top",
+      "goal_pool": "pour_platform_top",
+      "candidates": 160,
+      "certified": 157,
+      "uncertified": 3,
+      "certified_direct": 90,
+      "selected_direct": 56
+    },
+    "platform_cross": {
+      "pair_type": 2,
+      "start_pool": "cup_platform_top",
+      "goal_pool": "pour_platform_top",
+      "candidates": 160,
+      "certified": 105,
+      "uncertified": 55,
+      "certified_direct": 1,
+      "selected_direct": 1
+    }
+  },
+  "pool_sizes": {
+    "cup": 234730,
+    "pour": 598207,
+    "cup_platform_top": 15674,
+    "pour_platform_top": 29451
+  },
+  "rrt_targets": 300000,
+  "timing": {
+    "pools": 172.25926613099728,
+    "total": 482.13502279199747
+  },
+  "parameters": {
+    "samples": 400000000,
+    "round_size": 160,
+    "max_rounds": 6,
+    "rrt_iterations": 10000,
+    "rrt_step": 0.2,
+    "rrt_capacity": 10500,
+    "goal_bias": 0.1,
+    "min_cspace_l2": 0.02,
+    "max_cspace_l2": 4.0,
+    "per_stratum": 100
+  },
+  "complete": true
+}

@@ -1,0 +1,13 @@
+{
+  "asset_files_verified": 113,
+  "git_clone_and_asset_unpack_verified": true,
+  "container_mounts_inside_new_repository": true,
+  "no_symlink_dependencies": true,
+  "gui_all_task_seed_paths_loaded": true,
+  "gui_robot_fk_passed": true,
+  "gui_http_status": 200,
+  "gui_temporary_test_process_stopped": true,
+  "asset_bundle": "dist/bellman600-clean-assets.tar.gz",
+  "registry_run_id": "20260930T002043Z-6d56aa43",
+  "registry_state": "succeeded"
+}
