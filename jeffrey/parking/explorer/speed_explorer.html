@@ -1,0 +1,885 @@
+<title>Parking Speed Explorer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: a control console, the lot plate beside speed and travel-time slope along the line through both bays, then the travel time full width; one column on phones. */
+:root {
+  --bg: #f3f4f1;
+  --surface: #ffffff;
+  --ink: #15181c;
+  --ink-2: #59616b;
+  --rule: #d9dcd5;
+  --wall: #4a4f57;
+  --band: rgba(190, 36, 44, 0.13);
+  --band-ink: #a8222b;
+  --speed: #2463c6;
+  --time: #c4501a;
+  --straight: #6f7782;
+  --start: #11845a;
+  --heat-fast: #f2f4f6;
+  --heat-slow: #1b3c6e;
+  --chip: #eceee9;
+  --across: #7246c2;
+  --learned: #c0307f;
+  --font-display: 'IBM Plex Sans Condensed', 'Arial Narrow', system-ui, sans-serif;
+  --font-ui: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-num: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101216; --surface: #171a1f; --ink: #e6e8eb; --ink-2: #9aa2ac; --rule: #2a2f36; --wall: #727a85;
+    --band: rgba(240, 96, 104, 0.2); --band-ink: #ff8d92; --speed: #64a2f2; --time: #f08550; --straight: #a0a8b2;
+    --start: #36c690; --heat-fast: #1a1e24; --heat-slow: #93bcff; --chip: #22262c; --across: #ab8cf2; --learned: #f283c0; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #101216; --surface: #171a1f; --ink: #e6e8eb; --ink-2: #9aa2ac; --rule: #2a2f36; --wall: #727a85;
+  --band: rgba(240, 96, 104, 0.2); --band-ink: #ff8d92; --speed: #64a2f2; --time: #f08550; --straight: #a0a8b2;
+  --start: #36c690; --heat-fast: #1a1e24; --heat-slow: #93bcff; --chip: #22262c; --across: #ab8cf2; --learned: #f283c0; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 15px; line-height: 1.5; }
+.page { max-width: 1200px; margin: 0 auto; padding-block: 28px 56px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+.page > * { min-width: 0; }
+header { display: grid; gap: 6px; }
+.eyebrow { font-family: var(--font-num); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); }
+h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 4.2vw, 38px); line-height: 1.08; margin: 0; text-wrap: balance; }
+.sub { margin: 0; color: var(--ink-2); max-width: 70ch; }
+.console { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 16px 18px; display: grid; gap: 14px; }
+.controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px 24px; }
+.ctl { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 2px 10px; min-width: 0; }
+.ctl .name, fieldset legend { grid-column: 1 / -1; font-size: 12px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-2); padding: 0; }
+.ctl input[type=range] { width: 100%; margin: 0; accent-color: var(--speed); }
+.ctl output { font-family: var(--font-num); font-variant-numeric: tabular-nums; font-size: 14px; min-width: 6.5ch; text-align: right; }
+fieldset { border: 0; margin: 0; padding: 0; min-width: 0; display: grid; gap: 6px; }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg label { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 6px; background: var(--chip); font-size: 13.5px; cursor: pointer; }
+.seg input { accent-color: var(--speed); margin: 0; }
+.position { grid-column: 1 / -1; }
+.bottomrow { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; justify-content: space-between; }
+.derived { display: flex; flex-wrap: wrap; gap: 6px 20px; font-family: var(--font-num); font-size: 13px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.derived b { color: var(--ink); font-weight: 500; }
+.presets { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.presets span { font-size: 12px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-2); font-weight: 600; }
+button { font: inherit; font-size: 13.5px; color: var(--ink); background: var(--chip); border: 1px solid var(--rule); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+button[aria-pressed="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+:focus-visible { outline: 2px solid var(--speed); outline-offset: 2px; }
+.main { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.25fr); gap: 20px; align-items: start; }
+@media (max-width: 880px) { .main { grid-template-columns: minmax(0, 1fr); } }
+.plate { margin: 0; background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 12px; display: grid; gap: 10px; min-width: 0; }
+.plate canvas { width: 100%; aspect-ratio: 1 / 1; max-width: 100%; display: block; border-radius: 4px; touch-action: none; cursor: ns-resize; }
+.keys { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12.5px; color: var(--ink-2); }
+.key { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 18px; height: 10px; border-radius: 2px; display: inline-block; flex: none; }
+.readings { display: grid; gap: 16px; min-width: 0; }
+.chart { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 14px 10px; min-width: 0; display: grid; gap: 4px; }
+.chart .head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 14px; }
+.chart h2 { font-size: 14.5px; font-weight: 600; margin: 0; }
+.chart svg { width: 100%; display: block; touch-action: none; cursor: ew-resize; overflow: visible; }
+.chart svg text { font-family: var(--font-ui); font-size: 11px; fill: var(--ink-2); }
+.chart svg text.val { font-family: var(--font-num); fill: var(--ink); font-size: 11.5px; }
+.chart svg text.band { fill: var(--band-ink); }
+.readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }
+.cell { background: var(--surface); padding: 10px 14px; display: grid; gap: 2px; min-width: 0; }
+.cell .l { font-size: 12px; color: var(--ink-2); }
+.cell .v { font-family: var(--font-num); font-size: 18px; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.cell .n { font-size: 12px; color: var(--ink-2); }
+.tablewrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th, td { padding: 7px 12px; text-align: right; border-bottom: 1px solid var(--rule); white-space: nowrap; font-variant-numeric: tabular-nums; }
+th { font-size: 12px; font-weight: 600; color: var(--ink-2); letter-spacing: 0.03em; }
+td:first-child, th:first-child { text-align: left; }
+td { font-family: var(--font-num); }
+td:first-child { font-family: var(--font-ui); }
+tr:last-child td { border-bottom: 0; }
+section h2.sec { font-size: 15px; margin: 0 0 8px; font-weight: 600; }
+.notes { max-width: 78ch; color: var(--ink-2); font-size: 14px; }
+.notes ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
+.notes code { font-family: var(--font-num); font-size: 13px; color: var(--ink); }
+.busy { font-size: 12px; color: var(--ink-2); font-family: var(--font-num); }
+.widthcharts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 16px; }
+.widthcharts .keys b { font-family: var(--font-num); font-weight: 500; color: var(--ink); }
+.learnbar { border-top: 1px solid var(--rule); padding-top: 12px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
+.console { grid-template-columns: minmax(0, 1fr); }
+.lb-row > * { min-width: 0; max-width: 100%; }
+.lb-row { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+.lb-title { font-size: 12px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--learned); }
+.lb-jump { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-2); min-width: 0; }
+.lb-jump select { flex: 1 1 220px; width: 100%; font: inherit; font-size: 13px; color: var(--ink); background: var(--chip); border: 1px solid var(--rule); border-radius: 6px; padding: 3px 6px; max-width: 100%; min-width: 0; }
+.lb-status { font-size: 13px; color: var(--ink-2); }
+.seg label.on { outline: 1.5px solid var(--learned); }
+.cap, .widthcharts .cap { font-size: 12.5px; color: var(--ink-2); margin: 2px 0 0; }
+</style>
+
+<main class="page">
+  <header>
+    <div class="eyebrow">ntrl-demo speed model · exact car-to-wall clearance · θ = 0</div>
+    <h1>Parking Speed Explorer</h1>
+    <p class="sub">A 0.30-long rectangle car parks nose-in in bay A and has to reach bay B. Change the car's width, then slide it straight down from bay A to bay B: the plots show the speed at every position on that line, how fast the travel time changes along it, and the travel time to it from the parked pose in bay A: the truth (shortest route) and, for scenes that were trained, the learned ntrl-demo field.</p>
+  </header>
+
+  <section class="console" aria-label="Scene controls">
+    <div class="controls">
+      <div class="ctl">
+        <label class="name" for="w">Car width</label>
+        <input type="range" id="w" min="0.01" max="0.225" step="0.001" value="0.13">
+        <output id="w-out" for="w">0.130</output>
+      </div>
+      <div class="ctl">
+        <label class="name" for="dv">Divider thickness</label>
+        <input type="range" id="dv" min="0.001" max="0.3" step="0.001" value="0.005">
+        <output id="dv-out" for="dv">0.005</output>
+      </div>
+      <fieldset>
+        <legend>Bays</legend>
+        <div class="seg">
+          <label><input type="radio" name="bays" id="bays-fixed" value="fixed" checked> fixed at 0.23 wide</label>
+          <label><input type="radio" name="bays" id="bays-grow" value="grow"> car width + 0.10</label>
+        </div>
+      </fieldset>
+      <div class="ctl">
+        <label class="name" for="mg">Speed margin</label>
+        <input type="range" id="mg" min="0.01" max="0.1" step="0.0005" value="0.0333">
+        <output id="mg-out" for="mg">0.0333</output>
+      </div>
+      <div class="ctl position">
+        <label class="name" for="yy">Car position on the line x = 0.29 (drag here, on the lot, or on either chart)</label>
+        <input type="range" id="yy" min="-1" max="1" step="0.001" value="-1">
+        <output id="yy-out" for="yy">0.000</output>
+      </div>
+    </div>
+    <div class="bottomrow">
+      <div class="derived" id="derived"></div>
+      <div class="presets" role="group" aria-label="Presets">
+        <span>Presets</span>
+        <button type="button" id="p-orig">Original car</button>
+        <button type="button" id="p-narrow">Narrow car, close bays</button>
+        <button type="button" id="p-wide">Wide car, tight bays</button>
+      </div>
+    </div>
+    <div class="learnbar" aria-label="Learned field">
+      <div class="lb-row">
+        <span class="lb-title">Learned field (ntrl-demo)</span>
+        <label class="lb-jump">Jump to a trained scene <select id="jump"></select></label>
+      </div>
+      <div class="seg" id="seeds" role="radiogroup" aria-label="Learned field shown"></div>
+      <div class="lb-status" id="lstatus"></div>
+    </div>
+  </section>
+
+  <section class="main" aria-label="Lot and readings">
+    <figure class="plate">
+      <canvas id="lot" role="img" aria-label="The parking lot with the speed the car would have at each position of its centre, the car on the line through both bays, and the shortest route to it from the parked pose in bay A."></canvas>
+      <div class="keys">
+        <span class="key"><span class="sw" id="sw-heat"></span>speed if the car's centre were here (light = full speed, dark = slowest)</span>
+        <span class="key"><span class="sw" style="background: var(--wall)"></span>walls</span>
+        <span class="key"><span class="sw" style="background: var(--start)"></span>start pose, bay A</span>
+        <span class="key"><span class="sw" style="background: var(--time)"></span>shortest route to the car</span>
+      </div>
+      <div class="presets" role="group" aria-label="Heat map">
+        <span>Heat map</span>
+        <button type="button" id="h-true" aria-pressed="true">true speed</button>
+        <button type="button" id="h-learn" aria-pressed="false">learned speed</button>
+      </div>
+    </figure>
+    <div class="readings">
+      <div class="chart">
+        <div class="head"><h2>Speed of the car on the line</h2><span class="busy" id="busy"></span></div>
+        <div class="keys"><span class="key"><span class="sw" style="background: var(--speed)"></span>true speed S</span><span class="key lk"><span class="sw" style="background: var(--learned)"></span>learned speed 1 / |∇T|</span></div>
+        <svg id="c-speed" aria-label="Speed against the car's y position, from bay A through the divider to bay B"></svg>
+      </div>
+      <div class="chart">
+        <div class="head">
+          <h2>Travel time along the line: slope dT/ds</h2>
+          <div class="presets" role="group" aria-label="Slope scale">
+            <button type="button" id="sl-full" aria-pressed="true">Full scale</button>
+            <button type="button" id="sl-zoom" aria-pressed="false">Zoom to the bays</button>
+          </div>
+        </div>
+        <div class="keys">
+          <span class="key"><span class="sw" style="background: var(--time)"></span>true dT/ds: change in travel time per unit of distance as the car slides toward bay B</span>
+          <span class="key lk"><span class="sw" style="background: var(--learned)"></span>learned dT/ds</span>
+          <span class="key"><span class="sw" style="background: repeating-linear-gradient(90deg, var(--speed) 0 5px, transparent 5px 8px)"></span>±1 / S (true), the most the true slope can be</span>
+        </div>
+        <svg id="c-slope" aria-label="Slope of the true travel time along the line against the car's y position"></svg>
+        <p class="cap">It reaches ±1 / S where the shortest route runs along the line, and stays below where the route comes in from the side (bay B is reached by backing out and going around).</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chart" aria-label="True travel time">
+    <div class="head">
+      <h2>Travel time from the bay-A pose</h2>
+      <div class="presets" role="group" aria-label="Travel-time scale">
+        <button type="button" id="sc-full" aria-pressed="true">Full scale</button>
+        <button type="button" id="sc-zoom" aria-pressed="false">Zoom to the bays</button>
+      </div>
+    </div>
+    <div class="keys">
+      <span class="key"><span class="sw" style="background: var(--time)"></span>shortest route (true travel time)</span>
+      <span class="key"><span class="sw" style="background: repeating-linear-gradient(90deg, var(--straight) 0 5px, transparent 5px 8px)"></span>straight down the line, through the divider</span>
+      <span class="key lk"><span class="sw" style="background: var(--learned)"></span>learned T(bay-A pose, car)</span>
+    </div>
+    <svg id="c-time" aria-label="Travel time from the bay-A pose against the car's y position"></svg>
+  </section>
+
+  <section aria-label="Values at the car's position">
+    <div class="readout" id="readout"></div>
+    <div class="readout" id="readout-l" style="margin-top: 10px" hidden></div>
+  </section>
+
+  <section class="widthcharts" aria-label="Slopes against car width">
+    <div class="chart">
+      <div class="head"><h2>Slope of the travel time against car width</h2><span class="busy" id="busy-w"></span></div>
+      <div class="keys" id="keys-wtime"></div>
+      <svg id="c-wtime" aria-label="Travel-time slopes against car width"></svg>
+      <p class="cap">Travel time per unit of distance (log scale). Steepest: the largest |dT/dy| anywhere on the line. Along the bay: 1 / speed on bay B's centre line, the slope driving in or out. Across the band: the jump in travel time from one side of the no-go band to the other, divided by the band's thickness. Lines: truth. Dots: trained fields for this divider, bays and margin (larger dot: the field selected above); a field whose far side sits lower than its near side has a negative jump and is drawn on the floor. Drag on the chart to change the car width.</p>
+    </div>
+    <div class="chart">
+      <div class="head"><h2>Slope of the speed against car width</h2></div>
+      <div class="keys" id="keys-wspeed"></div>
+      <svg id="c-wspeed" aria-label="Steepest change of speed along the line against car width"></svg>
+      <p class="cap">The largest |dS/dy| anywhere on the line: how fast the speed climbs from the slowest value at a wall to full speed. Line: truth. Dots: trained fields, with their speed capped at 1 like the truth's and the 0.015 around the start pose left out (1 / |∇T| spikes wherever the learned T is flat, as at its own source). Drag on the chart to change the car width.</p>
+    </div>
+  </section>
+
+  <section aria-label="Values at key points">
+    <h2 class="sec">Key points on the line</h2>
+    <div class="tablewrap"><table id="keytable"></table></div>
+  </section>
+
+  <section class="notes" aria-label="How this is computed">
+    <h2 class="sec">How it is computed</h2>
+    <ul>
+      <li>Lot: the unit square with 0.02 outer walls; bays open toward −x at x = 0.10 and run to the back wall at 0.48. The car is 0.30 long (along x) and parks centred at x = 0.29, θ = 0.</li>
+      <li>Clearance <code>d</code>: the exact distance between the car rectangle and the nearest wall box (negative = how far it overlaps).</li>
+      <li>Speed: ntrl-demo's label <code>s = clip(d / margin, offset / margin, 1)</code> with offset = margin / 10 (ntrl-demo's default margin is 1/30), stretched by its <code>metric</code> trainer to <code>S = 1.025 s²(2 − s)² − 0.025</code>, so the slowest speed (touching or inside a wall) is 0.012. Walls are slow, not solid.</li>
+      <li>True travel time: shortest paths over the car centre's (x, y) positions at θ = 0, on a 0.005 grid with extra lines at the bay centres and bay edges, 16 neighbours per point, each step costing its length times the average of 1 / S at its ends. Checked against the (x, y, θ) ground truth of the registered runs in nine scenes: the time to bay B's centre agrees to within 1.2%, the peak inside the wall to within 8%.</li>
+      <li>Along-line slope dT/ds: the difference in true travel time between neighbouring grid lines on x = 0.29, divided by their spacing (0.0025 to 0.005), signed so that positive means the time grows as the car moves toward bay B. The eikonal equation fixes the full gradient, |∇T| = 1 / S, so |dT/ds| ≤ 1 / S.</li>
+      <li>Learned field: each registered parking run's final checkpoint (84 fields: 3 training seeds for most scenes, ntrl-demo <code>metric</code> and, for the divider sweep, <code>metric_arm</code>), evaluated from the bay-A parked pose it was trained from: learned T = T(qA, q) along x = 0.29 at θ = 0 every 0.001, learned speed = 1 / |∇T| with the gradient taken in the trained coordinates q = (x, y, θ / 2π) as in training, learned dT/ds = −∂T/∂y. The learned heat map is the same speed on a 121 × 121 grid. Planning success is per training seed out of 300 (100 bay-to-bay queries × 3 planning seeds; widening runs report the fine MPPI). Data: <code>jeffrey/parking/explorer/learned_data.py</code>.</li>
+      <li>Straight-down time: the integral of 1 / S along the line x = 0.29 from the parked pose, i.e. crawling straight through the divider.</li>
+      <li>Slopes against car width: one shortest-path solve per width (0.01 to 0.225 in steps of 0.005) for the current divider, bays and margin. The steepest travel-time slope is the largest |ΔT/Δy| between neighbouring grid lines on the line; the speed slope is the largest |ΔS/Δy| on a 4,000-point sampling of it.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="learned.js"></script>
+<script>
+// ---- solver begin ----
+const ALPHA = 1.025, CAR_L = 0.30, INNER = 0.48, X_D = 0.10, CLEAR = 0.05, FIXED_BAY = 0.23, PARK_X = 0.29;
+const BOX_NAMES = ['left wall', 'back wall', 'bottom wall', 'top wall', 'divider', 'block above bay A', 'block below bay B'];
+
+function makeScene(p) {
+  const bay = p.bays === 'grow' ? p.carW + 2 * CLEAR : FIXED_BAY;
+  const d = p.div;
+  const boxes = [
+    [-0.5, -0.5, -INNER, 0.5], [INNER, -0.5, 0.5, 0.5], [-0.5, -0.5, 0.5, -INNER], [-0.5, INNER, 0.5, 0.5],
+    [X_D, -d / 2, INNER, d / 2], [X_D, d / 2 + bay, INNER, INNER], [X_D, -INNER, INNER, -d / 2 - bay],
+  ];
+  return { W: p.carW, bay, div: d, boxes, yA: d / 2 + bay / 2, gap: (bay - p.carW) / 2, cwall: d + p.carW, margin: p.margin, offset: p.margin / 10 };
+}
+
+function clearance(sc, x, y) {
+  const hx = CAR_L / 2, hy = sc.W / 2;
+  let best = Infinity, which = -1;
+  for (let k = 0; k < 7; k++) {
+    const b = sc.boxes[k];
+    const gx = Math.max(b[0] - (x + hx), (x - hx) - b[2]);
+    const gy = Math.max(b[1] - (y + hy), (y - hy) - b[3]);
+    const dist = (gx > 0 || gy > 0) ? Math.hypot(Math.max(gx, 0), Math.max(gy, 0)) : Math.max(gx, gy);
+    if (dist < best) { best = dist; which = k; }
+  }
+  return { d: best, box: which };
+}
+
+function speedLabel(sc, d) { return Math.min(1, Math.max(sc.offset / sc.margin, d / sc.margin)); }
+function speed(sc, d) { const s = speedLabel(sc, d); return ALPHA * s * s * (2 - s) * (2 - s) + 1 - ALPHA; }
+
+function mergeAxis(base, extra) {
+  const all = base.concat(extra.filter(v => v > -0.5 && v < 0.5)).sort((a, b) => a - b);
+  const out = [];
+  for (const v of all) if (!out.length || v - out[out.length - 1] > 1e-6) out.push(v);
+  return out;
+}
+
+const STEPS = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1], [1, 2], [1, -2], [-1, 2], [-1, -2], [2, 1], [2, -1], [-2, 1], [-2, -1]];
+
+function solve(sc, h = 0.005) {
+  const n = Math.round(1 / h);
+  const base = Array.from({ length: n + 1 }, (_, i) => Math.round((-0.5 + i * h) * 1e6) / 1e6);
+  const xs = base;
+  const e1 = sc.div / 2 + sc.W / 2, e2 = sc.div / 2 + sc.bay - sc.W / 2, g = sc.gap;
+  const extra = [];
+  for (const sg of [1, -1]) for (const v of [sc.yA, e1, e2, sc.yA + g / 2, sc.yA - g / 2]) extra.push(sg * v);
+  const ys = mergeAxis(base, extra);
+  const nx = xs.length, ny = ys.length, N = nx * ny;
+  const inv = new Float64Array(N);
+  for (let i = 0; i < nx; i++) for (let j = 0; j < ny; j++) inv[i * ny + j] = 1 / speed(sc, clearance(sc, xs[i], ys[j]).d);
+  let i0 = 0, j0 = 0;
+  for (let i = 0; i < nx; i++) if (Math.abs(xs[i] - PARK_X) < Math.abs(xs[i0] - PARK_X)) i0 = i;
+  for (let j = 0; j < ny; j++) if (Math.abs(ys[j] - sc.yA) < Math.abs(ys[j0] - sc.yA)) j0 = j;
+  const T = new Float64Array(N).fill(Infinity), pred = new Int32Array(N).fill(-1);
+  const hk = [], hn = [];
+  const push = (k, v) => {
+    let i = hk.length; hk.push(k); hn.push(v);
+    while (i > 0) { const p = (i - 1) >> 1; if (hk[p] <= k) break; hk[i] = hk[p]; hn[i] = hn[p]; i = p; }
+    hk[i] = k; hn[i] = v;
+  };
+  const src = i0 * ny + j0;
+  T[src] = 0; push(0, src);
+  while (hk.length) {
+    const t = hk[0], u = hn[0];
+    const lk = hk.pop(), lv = hn.pop();
+    if (hk.length) {
+      let i = 0; const L = hk.length;
+      for (;;) { let c = 2 * i + 1; if (c >= L) break; if (c + 1 < L && hk[c + 1] < hk[c]) c++; if (hk[c] >= lk) break; hk[i] = hk[c]; hn[i] = hn[c]; i = c; }
+      hk[i] = lk; hn[i] = lv;
+    }
+    if (t > T[u]) continue;
+    const iu = (u / ny) | 0, ju = u - iu * ny;
+    for (let s = 0; s < 16; s++) {
+      const iv = iu + STEPS[s][0], jv = ju + STEPS[s][1];
+      if (iv < 0 || iv >= nx || jv < 0 || jv >= ny) continue;
+      const v = iv * ny + jv;
+      const nt = t + Math.hypot(xs[iv] - xs[iu], ys[jv] - ys[ju]) * 0.5 * (inv[u] + inv[v]);
+      if (nt < T[v]) { T[v] = nt; pred[v] = u; push(nt, v); }
+    }
+  }
+  return { xs, ys, nx, ny, T, pred, i0, j0 };
+}
+
+function lineTime(sol) {                               // true travel time along the line x = PARK_X, at every y line of the grid
+  const out = [];
+  for (let j = 0; j < sol.ny; j++) out.push([sol.ys[j], sol.T[sol.i0 * sol.ny + j]]);
+  return out;
+}
+
+function straightTime(sc, ys) {                        // integral of 1/S from the parked pose straight along the line
+  const step = 0.0005, out = new Map();
+  for (const dir of [1, -1]) {
+    let y = sc.yA, acc = 0, prev = 1 / speed(sc, clearance(sc, PARK_X, y).d);
+    const targets = ys.filter(v => (dir > 0 ? v >= sc.yA : v <= sc.yA)).sort((a, b) => dir * (a - b));
+    for (const target of targets) {
+      while (dir * (target - y) > 1e-12) {
+        const ny = dir > 0 ? Math.min(y + step, target) : Math.max(y - step, target);
+        const cur = 1 / speed(sc, clearance(sc, PARK_X, ny).d);
+        acc += Math.abs(ny - y) * 0.5 * (prev + cur); prev = cur; y = ny;
+      }
+      out.set(target, acc);
+    }
+  }
+  return out;
+}
+
+function slopesOf(sc, sol) {                           // slopes of the true travel time and of the speed, for one scene
+  const top = Math.min(0.47, sc.div / 2 + sc.bay + 0.012);
+  const line = lineTime(sol);
+  let steep = 0;
+  for (let k = 1; k < line.length; k++) {
+    const [y0, t0] = line[k - 1], [y1, t1] = line[k];
+    if (Math.abs(y0) > top || Math.abs(y1) > top || y1 - y0 < 1e-9) continue;
+    steep = Math.max(steep, Math.abs(t1 - t0) / (y1 - y0));
+  }
+  const e = sc.div / 2 + sc.W / 2;
+  const at = y => { let jb = 0; for (let j = 0; j < sol.ny; j++) if (Math.abs(sol.ys[j] - y) < Math.abs(sol.ys[jb] - y)) jb = j; return sol.T[sol.i0 * sol.ny + jb]; };
+  const across = (at(-e) - at(e)) / (2 * e);
+  const bay = 1 / speed(sc, clearance(sc, 0.1, -sc.yA).d);       // car halfway into bay B, on its centre line
+  let sSteep = 0;
+  const n = 4000, dy = 2 * top / n;
+  let prev = speed(sc, clearance(sc, PARK_X, top).d);
+  for (let k = 1; k <= n; k++) { const cur = speed(sc, clearance(sc, PARK_X, top - k * dy).d); sSteep = Math.max(sSteep, Math.abs(cur - prev) / dy); prev = cur; }
+  return { steep, bay, across, sSteep };
+}
+// ---- solver end ----
+
+const $ = id => document.getElementById(id);
+const state = { carW: 0.13, div: 0.005, bays: 'fixed', margin: 1 / 30, rel: -1, zoom: false, szoom: false, lsel: -1, heat: 'true' };
+let sc = null, sol = null, prof = [], straight = new Map(), keyRows = [], slopeProf = [];
+
+// ---- learned fields (learned.js, written by learned_data.py) ----
+const LD = window.LEARNED || { fields: [] };
+const LY0 = LD.line_y ? LD.line_y.start : -0.47, LDY = LD.line_y ? LD.line_y.step : 0.001;
+let learned = null, matching = [], lastPick = null;
+const wKey = w => Math.abs(w * 1000 - Math.round(w * 1000)) > 1e-6 ? w.toFixed(4) : w.toFixed(3);
+function sceneOf(f) { return makeScene({ carW: f.carW, div: f.div, bays: Math.abs(f.bay - FIXED_BAY) < 1e-9 ? 'fixed' : 'grow', margin: f.margin }); }
+function matches(f, s) { return Math.abs(f.carW - s.W) < 1e-6 && Math.abs(f.div - s.div) < 1e-6 && Math.abs(f.bay - s.bay) < 1e-6 && Math.abs(f.margin - s.margin) < 1e-4; }
+function lval(arr, y) {
+  const u = (y - LY0) / LDY, k = Math.max(0, Math.min(arr.length - 2, Math.floor(u))), f = u - k;
+  return arr[k] + f * (arr[k + 1] - arr[k]);
+}
+function lpts(arr) {
+  const [top, bot] = yRange(), out = [];
+  for (let k = 0; k < arr.length; k++) { const y = LY0 + k * LDY; if (y <= top + 1e-9 && y >= bot - 1e-9) out.push([y, arr[k]]); }
+  return out;
+}
+function succText(f) { return f.success.fine != null ? `${f.success.fine}/300 planned (fine MPPI)` : `${f.success.default}/300 planned`; }
+const lslopeCache = new Map();
+function learnedSlopes(f) {                            // the width-chart slopes, measured on a trained field
+  if (lslopeCache.has(f)) return lslopeCache.get(f);
+  const s = sceneOf(f), top = Math.min(0.47, s.div / 2 + s.bay + 0.012), e = s.div / 2 + s.W / 2;
+  let steep = 0, sSteep = 0;
+  for (let k = 1; k < f.S.length; k++) {
+    const y = LY0 + k * LDY;
+    if (Math.abs(y) > top || Math.abs(y - LDY) > top) continue;
+    steep = Math.max(steep, Math.abs(f.G[k]));
+    if (Math.abs(y - s.yA) > 0.015 && Math.abs(y - LDY - s.yA) > 0.015) sSteep = Math.max(sSteep, Math.abs(Math.min(1, f.S[k]) - Math.min(1, f.S[k - 1])) / LDY);
+  }
+  const r = { steep, bay: f.bayInv, across: (lval(f.T, -e) - lval(f.T, e)) / (2 * e), sSteep };
+  lslopeCache.set(f, r);
+  return r;
+}
+function pickLearned() {                               // keep the selected field if it fits the scene, else the same seed and variant, else the first
+  matching = LD.fields.map((f, i) => [f, i]).filter(([f]) => matches(f, sc));
+  if (state.lsel === 'none') { learned = null; return; }
+  let pick = matching.find(([, i]) => i === state.lsel);
+  if (!pick && lastPick) pick = matching.find(([f]) => f.seed === lastPick.seed && f.variant === lastPick.variant);
+  if (!pick) pick = matching.find(([f]) => f.variant === 'metric') || matching[0];
+  state.lsel = pick ? pick[1] : -1;
+  learned = pick ? pick[0] : null;
+  if (learned) lastPick = learned;
+}
+function renderLearnBar() {
+  const opts = matching.map(([f, i]) => `<label class="${learned === f ? 'on' : ''}"><input type="radio" name="lsel" value="${i}" ${learned === f ? 'checked' : ''}> seed ${f.seed} · ${f.variant}${f.family === 'widening' && matching.some(([g]) => g.family !== 'widening') ? ' · widening run' : ''} · ${succText(f)}</label>`);
+  if (matching.length) opts.push(`<label><input type="radio" name="lsel" value="none" ${learned ? '' : 'checked'}> hide</label>`);
+  $('seeds').innerHTML = opts.join('');
+  $('seeds').hidden = !matching.length;
+  $('lstatus').textContent = !LD.fields.length ? 'learned.js did not load, so only the truth is shown.'
+    : matching.length ? (learned ? `Showing training seed ${learned.seed} (${learned.variant}, ${learned.family}); its median T / T* over the bay-to-bay queries is ${learned.t_over_tstar.toFixed(2)}.` : 'Learned field hidden.')
+    : 'No trained field for this scene. Pick one above (some trained car widths, such as 0.0222, sit between the slider\'s 0.001 steps).';
+  const sel = $('jump'), match = [...sel.options].find(o => o.dataset.k && matches(JSON.parse(o.dataset.f), sc));
+  sel.value = match ? match.value : '';
+  document.querySelectorAll('.lk').forEach(n => { n.hidden = !learned; });
+  $('h-learn').disabled = !learned;
+  if (!learned && state.heat === 'learned') setHeat('true');
+}
+function buildJump() {
+  const seen = new Map();
+  for (const f of LD.fields) {
+    const k = `${f.carW}|${f.div}|${f.bay}|${f.margin}`;
+    if (!seen.has(k)) seen.set(k, { f, fam: new Set(), n: {} });
+    const g = seen.get(k); g.fam.add(f.family); g.n[f.variant] = (g.n[f.variant] || 0) + 1;
+  }
+  const famOrder = { 'divider sweep': 0, 'car-width sweep': 1, widening: 2 };
+  const groups = [...seen.values()].sort((a, b) => famOrder[[...a.fam][0]] - famOrder[[...b.fam][0]] || a.f.carW - b.f.carW || a.f.div - b.f.div);
+  $('jump').innerHTML = '<option value="">choose…</option>' + groups.map((g, i) => {
+    const f = g.f, n = Object.entries(g.n).map(([v, c]) => `${v} ×${c}`).join(', ');
+    return `<option value="${i}" data-k="1" data-f='${JSON.stringify({ carW: f.carW, div: f.div, bay: f.bay, margin: f.margin })}'>car ${wKey(f.carW)} · divider ${f.div} · bays ${f.bay.toFixed(3)} (${[...g.fam].join(' + ')}; ${n})</option>`;
+  }).join('');
+}
+
+function tok(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+function hexRGB(h) { h = h.replace('#', ''); if (h.length === 3) h = h.split('').map(c => c + c).join(''); return [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16)); }
+const fmt = (v, d = 3) => Number.isFinite(v) ? v.toFixed(d) : '–';
+function fmtT(v) { return !Number.isFinite(v) ? '–' : v >= 10 ? v.toFixed(1) : v >= 1 ? v.toFixed(2) : v.toFixed(3); }
+function yRange() { const top = Math.min(0.47, sc.div / 2 + sc.bay + 0.012); return [top, -top]; }
+function carY() { return state.rel * sc.yA; }
+
+function recompute() {
+  sc = makeScene(state);
+  pickLearned();
+  const t0 = performance.now();
+  sol = solve(sc);
+  const [top, bot] = yRange();
+  prof = lineTime(sol).filter(([y]) => y <= top + 1e-9 && y >= bot - 1e-9);
+  straight = straightTime(sc, prof.map(p => p[0]));
+  slopeProf = [];                                      // dT/ds between neighbouring grid lines, s running from bay A toward bay B (= -y)
+  for (let k = 1; k < prof.length; k++) {
+    const [y0, t0] = prof[k - 1], [y1, t1] = prof[k];
+    if (y1 - y0 > 1e-9) slopeProf.push([y0, y1, -(t1 - t0) / (y1 - y0)]);
+  }
+  $('busy').textContent = `solved in ${Math.round(performance.now() - t0)} ms`;
+  const yy = $('yy'); yy.min = (bot / sc.yA).toFixed(3); yy.max = (top / sc.yA).toFixed(3);
+  state.rel = Math.min(top / sc.yA, Math.max(bot / sc.yA, state.rel));
+  yy.value = state.rel;
+  buildKeyRows();
+  curSlopes = slopesOf(sc, sol);
+  heatCache = null;
+  render();
+  startSweep();
+}
+
+function atY(y) {                                      // values at the car's y on the line, true time interpolated between grid lines
+  const c = clearance(sc, PARK_X, y);
+  let k = 0;
+  while (k < prof.length - 2 && prof[k + 1][0] < y) k++;
+  const [y0, t0] = prof[k], [y1, t1] = prof[Math.min(k + 1, prof.length - 1)];
+  const f = y1 === y0 ? 0 : (y - y0) / (y1 - y0);
+  const st0 = straight.get(y0), st1 = straight.get(y1);
+  return { y, d: c.d, box: c.box, s: speedLabel(sc, c.d), S: speed(sc, c.d), T: t0 + f * (t1 - t0), Ts: st0 + f * (st1 - st0), G: slopeAt(y), Ginv: invAt(y),
+    lT: learned ? lval(learned.T, y) : NaN, lS: learned ? lval(learned.S, y) : NaN, lG: learned ? lval(learned.G, y) : NaN };
+}
+
+function invAt(y) {                                   // 1/S averaged over the grid step that holds y (the step dT/ds is measured on)
+  for (const [y0, y1] of slopeProf) if (y >= y0 - 1e-12 && y <= y1 + 1e-12) return Math.abs(straight.get(y1) - straight.get(y0)) / (y1 - y0);
+  return NaN;
+}
+
+function slopeAt(y) {
+  for (const [y0, y1, g] of slopeProf) if (y >= y0 - 1e-12 && y <= y1 + 1e-12) return g;
+  return slopeProf.length ? slopeProf[y < slopeProf[0][0] ? 0 : slopeProf.length - 1][2] : NaN;
+}
+
+function routeTo(y) {
+  let jb = 0;
+  for (let j = 0; j < sol.ny; j++) if (Math.abs(sol.ys[j] - y) < Math.abs(sol.ys[jb] - y)) jb = j;
+  const pts = [];
+  for (let v = sol.i0 * sol.ny + jb; v >= 0; v = sol.pred[v]) { const i = (v / sol.ny) | 0; pts.push([sol.xs[i], sol.ys[v - i * sol.ny]]); }
+  return pts;
+}
+
+function buildKeyRows() {
+  const e = sc.div / 2 + sc.W / 2, inside = prof.filter(([y]) => Math.abs(y) < e);
+  const peak = inside.length ? inside.reduce((a, b) => (b[1] > a[1] ? b : a)) : null;
+  const pts = [['Start pose, bay A centre', sc.yA], ['Just outside the wall, bay A side', e + 0.0025]];
+  if (peak) pts.push(['Highest point inside the wall', peak[0]]);
+  pts.push(['Just outside the wall, bay B side', -e - 0.0025], ['Bay B centre (parked pose)', -sc.yA]);
+  keyRows = pts.map(([name, y]) => [name, atY(y)]);
+}
+
+// ---- drawing: lot ----
+let heatCache = null;
+function heatImage(size) {
+  const fast = hexRGB(tok('--heat-fast')), slow = hexRGB(tok('--heat-slow'));
+  const useL = state.heat === 'learned' && learned;
+  const key = `${size}|${fast}|${slow}|${useL ? state.lsel : 'true'}`;
+  if (heatCache && heatCache.key === key) return heatCache.canvas;
+  if (useL) {                                          // learned speed on its 121 x 121 grid, smoothed up by drawImage
+    const n = LD.plane_n, raw = atob(learned.plane), off = document.createElement('canvas'); off.width = n; off.height = n;
+    const ctx = off.getContext('2d'), img = ctx.createImageData(n, n);
+    for (let k = 0; k < n * n; k++) {
+      const t = Math.pow(1 - raw.charCodeAt(k) / 255, 0.65);
+      for (let c = 0; c < 3; c++) img.data[4 * k + c] = Math.round(fast[c] + t * (slow[c] - fast[c]));
+      img.data[4 * k + 3] = 255;
+    }
+    ctx.putImageData(img, 0, 0);
+    heatCache = { key, canvas: off };
+    return off;
+  }
+  const R = 260, off = document.createElement('canvas'); off.width = R; off.height = R;
+  const ctx = off.getContext('2d'), img = ctx.createImageData(R, R);
+  for (let py = 0; py < R; py++) for (let px = 0; px < R; px++) {
+    const x = -0.5 + (px + 0.5) / R, y = 0.5 - (py + 0.5) / R;
+    const t = Math.pow(1 - speed(sc, clearance(sc, x, y).d), 0.65);
+    const o = 4 * (py * R + px);
+    for (let c = 0; c < 3; c++) img.data[o + c] = Math.round(fast[c] + t * (slow[c] - fast[c]));
+    img.data[o + 3] = 255;
+  }
+  ctx.putImageData(img, 0, 0);
+  heatCache = { key, canvas: off };
+  return off;
+}
+
+function drawLot() {
+  const cv = $('lot'), dpr = window.devicePixelRatio || 1, size = cv.clientWidth;
+  if (!size) return;
+  cv.width = Math.round(size * dpr); cv.height = Math.round(size * dpr);
+  const ctx = cv.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const X = x => (x + 0.5) * size, Y = y => (0.5 - y) * size;
+  ctx.imageSmoothingEnabled = true;
+  ctx.drawImage(heatImage(size), 0, 0, size, size);
+  ctx.fillStyle = tok('--wall');
+  for (const b of sc.boxes) ctx.fillRect(X(b[0]), Y(b[3]), X(b[2]) - X(b[0]), Y(b[1]) - Y(b[3]));
+  const [top, bot] = yRange();
+  ctx.setLineDash([4, 4]); ctx.strokeStyle = tok('--ink-2'); ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(X(PARK_X), Y(top)); ctx.lineTo(X(PARK_X), Y(bot)); ctx.stroke(); ctx.setLineDash([]);
+  const y = carY(), route = routeTo(y);
+  ctx.strokeStyle = tok('--time'); ctx.lineWidth = 2.5; ctx.lineJoin = 'round';
+  ctx.beginPath(); route.forEach(([x, yy], i) => (i ? ctx.lineTo(X(x), Y(yy)) : ctx.moveTo(X(x), Y(yy)))); ctx.stroke();
+  const rect = (cx, cy) => [X(cx - CAR_L / 2), Y(cy + sc.W / 2), CAR_L * size, sc.W * size];
+  ctx.fillStyle = tok('--start'); ctx.globalAlpha = 0.85; ctx.fillRect(...rect(PARK_X, sc.yA)); ctx.globalAlpha = 1;
+  const c = clearance(sc, PARK_X, y);
+  ctx.lineWidth = 2; ctx.strokeStyle = c.d < 0 ? tok('--band-ink') : tok('--ink');
+  ctx.strokeRect(...rect(PARK_X, y));
+  ctx.fillStyle = c.d < 0 ? tok('--band-ink') : tok('--ink');
+  ctx.beginPath(); ctx.arc(X(PARK_X), Y(y), 3, 0, 2 * Math.PI); ctx.fill();
+}
+
+// ---- drawing: charts ----
+const SVGNS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs, parent) { const e = document.createElementNS(SVGNS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+
+function chart(svg, opts) {
+  const Wd = Math.max(280, svg.clientWidth || svg.parentNode.clientWidth), H = opts.height;
+  svg.setAttribute('viewBox', `0 0 ${Wd} ${H}`); svg.setAttribute('height', H);
+  svg.replaceChildren();
+  const m = { l: 46, r: 14, t: 24, b: 34 };
+  const [top, bot] = yRange();
+  const X = y => m.l + (top - y) / (top - bot) * (Wd - m.l - m.r);
+  const ymin = opts.ymin || 0;
+  const Y = v => m.t + (1 - (Math.max(ymin, Math.min(v, opts.ymax)) - ymin) / (opts.ymax - ymin)) * (H - m.t - m.b);
+  const e = sc.div / 2 + sc.W / 2;
+  el('rect', { x: X(e), y: m.t, width: X(-e) - X(e), height: H - m.t - m.b, fill: 'var(--band)' }, svg);
+  const regions = [[(top + e) / 2, 'bay A', ''], [0, 'divider', 'band'], [(bot - e) / 2, 'bay B', '']];
+  for (const [yy, text, cls] of regions) el('text', { x: X(yy), y: m.t - 8, 'text-anchor': 'middle', class: cls }, svg).textContent = text;
+  for (const t of opts.ticks) {
+    el('line', { x1: m.l, x2: Wd - m.r, y1: Y(t), y2: Y(t), stroke: t === 0 && ymin < 0 ? 'var(--ink-2)' : 'var(--rule)', 'stroke-width': 1 }, svg);
+    el('text', { x: m.l - 6, y: Y(t) + 4, 'text-anchor': 'end' }, svg).textContent = opts.tickFmt(t);
+  }
+  const xt = [top, sc.yA, 0, -sc.yA, bot];
+  for (const t of xt) el('text', { x: X(t), y: H - m.b + 16, 'text-anchor': 'middle' }, svg).textContent = t.toFixed(3);
+  el('text', { x: (m.l + Wd - m.r) / 2, y: H - 4, 'text-anchor': 'middle' }, svg).textContent = "car centre y (bay A on the left, bay B on the right)";
+  el('line', { x1: m.l, x2: Wd - m.r, y1: H - m.b, y2: H - m.b, stroke: 'var(--ink-2)', 'stroke-width': 1 }, svg);
+  for (const s of opts.series) {                       // break the line where it leaves the scale instead of drawing it flat along the top
+    let d = '', pen = false;
+    for (const [yy, v] of s.points) {
+      if (!Number.isFinite(v) || v > opts.ymax || v < ymin) { pen = false; continue; }
+      d += `${pen ? 'L' : 'M'}${X(yy).toFixed(1)},${Y(v).toFixed(1)}`; pen = true;
+    }
+    el('path', { d, fill: 'none', stroke: s.color, 'stroke-width': s.width || 2, 'stroke-dasharray': s.dash || 'none', 'stroke-linejoin': 'round' }, svg);
+  }
+  (opts.notes || []).forEach((note, i) => { el('text', { x: X(note[0]), y: m.t + 12 + 14 * i, 'text-anchor': 'middle', class: 'val' }, svg).textContent = note[1]; });
+  const y = carY();
+  el('line', { x1: X(y), x2: X(y), y1: m.t, y2: H - m.b, stroke: 'var(--ink)', 'stroke-width': 1, 'stroke-opacity': 0.5 }, svg);
+  const right = X(y) < (m.l + Wd - m.r) / 2;
+  const labels = opts.markers.filter(mk => Number.isFinite(mk.v)).map(mk => ({ mk, ly: Math.max(m.t + 12, Y(mk.v) + 4) }));
+  labels.sort((a, b) => a.ly - b.ly);                  // spread the labels so none overlap, then keep them inside the plot
+  for (let i = 1; i < labels.length; i++) labels[i].ly = Math.max(labels[i].ly, labels[i - 1].ly + 14);
+  const over = labels.length ? labels[labels.length - 1].ly - (H - m.b - 4) : 0;
+  if (over > 0) for (const l of labels) l.ly -= over;
+  for (const { mk, ly } of labels) {
+    el('circle', { cx: X(y), cy: Y(mk.v), r: mk.r || 5, fill: mk.color, stroke: 'var(--surface)', 'stroke-width': 2 }, svg);
+    el('text', { x: X(y) + (right ? 10 : -10), y: ly, 'text-anchor': right ? 'start' : 'end', class: 'val', style: `fill: ${mk.color}` }, svg).textContent = mk.text;
+  }
+  el('rect', { x: m.l, y: m.t, width: Wd - m.l - m.r, height: H - m.t - m.b, fill: 'transparent' }, svg);
+  const setFromEvent = ev => {
+    const r = svg.getBoundingClientRect(), px = (ev.clientX - r.left) / r.width * Wd;
+    const yy = top - (px - m.l) / (Wd - m.l - m.r) * (top - bot);
+    setY(Math.max(bot, Math.min(top, yy)));
+  };
+  // handlers live on the svg itself, which survives redraws (its children are rebuilt on every render)
+  svg.onpointerdown = ev => { svg.setPointerCapture(ev.pointerId); setFromEvent(ev); };
+  svg.onpointermove = ev => { if (ev.buttons || ev.pointerType === 'mouse') setFromEvent(ev); };
+}
+
+// ---- drawing: slopes against car width ----
+const W_MIN = 0.01, W_MAX = 0.225;
+const sweep = { key: '', rows: [], todo: [], timer: 0 };
+let curSlopes = null;
+
+function startSweep() {                                 // one solve per width, in the background, for the current divider, bays and margin
+  const key = `${state.div}|${state.bays}|${state.margin}`;
+  if (sweep.key === key) return;
+  clearTimeout(sweep.timer);
+  Object.assign(sweep, { key, rows: [], todo: [] });
+  for (let w = W_MIN; w <= W_MAX + 1e-9; w += 0.005) sweep.todo.push(+w.toFixed(3));
+  const total = sweep.todo.length;
+  const step = () => {
+    if (!sweep.todo.length) { $('busy-w').textContent = ''; drawWidthCharts(); return; }
+    const w = sweep.todo.shift();
+    const s = makeScene({ carW: w, div: state.div, bays: state.bays, margin: state.margin });
+    sweep.rows.push(Object.assign({ w }, slopesOf(s, solve(s))));
+    $('busy-w').textContent = `computing ${sweep.rows.length} of ${total} widths`;
+    if (sweep.rows.length % 5 === 0 || !sweep.todo.length) drawWidthCharts();
+    sweep.timer = setTimeout(step, 0);
+  };
+  sweep.timer = setTimeout(step, 0);
+}
+
+function widthChart(svg, o) {
+  const Wd = Math.max(280, svg.clientWidth || svg.parentNode.clientWidth), H = o.height;
+  svg.setAttribute('viewBox', `0 0 ${Wd} ${H}`); svg.setAttribute('height', H);
+  svg.replaceChildren();
+  const m = { l: 44, r: 14, t: 10, b: 36 };
+  const X = w => m.l + (w - W_MIN) / (W_MAX - W_MIN) * (Wd - m.l - m.r);
+  const f = v => (o.ylog ? Math.log10(v) : v);
+  const Y = v => m.t + (1 - (f(Math.min(Math.max(v, o.ymin), o.ymax)) - f(o.ymin)) / (f(o.ymax) - f(o.ymin))) * (H - m.t - m.b);
+  for (const t of o.ticks) {
+    el('line', { x1: m.l, x2: Wd - m.r, y1: Y(t), y2: Y(t), stroke: 'var(--rule)', 'stroke-width': 1 }, svg);
+    el('text', { x: m.l - 6, y: Y(t) + 4, 'text-anchor': 'end' }, svg).textContent = String(t);
+  }
+  for (const t of [0.01, 0.05, 0.1, 0.15, 0.2]) el('text', { x: X(t), y: H - m.b + 16, 'text-anchor': 'middle' }, svg).textContent = t.toFixed(2);
+  el('text', { x: (m.l + Wd - m.r) / 2, y: H - 4, 'text-anchor': 'middle' }, svg).textContent = 'car width';
+  el('line', { x1: m.l, x2: Wd - m.r, y1: H - m.b, y2: H - m.b, stroke: 'var(--ink-2)', 'stroke-width': 1 }, svg);
+  for (const s of o.series) {
+    const d = s.points.filter(p => Number.isFinite(p[1])).map(([w, v], i) => `${i ? 'L' : 'M'}${X(w).toFixed(1)},${Y(v).toFixed(1)}`).join('');
+    el('path', { d, fill: 'none', stroke: s.color, 'stroke-width': s.width || 2, 'stroke-dasharray': s.dash || 'none', 'stroke-linejoin': 'round' }, svg);
+  }
+  const xw = X(state.carW);
+  el('line', { x1: xw, x2: xw, y1: m.t, y2: H - m.b, stroke: 'var(--ink)', 'stroke-width': 1, 'stroke-opacity': 0.5 }, svg);
+  for (const [w, v, sel] of o.dots || []) if (Number.isFinite(v))
+    el('circle', { cx: X(w), cy: Y(v), r: sel ? 5 : 3.2, fill: 'var(--learned)', 'fill-opacity': sel ? 1 : 0.7, stroke: sel ? 'var(--ink)' : 'var(--surface)', 'stroke-width': sel ? 1.5 : 1 }, svg);
+  for (const [v, color] of o.markers) if (Number.isFinite(v)) el('circle', { cx: xw, cy: Y(v), r: 4.5, fill: color, stroke: 'var(--surface)', 'stroke-width': 2 }, svg);
+  el('rect', { x: m.l, y: m.t, width: Wd - m.l - m.r, height: H - m.t - m.b, fill: 'transparent' }, svg);
+  const setW = ev => {
+    const r = svg.getBoundingClientRect(), px = (ev.clientX - r.left) / r.width * Wd;
+    const w = Math.round(Math.min(W_MAX, Math.max(W_MIN, W_MIN + (px - m.l) / (Wd - m.l - m.r) * (W_MAX - W_MIN))) * 1000) / 1000;
+    if (w !== state.carW) { state.carW = w; $('w').value = w; requestSolve(); }
+  };
+  svg.onpointerdown = ev => { svg.setPointerCapture(ev.pointerId); setW(ev); };
+  svg.onpointermove = ev => { if (ev.buttons) setW(ev); };
+}
+
+function keyHTML(color, text, v, dashed) {
+  const sw = dashed ? `repeating-linear-gradient(90deg, ${color} 0 5px, transparent 5px 8px)` : color;
+  return `<span class="key"><span class="sw" style="background: ${sw}"></span>${text}: <b>${v == null ? '…' : v.toFixed(v >= 10 ? 1 : 2)}</b></span>`;
+}
+
+function drawWidthCharts() {
+  if (!sc) return;
+  const rows = sweep.rows.slice().sort((a, b) => a.w - b.w), c = curSlopes;
+  const variant = learned ? learned.variant : 'metric';
+  const fam = LD.fields.filter(f => f.variant === variant && Math.abs(f.div - state.div) < 1e-6 && Math.abs(f.margin - state.margin) < 1e-4 &&
+    (state.bays === 'fixed' ? Math.abs(f.bay - FIXED_BAY) < 1e-9 : Math.abs(f.bay - f.carW - 2 * CLEAR) < 1e-9));
+  const dots = key => fam.map(f => [f.carW, learnedSlopes(f)[key], f === learned]);
+  const ls = learned ? learnedSlopes(learned) : null;
+  const lkey = (text, val) => learned ? `<span class="key"><span class="sw" style="background: var(--learned); border-radius: 50%; width: 10px"></span>learned, ${text}: <b>${val.toFixed(val >= 10 ? 1 : 2)}</b></span>` : '';
+  $('keys-wtime').innerHTML = keyHTML('var(--straight)', 'steepest anywhere on the line', c && c.steep, true) +
+    keyHTML('var(--time)', 'along the bay', c && c.bay) + keyHTML('var(--across)', 'across the no-go band', c && c.across) +
+    (ls ? lkey('steepest', ls.steep) + lkey('along the bay', ls.bay) + lkey('across', ls.across) : '');
+  const wd = dots('steep').concat(dots('bay'), dots('across'));
+  const wmax = [200, 500, 1000, 2000, 5000].find(t => t >= Math.max(0, ...wd.map(d => d[1]))) || 5000;
+  widthChart($('c-wtime'), {
+    height: 250, ylog: true, ymin: 0.5, ymax: wmax, ticks: [0.5, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000].filter(t => t <= wmax),
+    series: [{ points: rows.map(r => [r.w, r.steep]), color: 'var(--straight)', dash: '5 4', width: 1.8 },
+             { points: rows.map(r => [r.w, r.bay]), color: 'var(--time)' }, { points: rows.map(r => [r.w, r.across]), color: 'var(--across)' }],
+    markers: c ? [[c.steep, 'var(--straight)'], [c.bay, 'var(--time)'], [c.across, 'var(--across)']] : [],
+    dots: wd,
+  });
+  const sd = dots('sSteep'), smax = Math.max(60, ...rows.map(r => r.sSteep), c ? c.sSteep : 0, ...sd.map(d => d[1]));
+  const sstep = [20, 25, 50, 100, 200, 250, 500].find(st => smax * 1.1 / st <= 6) || 1000;
+  const top = Math.ceil(smax * 1.1 / sstep) * sstep, ticks = [];
+  for (let t = 0; t <= top; t += sstep) ticks.push(t);
+  $('keys-wspeed').innerHTML = keyHTML('var(--speed)', 'steepest change of speed on the line', c && c.sSteep) + (ls ? lkey('steepest', ls.sSteep) : '');
+  widthChart($('c-wspeed'), {
+    height: 250, ylog: false, ymin: 0, ymax: top, ticks,
+    series: [{ points: rows.map(r => [r.w, r.sSteep]), color: 'var(--speed)' }],
+    markers: c ? [[c.sSteep, 'var(--speed)']] : [],
+    dots: sd,
+  });
+}
+
+function render() {
+  const y = carY(), v = atY(y);
+  $('w-out').textContent = wKey(state.carW);
+  renderLearnBar();
+  $('dv-out').textContent = state.div.toFixed(3);
+  $('mg-out').textContent = state.margin.toFixed(4);
+  $('yy-out').textContent = y.toFixed(3);
+  $('derived').innerHTML = `<span>bays <b>${sc.bay.toFixed(3)}</b> wide</span><span>side gap <b>${sc.gap.toFixed(4)}</b></span>` +
+    `<span>no-go band for the car centre (divider + car width) <b>${sc.cwall.toFixed(3)}</b></span><span>slowest speed <b>${speed(sc, -1).toFixed(3)}</b></span>`;
+  drawLot();
+  const speedPts = [];
+  const [top, bot] = yRange();
+  for (let k = 0; k <= 900; k++) { const yy = top + (bot - top) * k / 900; speedPts.push([yy, speed(sc, clearance(sc, PARK_X, yy).d)]); }
+  const lS = learned ? lpts(learned.S) : [], sMax = learned ? 1.3 : 1.05, sNotes = [];
+  if (learned) { const pk = lS.reduce((a, b) => (b[1] > a[1] ? b : a)); if (pk[1] > sMax) sNotes.push([pk[0], `learned ${pk[1] > 100 ? '> 100' : pk[1].toFixed(2)} ↑`]); }
+  chart($('c-speed'), {
+    height: 240, ymax: sMax, ticks: learned ? [0, 0.25, 0.5, 0.75, 1, 1.25] : [0, 0.25, 0.5, 0.75, 1], tickFmt: t => t.toFixed(2),
+    series: [{ points: speedPts, color: 'var(--speed)' }].concat(learned ? [{ points: lS, color: 'var(--learned)', width: 1.7 }] : []),
+    markers: [{ v: v.S, color: 'var(--speed)', text: `true ${v.S.toFixed(3)}` }].concat(learned ? [{ v: Math.min(v.lS, sMax), color: 'var(--learned)', text: `learned ${v.lS.toFixed(3)}` }] : []),
+    notes: sNotes,
+  });
+  const gPts = [];
+  for (let k = slopeProf.length - 1; k >= 0; k--) { const [y0, y1, g] = slopeProf[k]; gPts.push([y1, g], [y0, g]); }   // steps, bay A (high y) to bay B
+  const bayInv = 1 / speed(sc, clearance(sc, PARK_X, -sc.yA).d);
+  const lG = learned ? lpts(learned.G) : [];
+  const gmax = state.szoom ? Math.max(2.5, 2.5 * bayInv) : 1.08 * Math.max(...speedPts.map(p => 1 / p[1]), ...lG.map(p => Math.abs(p[1])));
+  const gstep = [0.5, 1, 2, 2.5, 5, 10, 20, 25, 40, 50, 100].find(st => gmax / st <= 4) || 200;
+  const gticks = []; for (let t = -Math.floor(gmax / gstep) * gstep; t <= gmax + 1e-9; t += gstep) gticks.push(+t.toFixed(3));
+  const invS = v.Ginv, along = Math.abs(v.G) >= 0.95 * invS;
+  const gMarks = along ? [{ v: v.G, color: 'var(--time)', text: `true ${v.G.toFixed(2)} = ${v.G < 0 ? '−' : ''}1/S` }] : [
+    { v: Math.sign(v.G || 1) * invS, color: 'var(--speed)', text: `1/S (step avg) ${invS.toFixed(2)}`, dy: v.G < 0 ? 16 : -8 },
+    { v: v.G, color: 'var(--time)', text: `true ${v.G.toFixed(2)}`, dy: v.G < 0 ? -8 : 16 }];
+  chart($('c-slope'), {
+    height: 250, ymin: -gmax, ymax: gmax, ticks: gticks, tickFmt: t => String(t),
+    series: [{ points: speedPts.map(([yy, S]) => [yy, 1 / S]), color: 'var(--speed)', width: 1.3, dash: '5 4' },
+             { points: speedPts.map(([yy, S]) => [yy, -1 / S]), color: 'var(--speed)', width: 1.3, dash: '5 4' },
+             { points: gPts, color: 'var(--time)', width: 2.2 }].concat(learned ? [{ points: lG, color: 'var(--learned)', width: 1.7 }] : []),
+    markers: gMarks.concat(learned ? [{ color: 'var(--learned)', text: `learned ${v.lG.toFixed(2)}`, v: v.lG }] : []).map(mk => Object.assign(mk, { v: Math.max(-gmax, Math.min(gmax, mk.v)) })),
+  });
+  const tPts = prof.map(([yy, t]) => [yy, t]), sPts = prof.map(([yy]) => [yy, straight.get(yy)]);
+  const bayB = atY(-sc.yA);
+  const lT = learned ? lpts(learned.T) : [];
+  const fullMax = Math.max(...tPts.map(p => p[1]).filter(Number.isFinite), ...lT.map(p => p[1]));
+  const ymax = state.zoom ? Math.max(0.2, 1.8 * Math.max(bayB.T, atY(sc.div / 2 + sc.W / 2 + 0.0025).T, bayB.lT || 0)) : fullMax * 1.08;
+  const notes = [];
+  const e = sc.div / 2 + sc.W / 2, inside = tPts.filter(([yy]) => Math.abs(yy) < e);
+  if (inside.length) { const pk = inside.reduce((a, b) => (b[1] > a[1] ? b : a)); if (pk[1] > ymax) notes.push([pk[0], `true peak ${fmtT(pk[1])} ↑`]); }
+  if (learned && state.zoom) { const lin = lT.filter(([yy]) => Math.abs(yy) < e); if (lin.length) { const pk = lin.reduce((a, b) => (b[1] > a[1] ? b : a)); if (pk[1] > ymax) notes.push([pk[0], `learned peak ${fmtT(pk[1])} ↑`]); } }
+  const step = ymax > 8 ? 2.5 : ymax > 4 ? 1 : ymax > 2 ? 0.5 : ymax > 0.8 ? 0.25 : 0.1;
+  const ticks = []; for (let t = 0; t <= ymax + 1e-9; t += step) ticks.push(+t.toFixed(3));
+  chart($('c-time'), {
+    height: 260, ymax, ticks, tickFmt: t => String(t),
+    series: [{ points: sPts, color: 'var(--straight)', width: 1.6, dash: '5 4' }, { points: tPts, color: 'var(--time)', width: 2.2 }].concat(learned ? [{ points: lT, color: 'var(--learned)', width: 1.8 }] : []),
+    markers: [{ v: Math.min(v.Ts, ymax), color: 'var(--straight)', text: `straight ${fmtT(v.Ts)}`, dy: 16 }, { v: Math.min(v.T, ymax), color: 'var(--time)', text: `true ${fmtT(v.T)}` }]
+      .concat(learned ? [{ v: Math.min(v.lT, ymax), color: 'var(--learned)', text: `learned ${fmtT(v.lT)}` }] : []),
+    notes,
+  });
+  const route = routeTo(y), around = route.some(([x]) => x < X_D - CAR_L / 2);
+  const where = Math.abs(y) < e ? 'overlapping the divider' : y > 0 ? 'bay A side' : 'bay B side';
+  const cells = [
+    ['Car centre y', y.toFixed(3), where],
+    ['Clearance to the nearest wall', v.d >= 0 ? v.d.toFixed(4) : `−${(-v.d).toFixed(4)}`, v.d >= 0 ? BOX_NAMES[v.box] : `overlaps the ${BOX_NAMES[v.box]}`],
+    ['Speed S', v.S.toFixed(3), `label s = ${v.s.toFixed(3)}`],
+    ['Time per unit of distance, 1 / S', (1 / v.S).toFixed(2), 'the slope of T in its steepest direction'],
+    ['Slope of T along the line, dT/ds', v.G.toFixed(2), Math.abs(v.G) >= 0.95 * v.Ginv ? `equals 1/S averaged over this grid step (${v.Ginv.toFixed(2)}): the route runs along the line` : `${Math.round(100 * Math.abs(v.G) / v.Ginv)}% of 1/S averaged over this grid step (${v.Ginv.toFixed(2)}): the route comes in from the side`],
+    ['True travel time T', fmtT(v.T), around ? 'route backs out and goes around' : (y > 0 || Math.abs(y) < e ? 'route stays on bay A\'s side' : 'route goes straight through the divider')],
+    ['Straight down the line', fmtT(v.Ts), 'crawling through the divider'],
+  ];
+  const lcells = learned ? [
+    ['Learned speed', v.lS > 100 ? '> 100' : v.lS.toFixed(3), `true ${v.S.toFixed(3)}`],
+    ['Learned dT/ds', v.lG.toFixed(2), `true ${v.G.toFixed(2)}`],
+    ['Learned travel time', fmtT(v.lT), v.T > 1e-3 ? `${Math.round(100 * v.lT / v.T)}% of the true ${fmtT(v.T)}` : `true ${fmtT(v.T)}`],
+  ] : [];
+  $('readout-l').hidden = !learned;
+  $('readout-l').innerHTML = lcells.map(([l, val, n]) => `<div class="cell"><span class="l" style="color: var(--learned)">${l}</span><span class="v">${val}</span><span class="n">${n}</span></div>`).join('');
+  $('readout').innerHTML = cells.map(([l, val, n]) => `<div class="cell"><span class="l">${l}</span><span class="v">${val}</span><span class="n">${n}</span></div>`).join('');
+  $('keytable').innerHTML = '<thead><tr><th>Point</th><th>car y</th><th>clearance</th><th>speed S</th><th>true travel time</th><th>dT/ds</th><th>straight down</th>' + (learned ? '<th>learned S</th><th>learned T</th><th>learned dT/ds</th>' : '') + '</tr></thead><tbody>' +
+    keyRows.map(([name, r0]) => { const r = atY(r0.y); return `<tr><td>${name}</td><td>${r.y.toFixed(3)}</td><td>${r.d.toFixed(4)}</td><td>${r.S.toFixed(3)}</td><td>${fmtT(r.T)}</td><td>${r.G.toFixed(2)}</td><td>${fmtT(r.Ts)}</td>` +
+      (learned ? `<td>${r.lS > 100 ? '> 100' : r.lS.toFixed(3)}</td><td>${fmtT(r.lT)}</td><td>${r.lG.toFixed(2)}</td>` : '') + '</tr>'; }).join('') + '</tbody>';
+  $('sw-heat').style.background = `linear-gradient(90deg, ${tok('--heat-fast')}, ${tok('--heat-slow')})`;
+  drawWidthCharts();
+}
+
+function setY(y) { state.rel = y / sc.yA; $('yy').value = state.rel; requestRender(); }
+let renderPending = false, solvePending = false;
+function requestRender() { if (renderPending) return; renderPending = true; requestAnimationFrame(() => { renderPending = false; render(); }); }
+function requestSolve() { if (solvePending) return; solvePending = true; $('busy').textContent = 'solving…'; requestAnimationFrame(() => setTimeout(() => { solvePending = false; recompute(); }, 0)); }
+
+function syncInputs() {
+  $('w').max = state.bays === 'fixed' ? 0.225 : 0.225;
+  $('w').value = state.carW; $('dv').value = state.div; $('mg').value = state.margin;
+  $('bays-fixed').checked = state.bays === 'fixed'; $('bays-grow').checked = state.bays === 'grow';
+}
+$('w').addEventListener('input', e => { state.carW = +e.target.value; requestSolve(); });
+$('dv').addEventListener('input', e => { state.div = +e.target.value; requestSolve(); });
+$('mg').addEventListener('input', e => { state.margin = +e.target.value; requestSolve(); });
+for (const id of ['bays-fixed', 'bays-grow']) $(id).addEventListener('change', e => { state.bays = e.target.value; requestSolve(); });
+$('yy').addEventListener('input', e => { state.rel = +e.target.value; requestRender(); });
+const preset = p => { Object.assign(state, p); syncInputs(); requestSolve(); };
+$('p-orig').addEventListener('click', () => preset({ carW: 0.13, div: 0.005, bays: 'fixed', margin: 1 / 30, rel: -1 }));
+$('p-narrow').addEventListener('click', () => preset({ carW: 0.02, div: 0.005, bays: 'grow', margin: 1 / 30, rel: -1 }));
+$('p-wide').addEventListener('click', () => preset({ carW: 0.205, div: 0.01, bays: 'fixed', margin: 1 / 30, rel: -1 }));
+const setZoom = z => { state.zoom = z; $('sc-full').setAttribute('aria-pressed', String(!z)); $('sc-zoom').setAttribute('aria-pressed', String(z)); requestRender(); };
+$('sc-full').addEventListener('click', () => setZoom(false));
+const setSZoom = z => { state.szoom = z; $('sl-full').setAttribute('aria-pressed', String(!z)); $('sl-zoom').setAttribute('aria-pressed', String(z)); requestRender(); };
+$('sl-full').addEventListener('click', () => setSZoom(false));
+$('sl-zoom').addEventListener('click', () => setSZoom(true));
+$('sc-zoom').addEventListener('click', () => setZoom(true));
+function setHeat(h) { state.heat = h; $('h-true').setAttribute('aria-pressed', String(h === 'true')); $('h-learn').setAttribute('aria-pressed', String(h === 'learned')); heatCache = null; requestRender(); }
+$('h-true').addEventListener('click', () => setHeat('true'));
+$('h-learn').addEventListener('click', () => setHeat('learned'));
+$('seeds').addEventListener('change', e => {
+  const v = e.target.value; state.lsel = v === 'none' ? 'none' : +v;
+  if (state.lsel !== 'none') learned = LD.fields[state.lsel], lastPick = learned; else learned = null;
+  heatCache = null; requestRender();
+});
+$('jump').addEventListener('change', e => {
+  const o = e.target.selectedOptions[0]; if (!o || !o.dataset.f) return;
+  const f = JSON.parse(o.dataset.f);
+  preset({ carW: f.carW, div: f.div, margin: f.margin, bays: Math.abs(f.bay - FIXED_BAY) < 1e-9 ? 'fixed' : 'grow', lsel: state.lsel === 'none' ? -1 : state.lsel });
+});
+const lot = $('lot');
+const lotY = ev => { const r = lot.getBoundingClientRect(); const [top, bot] = yRange(); setY(Math.max(bot, Math.min(top, 0.5 - (ev.clientY - r.top) / r.height))); };
+lot.addEventListener('pointerdown', ev => { lot.setPointerCapture(ev.pointerId); lotY(ev); });
+lot.addEventListener('pointermove', ev => { if (ev.buttons) lotY(ev); });
+new ResizeObserver(() => requestRender()).observe(document.querySelector('.main'));
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { heatCache = null; requestRender(); });
+new MutationObserver(() => { heatCache = null; requestRender(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+buildJump();
+syncInputs();
+recompute();
+</script>

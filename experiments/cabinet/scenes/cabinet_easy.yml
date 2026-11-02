@@ -1,0 +1,79 @@
+# Easy cabinet cabinet_easy: cabinet_w20 (compartment openings 2.0 x as wide, 1.0 x as tall, centre line y 0.15) with every panel
+# 5 x as thick (0.1 m), panels growing outward from the unchanged compartment interiors. Written by
+# jeffrey/easy_cabinet/make_easy.py; do not edit by hand.
+# Cupboard (open towards the robot, -X): outer box x 0.56-0.96, y -0.31-0.61, z -0.035-0.905.
+# Compartments: bottom y -0.21-0.51 z -0.035-0.19, middle y -0.21-0.51 z 0.29-0.5, top y -0.21-0.51 z 0.6-0.805.
+#
+# Sampling box for the grasp point: height = cupboard, width 1.5 x centred, depth 2.5 x from the back face but x >= 0.08.
+# No task orientation: no zones or task_axes. Speed is clearance only.
+
+cuboids:
+  - name: table
+    pose: [0.65, 0.0, -0.06, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.8, 1.2, 0.05]
+
+  - name: shelf_back
+    pose: [0.91, 0.15, 0.435, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.1, 0.92, 0.94]
+    color: [150, 105, 60]
+
+  - name: shelf_side_inner
+    pose: [0.71, -0.26, 0.435, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.3, 0.1, 0.94]
+    color: [150, 105, 60]
+
+  - name: shelf_side_outer
+    pose: [0.71, 0.56, 0.435, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.3, 0.1, 0.94]
+    color: [150, 105, 60]
+
+  - name: shelf_top
+    pose: [0.71, 0.15, 0.855, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.3, 0.72, 0.1]
+    color: [150, 105, 60]
+
+  - name: shelf_board_low
+    pose: [0.71, 0.15, 0.24, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.3, 0.72, 0.1]
+    color: [170, 125, 75]
+
+  - name: shelf_board_high
+    pose: [0.71, 0.15, 0.55, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.3, 0.72, 0.1]
+    color: [170, 125, 75]
+
+viz_table:
+  name: viz_tabletop
+  pose: [0.75, 0.0, -0.06, 1.0, 0.0, 0.0, 0.0]
+  dims: [1.0, 1.2, 0.05]
+
+sampling:
+  x: [0.08, 0.96]
+  y: [-0.54, 0.84]
+  z: [-0.035, 0.905]
+  rule: height = cupboard, width = 1.5 x, depth = 2.5 x from the back face, x >= 0.08
+
+# Grasp-point boxes of the compartment interiors (0.04 m past the opening). Used by the test suites and the coverage strata.
+compartments:
+  - name: bottom
+    x: [0.6, 0.86]
+    y: [-0.21, 0.51]
+    z: [-0.035, 0.19]
+  - name: middle
+    x: [0.6, 0.86]
+    y: [-0.21, 0.51]
+    z: [0.29, 0.5]
+  - name: top
+    x: [0.6, 0.86]
+    y: [-0.21, 0.51]
+    z: [0.6, 0.805]
+
+# Derivation (jeffrey/easy_cabinet/make_easy.py); not read by the runtime.
+variant:
+  base: cabinet.yml
+  clearance_scale: 1.0
+  width_scale: 2.0
+  height_scale: 1.0
+  centre_y: 0.15
+  panel_scale: 5
+  rule: compartment openings width_scale x as wide and height_scale x as tall, cupboard centred on y = centre_y (cabinet_w20); then every panel panel_scale x as thick, growing outward from the interiors

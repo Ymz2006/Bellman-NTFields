@@ -1,0 +1,299 @@
+<title>Maze Scale Test</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;650;750&family=Public+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column (~68ch) with full-width chart bands; small multiples in a wrapping grid, one panel per maze. */
+:root {
+  --bg: #f5f6f8; --surface: #ffffff; --ink: #15181d; --ink2: #4b525c; --muted: #737b86; --rule: #dde1e6; --wash: #eef1f5;
+  --accent: #2a78d6;
+  --s-ntrl: #2a78d6; --s-dp: #eb6834; --s-zoom: #1baf7a; --s-wall: #6250d6; --s-ref: #8b929b;
+  --good: #2b7d3f; --bad: #b4382f;
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+    --accent: #3987e5; --s-ntrl: #3987e5; --s-dp: #d95926; --s-zoom: #199e70; --s-wall: #9085e9; --s-ref: #7d858f;
+    --good: #5bb46f; --bad: #e0675d; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+  --accent: #3987e5; --s-ntrl: #3987e5; --s-dp: #d95926; --s-zoom: #199e70; --s-wall: #9085e9; --s-ref: #7d858f;
+  --good: #5bb46f; --bad: #e0675d; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 15.5px/1.6 var(--f-body); margin: 0; }
+.page { max-width: 1120px; margin: 0 auto; padding-block: 40px 72px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 44px; }
+.col { max-width: 70ch; min-width: 0; }
+header { display: grid; gap: 14px; }
+.eyebrow { font: 500 12px/1.4 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 750 clamp(30px, 5vw, 46px)/1.05 var(--f-display); letter-spacing: -0.015em; margin: 0; text-wrap: balance; }
+h2 { font: 650 23px/1.2 var(--f-display); margin: 0 0 10px; text-wrap: balance; }
+h3 { font: 650 16px/1.3 var(--f-display); margin: 18px 0 6px; }
+p { margin: 0 0 12px; }
+.lede { font-size: 17.5px; line-height: 1.55; color: var(--ink); }
+.lede strong, p strong { font-weight: 600; }
+section { display: grid; gap: 14px; min-width: 0; }
+.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+figure { margin: 0; background: #ffffff; border: 1px solid var(--rule); border-radius: 6px; padding: 10px; overflow-x: auto; }
+figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+figcaption { color: #4b525c; font-size: 13px; margin-top: 6px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.tile { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 12px 14px; display: grid; gap: 2px; }
+.tile .k { font: 500 12px/1.3 var(--f-mono); color: var(--muted); }
+.tile .v { font: 650 26px/1.15 var(--f-display); font-variant-numeric: tabular-nums; }
+.tile .s { font-size: 12.5px; color: var(--ink2); }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.controls .lab { font: 500 12px var(--f-mono); color: var(--muted); margin-right: 4px; }
+.chip { display: inline-flex; align-items: center; gap: 7px; font: 500 13px var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 999px; padding: 5px 11px; cursor: pointer; }
+.chip[aria-pressed="false"] { color: var(--muted); background: transparent; }
+.chip[aria-pressed="false"] .key { opacity: 0.35; }
+.chip:focus-visible, .panel:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.key { width: 18px; height: 0; border-top: 3px solid currentColor; border-radius: 2px; }
+.key.dash { border-top-style: dashed; border-top-width: 2px; }
+.key.dot { border-top-style: dotted; border-top-width: 2px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+.panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 10px 4px; position: relative; min-width: 0; }
+.panel h4 { font: 650 14px var(--f-display); margin: 0 0 2px 4px; display: flex; justify-content: space-between; gap: 8px; }
+.panel h4 span { font: 400 12px var(--f-mono); color: var(--muted); }
+.panel svg { display: block; width: 100%; height: auto; overflow: visible; }
+.axis text { fill: var(--muted); font: 9.5px var(--f-mono); }
+.gridline { stroke: var(--rule); stroke-width: 1; }
+.tip { position: absolute; z-index: 5; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--rule); border-radius: 6px; padding: 8px 10px; box-shadow: 0 4px 14px rgba(0,0,0,0.12); font-size: 12.5px; min-width: 190px; }
+.tip .h { font: 500 11.5px var(--f-mono); color: var(--muted); margin-bottom: 4px; }
+.tip .r { display: grid; grid-template-columns: 14px auto 1fr; gap: 6px; align-items: center; }
+.tip .r b { font: 500 13px var(--f-mono); font-variant-numeric: tabular-nums; }
+.tip .r i { font-style: normal; color: var(--ink2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tip .r .key { width: 14px; }
+details { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 14px; }
+summary { cursor: pointer; font: 600 14px var(--f-body); }
+.tablewrap { overflow-x: auto; margin-top: 10px; }
+table { border-collapse: collapse; font-size: 13px; min-width: 520px; }
+th, td { padding: 5px 9px; border-bottom: 1px solid var(--rule); text-align: right; white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+table.named th:nth-child(2), table.named td:nth-child(2) { text-align: left; }
+thead th { font: 600 12px var(--f-mono); color: var(--muted); }
+td.num, td .num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+tbody tr:hover { background: var(--wash); }
+.note { font-size: 13.5px; color: var(--ink2); }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; align-items: start; }
+.two > * { min-width: 0; }
+ul.tight { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+code { font: 13px var(--f-mono); background: var(--wash); padding: 1px 4px; border-radius: 4px; }
+@media (prefers-reduced-motion: no-preference) { .chip { transition: background-color 120ms, color 120ms; } }
+</style>
+
+<div class="page">
+  <header class="col">
+    <div class="eyebrow">jeffrey/maze_scale · ntrl-demo · 1 Nov 2026</div>
+    <h1>Maze Scale Test</h1>
+    <p class="lede" id="lede">ntrl-demo plans flawlessly on mazes up to the size of its own demo maze (7&nbsp;&times;&nbsp;7 cells) and falls apart beyond it: <strong>99.7&nbsp;% of runs on 4&times;4 and 7&times;7, 59&nbsp;% on 13&times;13, 23&nbsp;% on 22&times;22 and 11&nbsp;% on 40&times;40</strong>, where it does no better than driving straight at the goal. It fails by hitting walls: as the maze grows, the walls fade out of its travel-time field. Segment DP alone repairs the long-range travel times but plans worse. With ntrl-demo&rsquo;s own wall term in every DP level it beats ntrl-demo at every distance on 13&times;13 (74 vs 59&nbsp;%) and doubles it on 22&times;22 (43 vs 21&nbsp;%); on 40&times;40 nothing tested gets past 8 cells.</p>
+  </header>
+
+  <section>
+    <div class="col">
+      <h2>Five mazes, one robot</h2>
+      <p>Perfect mazes (randomized Kruskal) with 15&nbsp;% of the remaining walls removed to open loops, like ntrl-demo&rsquo;s demo maze, at 4, 7, 13, 22 and 40 cells a side; the last is 10&times; the first in each direction. Each is an <code>.obj</code> normalized exactly as ntrl-demo&rsquo;s <code>to_off</code> does. The robot is a 0.5 &times; 0.2-cell rectangle planned in SE(2) as q&nbsp;=&nbsp;(x,&nbsp;y,&nbsp;&phi;) with &phi;&nbsp;=&nbsp;0.25&nbsp;&theta; in cell units: it can turn on a corridor&rsquo;s centre line but drives slowly broadside. Margin, planner step, tolerance and temperature are all set in cells, so only the number of cells changes between mazes.</p>
+    </div>
+    <figure><img src="mazes.png" alt="The five mazes, 4, 7, 13, 22 and 40 cells a side, each drawn at the same size with the longest test query's true path." width="2015" height="429"><figcaption>Each maze fills ntrl-demo's unit box, so a bigger maze is the same world with more cells. Orange: the longest certified query's true path.</figcaption></figure>
+    <div class="tiles" id="tiles"></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Success by distance</h2>
+      <p>Queries are binned by their true travel distance (cells at full speed, from a ground-truth grid solver), 40 per bin, each certified by a collision-free truth path. Each point pools 3 training seeds &times; 3 planning seeds; the whisker is the training-seed range. The oracle, the same MPPI driven by the true travel time, solves every query, so every loss is the learned field&rsquo;s. Hover a panel for the numbers.</p>
+    </div>
+    <div class="controls" id="legend" role="group" aria-label="Series shown in the charts"><span class="lab">show</span></div>
+    <div class="grid" id="panels"></div>
+    <details id="tables"><summary>All numbers as tables</summary><div id="tablebox"></div></details>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Why it breaks: the walls fade out</h2>
+      <p>At 7&times;7 the learned speed redraws every wall. At 13&times;13 most walls survive, at 22&times;22 only a connected subset, at 40&times;40 almost none. On held-out pairs the learned speed&rsquo;s log-correlation with the true speed falls 0.96, 0.92, 0.69, 0.32, 0.16 from 4 to 40 cells. At poses next to a wall the field&rsquo;s rise into the wall (ntrl-demo&rsquo;s eikonal target is 1) falls from 0.84&ndash;0.89 to 0.20, and its pull away from the wall (cosine with the into-wall direction, target 1) from 0.98 to 0.07&ndash;0.10. On the 40&times;40 maze MPPI hits the first wall it meets, a median 0.4&ndash;0.8 cells after the start.</p>
+    </div>
+    <figure><img src="speedmaps.png" alt="True speed and the learned speed 1/|grad T| at heading 0, for the 7, 13, 22 and 40-cell mazes, with the zoom control below." width="1440" height="1116"><figcaption>Speed towards goal 0 at heading 0 (dark = slow, i.e. a wall). Top: truth. Middle: ntrl-demo. Bottom: ntrl-demo trained on zoomed coordinates (one cell spans the same input length as in the 7-cell maze).</figcaption></figure>
+    <div class="col"><p><strong>Control: zoomed input.</strong> Training ntrl-demo on coordinates scaled so one cell spans the same input length as in the 7&times;7 maze (the same as multiplying its Fourier matrix B by 1.85, 3.11 or 5.65) recovers a lot at 13&times;13 (444 vs 347 of 600 runs for the same training seed) and some at 22&times;22 (213 vs 152 of 720), but not at 40&times;40 (108 vs 89 of 840; speed fit still 0.15). Input frequency per cell explains part of the loss at 13 and 22 cells; at 40 cells one network does not hold about 1,400 walls even at the right frequency.</p></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Segment DP</h2>
+      <p>Segment DP (the interval-DP transition of <code>jeffrey/segment_dp</code>) builds travel times for long gaps from shorter ones: T(i,&nbsp;j)&nbsp;=&nbsp;min<sub>k</sub> T(i,&nbsp;k)&nbsp;+&nbsp;T(k,&nbsp;j) over pool poses k within the shorter segments&rsquo; range. Gaps are cut geometrically from 0.5 cells (ntrl-demo&rsquo;s own field below) to the maze diameter, 8 to 16 levels, each a warm-started ntrl-demo network fit to its DP targets. The chain fixes the long-range values (13&times;13, 16&ndash;32 cells: 1.35 &times; the true travel time vs 2.04) and directions, yet plans <strong>worse</strong> on every maze ntrl-demo had not already solved. The levels are fit to values only, so they lose the wall barrier that ntrl-demo&rsquo;s near-wall terms give its own field (near-wall table below), and MPPI collides sooner.</p>
+    </div>
+    <div class="tablewrap" id="dptable"></div>
+    <div class="tablewrap" id="walltable"></div>
+    <div class="col"><p>Excluding through-wall base pieces from the DP (checked pieces) or starting from the zoomed field does not change this. Fitting ntrl-demo&rsquo;s own wall-direction term in every DP level (<code>segdp3.py</code>) brings the barrier back (near-wall table above), and the chains stop hitting walls; what still fails stalls in a local minimum of the long-range field (crosses in the figure). The term&rsquo;s weight matters. At weight 1 the long-range values drift low and long queries stall; at <strong>weight 0.3</strong> the chain beats ntrl-demo on all three 13&times;13 training seeds (451 / 456 / 420 vs 347 / 320 / 393 of 600 runs), at every distance including the longest (16&ndash;32 cells: 32 / 51 / 29 vs 32 / 4 / 34 of 120), doubles it on 22&times;22 (308 vs 152 of 720) and helps on 40&times;40 below 8 cells (155 vs 89 of 840). Where ntrl-demo is already perfect (7&times;7) the chain costs a little (454 vs 480).</p></div>
+    <figure><img src="paths13.png" alt="Three queries on the 13-cell maze: the truth path and the paths planned by ntrl-demo, segment DP and segment DP with the wall term." width="1326" height="481"><figcaption>13 &times; 13 maze, planning seed 0, training seed 87358. Dashed: truth. A cross marks where a run that never reached the goal stopped.</figcaption></figure>
+  </section>
+
+  <section class="col">
+    <h2>How it was measured</h2>
+    <ul class="tight"><li><strong>Training</strong>: ntrl-demo&rsquo;s point recipe in the robot&rsquo;s C-space (500,000 pairs; applied in the unit cube the C-space box maps to, since the heading axis is thin) and its <code>models/metric</code> <code>Model.train()</code> unchanged, dim 3, 5,000 epochs, training seeds 87358 / 1 / 2.</li><li><strong>Speed</strong>: clip(d / margin, 0.1, 1) with margin 0.175 cells (ntrl-demo&rsquo;s test-maze ratio), stretched by the trainer; d is the exact rectangle-to-wall clearance (matches shapely to 4&middot;10<sup>&minus;6</sup> cells).</li><li><strong>Planner</strong>: ntrl-demo&rsquo;s MPPI (50 samples, horizon 5, cost 10&nbsp;T(first)&nbsp;+&nbsp;T(last)), its defaults on the 4&times;4 maze and scaled per cell elsewhere; budget 3&times; the true path. Success = reached the goal without touching a wall (exact clearance every 0.005 cells).</li><li><strong>Truth</strong>: travel time on a C-space grid (1/15 cell, 13 headings; within 1&nbsp;% of a 4&times; finer grid), 48 goals per maze; queries from 200,000 random starts, binned by true travel distance, 40 per bin.</li><li><strong>Segment DP</strong>: 100,000 pool pairs per level, 128 split candidates (half near the straight line, half uniform in the lens), |log&nbsp;T&nbsp;&minus;&nbsp;log&nbsp;y| loss, 6,000 steps of 2,000.</li></ul>
+  </section>
+
+  <section class="col">
+    <h2>Caveats</h2>
+    <ul class="tight"><li>One maze layout per size; 40 queries per distance bin.</li><li>On 13&times;13, ntrl-demo, segment DP and both wall-term weights have three training seeds; every other DP and zoom number is training seed 87358 only. ntrl-demo&rsquo;s 13&times;13 seeds differ by up to 73 of 600 runs, mostly in the long bins.</li><li>The wall-term weight was tried at 1 and 0.3 only, chosen on 13&times;13 and carried to the other mazes.</li><li>Only ntrl-demo&rsquo;s MPPI was used as the planner; a gradient-descent planner was not tried.</li><li>The zoom control changes three things at once: Fourier frequency per cell, TD step (0.03 of the zoomed box) and time units (divided back out for the planner).</li></ul>
+  </section>
+
+  <details class="col"><summary>Registered runs</summary><div class="tablewrap" id="runs"></div></details>
+</div>
+
+<script>
+const D = {"mazes": [{"n": 4, "id": "20261101T192432Z-423319dc", "bins": ["0.5-2", "2-4", "4-8"], "per_bin": [40, 40, 40], "oracle": [100.0, 100.0, 100.0], "straight": [62.5, 5.0, 0.0], "fields": {"ntrl-demo": {"seeds": [1, 2, 87358], "counts": [[360, 360], [357, 360], [360, 360]], "pct": [100.0, 99.16666666666667, 100.0], "lo": [100.0, 97.5, 100.0], "hi": [100.0, 100.0, 100.0], "ids": ["20261101T194708Z-15deb708", "20261101T195648Z-927151d4", "20261101T193251Z-f43026ee"], "total": [1077, 1080], "per_seed_total": {"1": [357, 360], "2": [360, 360], "87358": [360, 360]}, "field": {"t_over_tstar": [0.9325663248697916, 0.9168494939804077, 0.9130479494730631], "cos": [0.9741426110267639, 0.9200218319892883, 0.9411825935045878]}, "speed_fit": 0.9638408223787943}, "segment DP": {"seeds": [87358], "counts": [[120, 120], [120, 120], [120, 120]], "pct": [100.0, 100.0, 100.0], "lo": [100.0, 100.0, 100.0], "hi": [100.0, 100.0, 100.0], "ids": ["20261101T203439Z-6ed89e28"], "total": [360, 360], "per_seed_total": {"87358": [360, 360]}, "field": {"t_over_tstar": [0.9276844263076782, 0.9425877928733826, 0.9695953130722046], "cos": [0.9796719551086426, 0.9652296304702759, 0.9323110580444336]}, "speed_fit": null}}}, {"n": 7, "id": "20261101T192446Z-9b1569db", "bins": ["0.5-2", "2-4", "4-8", "8-16"], "per_bin": [40, 40, 40, 40], "oracle": [100.0, 100.0, 100.0, 100.0], "straight": [77.5, 17.5, 0.0, 0.0], "fields": {"ntrl-demo": {"seeds": [1, 2, 87358], "counts": [[360, 360], [360, 360], [360, 360], [357, 360]], "pct": [100.0, 100.0, 100.0, 99.16666666666667], "lo": [100.0, 100.0, 100.0, 97.5], "hi": [100.0, 100.0, 100.0, 100.0], "ids": ["20261101T201244Z-1ae74c20", "20261101T202527Z-32f7835e", "20261101T200440Z-b920137d"], "total": [1437, 1440], "per_seed_total": {"1": [480, 480], "2": [477, 480], "87358": [480, 480]}, "field": {"t_over_tstar": [0.962881604830424, 1.0274578332901, 1.0311516125996907, 1.0513064066569011], "cos": [0.948543131351471, 0.9630946715672811, 0.913020670413971, 0.9181138475735983]}, "speed_fit": 0.9146541555722555}, "segment DP": {"seeds": [87358], "counts": [[120, 120], [120, 120], [114, 120], [105, 120]], "pct": [100.0, 100.0, 95.0, 87.5], "lo": [100.0, 100.0, 95.0, 87.5], "hi": [100.0, 100.0, 95.0, 87.5], "ids": ["20261101T201621Z-4d135bc3"], "total": [459, 480], "per_seed_total": {"87358": [459, 480]}, "field": {"t_over_tstar": [0.9840185046195984, 1.0578901767730713, 1.0751161575317383, 1.0701760053634644], "cos": [0.962852418422699, 0.9592907428741455, 0.9312148690223694, 0.9373468160629272]}, "speed_fit": null}, "segment DP + wall term": {"seeds": [87358], "counts": [[120, 120], [120, 120], [109, 120], [97, 120]], "pct": [100.0, 100.0, 90.83333333333333, 80.83333333333333], "lo": [100.0, 100.0, 90.83333333333333, 80.83333333333333], "hi": [100.0, 100.0, 90.83333333333333, 80.83333333333333], "ids": ["20261101T212502Z-d09fb16b"], "total": [446, 480], "per_seed_total": {"87358": [446, 480]}, "field": {"t_over_tstar": [0.906965434551239, 0.9178544282913208, 0.8939112424850464, 0.8832013010978699], "cos": [0.9308038949966431, 0.9102007150650024, 0.9005295038223267, 0.8974456191062927]}, "speed_fit": null}, "segment DP + wall term (weight 0.3)": {"seeds": [87358], "counts": [[120, 120], [120, 120], [108, 120], [106, 120]], "pct": [100.0, 100.0, 90.0, 88.33333333333333], "lo": [100.0, 100.0, 90.0, 88.33333333333333], "hi": [100.0, 100.0, 90.0, 88.33333333333333], "ids": ["20261101T230634Z-024a6522"], "total": [454, 480], "per_seed_total": {"87358": [454, 480]}, "field": {"t_over_tstar": [0.9633557796478271, 0.9931725263595581, 0.9947189092636108, 0.9895097017288208], "cos": [0.9584046602249146, 0.9283756017684937, 0.9124555587768555, 0.9297865629196167]}, "speed_fit": null}}}, {"n": 13, "id": "20261101T192504Z-13cf1d04", "bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32"], "per_bin": [40, 40, 40, 40, 40], "oracle": [100.0, 100.0, 100.0, 100.0, 100.0], "straight": [70.0, 10.0, 0.0, 0.0, 0.0], "fields": {"ntrl-demo": {"seeds": [1, 2, 87358], "counts": [[337, 360], [280, 360], [214, 360], [159, 360], [70, 360]], "pct": [93.61111111111111, 77.77777777777777, 59.44444444444444, 44.166666666666664, 19.444444444444443], "lo": [91.66666666666667, 75.0, 48.333333333333336, 28.333333333333332, 3.3333333333333335], "hi": [97.5, 80.83333333333333, 65.83333333333333, 56.666666666666664, 28.333333333333332], "ids": ["20261101T204630Z-58badec5", "20261101T205900Z-c57aa0f1", "20261101T203437Z-ebc95225"], "total": [1060, 1800], "per_seed_total": {"1": [320, 600], "2": [393, 600], "87358": [347, 600]}, "field": {"t_over_tstar": [1.1229068040847778, 1.192996859550476, 1.2696935733159382, 1.9460813999176025, 2.0822587807973227], "cos": [0.9496855934460958, 0.8898908297220866, 0.8245838284492493, 0.8515155911445618, 0.8405288060506185]}, "speed_fit": 0.6867385109265646}, "ntrl-demo, zoomed input": {"seeds": [87358], "counts": [[116, 120], [106, 120], [93, 120], [75, 120], [54, 120]], "pct": [96.66666666666667, 88.33333333333333, 77.5, 62.5, 45.0], "lo": [96.66666666666667, 88.33333333333333, 77.5, 62.5, 45.0], "hi": [96.66666666666667, 88.33333333333333, 77.5, 62.5, 45.0], "ids": ["20261101T204839Z-df3ab517"], "total": [444, 600], "per_seed_total": {"87358": [444, 600]}, "field": {"t_over_tstar": [1.0991477966308594, 1.1781842708587646, 1.2521345615386963, 2.0709733963012695, 2.128795862197876], "cos": [0.9570951461791992, 0.8993562459945679, 0.885477602481842, 0.8663780689239502, 0.8643062710762024]}, "speed_fit": 0.7311415076255798}, "segment DP": {"seeds": [1, 2, 87358], "counts": [[344, 360], [242, 360], [136, 360], [72, 360], [11, 360]], "pct": [95.55555555555556, 67.22222222222223, 37.77777777777778, 20.0, 3.0555555555555554], "lo": [95.0, 60.833333333333336, 30.0, 15.0, 0.8333333333333334], "hi": [95.83333333333333, 71.66666666666667, 45.833333333333336, 23.333333333333332, 5.833333333333333], "ids": ["20261101T221325Z-26a627cd", "20261101T212901Z-f4ac5cd0", "20261101T204654Z-6719910c"], "total": [805, 1800], "per_seed_total": {"1": [280, 600], "2": [263, 600], "87358": [262, 600]}, "field": {"t_over_tstar": [1.175516684850057, 1.2375394503275554, 1.290589451789856, 1.3495234251022339, 1.361459215482076], "cos": [0.9675102631251017, 0.9270398418108622, 0.8829740484555563, 0.90836634238561, 0.9174069364865621]}, "speed_fit": null}, "segment DP + wall term": {"seeds": [1, 2, 87358], "counts": [[357, 360], [323, 360], [286, 360], [147, 360], [43, 360]], "pct": [99.16666666666667, 89.72222222222223, 79.44444444444444, 40.833333333333336, 11.944444444444445], "lo": [97.5, 88.33333333333333, 77.5, 37.5, 2.5], "hi": [100.0, 90.83333333333333, 82.5, 42.5, 28.333333333333332], "ids": ["20261101T214011Z-1684e9fd", "20261101T215413Z-4f22c760", "20261101T210413Z-ae790e10"], "total": [1156, 1800], "per_seed_total": {"1": [400, 600], "2": [377, 600], "87358": [379, 600]}, "field": {"t_over_tstar": [1.0454765160878499, 0.9770840605099996, 0.9766760667165121, 0.9841578205426534, 0.8975058396657308], "cos": [0.9198207060496012, 0.868688682715098, 0.864444355169932, 0.7505036195119222, 0.5329385201136271]}, "speed_fit": null}, "segment DP + wall term (weight 0.3)": {"seeds": [1, 2, 87358], "counts": [[360, 360], [350, 360], [317, 360], [188, 360], [112, 360]], "pct": [100.0, 97.22222222222223, 88.05555555555556, 52.22222222222222, 31.11111111111111], "lo": [100.0, 95.0, 80.0, 50.833333333333336, 24.166666666666668], "hi": [100.0, 99.16666666666667, 95.0, 55.0, 42.5], "ids": ["20261101T222804Z-9ddcbd27", "20261101T224644Z-59272aa7", "20261101T215932Z-1bbbfbc7"], "total": [1327, 1800], "per_seed_total": {"1": [456, 600], "2": [420, 600], "87358": [451, 600]}, "field": {"t_over_tstar": [1.1321271260579426, 1.087411363919576, 1.1303639809290569, 1.1598044236501057, 1.1627906163533528], "cos": [0.9582770466804504, 0.8973410129547119, 0.8592550357182821, 0.8080219825108846, 0.8145881096522013]}, "speed_fit": null}}}, {"n": 22, "id": "20261101T193403Z-cea05796", "bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32", "32-64"], "per_bin": [40, 40, 40, 40, 40, 40], "oracle": [100.0, 100.0, 100.0, 100.0, 100.0, 100.0], "straight": [65.0, 10.0, 0.0, 0.0, 0.0, 0.0], "fields": {"ntrl-demo": {"seeds": [1, 2, 87358], "counts": [[269, 360], [117, 360], [57, 360], [45, 360], [17, 360], [0, 360]], "pct": [74.72222222222223, 32.5, 15.833333333333334, 12.5, 4.722222222222222, 0.0], "lo": [74.16666666666667, 21.666666666666668, 10.0, 7.5, 2.5, 0.0], "hi": [75.0, 45.0, 20.0, 15.0, 6.666666666666667, 0.0], "ids": ["20261101T194908Z-fa2678e3", "20261101T200614Z-92e8b351", "20261101T193703Z-dd44f02b"], "total": [505, 2160], "per_seed_total": {"1": [186, 720], "2": [167, 720], "87358": [152, 720]}, "field": {"t_over_tstar": [1.1973987420399983, 1.2597596645355225, 1.3446416854858398, 1.4284630219141643, 1.3867870569229126, 1.009671727816264], "cos": [0.9427324732144674, 0.8609309792518616, 0.7944796482721964, 0.7977486252784729, 0.6631967226664225, 0.0593394630899032]}, "speed_fit": 0.32422250509262085}, "ntrl-demo, zoomed input": {"seeds": [87358], "counts": [[93, 120], [69, 120], [36, 120], [14, 120], [1, 120], [0, 120]], "pct": [77.5, 57.5, 30.0, 11.666666666666666, 0.8333333333333334, 0.0], "lo": [77.5, 57.5, 30.0, 11.666666666666666, 0.8333333333333334, 0.0], "hi": [77.5, 57.5, 30.0, 11.666666666666666, 0.8333333333333334, 0.0], "ids": ["20261101T202555Z-61b47892"], "total": [213, 720], "per_seed_total": {"87358": [213, 720]}, "field": {"t_over_tstar": [1.2680366039276123, 1.3948750495910645, 1.9517462253570557, 2.276463747024536, 2.2787928581237793, 1.9133895635604858], "cos": [0.9537754058837891, 0.8864352703094482, 0.8535547256469727, 0.8072930574417114, 0.8321468234062195, 0.674666166305542]}, "speed_fit": 0.42190077900886536}, "segment DP": {"seeds": [87358], "counts": [[89, 120], [20, 120], [5, 120], [1, 120], [3, 120], [0, 120]], "pct": [74.16666666666667, 16.666666666666668, 4.166666666666667, 0.8333333333333334, 2.5, 0.0], "lo": [74.16666666666667, 16.666666666666668, 4.166666666666667, 0.8333333333333334, 2.5, 0.0], "hi": [74.16666666666667, 16.666666666666668, 4.166666666666667, 0.8333333333333334, 2.5, 0.0], "ids": ["20261101T202506Z-fbbff9fe"], "total": [118, 720], "per_seed_total": {"87358": [118, 720]}, "field": {"t_over_tstar": [1.2458903789520264, 1.3593108654022217, 1.4362910985946655, 1.479701042175293, 1.4903963804244995, 1.014143705368042], "cos": [0.9319570064544678, 0.8873163461685181, 0.8649211525917053, 0.8509440422058105, 0.7271652817726135, -0.29907721281051636]}, "speed_fit": null}, "segment DP, zoomed base": {"seeds": [87358], "counts": [[92, 120], [56, 120], [16, 120], [5, 120], [0, 120], [0, 120]], "pct": [76.66666666666667, 46.666666666666664, 13.333333333333334, 4.166666666666667, 0.0, 0.0], "lo": [76.66666666666667, 46.666666666666664, 13.333333333333334, 4.166666666666667, 0.0, 0.0], "hi": [76.66666666666667, 46.666666666666664, 13.333333333333334, 4.166666666666667, 0.0, 0.0], "ids": ["20261101T204927Z-51fa1b1c"], "total": [169, 720], "per_seed_total": {"87358": [169, 720]}, "field": {"t_over_tstar": [1.2244317531585693, 1.3239641189575195, 1.4262501001358032, 1.4903321266174316, 1.4826891422271729, 1.3261200189590454], "cos": [0.9638006687164307, 0.9244855642318726, 0.8634089827537537, 0.8859524726867676, 0.7695657014846802, 0.5466217994689941]}, "speed_fit": null}, "segment DP, checked pieces": {"seeds": [87358], "counts": [[91, 120], [25, 120], [6, 120], [7, 120], [3, 120], [0, 120]], "pct": [75.83333333333333, 20.833333333333332, 5.0, 5.833333333333333, 2.5, 0.0], "lo": [75.83333333333333, 20.833333333333332, 5.0, 5.833333333333333, 2.5, 0.0], "hi": [75.83333333333333, 20.833333333333332, 5.0, 5.833333333333333, 2.5, 0.0], "ids": ["20261101T204940Z-0ab9e137"], "total": [132, 720], "per_seed_total": {"87358": [132, 720]}, "field": {"t_over_tstar": [1.242310643196106, 1.3605949878692627, 1.3783998489379883, 1.4358656406402588, 1.3337130546569824, 0.9534984827041626], "cos": [0.9461910724639893, 0.870360255241394, 0.8116689324378967, 0.7554378509521484, 0.7895324230194092, -0.18083368241786957]}, "speed_fit": null}, "segment DP + wall term": {"seeds": [87358], "counts": [[103, 120], [70, 120], [49, 120], [10, 120], [0, 120], [0, 120]], "pct": [85.83333333333333, 58.333333333333336, 40.833333333333336, 8.333333333333334, 0.0, 0.0], "lo": [85.83333333333333, 58.333333333333336, 40.833333333333336, 8.333333333333334, 0.0, 0.0], "hi": [85.83333333333333, 58.333333333333336, 40.833333333333336, 8.333333333333334, 0.0, 0.0], "ids": ["20261101T212214Z-6b29cad2"], "total": [232, 720], "per_seed_total": {"87358": [232, 720]}, "field": {"t_over_tstar": [1.1261425018310547, 1.0103493928909302, 0.9503462910652161, 0.960982084274292, 0.9420990347862244, 0.6940300464630127], "cos": [0.8795890212059021, 0.8059138655662537, 0.8593786358833313, 0.6145415306091309, 0.7915105819702148, 0.3232700824737549]}, "speed_fit": null}, "segment DP + wall term (weight 0.3)": {"seeds": [87358], "counts": [[108, 120], [84, 120], [68, 120], [36, 120], [12, 120], [0, 120]], "pct": [90.0, 70.0, 56.666666666666664, 30.0, 10.0, 0.0], "lo": [90.0, 70.0, 56.666666666666664, 30.0, 10.0, 0.0], "hi": [90.0, 70.0, 56.666666666666664, 30.0, 10.0, 0.0], "ids": ["20261101T223027Z-dd0f1f6b"], "total": [308, 720], "per_seed_total": {"87358": [308, 720]}, "field": {"t_over_tstar": [1.204283356666565, 1.169801950454712, 1.1375195980072021, 1.1701408624649048, 1.163050889968872, 0.8303488492965698], "cos": [0.919209897518158, 0.834004282951355, 0.8161681294441223, 0.7547943592071533, 0.8466363549232483, 0.12760764360427856]}, "speed_fit": null}}}, {"n": 40, "id": "20261101T192432Z-a7d34464", "bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32", "32-64", "64-128"], "per_bin": [40, 40, 40, 40, 40, 40, 40], "oracle": [100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0], "straight": [62.5, 5.0, 0.0, 0.0, 0.0, 0.0, 0.0], "fields": {"ntrl-demo": {"seeds": [1, 2, 87358], "counts": [[239, 360], [29, 360], [0, 360], [0, 360], [0, 360], [0, 360], [0, 360]], "pct": [66.38888888888889, 8.055555555555555, 0.0, 0.0, 0.0, 0.0, 0.0], "lo": [65.0, 5.0, 0.0, 0.0, 0.0, 0.0, 0.0], "hi": [67.5, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0], "ids": ["20261101T194659Z-7d97259d", "20261101T200157Z-9b30f307", "20261101T193402Z-ffc2decc"], "total": [268, 2520], "per_seed_total": {"1": [86, 840], "2": [93, 840], "87358": [89, 840]}, "field": {"t_over_tstar": [1.2766446272532146, 1.2411738236745198, 1.2576617797215779, 1.225744406382243, 1.249062140782674, 1.2277135054270427, 1.1076736052831013], "cos": [0.9030466874440511, 0.9087503552436829, 0.7602875630060831, 0.6229040026664734, 0.6974833011627197, 0.6763496200243632, 0.06041536976893743]}, "speed_fit": 0.16454600294431052}, "ntrl-demo, zoomed input": {"seeds": [87358], "counts": [[81, 120], [24, 120], [3, 120], [0, 120], [0, 120], [0, 120], [0, 120]], "pct": [67.5, 20.0, 2.5, 0.0, 0.0, 0.0, 0.0], "lo": [67.5, 20.0, 2.5, 0.0, 0.0, 0.0, 0.0], "hi": [67.5, 20.0, 2.5, 0.0, 0.0, 0.0, 0.0], "ids": ["20261101T202151Z-8e48de41"], "total": [108, 840], "per_seed_total": {"87358": [108, 840]}, "field": {"t_over_tstar": [1.3694922924041748, 1.478013038635254, 1.7790188789367676, 2.5545334815979004, 2.3662047386169434, 1.9052777290344238, 0.9744702577590942], "cos": [0.923166036605835, 0.8650060892105103, 0.7655087113380432, 0.7527193427085876, 0.6627882122993469, 0.09050245583057404, -0.21337471902370453]}, "speed_fit": 0.15233299136161804}, "segment DP": {"seeds": [87358], "counts": [[74, 120], [11, 120], [0, 120], [0, 120], [0, 120], [0, 120], [0, 120]], "pct": [61.666666666666664, 9.166666666666666, 0.0, 0.0, 0.0, 0.0, 0.0], "lo": [61.666666666666664, 9.166666666666666, 0.0, 0.0, 0.0, 0.0, 0.0], "hi": [61.666666666666664, 9.166666666666666, 0.0, 0.0, 0.0, 0.0, 0.0], "ids": ["20261101T195644Z-ac24eb74"], "total": [85, 840], "per_seed_total": {"87358": [85, 840]}, "field": {"t_over_tstar": [1.4329081773757935, 1.4121932983398438, 1.3961390256881714, 1.3505573272705078, 1.3974781036376953, 1.3496408462524414, 1.2158194780349731], "cos": [0.9491075277328491, 0.900505542755127, 0.7049506306648254, 0.5079900026321411, 0.7327324151992798, 0.6236468553543091, 0.00899505615234375]}, "speed_fit": null}, "segment DP + wall term (weight 0.3)": {"seeds": [87358], "counts": [[88, 120], [58, 120], [9, 120], [0, 120], [0, 120], [0, 120], [0, 120]], "pct": [73.33333333333333, 48.333333333333336, 7.5, 0.0, 0.0, 0.0, 0.0], "lo": [73.33333333333333, 48.333333333333336, 7.5, 0.0, 0.0, 0.0, 0.0], "hi": [73.33333333333333, 48.333333333333336, 7.5, 0.0, 0.0, 0.0, 0.0], "ids": ["20261101T223506Z-f2a8699a"], "total": [155, 840], "per_seed_total": {"87358": [155, 840]}, "field": {"t_over_tstar": [1.3668322563171387, 1.1849164962768555, 1.0884552001953125, 1.0226762294769287, 1.017608404159546, 0.9919816255569458, 0.8825469017028809], "cos": [0.9233046174049377, 0.8256573677062988, 0.690920889377594, 0.6688886880874634, 0.6121553182601929, 0.581134021282196, 0.5160045623779297]}, "speed_fit": null}}}], "series": ["ntrl-demo", "ntrl-demo, zoomed input", "segment DP", "segment DP + wall term (weight 0.3)"], "wallfeel": {"4|ntrl-demo": {"0-0.5": {"n": 4611, "slope": 0.8314457535743713, "cos": 0.9795641303062439}, "0.5-2": {"n": 6288, "slope": 0.8808152079582214, "cos": 0.990277886390686}, "2-8": {"n": 1780, "slope": 0.8856525421142578, "cos": 0.9919981956481934}}, "4|segment DP": {"0-0.5": {"n": 4611, "slope": 0.8304359912872314, "cos": 0.9793885946273804}, "0.5-2": {"n": 6288, "slope": 0.8148526549339294, "cos": 0.9856948256492615}, "2-8": {"n": 1780, "slope": 0.8076669573783875, "cos": 0.9853200316429138}}, "7|ntrl-demo": {"0-0.5": {"n": 2999, "slope": 0.7624539732933044, "cos": 0.9702163338661194}, "0.5-2": {"n": 5159, "slope": 0.8392955660820007, "cos": 0.9818819165229797}, "2-8": {"n": 4819, "slope": 0.8566734194755554, "cos": 0.9848248958587646}}, "7|segment DP": {"0-0.5": {"n": 2999, "slope": 0.7642557621002197, "cos": 0.9702163338661194}, "0.5-2": {"n": 5159, "slope": 0.6455022096633911, "cos": 0.9660506844520569}, "2-8": {"n": 4819, "slope": 0.6151527166366577, "cos": 0.9617851376533508}}, "7|segment DP + wall term": {"0-0.5": {"n": 2999, "slope": 0.7709225416183472, "cos": 0.9684281349182129}, "0.5-2": {"n": 5159, "slope": 0.8439621329307556, "cos": 0.9910333156585693}, "2-8": {"n": 4819, "slope": 0.9231119155883789, "cos": 0.9942951798439026}}, "7|segment DP + wall term (weight 0.3)": {"0-0.5": {"n": 2999, "slope": 0.768642783164978, "cos": 0.9691988229751587}, "0.5-2": {"n": 5159, "slope": 0.839693546295166, "cos": 0.9872000217437744}, "2-8": {"n": 4819, "slope": 0.9038923978805542, "cos": 0.9914501905441284}}, "13|ntrl-demo": {"0-0.5": {"n": 1797, "slope": 0.3821873962879181, "cos": 0.8595096468925476}, "0.5-2": {"n": 3609, "slope": 0.4092112183570862, "cos": 0.8914885520935059}, "2-8": {"n": 6720, "slope": 0.47810834646224976, "cos": 0.919273853302002}, ">8": {"n": 1164, "slope": 0.4821658730506897, "cos": 0.9149169921875}}, "13|segment DP": {"0-0.5": {"n": 1797, "slope": 0.3822939991950989, "cos": 0.8556138277053833}, "0.5-2": {"n": 3609, "slope": 0.2858854830265045, "cos": 0.7313612699508667}, "2-8": {"n": 6720, "slope": 0.27047914266586304, "cos": 0.6369668245315552}, ">8": {"n": 1164, "slope": 0.24321772158145905, "cos": 0.6544696688652039}}, "13|segment DP + wall term": {"0-0.5": {"n": 1797, "slope": 0.3935653865337372, "cos": 0.8556138277053833}, "0.5-2": {"n": 3609, "slope": 0.5775274634361267, "cos": 0.9730470180511475}, "2-8": {"n": 6720, "slope": 0.7683892250061035, "cos": 0.9882526397705078}, ">8": {"n": 1164, "slope": 0.8193341493606567, "cos": 0.9932658672332764}}, "13|segment DP + wall term (weight 0.3)": {"0-0.5": {"n": 1797, "slope": 0.3875878155231476, "cos": 0.8548063635826111}, "0.5-2": {"n": 3609, "slope": 0.5725808143615723, "cos": 0.9655730128288269}, "2-8": {"n": 6720, "slope": 0.7634787559509277, "cos": 0.9815068244934082}, ">8": {"n": 1164, "slope": 0.7941931486129761, "cos": 0.9888371229171753}}, "13|zoom x1.85": {"0-0.5": {"n": 1797, "slope": 0.4520920515060425, "cos": 0.897436261177063}, "0.5-2": {"n": 3609, "slope": 0.4963700771331787, "cos": 0.9278573989868164}, "2-8": {"n": 6720, "slope": 0.5535939931869507, "cos": 0.9357756972312927}, ">8": {"n": 1164, "slope": 0.4956599473953247, "cos": 0.9265597462654114}}, "22|ntrl-demo": {"0-0.5": {"n": 1044, "slope": 0.21018165349960327, "cos": 0.5723448991775513}, "0.5-2": {"n": 2389, "slope": 0.23001372814178467, "cos": 0.35180437564849854}, "2-8": {"n": 5967, "slope": 0.24360908567905426, "cos": 0.5641812086105347}, ">8": {"n": 3608, "slope": 0.23818524181842804, "cos": 0.6362726092338562}}, "22|segment DP": {"0-0.5": {"n": 1044, "slope": 0.2115168273448944, "cos": 0.5741727948188782}, "0.5-2": {"n": 2389, "slope": 0.23308639228343964, "cos": 0.18570929765701294}, "2-8": {"n": 5967, "slope": 0.2277163714170456, "cos": 0.19678057730197906}, ">8": {"n": 3608, "slope": 0.2186848372220993, "cos": 0.24706248939037323}}, "22|segment DP + wall term": {"0-0.5": {"n": 1044, "slope": 0.2153741419315338, "cos": 0.5755146741867065}, "0.5-2": {"n": 2389, "slope": 0.47152528166770935, "cos": 0.9562268257141113}, "2-8": {"n": 5967, "slope": 0.5963985919952393, "cos": 0.973861813545227}, ">8": {"n": 3608, "slope": 0.6044619083404541, "cos": 0.9797185063362122}}, "22|segment DP + wall term (weight 0.3)": {"0-0.5": {"n": 1044, "slope": 0.21243467926979065, "cos": 0.5748868584632874}, "0.5-2": {"n": 2389, "slope": 0.351483017206192, "cos": 0.8917209506034851}, "2-8": {"n": 5967, "slope": 0.5744031071662903, "cos": 0.9618865847587585}, ">8": {"n": 3608, "slope": 0.6081697940826416, "cos": 0.9722832441329956}}, "22|segment DP, checked pieces": {"0-0.5": {"n": 1044, "slope": 0.21176642179489136, "cos": 0.5737369060516357}, "0.5-2": {"n": 2389, "slope": 0.23737438023090363, "cos": 0.1733790785074234}, "2-8": {"n": 5967, "slope": 0.2273799031972885, "cos": 0.1693423092365265}, ">8": {"n": 3608, "slope": 0.21951553225517273, "cos": 0.23685744404792786}}, "22|zoom x3.11": {"0-0.5": {"n": 1044, "slope": 0.28251421451568604, "cos": 0.6684027910232544}, "0.5-2": {"n": 2389, "slope": 0.31129270792007446, "cos": 0.613538384437561}, "2-8": {"n": 5967, "slope": 0.350358247756958, "cos": 0.699266254901886}, ">8": {"n": 3608, "slope": 0.3489875793457031, "cos": 0.7230278849601746}}, "40|ntrl-demo": {"0-0.5": {"n": 571, "slope": 0.1825803965330124, "cos": 0.47816887497901917}, "0.5-2": {"n": 1369, "slope": 0.2031317800283432, "cos": 0.0691119134426117}, "2-8": {"n": 4428, "slope": 0.21232040226459503, "cos": 0.09086492657661438}, ">8": {"n": 6847, "slope": 0.20092228055000305, "cos": 0.10151824355125427}}, "40|segment DP": {"0-0.5": {"n": 571, "slope": 0.18494300544261932, "cos": 0.47816896438598633}, "0.5-2": {"n": 1369, "slope": 0.2204292118549347, "cos": 0.053727999329566956}, "2-8": {"n": 4428, "slope": 0.23810017108917236, "cos": 0.05555492639541626}, ">8": {"n": 6847, "slope": 0.2310221642255783, "cos": 0.042439550161361694}}, "40|segment DP + wall term (weight 0.3)": {"0-0.5": {"n": 571, "slope": 0.18494300544261932, "cos": 0.47816896438598633}, "0.5-2": {"n": 1369, "slope": 0.22762730717658997, "cos": 0.6948235630989075}, "2-8": {"n": 4428, "slope": 0.3671528100967407, "cos": 0.9082740545272827}, ">8": {"n": 6847, "slope": 0.4187350571155548, "cos": 0.9374450445175171}}, "40|zoom x5.65": {"0-0.5": {"n": 571, "slope": 0.2390776425600052, "cos": 0.4692390561103821}, "0.5-2": {"n": 1369, "slope": 0.2691665589809418, "cos": 0.0465150848031044}, "2-8": {"n": 4428, "slope": 0.27780115604400635, "cos": 0.14805321395397186}, ">8": {"n": 6847, "slope": 0.22986406087875366, "cos": 0.17369017004966736}}}, "contact": {"4": {"0.5-2": {"cells": null, "within1": 0, "collisions": 0, "failures": 0}, "2-4": {"cells": null, "within1": 0, "collisions": 0, "failures": 0}, "4-8": {"cells": null, "within1": 0, "collisions": 0, "failures": 0}}, "7": {"0.5-2": {"cells": null, "within1": 0, "collisions": 0, "failures": 0}, "2-4": {"cells": null, "within1": 0, "collisions": 0, "failures": 0}, "4-8": {"cells": null, "within1": 0, "collisions": 0, "failures": 0}, "8-16": {"cells": null, "within1": 0, "collisions": 0, "failures": 0}}, "13": {"0.5-2": {"cells": 0.8857141137123108, "within1": 3, "collisions": 3, "failures": 3}, "2-4": {"cells": 0.8175541162490845, "within1": 5, "collisions": 9, "failures": 9}, "4-8": {"cells": 2.4009335041046143, "within1": 5, "collisions": 21, "failures": 21}, "8-16": {"cells": 4.266756534576416, "within1": 5, "collisions": 23, "failures": 23}, "16-32": {"cells": 3.636232852935791, "within1": 3, "collisions": 29, "failures": 29}}, "22": {"0.5-2": {"cells": 0.40384534001350403, "within1": 9, "collisions": 10, "failures": 10}, "2-4": {"cells": 0.7158571183681488, "within1": 21, "collisions": 32, "failures": 32}, "4-8": {"cells": 1.7890717387199402, "within1": 8, "collisions": 36, "failures": 36}, "8-16": {"cells": 2.771153211593628, "within1": 9, "collisions": 33, "failures": 34}, "16-32": {"cells": 3.500152111053467, "within1": 8, "collisions": 33, "failures": 38}, "32-64": {"cells": 1.083006501197815, "within1": 14, "collisions": 30, "failures": 40}}, "40": {"0.5-2": {"cells": 0.4384218901395798, "within1": 12, "collisions": 14, "failures": 14}, "2-4": {"cells": 0.5622864663600922, "within1": 27, "collisions": 36, "failures": 36}, "4-8": {"cells": 0.6086688041687012, "within1": 27, "collisions": 40, "failures": 40}, "8-16": {"cells": 0.7255806624889374, "within1": 24, "collisions": 40, "failures": 40}, "16-32": {"cells": 0.8161135017871857, "within1": 22, "collisions": 40, "failures": 40}, "32-64": {"cells": 0.6016362011432648, "within1": 31, "collisions": 40, "failures": 40}, "64-128": {"cells": 0.4111352413892746, "within1": 32, "collisions": 40, "failures": 40}}}, "dp": {"bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32", "32-64", "64-128"], "rows": [{"maze": "4\u00d74", "name": "ntrl-demo", "cells": ["100", "100", "100", "", "", "", ""], "all": "100 (360/360)"}, {"maze": "", "name": "segment DP", "cells": ["100", "100", "100", "", "", "", ""], "all": "100 (360/360)"}, {"maze": "7\u00d77", "name": "ntrl-demo", "cells": ["100", "100", "100", "100", "", "", ""], "all": "100 (480/480)"}, {"maze": "", "name": "segment DP", "cells": ["100", "100", "95", "88", "", "", ""], "all": "96 (459/480)"}, {"maze": "", "name": "segment DP + wall term", "cells": ["100", "100", "91", "81", "", "", ""], "all": "93 (446/480)"}, {"maze": "", "name": "segment DP + wall term (weight 0.3)", "cells": ["100", "100", "90", "88", "", "", ""], "all": "95 (454/480)"}, {"maze": "13\u00d713", "name": "ntrl-demo", "cells": ["92", "75", "48", "48", "27", "", ""], "all": "58 (347/600)"}, {"maze": "", "name": "ntrl-demo, zoomed input", "cells": ["97", "88", "78", "62", "45", "", ""], "all": "74 (444/600)"}, {"maze": "", "name": "segment DP", "cells": ["96", "61", "38", "23", "1", "", ""], "all": "44 (262/600)"}, {"maze": "", "name": "segment DP + wall term", "cells": ["100", "88", "82", "42", "2", "", ""], "all": "63 (379/600)"}, {"maze": "", "name": "segment DP + wall term (weight 0.3)", "cells": ["100", "99", "95", "55", "27", "", ""], "all": "75 (451/600)"}, {"maze": "22\u00d722", "name": "ntrl-demo", "cells": ["75", "22", "10", "15", "5", "0", ""], "all": "21 (152/720)"}, {"maze": "", "name": "ntrl-demo, zoomed input", "cells": ["78", "58", "30", "12", "1", "0", ""], "all": "30 (213/720)"}, {"maze": "", "name": "segment DP", "cells": ["74", "17", "4", "1", "2", "0", ""], "all": "16 (118/720)"}, {"maze": "", "name": "segment DP, checked pieces", "cells": ["76", "21", "5", "6", "2", "0", ""], "all": "18 (132/720)"}, {"maze": "", "name": "segment DP, zoomed base", "cells": ["77", "47", "13", "4", "0", "0", ""], "all": "23 (169/720)"}, {"maze": "", "name": "segment DP + wall term", "cells": ["86", "58", "41", "8", "0", "0", ""], "all": "32 (232/720)"}, {"maze": "", "name": "segment DP + wall term (weight 0.3)", "cells": ["90", "70", "57", "30", "10", "0", ""], "all": "43 (308/720)"}, {"maze": "40\u00d740", "name": "ntrl-demo", "cells": ["65", "9", "0", "0", "0", "0", "0"], "all": "11 (89/840)"}, {"maze": "", "name": "ntrl-demo, zoomed input", "cells": ["68", "20", "2", "0", "0", "0", "0"], "all": "13 (108/840)"}, {"maze": "", "name": "segment DP", "cells": ["62", "9", "0", "0", "0", "0", "0"], "all": "10 (85/840)"}, {"maze": "", "name": "segment DP + wall term (weight 0.3)", "cells": ["73", "48", "8", "0", "0", "0", "0"], "all": "18 (155/840)"}]}};
+const SERIES = [
+  {name: 'ntrl-demo', css: '--s-ntrl', on: true},
+  {name: 'ntrl-demo, zoomed input', css: '--s-zoom', on: true},
+  {name: 'segment DP', css: '--s-dp', on: true},
+  {name: 'segment DP + wall term (weight 0.3)', css: '--s-wall', on: true},
+  {name: 'oracle (MPPI on T*)', css: '--s-ref', ref: 'oracle', dash: 'dash', on: true},
+  {name: 'straight line', css: '--s-ref', ref: 'straight', dash: 'dot', on: true},
+];
+const NS = 'http://www.w3.org/2000/svg';
+const el = (tag, attrs = {}, parent) => { const e = document.createElementNS(NS, tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); if (parent) parent.appendChild(e); return e; };
+const h = (tag, cls, text, parent) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; if (parent) parent.appendChild(e); return e; };
+const pct = v => v == null ? '–' : `${Math.round(v)}%`;
+
+function seriesValues(m, s) {
+  if (s.ref) return {pct: m[s.ref], counts: null};
+  const f = m.fields[s.name];
+  return f ? f : null;
+}
+
+function drawPanel(m, box) {
+  box.textContent = '';
+  const W = 320, H = 210, L = 34, R = 10, T = 10, B = 40;
+  const svg = el('svg', {viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': `Success by distance, ${m.n} by ${m.n} maze`});
+  const n = m.bins.length, x = i => L + (n === 1 ? (W - L - R) / 2 : i * (W - L - R) / (n - 1)), y = v => T + (100 - v) * (H - T - B) / 100;
+  const ax = el('g', {class: 'axis'}, svg);
+  for (const v of [0, 25, 50, 75, 100]) { el('line', {x1: L, x2: W - R, y1: y(v), y2: y(v), class: 'gridline'}, svg); const t = el('text', {x: L - 6, y: y(v) + 3, 'text-anchor': 'end'}, ax); t.textContent = v; }
+  m.bins.forEach((b, i) => { const t = el('text', {x: x(i), y: H - B + 14, 'text-anchor': 'middle'}, ax); t.textContent = b; });
+  const lab = el('text', {x: (L + W - R) / 2, y: H - 6, 'text-anchor': 'middle'}, ax); lab.textContent = 'true travel distance (cells)';
+  for (const s of SERIES) {
+    if (!s.on) continue;
+    const sv = seriesValues(m, s); if (!sv) continue;
+    const col = `var(${s.css})`;
+    if (sv.lo) sv.lo.forEach((lo, i) => { if (lo != null && sv.hi[i] - lo > 0.5) el('line', {x1: x(i), x2: x(i), y1: y(lo), y2: y(sv.hi[i]), stroke: col, 'stroke-width': 1.5, 'stroke-opacity': 0.55}, svg); });
+    let d = ''; sv.pct.forEach((v, i) => { if (v != null) d += `${d ? 'L' : 'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`; });
+    el('path', {d, fill: 'none', stroke: col, 'stroke-width': s.ref ? 1.5 : 2.2, 'stroke-dasharray': s.dash === 'dash' ? '5 4' : s.dash === 'dot' ? '1.5 3.5' : 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+    if (!s.ref) sv.pct.forEach((v, i) => { if (v != null) el('circle', {cx: x(i), cy: y(v), r: 4, fill: col, stroke: 'var(--surface)', 'stroke-width': 2}, svg); });
+  }
+  const cross = el('line', {y1: T, y2: H - B, stroke: 'var(--ink2)', 'stroke-width': 1, 'stroke-dasharray': '2 3', visibility: 'hidden'}, svg);
+  const hit = el('rect', {x: L - 14, y: T, width: W - L - R + 28, height: H - T - B, fill: 'transparent'}, svg);
+  box.appendChild(svg);
+  const tip = h('div', 'tip', null, box); tip.hidden = true;
+  const show = i => {
+    cross.setAttribute('x1', x(i)); cross.setAttribute('x2', x(i)); cross.setAttribute('visibility', 'visible');
+    tip.textContent = ''; h('div', 'h', `${m.n}×${m.n} · ${m.bins[i]} cells · ${m.per_bin[i]} queries × 3 planning seeds per training seed`, tip);
+    for (const s of SERIES) {
+      if (!s.on) continue; const sv = seriesValues(m, s); if (!sv || sv.pct[i] == null) continue;
+      const r = h('div', 'r', null, tip); const k = h('span', 'key' + (s.dash ? ' ' + s.dash : ''), null, r); k.style.color = `var(${s.css})`;
+      h('b', null, pct(sv.pct[i]), r);
+      const c = sv.counts && sv.counts[i] ? ` ${sv.counts[i][0]}/${sv.counts[i][1]}` + (sv.seeds && sv.seeds.length > 1 ? `, seeds ${Math.round(sv.lo[i])}–${Math.round(sv.hi[i])}%` : '') : '';
+      const ns = sv.seeds ? ` [${sv.seeds.length} training seed${sv.seeds.length > 1 ? 's' : ''}]` : '';
+      h('i', null, s.name + ns + c, r);
+    }
+    tip.hidden = false;
+    const bw = box.getBoundingClientRect().width, px = x(i) / W * bw;
+    tip.style.left = Math.max(4, Math.min(bw - tip.offsetWidth - 4, px + 12)) + 'px'; tip.style.top = '34px';
+  };
+  const hide = () => { tip.hidden = true; cross.setAttribute('visibility', 'hidden'); };
+  const pick = ev => { const r = svg.getBoundingClientRect(); const px = (ev.clientX - r.left) / r.width * W; let best = 0; for (let i = 1; i < n; i++) if (Math.abs(x(i) - px) < Math.abs(x(best) - px)) best = i; return best; };
+  hit.addEventListener('pointermove', ev => show(pick(ev)));
+  hit.addEventListener('pointerleave', hide);
+  box.tabIndex = 0; let cur = -1;
+  box.addEventListener('keydown', ev => { if (ev.key === 'ArrowRight' || ev.key === 'ArrowLeft') { cur = Math.max(0, Math.min(n - 1, cur + (ev.key === 'ArrowRight' ? 1 : -1))); show(cur); ev.preventDefault(); } if (ev.key === 'Escape') hide(); });
+  box.addEventListener('blur', hide);
+}
+
+function render() {
+  const panels = document.getElementById('panels'); panels.textContent = '';
+  for (const m of D.mazes) {
+    const p = h('div', 'panel', null, panels);
+    const t = h('h4', null, `${m.n} × ${m.n} cells`, p);
+    const f = m.fields['ntrl-demo'];
+    if (f) h('span', null, `ntrl-demo ${pct(100 * f.total[0] / f.total[1])} overall`, t);
+    const box = h('div', null, null, p); box.style.position = 'relative';
+    drawPanel(m, box);
+  }
+}
+
+function legend() {
+  const lg = document.getElementById('legend');
+  for (const s of SERIES) {
+    const b = h('button', 'chip', null, lg); b.type = 'button'; b.setAttribute('aria-pressed', 'true');
+    const k = h('span', 'key' + (s.dash ? ' ' + s.dash : ''), null, b); k.style.color = `var(${s.css})`; h('span', null, s.name, b);
+    b.addEventListener('click', () => { s.on = !s.on; b.setAttribute('aria-pressed', String(s.on)); render(); });
+  }
+}
+
+function tiles() {
+  const box = document.getElementById('tiles');
+  for (const m of D.mazes) {
+    const f = m.fields['ntrl-demo']; if (!f) continue;
+    const t = h('div', 'tile', null, box);
+    h('div', 'k', `${m.n} × ${m.n} cells`, t);
+    h('div', 'v', pct(100 * f.total[0] / f.total[1]), t);
+    h('div', 's', `ntrl-demo MPPI success, ${f.total[0]} of ${f.total[1]} runs; speed fit ${f.speed_fit != null ? f.speed_fit.toFixed(2) : '–'}`, t);
+  }
+}
+
+function tables() {
+  const box = document.getElementById('tablebox');
+  for (const m of D.mazes) {
+    h('h3', null, `${m.n} × ${m.n} cells (prepare run ${m.id})`, box);
+    const w = h('div', 'tablewrap', null, box); const tb = h('table', null, null, w);
+    const hr = h('tr', null, null, h('thead', null, null, tb)); h('th', null, 'field', hr); m.bins.forEach(b => h('th', null, b, hr)); h('th', null, 'all', hr);
+    const body = h('tbody', null, null, tb);
+    const row = (name, vals, counts, total) => { const r = h('tr', null, null, body); h('td', null, name, r); vals.forEach((v, i) => h('td', 'num', pct(v) + (counts && counts[i] ? ` (${counts[i][0]}/${counts[i][1]})` : ''), r)); h('td', 'num', total || '', r); };
+    row('oracle (MPPI on T*)', m.oracle, null, '');
+    row('straight line', m.straight, null, '');
+    for (const [name, f] of Object.entries(m.fields)) row(`${name} [${f.seeds.length} seed${f.seeds.length > 1 ? 's' : ''}]`, f.pct, f.counts, `${pct(100 * f.total[0] / f.total[1])} (${f.total[0]}/${f.total[1]})`);
+  }
+}
+
+function runs() {
+  const box = document.getElementById('runs'); const tb = h('table', null, null, box);
+  const hr = h('tr', null, null, h('thead', null, null, tb)); ['maze', 'stage', 'training seed', 'run id (results/registered_<id>)'].forEach(x => h('th', null, x, hr));
+  const body = h('tbody', null, null, tb);
+  for (const m of D.mazes) {
+    const r = h('tr', null, null, body); h('td', null, `${m.n}`, r); h('td', null, 'prepare (maze, data, truth, queries, oracle)', r); h('td', null, '–', r); h('td', 'num', m.id, r);
+    for (const [name, f] of Object.entries(m.fields)) f.seeds.forEach((s, i) => { const r = h('tr', null, null, body); h('td', null, `${m.n}`, r); h('td', null, name, r); h('td', 'num', `${s}`, r); h('td', 'num', f.ids[i], r); });
+  }
+}
+
+
+function dpTable() {
+  const box = document.getElementById('dptable'); if (!D.dp) return;
+  h('h3', null, 'MPPI success by distance, training seed 87358 (%)', box);
+  const tb = h('table', 'named', null, box);
+  const bins = D.dp.bins; const hr = h('tr', null, null, h('thead', null, null, tb));
+  ['maze', 'field'].concat(bins).concat(['all']).forEach(x => h('th', null, x, hr));
+  const body = h('tbody', null, null, tb);
+  for (const row of D.dp.rows) { const r = h('tr', null, null, body); h('td', null, row.maze, r); h('td', null, row.name, r); row.cells.forEach(c => h('td', 'num', c, r)); h('td', 'num', row.all, r); }
+}
+function wallTable() {
+  const box = document.getElementById('walltable'); if (!D.wallfeel) return;
+  h('h3', null, 'At near-wall poses: rise into the wall / direction', box);
+  const tb = h('table', 'named', null, box); const gaps = ['0-0.5', '0.5-2', '2-8', '>8'];
+  const hr = h('tr', null, null, h('thead', null, null, tb)); ['maze', 'field'].concat(gaps.map(g => g + ' cells')).forEach(x => h('th', null, x, hr));
+  const body = h('tbody', null, null, tb);
+  let last = '';
+  for (const [key, v] of Object.entries(D.wallfeel)) { const [n, name] = key.split('|'); const r = h('tr', null, null, body); h('td', null, n === last ? '' : `${n}×${n}`, r); last = n; h('td', null, name, r);
+    gaps.forEach(g => h('td', 'num', v[g] ? `${v[g].slope.toFixed(2)} / ${v[g].cos.toFixed(2)}` : '–', r)); }
+  h('p', 'note', 'Median S·|∇T| (target 1) / cosine of ∇T with the into-wall direction (target 1) on held-out pairs whose start is next to a wall, by gap to the goal.', box);
+}
+dpTable(); wallTable();
+
+
+legend(); render(); tiles(); tables(); runs();
+let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(render, 150); });
+</script>

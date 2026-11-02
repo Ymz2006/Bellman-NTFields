@@ -1,0 +1,58 @@
+# Two cubes far apart on the table (no cupboard). Named cabinet_* because the cabinet task's launcher,
+# registration and frozen-suite layout take scenes named cabinet<suffix> (tests_twocubes/); the task is the
+# cabinet task's: no zones or task axes, clearance-only speed, release scorer with its tilt gate off.
+# Layout follows cabinet_clutter.yml (jeffrey/two_cubes/README.md).
+#   cube_left    0.20 x 0.20 x 0.20 at (0.58, +0.36)
+#   cube_right   0.20 x 0.20 x 0.20 at (0.58, -0.36)
+# Both stand on the table top (z = -0.035); 0.52 m of free table between them.
+
+cuboids:
+  - name: table
+    pose: [0.65, 0.0, -0.06, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.80, 1.20, 0.05]
+
+  - name: cube_left
+    pose: [0.58, 0.36, 0.065, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.20, 0.20, 0.20]
+    color: [60, 110, 170]
+
+  - name: cube_right
+    pose: [0.58, -0.36, 0.065, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.20, 0.20, 0.20]
+    color: [170, 90, 60]
+
+viz_table:
+  name: viz_tabletop
+  pose: [0.75, 0.0, -0.06, 1.0, 0.0, 0.0, 0.0]
+  dims: [1.00, 1.20, 0.05]
+
+# Grasp-point sampling box: x and y of cabinet_clutter; z from the table top to 0.15 m above the cube tops (0.165).
+sampling:
+  x: [0.29, 0.85]
+  y: [-0.55, 0.55]
+  z: [-0.035, 0.315]
+  rule: x, y of the obstacle scenes; z from the table top to 0.15 m above the cube tops
+
+# Near-cube regions: each cube's footprint widened by 0.08 m on every side (clipped to the sampling box),
+# from the table top to 0.05 m above the cube's top. They take the compartments' place in the test suites
+# (compartment = next to a cube) and the coverage strata.
+compartments:
+  - name: near_left
+    x: [0.40, 0.76]
+    y: [0.18, 0.54]
+    z: [-0.035, 0.215]
+  - name: near_right
+    x: [0.40, 0.76]
+    y: [-0.54, -0.18]
+    z: [-0.035, 0.215]
+
+# Focus box = bounding box of the near-cube regions. It replaces the cupboard's outer box (coverage strata;
+# test region free = outside it, i.e. in front of, behind or above the cubes).
+focus:
+  x: [0.40, 0.76]
+  y: [-0.54, 0.54]
+  z: [-0.035, 0.215]
+
+variant:
+  clearance_scale: null
+  rule: two 0.20 m cubes 0.72 m apart (centres) on the table, no cupboard, no orientation rule

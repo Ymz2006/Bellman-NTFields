@@ -35,7 +35,7 @@ def execute(a):
   launcher=str(HERE/'launch.py'),entrypoint=str(HERE/'run.py'),runtime_manifest=str(HERE/'runtime_manifest.json'),runtime_tools=str(HERE/'tools/runtime_assets.py'),
   registry=str(registry))
  common=dict(action=a.action,scene=scene,scene_sha256=scene_sha,smoke=a.smoke,gpus=gpus,orientation_rule=None,
-  sampling_box=dict(**{k:doc['sampling'][k] for k in 'xyz'},rule='height = cupboard, width = 1.5 x, depth = 2.5 x from the back face'))
+  sampling_box=dict(**{k:doc['sampling'][k] for k in 'xyz'},rule=doc['sampling'].get('rule','height = cupboard, width = 1.5 x, depth = 2.5 x from the back face')))
  if variant:common.update(clearance_scale=doc['variant']['clearance_scale'],clearance_rule=doc['variant']['rule'])
  if a.action=='cabinet-tests':
   name='Clean Bellman600 cabinet-tests'+''.join(' '+v for v in variant)

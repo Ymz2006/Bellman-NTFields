@@ -1,0 +1,630 @@
+<title>Cabinet Time Field</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: instrument panel. Controls and readouts on the left, the draggable arm in 3D on the right; below, the
+   learned and ground-truth slices side by side with one shared scale, and the learned-vs-truth scatter. */
+:root {
+  --bg: #f4f6f7; --panel: #ffffff; --ink: #14181b; --ink-2: #4a5359; --ink-3: #78828a; --rule: #d9dee2; --well: #e9edf0; --grid: #e6e9ec;
+  --accent: #2a78d6; --scene: #eef1f3; --wood: #9a6b3f; --wood-edge: #6e4a29; --table: #b9c0c6; --region: #4a5359; --link: #4a5359;
+  --arm: #2a78d6; --ghost: #78828a; --handle: #e34948; --path: #e34948; --empty: #e3e7ea; --contour: rgba(20,24,27,.45); --wall: #14181b;
+  --cat-out: #1c8f6a; --cat-cup: #d95926; --hatch: rgba(255,255,255,.38); --wall-fill: rgba(128,128,128,.2);
+  --t0: #f1f6fc; --t1: #c4daf3; --t2: #8bb8e8; --t3: #4a8fd8; --t4: #1f62ad; --t5: #0c3466;
+  --s0: #3a1d0a; --s1: #7a3a10; --s2: #b75e1c; --s3: #df8a3e; --s4: #f2bc86; --s5: #fcebd8;
+  --display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111416; --panel: #191d20; --ink: #e8ecee; --ink-2: #b4bcc2; --ink-3: #87919a; --rule: #2c3337; --well: #22282c; --grid: #262c30;
+  --accent: #3987e5; --scene: #15191c; --wood: #8a6040; --wood-edge: #c09060; --table: #3a4248; --region: #87919a; --link: #87919a;
+  --arm: #5598e7; --ghost: #87919a; --handle: #e66767; --path: #ff7b72; --empty: #22282c; --contour: rgba(232,236,238,.5); --wall: #e8ecee;
+  --cat-out: #2fbf8c; --cat-cup: #f07a45; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #111416; --panel: #191d20; --ink: #e8ecee; --ink-2: #b4bcc2; --ink-3: #87919a; --rule: #2c3337; --well: #22282c; --grid: #262c30;
+  --accent: #3987e5; --scene: #15191c; --wood: #8a6040; --wood-edge: #c09060; --table: #3a4248; --region: #87919a; --link: #87919a;
+  --arm: #5598e7; --ghost: #87919a; --handle: #e66767; --path: #ff7b72; --empty: #22282c; --contour: rgba(232,236,238,.5); --wall: #e8ecee;
+  --cat-out: #2fbf8c; --cat-cup: #f07a45; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 14px/1.45 var(--body); }
+.wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 18px 28px;
+        max-width: 1520px; margin: 0 auto; display: grid; gap: 14px; }
+header { display: grid; gap: 4px; }
+h1 { font: 600 1.6rem/1.15 var(--display); margin: 0; text-wrap: balance; }
+h2 { font: 600 1.05rem/1.2 var(--display); margin: 0; letter-spacing: .01em; }
+.lede { color: var(--ink-2); margin: 0; max-width: 92ch; }
+.main { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 14px; align-items: start; }
+.side { display: grid; gap: 12px; min-width: 0; }
+.card { background: var(--panel); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 14px; display: grid; gap: 10px; min-width: 0; }
+.label { font: 500 11px var(--mono); letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); }
+.row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.muted { color: var(--ink-3); font-size: 12.5px; }
+.seg { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; background: var(--well); border-radius: 6px; padding: 3px; gap: 3px; }
+.seg button { font: 500 12.5px var(--body); color: var(--ink-2); background: transparent; border: 0; border-radius: 4px; padding: 6px 4px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--panel); color: var(--ink); box-shadow: 0 0 0 1px var(--rule); }
+.seg button:disabled { opacity: .5; cursor: progress; }
+button:focus-visible, input:focus-visible, canvas:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.presets { display: flex; flex-wrap: wrap; gap: 6px; }
+.presets button { font: 500 12px var(--body); color: var(--ink-2); background: transparent; border: 1px solid var(--rule); border-radius: 6px; padding: 5px 9px; cursor: pointer; }
+.presets button:hover { color: var(--ink); border-color: var(--ink-3); }
+dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; margin: 0; font-size: 13px; }
+dt { color: var(--ink-3); }
+dd { margin: 0; text-align: right; font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; color: var(--ink); }
+.status { font: 12px var(--mono); color: var(--ink-3); }
+.viewport { position: relative; height: min(70vh, 720px); min-height: 380px; background: var(--scene); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; touch-action: none; }
+.viewport canvas { display: block; width: 100%; height: 100%; }
+.vbar { position: absolute; top: 10px; right: 10px; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.vbar button { font: 500 12px var(--body); color: var(--ink-2); background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 5px 10px; cursor: pointer; }
+.vtag { position: absolute; top: 10px; left: 12px; font: 600 13px var(--display); color: var(--ink); background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 4px 9px; }
+.hint { position: absolute; left: 12px; bottom: 10px; font-size: 12px; color: var(--ink-3); pointer-events: none; max-width: calc(100% - 24px); }
+.busy { position: absolute; inset: 0; display: grid; place-items: center; font: 13px var(--mono); color: var(--ink-2); background: color-mix(in srgb, var(--panel) 70%, transparent); }
+.below { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, .9fr); gap: 14px; align-items: start; }
+.slice { position: relative; }
+.slice canvas { display: block; width: 100%; height: auto; cursor: crosshair; touch-action: none; }
+.legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-size: 12.5px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.key { display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.ramp { height: 10px; border-radius: 3px; }
+.ticks { display: flex; justify-content: space-between; font: 11px var(--mono); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--bg); font: 12px/1.45 var(--mono); padding: 6px 9px; border-radius: 5px; white-space: nowrap; z-index: 3; }
+.notes { display: grid; gap: 8px; font-size: 13px; color: var(--ink-2); max-width: 96ch; }
+.notes p { margin: 0; }
+.tablebox { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 10px; text-align: right; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; white-space: normal; }
+thead th { font-weight: 500; color: var(--ink-2); font-size: 12px; }
+tbody tr:last-child td { border-bottom: 0; }
+@media (max-width: 1180px) { .below { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .below .scatter { grid-column: 1 / -1; } }
+@media (max-width: 860px) { .main, .below { grid-template-columns: minmax(0, 1fr); } .viewport { height: 60vh; order: -1; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Cabinet time field</h1>
+    <p class="lede">Drag the red gripper handle to place the arm. The two slices show how long the arm takes to bring its gripper from there to every other point of the test area, cut through the gripper: on the left the trained ntrl-demo network's prediction, on the right the ground truth from the clearance speed. Each gripper position uses one arm pose found by inverse kinematics on a 2.5 cm grid. Switch to <b>Speed</b> to compare the network's speed with the speed it was trained to match. Hover a slice point to see the true fastest route and the arm pose there; click it to move the start.</p>
+  </header>
+
+  <div class="main">
+    <aside class="side">
+      <section class="card" aria-labelledby="l-start">
+        <span class="label" id="l-start">Start pose</span>
+        <dl id="start-info"></dl>
+        <div class="presets" id="presets"></div>
+        <div class="muted">The start snaps to the nearest collision-free grid pose. On a focused slice, the arrow keys move it one cell.</div>
+      </section>
+
+      <section class="card" aria-labelledby="l-model">
+        <span class="label" id="l-model">Learned field</span>
+        <div class="seg" role="group" aria-labelledby="l-model" id="models"></div>
+        <div class="status" id="model-status">Loading…</div>
+      </section>
+
+      <section class="card" aria-labelledby="l-view">
+        <span class="label" id="l-view">Show</span>
+        <div class="seg" role="group" aria-label="Field">
+          <button id="f-time" aria-pressed="true">Travel time</button>
+          <button id="f-speed" aria-pressed="false">Speed</button>
+        </div>
+        <div class="seg" role="group" aria-label="Slice through the gripper">
+          <button id="s-xz" aria-pressed="true">Side</button>
+          <button id="s-xy" aria-pressed="false">Top</button>
+          <button id="s-yz" aria-pressed="false">Front</button>
+        </div>
+        <div class="seg" role="group" aria-label="Slice drawn in 3D">
+          <button id="p-truth" aria-pressed="true">3D: truth</button>
+          <button id="p-learned" aria-pressed="false">3D: learned</button>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="l-hover">
+        <span class="label" id="l-hover">Point under the cursor</span>
+        <dl id="hover-info"><dt>Hover a slice</dt><dd></dd></dl>
+      </section>
+    </aside>
+
+    <div class="viewport" id="viewport">
+      <div class="vtag" id="vtag">Start pose</div>
+      <div class="vbar">
+        <button id="v-reset">Reset view</button>
+        <button id="v-cab">Look into cupboard</button>
+        <button id="v-top">Top</button>
+      </div>
+      <div class="hint">Drag the red handle to move the gripper · drag elsewhere to orbit · right-drag to pan · scroll to zoom</div>
+      <div class="busy" id="busy">Loading the grid…</div>
+    </div>
+  </div>
+
+  <div class="below">
+    <section class="card" aria-labelledby="l-learned">
+      <div class="row"><h2 id="l-learned">Learned</h2><span class="muted" id="learned-sub"></span></div>
+      <div class="slice" id="slice-learned"><canvas id="c-learned" tabindex="0" aria-label="Learned field slice"></canvas><div class="tip" id="tip-learned" hidden></div></div>
+    </section>
+    <section class="card" aria-labelledby="l-truth">
+      <div class="row"><h2 id="l-truth">Ground truth</h2><span class="muted" id="truth-sub"></span></div>
+      <div class="slice" id="slice-truth"><canvas id="c-truth" tabindex="0" aria-label="Ground-truth slice"></canvas><div class="tip" id="tip-truth" hidden></div></div>
+    </section>
+    <section class="card scatter" aria-labelledby="l-scatter">
+      <h2 id="l-scatter">Learned against true time, every grid point</h2>
+      <div class="slice"><canvas id="c-scatter" aria-label="Scatter of learned against true travel time"></canvas></div>
+      <div class="legend"><span><i class="key" style="background:var(--cat-out)"></i>Outside the cupboard</span><span><i class="key" style="background:var(--cat-cup)"></i>Inside the cupboard</span><span class="muted">Diagonal: learned = true</span></div>
+      <div class="tablebox"><table id="ratios"></table></div>
+    </section>
+  </div>
+
+  <section class="card" aria-labelledby="l-scale">
+    <div class="row"><span class="label" id="l-scale">Scale</span><span class="muted" id="scale-note"></span></div>
+    <div id="legend"></div>
+  </section>
+
+  <section class="card notes" aria-labelledby="l-notes">
+    <h2 id="l-notes">How the two fields are computed</h2>
+    <div id="notes"></div>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script id="core">
+/* Core math shared by the page, its workers and the offline check: float16 decoding, the ntrl-demo metric network
+   (forward and input gradient), its travel time, Dijkstra on the grid graph, forward kinematics. */
+const F16 = (() => { const t = new Float32Array(65536); for (let h = 0; h < 65536; h++) { const s = h & 0x8000 ? -1 : 1, e = (h >> 10) & 31, f = h & 1023;
+  t[h] = e === 0 ? s*f*5.960464477539063e-8 : e === 31 ? (f ? NaN : s*Infinity) : s*Math.pow(2, e-15)*(1+f/1024); } return t; })();
+function decodeF16(u16) { const out = new Float32Array(u16.length); for (let i = 0; i < u16.length; i++) out[i] = F16[u16[i]]; return out; }
+function unpackNet(buf) {
+  let o = 0; const take = n => { const a = buf.subarray(o, o+n); o += n; return a; };
+  const net = { B: take(6*128), L: [] };
+  for (let k = 0; k < 9; k++) net.L.push({ W: take(65536), b: take(256) });
+  net.g = take(2);
+  if (o !== buf.length) throw new Error('weights: expected ' + o + ' floats, got ' + buf.length);
+  return net;
+}
+function affine(W, b, x, y) { for (let i = 0; i < 256; i++) { let s = b[i]; const r = i*256; for (let j = 0; j < 256; j++) s += W[r+j]*x[j]; y[i] = s; } }
+function affineT(W, g, out) { out.fill(0); for (let i = 0; i < 256; i++) { const gi = g[i]; if (gi === 0) continue; const r = i*256; for (let j = 0; j < 256; j++) out[j] += W[r+j]*gi; } }
+function forward(net, x, keep) {
+  const xp = new Float64Array(128), xin = new Float64Array(256);
+  for (let k = 0; k < 128; k++) { let s = 0; for (let j = 0; j < 6; j++) s += x[j]*net.B[j*128+k]; xp[k] = s; xin[k] = Math.sin(s); xin[128+k] = Math.cos(s); }
+  const zu = new Float64Array(256), zv = new Float64Array(256); affine(net.L[0].W, net.L[0].b, xin, zu); affine(net.L[1].W, net.L[1].b, xin, zv);
+  const u = zu.map(Math.sin), v = zv.map(Math.sin); let h = xin; const blocks = [];
+  for (let ii = 0; ii < 2; ii++) {
+    const htmp = h, y1 = new Float64Array(256), y2 = new Float64Array(256), y3 = new Float64Array(256), h1 = new Float64Array(256), h2 = new Float64Array(256), hn = new Float64Array(256);
+    affine(net.L[2+3*ii].W, net.L[2+3*ii].b, htmp, y1); for (let k = 0; k < 256; k++) { const a = Math.sin(y1[k]); h1[k] = u[k]*a+v[k]*(1-a); }
+    affine(net.L[3+3*ii].W, net.L[3+3*ii].b, h1, y2); for (let k = 0; k < 256; k++) { const a = Math.sin(y2[k]); h2[k] = u[k]*a+v[k]*(1-a); }
+    affine(net.L[4+3*ii].W, net.L[4+3*ii].b, h2, y3); const g = net.g[ii]; for (let k = 0; k < 256; k++) hn[k] = (1-g)*htmp[k]+g*Math.sin(y3[k]);
+    blocks.push({ y1, y2, y3 }); h = hn;
+  }
+  const y = new Float64Array(256); affine(net.L[8].W, net.L[8].b, h, y);
+  let mean = 0; for (let k = 0; k < 256; k++) mean += y[k]; mean /= 256; let vr = 0; for (let k = 0; k < 256; k++) vr += (y[k]-mean)**2; vr /= 256;
+  const sd = Math.sqrt(vr+1e-5), e = new Float64Array(256); for (let k = 0; k < 256; k++) e[k] = (y[k]-mean)/sd;
+  return keep ? { e, sd, xp, zu, zv, u, v, blocks } : { e };
+}
+const _md = new Float64Array(16);
+function metric(a, ao, b, bo) {   // T between embeddings a[ao..ao+256) and b[bo..bo+256)
+  let T = 0; const d = _md;
+  for (let g = 0; g < 16; g++) { let m = -Infinity;
+    for (let k = 0; k < 16; k++) { const df = a[ao+16*g+k]-b[bo+16*g+k]; d[k] = Math.sqrt(df*df+1e-6); if (10*d[k] > m) m = 10*d[k]; }
+    let s = 0; for (let k = 0; k < 16; k++) s += Math.exp(10*d[k]-m); T += (m+Math.log(s)-Math.log(16))/10; }
+  return 0.2*T;
+}
+function speedAt(net, es, x) {     // field speed 1 / |dT(es, e(x)) / dx| in release units
+  const c = forward(net, x, true), e = c.e, gE = new Float64Array(256);
+  for (let g = 0; g < 16; g++) { let m = -Infinity; const d = new Float64Array(16), w = new Float64Array(16);
+    for (let k = 0; k < 16; k++) { const df = e[16*g+k]-es[16*g+k]; d[k] = Math.sqrt(df*df+1e-6); if (10*d[k] > m) m = 10*d[k]; }
+    let s = 0; for (let k = 0; k < 16; k++) { w[k] = Math.exp(10*d[k]-m); s += w[k]; }
+    for (let k = 0; k < 16; k++) gE[16*g+k] = 0.2*(w[k]/s)*(e[16*g+k]-es[16*g+k])/d[k]; }
+  let mg = 0, mge = 0; for (let k = 0; k < 256; k++) { mg += gE[k]; mge += gE[k]*e[k]; } mg /= 256; mge /= 256;
+  const gy = new Float64Array(256); for (let k = 0; k < 256; k++) gy[k] = (gE[k]-mg-e[k]*mge)/c.sd;
+  let gh = new Float64Array(256); affineT(net.L[8].W, gy, gh);
+  const gu = new Float64Array(256), gv = new Float64Array(256), t = new Float64Array(256);
+  for (let ii = 1; ii >= 0; ii--) {
+    const B = c.blocks[ii], g = net.g[ii], gy3 = new Float64Array(256), ghtmp = new Float64Array(256), gh2 = new Float64Array(256), gy2 = new Float64Array(256), gh1 = new Float64Array(256), gy1 = new Float64Array(256);
+    for (let k = 0; k < 256; k++) { gy3[k] = gh[k]*g*Math.cos(B.y3[k]); ghtmp[k] = gh[k]*(1-g); }
+    affineT(net.L[4+3*ii].W, gy3, gh2);
+    for (let k = 0; k < 256; k++) { const a = Math.sin(B.y2[k]); gu[k] += gh2[k]*a; gv[k] += gh2[k]*(1-a); gy2[k] = gh2[k]*(c.u[k]-c.v[k])*Math.cos(B.y2[k]); }
+    affineT(net.L[3+3*ii].W, gy2, gh1);
+    for (let k = 0; k < 256; k++) { const a = Math.sin(B.y1[k]); gu[k] += gh1[k]*a; gv[k] += gh1[k]*(1-a); gy1[k] = gh1[k]*(c.u[k]-c.v[k])*Math.cos(B.y1[k]); }
+    affineT(net.L[2+3*ii].W, gy1, t); for (let k = 0; k < 256; k++) ghtmp[k] += t[k];
+    gh = ghtmp;
+  }
+  const gzu = new Float64Array(256), gzv = new Float64Array(256), t0 = new Float64Array(256), t1 = new Float64Array(256);
+  for (let k = 0; k < 256; k++) { gzu[k] = gu[k]*Math.cos(c.zu[k]); gzv[k] = gv[k]*Math.cos(c.zv[k]); }
+  affineT(net.L[0].W, gzu, t0); affineT(net.L[1].W, gzv, t1);
+  let n2 = 0;
+  for (let j = 0; j < 6; j++) { let s = 0; for (let k = 0; k < 128; k++) { const gxin_s = gh[k]+t0[k]+t1[k], gxin_c = gh[128+k]+t0[128+k]+t1[128+k];
+    s += net.B[j*128+k]*(gxin_s*Math.cos(c.xp[k])-gxin_c*Math.sin(c.xp[k])); } n2 += s*s; }
+  return 1/Math.max(Math.sqrt(n2), 1e-12);
+}
+function buildGraph(N, nbr, E, K) {   // CSR of the undirected grid graph from the canonical forward edges
+  const deg = new Int32Array(N+1);
+  for (let i = 0; i < N; i++) for (let k = 0; k < K; k++) { const j = nbr[i*K+k]; if (j >= 0 && isFinite(E[i*K+k])) { deg[i+1]++; deg[j+1]++; } }
+  for (let i = 0; i < N; i++) deg[i+1] += deg[i];
+  const fill = deg.slice(0, N), to = new Int32Array(deg[N]), w = new Float32Array(deg[N]);
+  for (let i = 0; i < N; i++) for (let k = 0; k < K; k++) { const j = nbr[i*K+k], c = E[i*K+k]; if (j >= 0 && isFinite(c)) { to[fill[i]] = j; w[fill[i]++] = c; to[fill[j]] = i; w[fill[j]++] = c; } }
+  return { N, off: deg, to, w };
+}
+function dijkstra(G, start) {
+  const dist = new Float64Array(G.N).fill(Infinity), pred = new Int32Array(G.N).fill(-1), done = new Uint8Array(G.N);
+  let hk = new Float64Array(1 << 16), hv = new Int32Array(1 << 16), n = 0;
+  const push = (k, v) => { if (n === hk.length) { const a = new Float64Array(2*n), b = new Int32Array(2*n); a.set(hk); b.set(hv); hk = a; hv = b; }
+    let i = n++; while (i > 0) { const p = (i-1) >> 1; if (hk[p] <= k) break; hk[i] = hk[p]; hv[i] = hv[p]; i = p; } hk[i] = k; hv[i] = v; };
+  const pop = () => { const v = hv[0], k = hk[--n], x = hv[n]; let i = 0;
+    while (true) { let c = 2*i+1; if (c >= n) break; if (c+1 < n && hk[c+1] < hk[c]) c++; if (hk[c] >= k) break; hk[i] = hk[c]; hv[i] = hv[c]; i = c; } hk[i] = k; hv[i] = x; return v; };
+  dist[start] = 0; push(0, start);
+  while (n) { const i = pop(); if (done[i]) continue; done[i] = 1; const di = dist[i];
+    for (let e = G.off[i]; e < G.off[i+1]; e++) { const j = G.to[e], nd = di+G.w[e]; if (nd < dist[j]) { dist[j] = nd; pred[j] = i; push(nd, j); } } }
+  return { dist, pred };
+}
+function matMul(A, B) { const C = new Float64Array(16); for (let r = 0; r < 4; r++) for (let c = 0; c < 4; c++) { let s = 0; for (let k = 0; k < 4; k++) s += A[r*4+k]*B[k*4+c]; C[r*4+c] = s; } return C; }
+function forwardKinematics(chain, q) {   // world transforms (row-major 4x4) of every chain link for joint angles q (rad)
+  let T = new Float64Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]); const out = { base_link: T };
+  for (const j of chain) { T = matMul(T, j.origin);
+    if (j.moving >= 0) { const c = Math.cos(q[j.moving]), s = Math.sin(q[j.moving]); T = matMul(T, new Float64Array([c, -s, 0, 0, s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])); }
+    out[j.child] = T; }
+  return out;
+}
+</script>
+<script>
+const M = /*META*/null;
+const CORE_SRC = document.getElementById('core').textContent;
+const N = M.nodes, [NX, NY, NZ] = M.grid.shape, LO = M.grid.lo, H = M.grid.h, K = M.dirs.length, QR = M.q_range;
+const fmt = (v, d = 3) => (v == null || !isFinite(v)) ? '–' : v.toFixed(d);
+const cm = v => (v*100).toFixed(1);
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const $ = id => document.getElementById(id);
+const gridId = (ix, iy, iz) => (ix*NY+iy)*NZ+iz;
+const CUP = [[.56, .88], [.13, .53], [-.035, .665]];
+
+/* ---------- data ---------- */
+let GI, Q, X, D, SP, P, G2N, INCUP, FREE, NBR;
+let start = -1, model = Object.keys(M.checkpoints)[0], field = 'time', sliceType = 'xz', planeSrc = 'truth', hover = -1;
+let TT = null, PRED = null, LT = null, LS = null, lsKey = '';
+const EMB = {}, NETBUF = {};
+
+function workerFrom(body) { return new Worker(URL.createObjectURL(new Blob([CORE_SRC, '\n', body], { type: 'text/javascript' }))); }
+const graphWorker = workerFrom(`let G; onmessage = ev => { const m = ev.data;
+  if (m.type === 'init') { G = buildGraph(m.N, m.nbr, m.E, m.K); postMessage({ type: 'ready' }); }
+  else if (m.type === 'run') { const r = dijkstra(G, m.start); const dist = new Float32Array(r.dist); postMessage({ type: 'dist', start: m.start, dist, pred: r.pred }, [dist.buffer, r.pred.buffer]); } };`);
+const NW = Math.max(1, Math.min(4, (navigator.hardwareConcurrency || 4)-1));
+const netWorkers = Array.from({ length: NW }, () => workerFrom(`let net, X; onmessage = ev => { const m = ev.data;
+  if (m.type === 'x') { X = m.X; }
+  else if (m.type === 'net') { net = unpackNet(m.w); postMessage({ type: 'net', key: m.key }); }
+  else if (m.type === 'speed') { const es = forward(net, X.subarray(6*m.start, 6*m.start+6), false).e, out = new Float32Array(m.nodes.length);
+    for (let i = 0; i < m.nodes.length; i++) out[i] = speedAt(net, es, X.subarray(6*m.nodes[i], 6*m.nodes[i]+6));
+    postMessage({ type: 'speed', id: m.id, out }, [out.buffer]); } };`));
+let netKeyInWorkers = '';
+
+async function fetchBin(name) {   // the arrays are published as base64 text (<name>.b64.txt): artifacts serve no raw binary
+  const r = await fetch(name.replace(/\.bin$/, '.b64.txt')); if (!r.ok) throw new Error(name + ': HTTP ' + r.status);
+  const s = atob((await r.text()).trim()), u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return u.buffer;
+}
+
+async function loadGrid() {
+  const [nb, eb] = await Promise.all([fetchBin('nodes.bin'), fetchBin('edges.bin')]);
+  const A = new Float32Array(nb), E = new Float32Array(eb);
+  GI = new Int32Array(3*N); Q = new Float32Array(6*N); X = new Float32Array(6*N); D = new Float32Array(N); SP = new Float32Array(N); P = new Float32Array(3*N);
+  G2N = new Int32Array(NX*NY*NZ).fill(-1); INCUP = new Uint8Array(N); FREE = new Uint8Array(N);
+  for (let i = 0; i < N; i++) {
+    for (let a = 0; a < 3; a++) { GI[3*i+a] = Math.round(A[11*i+a]); P[3*i+a] = LO[a]+GI[3*i+a]*H; }
+    for (let j = 0; j < 6; j++) { Q[6*i+j] = A[11*i+3+j]; X[6*i+j] = A[11*i+3+j]/QR[j]; }
+    D[i] = A[11*i+9]; SP[i] = A[11*i+10]; G2N[gridId(GI[3*i], GI[3*i+1], GI[3*i+2])] = i;
+    INCUP[i] = [0, 1, 2].every(a => P[3*i+a] >= CUP[a][0] && P[3*i+a] <= CUP[a][1]) ? 1 : 0; FREE[i] = D[i] > M.offset ? 1 : 0;
+  }
+  NBR = new Int32Array(N*K).fill(-1);
+  for (let i = 0; i < N; i++) for (let k = 0; k < K; k++) { const [dx, dy, dz] = M.dirs[k], a = GI[3*i]+dx, b = GI[3*i+1]+dy, c = GI[3*i+2]+dz;
+    if (a >= 0 && a < NX && b >= 0 && b < NY && c >= 0 && c < NZ) NBR[i*K+k] = G2N[gridId(a, b, c)]; }
+  await new Promise(res => { graphWorker.onmessage = ev => { if (ev.data.type === 'ready') res(); }; graphWorker.postMessage({ type: 'init', N, nbr: NBR, E, K }); });
+  graphWorker.onmessage = onGraph;
+  for (const w of netWorkers) w.postMessage({ type: 'x', X });
+}
+
+async function loadModel(key) {
+  const btns = [...$('models').querySelectorAll('button')]; btns.forEach(b => b.disabled = true);
+  $('model-status').textContent = `Loading ${M.checkpoints[key].title}…`;
+  try {
+    if (!EMB[key]) { const [eb, wb] = await Promise.all([fetchBin(`emb_${key}.bin`), fetchBin(`net_${key}.bin`)]); EMB[key] = decodeF16(new Uint16Array(eb)); NETBUF[key] = new Float32Array(wb); }
+    await Promise.all(netWorkers.map(w => new Promise(res => { const h = ev => { if (ev.data.type === 'net') { w.removeEventListener('message', h); res(); } };
+      w.addEventListener('message', h); w.postMessage({ type: 'net', key, w: NETBUF[key] }); })));
+    netKeyInWorkers = key; model = key; $('model-status').textContent = `Run ${M.checkpoints[key].run.split('T').pop()} · ${(M.checkpoints[key].weights/1e3).toFixed(0)}k weights`;
+    computeLearned(); lsKey = ''; requestSpeed(); render();
+  } catch (err) { $('model-status').textContent = 'Could not load this model: ' + err.message; }
+  btns.forEach(b => b.disabled = false);
+}
+
+/* ---------- computation ---------- */
+let graphBusy = false, graphQueued = -1;
+function runGraph(i) { if (graphBusy) { graphQueued = i; return; } graphBusy = true; graphWorker.postMessage({ type: 'run', start: i }); }
+function setStart(i) {
+  if (i < 0 || i === start) return; start = i; hover = -1; TT = null; PRED = null; LS = null; lsKey = '';
+  runGraph(i);
+  computeLearned(); drawArm(); render(); updateStartInfo();
+}
+function onGraph(ev) { const m = ev.data; if (m.type !== 'dist') return; graphBusy = false;
+  if (graphQueued >= 0) { const q = graphQueued; graphQueued = -1; if (q !== m.start) { runGraph(q); if (q === start) return; } }
+  if (m.start !== start) return; TT = m.dist; PRED = m.pred; $('busy').hidden = true; render(); scatter(); }
+function computeLearned() {
+  const E = EMB[model]; if (!E || start < 0) { LT = null; return; }
+  LT = new Float32Array(N); for (let i = 0; i < N; i++) LT[i] = metric(E, 256*start, E, 256*i);
+  scatter();
+}
+let speedId = 0;
+function requestSpeed() {
+  if (field !== 'speed' || start < 0 || netKeyInWorkers !== model) return;
+  const key = `${model}|${start}|${sliceType}`; if (key === lsKey) return; lsKey = key;
+  const nodes = sliceNodes().filter(i => i >= 0), id = ++speedId, parts = [], chunk = Math.ceil(nodes.length/NW);
+  LS = null; $('learned-sub').textContent = 'computing the network\'s speed…';
+  const got = new Float32Array(N).fill(NaN); let pending = 0;
+  netWorkers.forEach((w, k) => { const part = Int32Array.from(nodes.slice(k*chunk, (k+1)*chunk)); if (!part.length) return; pending++;
+    const h = ev => { if (ev.data.type !== 'speed' || ev.data.id !== id) return; w.removeEventListener('message', h);
+      part.forEach((n, j) => got[n] = ev.data.out[j]); if (--pending === 0 && id === speedId) { LS = got; render(); } };
+    w.addEventListener('message', h); w.postMessage({ type: 'speed', id, start, nodes: part }); });
+}
+
+/* ---------- slices ---------- */
+function sliceGeom(type = sliceType) {
+  const s = start >= 0 ? start : 0, ix0 = GI[3*s], iy0 = GI[3*s+1], iz0 = GI[3*s+2];
+  if (type === 'xz') return { w: NX, h: NZ, node: (i, j) => G2N[gridId(i, iy0, j)], ha: 'x', va: 'z', hv: i => LO[0]+i*H, vv: j => LO[2]+j*H, fixed: `y = ${cm(LO[1]+iy0*H)} cm`, flip: false,
+    uv: (x, y, z) => [(x-(LO[0]-H/2))/H, (z-(LO[2]-H/2))/H], axes: [[1, 0, 0], [0, 0, 1]], normal: 1, at: LO[1]+iy0*H };
+  if (type === 'xy') return { w: NX, h: NY, node: (i, j) => G2N[gridId(i, j, iz0)], ha: 'x', va: 'y', hv: i => LO[0]+i*H, vv: j => LO[1]+j*H, fixed: `z = ${cm(LO[2]+iz0*H)} cm`, flip: false,
+    uv: (x, y, z) => [(x-(LO[0]-H/2))/H, (y-(LO[1]-H/2))/H], axes: [[1, 0, 0], [0, 1, 0]], normal: 2, at: LO[2]+iz0*H };
+  return { w: NY, h: NZ, node: (i, j) => G2N[gridId(ix0, NY-1-i, j)], ha: 'y', va: 'z', hv: i => LO[1]+(NY-1-i)*H, vv: j => LO[2]+j*H, fixed: `x = ${cm(LO[0]+ix0*H)} cm (seen from the robot)`, flip: true,
+    uv: (x, y, z) => [((LO[1]+(NY-1)*H+H/2)-y)/H, (z-(LO[2]-H/2))/H], axes: [[0, -1, 0], [0, 0, 1]], normal: 0, at: LO[0]+ix0*H };
+}
+function sliceNodes() { const g = sliceGeom(), out = []; for (let j = 0; j < g.h; j++) for (let i = 0; i < g.w; i++) out.push(g.node(i, j)); return out; }
+
+const TRAMP = ['--t0', '--t1', '--t2', '--t3', '--t4', '--t5'], SRAMP = ['--s0', '--s1', '--s2', '--s3', '--s4', '--s5'];
+let RAMPS = {};
+function hexRGB(h) { const v = h.replace('#', ''); return [0, 2, 4].map(k => parseInt(v.slice(k, k+2), 16)); }
+function readRamps() { RAMPS = { t: TRAMP.map(n => hexRGB(css(n))), s: SRAMP.map(n => hexRGB(css(n))) }; }
+function rampRGB(r, t) { t = Math.min(1, Math.max(0, t)); const x = t*(r.length-1), i = Math.min(r.length-2, Math.floor(x)), f = x-i; return r[i].map((c, k) => Math.round(c+(r[i+1][k]-c)*f)); }
+const S_LO = Math.log10(0.01), S_HI = 0;
+let TMAX = 0.3;
+function valueOf(which, i) {
+  if (field === 'time') return which === 'truth' ? (TT ? TT[i] : NaN) : (LT ? LT[i] : NaN);
+  return which === 'truth' ? SP[i] : (LS ? LS[i] : NaN);
+}
+function colorOf(v) { if (!isFinite(v)) return null; return field === 'time' ? rampRGB(RAMPS.t, v/TMAX) : rampRGB(RAMPS.s, (Math.log10(Math.max(v, 1e-4))-S_LO)/(S_HI-S_LO)); }
+function updateScale() {
+  if (field !== 'time' || !TT) return; const vals = [];
+  for (const i of sliceNodes()) if (i >= 0 && FREE[i] && isFinite(TT[i])) vals.push(TT[i]);
+  vals.sort((a, b) => a-b); TMAX = Math.max(0.02, vals.length ? vals[Math.floor(.95*(vals.length-1))] : 0.3);
+}
+function cellImage(which) {   // one pixel per grid cell, row 0 at the top
+  const g = sliceGeom(), c = document.createElement('canvas'); c.width = g.w; c.height = g.h; const ctx = c.getContext('2d'), img = ctx.createImageData(g.w, g.h);
+  for (let j = 0; j < g.h; j++) for (let i = 0; i < g.w; i++) { const n = g.node(i, j), o = 4*((g.h-1-j)*g.w+i); const rgb = n >= 0 ? colorOf(valueOf(which, n)) : null;
+    if (rgb) { img.data[o] = rgb[0]; img.data[o+1] = rgb[1]; img.data[o+2] = rgb[2]; img.data[o+3] = 255; } }
+  ctx.putImageData(img, 0, 0); return c;
+}
+function contours(which, g, cell, ctx) {   // marching squares on the cell centres at 9 levels of the time scale
+  const val = (i, j) => { const n = g.node(i, j); if (n < 0) return NaN; const v = valueOf(which, n); return isFinite(v) ? Math.min(v, TMAX*1.05) : NaN; };
+  const V = []; for (let j = 0; j < g.h; j++) { const r = []; for (let i = 0; i < g.w; i++) r.push(val(i, j)); V.push(r); }
+  ctx.beginPath();
+  for (let L = 1; L <= 9; L++) { const lv = TMAX*L/10;
+    for (let j = 0; j+1 < g.h; j++) for (let i = 0; i+1 < g.w; i++) {
+      const a = V[j][i], b = V[j][i+1], c = V[j+1][i+1], d = V[j+1][i]; if (!(isFinite(a) && isFinite(b) && isFinite(c) && isFinite(d))) continue;
+      const pts = []; const edge = (p, q, x0, y0, x1, y1) => { if ((p < lv) !== (q < lv)) { const t = (lv-p)/(q-p); pts.push([x0+(x1-x0)*t, y0+(y1-y0)*t]); } };
+      edge(a, b, i, j, i+1, j); edge(b, c, i+1, j, i+1, j+1); edge(c, d, i+1, j+1, i, j+1); edge(d, a, i, j+1, i, j);
+      for (let k = 0; k+1 < pts.length; k += 2) { const [x0, y0] = pts[k], [x1, y1] = pts[k+1];
+        ctx.moveTo((x0+.5)*cell, (g.h-y0-.5)*cell); ctx.lineTo((x1+.5)*cell, (g.h-y1-.5)*cell); } } }
+  ctx.strokeStyle = css('--contour'); ctx.lineWidth = 1; ctx.stroke();
+}
+function drawSlice(which) {
+  const cv = $('c-' + which), g = sliceGeom(), box = cv.parentElement.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const padL = 34, padB = 26, cell = Math.max(4, Math.floor((box.width-padL-6)/g.w)), W = padL+cell*g.w+6, Hh = cell*g.h+padB+6;
+  cv.width = W*dpr; cv.height = Hh*dpr; cv.style.height = Hh + 'px'; cv.style.width = W + 'px';
+  const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, Hh);
+  ctx.save(); ctx.translate(padL, 6);
+  ctx.fillStyle = css('--empty'); ctx.fillRect(0, 0, cell*g.w, cell*g.h);
+  ctx.imageSmoothingEnabled = false; ctx.drawImage(cellImage(which), 0, 0, cell*g.w, cell*g.h);
+  if (field === 'time' && ((which === 'truth' && TT) || (which === 'learned' && LT))) contours(which, g, cell, ctx);
+  // contact hatch
+  ctx.beginPath();
+  for (let j = 0; j < g.h; j++) for (let i = 0; i < g.w; i++) { const n = g.node(i, j); if (n >= 0 && D[n] <= 0) { const x = i*cell, y = (g.h-1-j)*cell; ctx.moveTo(x, y+cell); ctx.lineTo(x+cell, y); } }
+  ctx.strokeStyle = css('--hatch'); ctx.lineWidth = 1; ctx.stroke();
+  // walls
+  ctx.strokeStyle = css('--wall'); ctx.lineWidth = 1.5; ctx.fillStyle = css('--wall-fill');
+  const ax = { x: 0, y: 1, z: 2 }[['x', 'y', 'z'][g.normal]];
+  for (const b of M.boxes) { const lo = b.center.map((c, k) => c-b.dims[k]/2), hi = b.center.map((c, k) => c+b.dims[k]/2);
+    if (g.at < lo[ax] || g.at > hi[ax]) continue;
+    const c0 = g.uv(lo[0], lo[1], lo[2]), c1 = g.uv(hi[0], hi[1], hi[2]); let x0 = Math.min(c0[0], c1[0])*cell, x1 = Math.max(c0[0], c1[0])*cell, y0 = (g.h-Math.max(c0[1], c1[1]))*cell, y1 = (g.h-Math.min(c0[1], c1[1]))*cell;
+    x0 = Math.max(x0, -2); x1 = Math.min(x1, cell*g.w+2); y0 = Math.max(y0, -2); y1 = Math.min(y1, cell*g.h+2); if (x1 <= x0 || y1 <= y0) continue;
+    ctx.fillRect(x0, y0, x1-x0, y1-y0); ctx.strokeRect(x0, y0, x1-x0, y1-y0); }
+  // truth path to the hovered point, projected
+  if (hover >= 0 && PRED && isFinite(TT[hover])) { const path = pathTo(hover); ctx.beginPath();
+    path.forEach((n, k) => { const [u, v] = g.uv(P[3*n], P[3*n+1], P[3*n+2]); const x = u*cell, y = (g.h-v)*cell; k ? ctx.lineTo(x, y) : ctx.moveTo(x, y); });
+    ctx.setLineDash([4, 3]); ctx.strokeStyle = css('--path'); ctx.lineWidth = 2; ctx.stroke(); ctx.setLineDash([]); }
+  // start and hover markers
+  const mark = (n, color, r) => { const [u, v] = g.uv(P[3*n], P[3*n+1], P[3*n+2]); ctx.beginPath(); ctx.arc(u*cell, (g.h-v)*cell, r, 0, 2*Math.PI); ctx.lineWidth = 2.5; ctx.strokeStyle = color; ctx.stroke(); };
+  if (start >= 0) mark(start, css('--handle'), Math.max(5, cell*.6));
+  if (hover >= 0) mark(hover, css('--ink'), Math.max(4, cell*.45));
+  ctx.restore();
+  // axes
+  ctx.fillStyle = css('--ink-3'); ctx.font = '11px ' + css('--mono'); ctx.textAlign = 'center';
+  for (let i = 0; i < g.w; i += 4) ctx.fillText(cm(g.hv(i)), padL+(i+.5)*cell, 6+cell*g.h+14);
+  ctx.textAlign = 'right'; for (let j = 0; j < g.h; j += 4) ctx.fillText(cm(g.vv(j)), padL-4, 6+(g.h-j-.5)*cell+4);
+  ctx.textAlign = 'left'; ctx.fillText(`${g.ha} (cm) →`, padL, Hh-2); ctx.save(); ctx.translate(10, 6+cell*g.h/2); ctx.rotate(-Math.PI/2); ctx.textAlign = 'center'; ctx.fillText(`${g.va} (cm)`, 0, 0); ctx.restore();
+  cv._geom = { g, cell, padL, top: 6 };
+}
+function pathTo(n) { const out = [n]; let k = 0; while (out[out.length-1] !== start && k++ < 5000) { const p = PRED[out[out.length-1]]; if (p < 0) break; out.push(p); } return out; }
+
+/* ---------- scale legend, readouts ---------- */
+function legend() {
+  const r = field === 'time' ? TRAMP : SRAMP, stops = r.map((n, i) => `var(${n}) ${i/(r.length-1)*100}%`).join(',');
+  if (field === 'time') { $('legend').innerHTML = `<div class="ramp" style="background:linear-gradient(90deg,${stops})"></div><div class="ticks"><span>0</span><span>${fmt(TMAX/2)}</span><span>${fmt(TMAX)} and more</span></div>`;
+    $('scale-note').textContent = 'Travel time from the start, in the network\'s units (joint-space distance in release units at speed 1). Shared by both slices; lines every tenth of the scale. Hatched cells: the arm is in contact there.'; }
+  else { $('legend').innerHTML = `<div class="ramp" style="background:linear-gradient(90deg,${stops})"></div><div class="ticks"><span>0.01</span><span>0.1</span><span>1</span></div>`;
+    $('scale-note').textContent = 'Speed on a log scale. Truth: the speed the network is trained to match, from the arm\'s clearance (0.012 within 5 mm of an obstacle, 1 beyond 5 cm). Learned: 1 / |dT/dx| at that pose with the current start.'; }
+}
+function render() {
+  if (!GI) return; readRamps(); updateScale();
+  const g = sliceGeom();
+  $('learned-sub').textContent = `${M.checkpoints[model].title} · ${g.fixed}`; $('truth-sub').textContent = field === 'time' ? `fastest path through the grid · ${g.fixed}` : `trained target · ${g.fixed}`;
+  if (field === 'speed' && !LS) $('learned-sub').textContent = 'computing the network\'s speed…';
+  drawSlice('learned'); drawSlice('truth'); legend(); updatePlane(); drawPath3D(); updateHover();
+}
+function updateStartInfo() {
+  const i = start; if (i < 0) return;
+  $('start-info').innerHTML = `<dt>Gripper</dt><dd>${cm(P[3*i])}, ${cm(P[3*i+1])}, ${cm(P[3*i+2])} cm</dd><dt>Clearance</dt><dd>${(D[i]*1000).toFixed(1)} mm</dd>
+    <dt>Place</dt><dd>${INCUP[i] ? 'inside the cupboard' : 'outside the cupboard'}</dd>`;
+  $('vtag').textContent = `Start · ${cm(P[3*i])}, ${cm(P[3*i+1])}, ${cm(P[3*i+2])} cm`;
+}
+function updateHover() {
+  const i = hover; if (i < 0) { $('hover-info').innerHTML = '<dt>Hover a slice</dt><dd></dd>'; return; }
+  const s = Math.min(1, Math.max(0, (D[i]-M.offset)/(M.margin-M.offset)));
+  const lt = LT ? LT[i] : NaN, tt = TT ? TT[i] : NaN, ls = LS ? LS[i] : NaN;
+  $('hover-info').innerHTML = `<dt>Gripper</dt><dd>${cm(P[3*i])}, ${cm(P[3*i+1])}, ${cm(P[3*i+2])} cm</dd>
+    <dt>Learned time</dt><dd>${fmt(lt)}</dd><dt>True time</dt><dd>${fmt(tt)}</dd><dt>Learned / true</dt><dd>${isFinite(lt/tt) ? (lt/tt).toFixed(2) + '×' : '–'}</dd>
+    <dt>Learned speed</dt><dd>${field === 'speed' ? fmt(ls) : 'switch to Speed'}</dd><dt>Trained target speed</dt><dd>${fmt(SP[i])}</dd>
+    <dt>Clearance</dt><dd>${(D[i]*1000).toFixed(1)} mm${D[i] <= 0 ? ' (contact)' : ''}</dd>`;
+}
+
+/* ---------- 3D ---------- */
+const viewport = $('viewport'), renderer = new THREE.WebGLRenderer({ antialias: true }); renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); viewport.prepend(renderer.domElement);
+const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(40, 1, .01, 50); camera.up.set(0, 0, 1);
+const controls = new THREE.OrbitControls(camera, renderer.domElement); controls.enableDamping = true;
+const VIEWS = { reset: { pos: [-0.75, -1.35, 1.05], target: [0.45, 0.3, 0.25] }, cab: { pos: [-0.2, 0.33, 0.42], target: [0.75, 0.33, 0.30] }, top: { pos: [0.4, 0.3, 2.6], target: [0.4, 0.3, 0.0] } };
+function view(v) { camera.position.set(...VIEWS[v].pos); controls.target.set(...VIEWS[v].target); controls.update(); }
+view('reset');
+const cab = new THREE.Group(); scene.add(cab); const boxMats = [];
+for (const b of M.boxes) { const g = new THREE.BoxGeometry(...b.dims), isTable = b.name === 'table';
+  const fill = new THREE.MeshBasicMaterial({ transparent: true, opacity: isTable ? .2 : .26, depthWrite: false }), edge = new THREE.LineBasicMaterial({ transparent: true, opacity: isTable ? .5 : .9 });
+  const m = new THREE.Mesh(g, fill), e = new THREE.LineSegments(new THREE.EdgesGeometry(g), edge); m.position.set(...b.center); e.position.set(...b.center); cab.add(m, e); boxMats.push({ fill, edge, isTable }); }
+const S = M.sampling, regionMat = new THREE.LineBasicMaterial({ transparent: true, opacity: .5 });
+const region = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(S.x[1]-S.x[0], S.y[1]-S.y[0], S.z[1]-S.z[0])), regionMat);
+region.position.set((S.x[0]+S.x[1])/2, (S.y[0]+S.y[1])/2, (S.z[0]+S.z[1])/2); scene.add(region);
+const baseMat = new THREE.MeshBasicMaterial(), base = new THREE.Mesh(new THREE.CylinderGeometry(.06, .07, .02, 32), baseMat); base.rotation.x = Math.PI/2; scene.add(base);
+const armGroup = new THREE.Group(), ghostGroup = new THREE.Group(); scene.add(armGroup, ghostGroup);
+const armMat = new THREE.MeshBasicMaterial(), ghostMat = new THREE.MeshBasicMaterial({ transparent: true, opacity: .45, depthWrite: false });
+const handleMat = new THREE.MeshBasicMaterial(), handle = new THREE.Mesh(new THREE.SphereGeometry(.03, 24, 16), handleMat); scene.add(handle);
+const pathMat = new THREE.LineBasicMaterial(), pathLine = new THREE.Line(new THREE.BufferGeometry(), pathMat); scene.add(pathLine);
+const planeMat = new THREE.MeshBasicMaterial({ transparent: true, opacity: .82, side: THREE.DoubleSide, depthWrite: false }); let plane = null;
+const JOINT_GEO = new THREE.SphereGeometry(.018, 16, 12), LINK_GEO = new THREE.CylinderGeometry(.01, .01, 1, 12), STUB_GEO = new THREE.CylinderGeometry(.006, .006, 1, 8);
+function armMeshes(q, mat, group) {   // shared unit geometries, scaled per link, so redrawing never allocates GPU buffers
+  group.clear(); const T = forwardKinematics(M.chain, q), up = new THREE.Vector3(0, 1, 0);
+  const pts = M.arm_links.map(l => new THREE.Vector3(T[l][3], T[l][7], T[l][11]));
+  const rod = (a, b, geo) => { const d = b.clone().sub(a), len = d.length(); if (len < 1e-4) return; const c = new THREE.Mesh(geo, mat);
+    c.position.copy(a.clone().add(b).multiplyScalar(.5)); c.quaternion.setFromUnitVectors(up, d.normalize()); c.scale.set(1, len, 1); group.add(c); };
+  pts.forEach((a, k) => { const j = new THREE.Mesh(JOINT_GEO, mat); j.position.copy(a); group.add(j); if (k+1 < pts.length) rod(a, pts[k+1], LINK_GEO); });
+  const g = T[M.arm_links[M.arm_links.length-1]], tip = pts[pts.length-1];
+  rod(tip, tip.clone().add(new THREE.Vector3(g[2], g[6], g[10]).multiplyScalar(-0.07)), STUB_GEO);   // a short stub back along the approach axis
+  return tip;
+}
+function drawArm() { if (start < 0) return; const tip = armMeshes(Q.subarray(6*start, 6*start+6), armMat, armGroup); handle.position.copy(tip); }
+function drawPath3D() {
+  ghostGroup.clear();
+  if (hover < 0 || !PRED || !isFinite(TT[hover])) { pathLine.visible = false; return; }
+  const path = pathTo(hover), arr = new Float32Array(path.length*3); path.forEach((n, k) => arr.set([P[3*n], P[3*n+1], P[3*n+2]], 3*k));
+  pathLine.geometry.dispose(); pathLine.geometry = new THREE.BufferGeometry(); pathLine.geometry.setAttribute('position', new THREE.BufferAttribute(arr, 3)); pathLine.visible = true;
+  armMeshes(Q.subarray(6*hover, 6*hover+6), ghostMat, ghostGroup);
+}
+function updatePlane() {
+  if (plane) { scene.remove(plane); plane.geometry.dispose(); if (planeMat.map) planeMat.map.dispose(); plane = null; }
+  if (start < 0) return; const g = sliceGeom(), tex = new THREE.CanvasTexture(cellImage(planeSrc)); tex.magFilter = THREE.NearestFilter; tex.minFilter = THREE.NearestFilter;
+  planeMat.map = tex; planeMat.needsUpdate = true; plane = new THREE.Mesh(new THREE.PlaneGeometry(g.w*H, g.h*H), planeMat);
+  const u = new THREE.Vector3(...g.axes[0]), v = new THREE.Vector3(...g.axes[1]), n = u.clone().cross(v);
+  plane.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(u, v, n));
+  const c = [0, 0, 0]; for (let a = 0; a < 3; a++) c[a] = a === g.normal ? g.at : LO[a]+(([NX, NY, NZ][a]-1)*H)/2; plane.position.set(...c); scene.add(plane);
+}
+function theme() {
+  scene.background = new THREE.Color(css('--scene'));
+  for (const b of boxMats) { b.fill.color = new THREE.Color(css(b.isTable ? '--table' : '--wood')); b.edge.color = new THREE.Color(css(b.isTable ? '--table' : '--wood-edge')); }
+  regionMat.color = new THREE.Color(css('--region')); baseMat.color = new THREE.Color(css('--ink-3')); armMat.color = new THREE.Color(css('--arm')); ghostMat.color = new THREE.Color(css('--ghost'));
+  handleMat.color = new THREE.Color(css('--handle')); pathMat.color = new THREE.Color(css('--path')); render(); scatter();
+}
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', theme);
+new MutationObserver(theme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+/* drag the handle: move along the plane through the handle facing the camera, snap to the nearest collision-free pose */
+const ray = new THREE.Raycaster(), mouse = new THREE.Vector2(); let dragging = false; const dragPlane = new THREE.Plane(), hit = new THREE.Vector3();
+function setMouse(ev) { const r = renderer.domElement.getBoundingClientRect(); mouse.set((ev.clientX-r.left)/r.width*2-1, -(ev.clientY-r.top)/r.height*2+1); ray.setFromCamera(mouse, camera); }
+function nearestFree(x, y, z) {
+  const c = [(x-LO[0])/H, (y-LO[1])/H, (z-LO[2])/H].map(Math.round); let best = -1, bd = Infinity;
+  for (let r = 0; r <= 3 && best < 0; r++) for (let a = -r; a <= r; a++) for (let b = -r; b <= r; b++) for (let d = -r; d <= r; d++) {
+    const i = c[0]+a, j = c[1]+b, k = c[2]+d; if (i < 0 || j < 0 || k < 0 || i >= NX || j >= NY || k >= NZ) continue; const n = G2N[gridId(i, j, k)];
+    if (n >= 0 && FREE[n]) { const dd = (P[3*n]-x)**2+(P[3*n+1]-y)**2+(P[3*n+2]-z)**2; if (dd < bd) { bd = dd; best = n; } } }
+  return best;
+}
+renderer.domElement.addEventListener('pointerdown', ev => { if (start < 0) return; setMouse(ev); if (!ray.intersectObject(handle).length) return;
+  dragging = true; controls.enabled = false; renderer.domElement.setPointerCapture(ev.pointerId); dragPlane.setFromNormalAndCoplanarPoint(camera.getWorldDirection(new THREE.Vector3()), handle.position); }, { capture: true });
+renderer.domElement.addEventListener('pointermove', ev => { setMouse(ev);
+  if (!dragging) { renderer.domElement.style.cursor = start >= 0 && ray.intersectObject(handle).length ? 'grab' : ''; return; }
+  if (ray.ray.intersectPlane(dragPlane, hit)) { const n = nearestFree(hit.x, hit.y, hit.z); if (n >= 0) setStart(n); } });
+const endDrag = ev => { if (!dragging) return; dragging = false; controls.enabled = true; try { renderer.domElement.releasePointerCapture(ev.pointerId); } catch (e) {} requestSpeed(); };
+renderer.domElement.addEventListener('pointerup', endDrag); renderer.domElement.addEventListener('pointercancel', endDrag);
+$('v-reset').addEventListener('click', () => view('reset')); $('v-cab').addEventListener('click', () => view('cab')); $('v-top').addEventListener('click', () => view('top'));
+
+/* slice hover and click */
+for (const which of ['learned', 'truth']) {
+  const cv = $('c-' + which), tip = $('tip-' + which);
+  const cellAt = ev => { const gm = cv._geom; if (!gm) return -1; const r = cv.getBoundingClientRect(), x = ev.clientX-r.left-gm.padL, y = ev.clientY-r.top-gm.top;
+    const i = Math.floor(x/gm.cell), j = gm.g.h-1-Math.floor(y/gm.cell); if (i < 0 || j < 0 || i >= gm.g.w || j >= gm.g.h) return -1; return gm.g.node(i, j); };
+  cv.addEventListener('pointermove', ev => { const n = cellAt(ev); if (n !== hover) { hover = n; render(); }
+    if (n < 0) { tip.hidden = true; return; } const v = valueOf(which, n), r = cv.parentElement.getBoundingClientRect();
+    tip.innerHTML = `${which === 'truth' ? 'true' : 'learned'} ${field === 'time' ? 'time' : 'speed'} ${fmt(v)}<br>${cm(P[3*n])}, ${cm(P[3*n+1])}, ${cm(P[3*n+2])} cm${D[n] <= 0 ? ' · contact' : ''}`;
+    tip.style.left = Math.min(ev.clientX-r.left+14, r.width-200) + 'px'; tip.style.top = (ev.clientY-r.top-34) + 'px'; tip.hidden = false; });
+  cv.addEventListener('pointerleave', () => { tip.hidden = true; if (hover >= 0) { hover = -1; render(); } });
+  cv.addEventListener('click', ev => { const n = cellAt(ev); if (n >= 0) { const f = FREE[n] ? n : nearestFree(P[3*n], P[3*n+1], P[3*n+2]); setStart(f); requestSpeed(); } });
+  cv.addEventListener('keydown', ev => {   // arrow keys move the start one cell within the slice
+    const step = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, 1], ArrowDown: [0, -1] }[ev.key]; if (!step || start < 0) return; ev.preventDefault();
+    const g = sliceGeom(), u = new THREE.Vector3(...g.axes[0]), v = new THREE.Vector3(...g.axes[1]);
+    const p = new THREE.Vector3(P[3*start], P[3*start+1], P[3*start+2]).addScaledVector(u, step[0]*H).addScaledVector(v, step[1]*H);
+    const n = nearestFree(p.x, p.y, p.z); if (n >= 0 && n !== start) { setStart(n); requestSpeed(); } });
+}
+
+/* scatter */
+function scatter() {
+  const cv = $('c-scatter'); if (!cv || !TT || !LT) return; const box = cv.parentElement.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const W = Math.max(260, box.width), Hh = Math.min(W, 360); cv.width = W*dpr; cv.height = Hh*dpr; cv.style.height = Hh + 'px';
+  const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, Hh);
+  const m = { l: 44, r: 10, t: 10, b: 32 }, lo = -2.5, hi = 0.7, X0 = v => m.l+(Math.log10(v)-lo)/(hi-lo)*(W-m.l-m.r), Y0 = v => Hh-m.b-(Math.log10(v)-lo)/(hi-lo)*(Hh-m.t-m.b);
+  ctx.strokeStyle = css('--grid'); ctx.fillStyle = css('--ink-3'); ctx.font = '11px ' + css('--mono'); ctx.lineWidth = 1;
+  for (const v of [0.01, 0.1, 1]) { ctx.beginPath(); ctx.moveTo(X0(v), m.t); ctx.lineTo(X0(v), Hh-m.b); ctx.moveTo(m.l, Y0(v)); ctx.lineTo(W-m.r, Y0(v)); ctx.stroke();
+    ctx.textAlign = 'center'; ctx.fillText(String(v), X0(v), Hh-m.b+14); ctx.textAlign = 'right'; ctx.fillText(String(v), m.l-5, Y0(v)+4); }
+  ctx.textAlign = 'center'; ctx.fillText('true time', (m.l+W-m.r)/2, Hh-4); ctx.save(); ctx.translate(11, (m.t+Hh-m.b)/2); ctx.rotate(-Math.PI/2); ctx.fillText('learned time', 0, 0); ctx.restore();
+  ctx.strokeStyle = css('--ink-2'); ctx.setLineDash([4, 4]); ctx.beginPath(); ctx.moveTo(X0(10**lo), Y0(10**lo)); ctx.lineTo(X0(10**hi), Y0(10**hi)); ctx.stroke(); ctx.setLineDash([]);
+  const cols = [css('--cat-out'), css('--cat-cup')]; ctx.globalAlpha = .35;
+  for (let pass = 0; pass < 2; pass++) { ctx.fillStyle = cols[pass];
+    for (let i = 0; i < N; i++) { if (INCUP[i] !== pass || i === start) continue; const a = TT[i], b = LT[i]; if (!(a > 0 && b > 0) || !isFinite(a)) continue;
+      const x = X0(Math.min(Math.max(a, 10**lo), 10**hi)), y = Y0(Math.min(Math.max(b, 10**lo), 10**hi)); ctx.fillRect(x-1, y-1, 2.2, 2.2); } }
+  ctx.globalAlpha = 1;
+  if (hover >= 0 && isFinite(TT[hover])) { ctx.beginPath(); ctx.arc(X0(Math.max(TT[hover], 10**lo)), Y0(Math.max(LT[hover], 10**lo)), 5, 0, 2*Math.PI); ctx.strokeStyle = css('--ink'); ctx.lineWidth = 2; ctx.stroke(); }
+  const groups = [['Outside the cupboard, collision-free', i => !INCUP[i] && FREE[i]], ['Inside the cupboard, collision-free', i => INCUP[i] && FREE[i]], ['Arm in contact at the goal', i => D[i] <= 0]];
+  const rows = groups.map(([name, f]) => { const r = []; for (let i = 0; i < N; i++) if (i !== start && f(i) && isFinite(TT[i]) && TT[i] > 0) r.push(LT[i]/TT[i]); r.sort((a, b) => a-b);
+    const q = p => r.length ? r[Math.floor(p*(r.length-1))] : NaN; return `<tr><td>${name}</td><td>${r.length.toLocaleString('en-US')}</td><td>${fmt(q(.5), 2)}×</td><td>${fmt(q(.1), 2)}–${fmt(q(.9), 2)}×</td></tr>`; });
+  $('ratios').innerHTML = `<thead><tr><th>Goal points</th><th>Count</th><th>Learned / true, median</th><th>10th–90th pct</th></tr></thead><tbody>${rows.join('')}</tbody>`;
+}
+
+/* controls */
+function group(ids, fn) { for (const id of ids) $(id).addEventListener('click', () => { ids.forEach(x => $(x).setAttribute('aria-pressed', String(x === id))); fn(id); }); }
+group(['f-time', 'f-speed'], id => { field = id.slice(2); requestSpeed(); render(); });
+group(['s-xz', 's-xy', 's-yz'], id => { sliceType = id.slice(2); requestSpeed(); render(); });
+group(['p-truth', 'p-learned'], id => { planeSrc = id.slice(2); updatePlane(); });
+$('models').innerHTML = Object.entries(M.checkpoints).map(([k, c], i) => `<button id="m-${k}" aria-pressed="${i === 0}">${c.title.replace('Test 3 · ', '')}</button>`).join('');
+group(Object.keys(M.checkpoints).map(k => 'm-' + k), id => loadModel(id.slice(2)));
+$('presets').innerHTML = Object.keys(M.presets).map(k => `<button data-p="${k}">${k[0].toUpperCase()+k.slice(1)}</button>`).join('');
+$('presets').addEventListener('click', ev => { const b = ev.target.closest('button'); if (b) { setStart(M.presets[b.dataset.p]); requestSpeed(); } });
+
+/* notes */
+(function notes() {
+  const t = M.report.tightness, pct = v => (v*100).toFixed(0) + ' %';
+  const a = t['in front of the cupboard'], b = t['middle compartment'];
+  $('notes').innerHTML = `
+    <p><b>Arm poses.</b> Every point of the test area's 2.5 cm grid (${M.grid.shape.join(' × ')}) gets one arm pose by inverse kinematics: ${M.nodes.toLocaleString('en-US')} of ${(M.grid.shape[0]*M.grid.shape[1]*M.grid.shape[2]).toLocaleString('en-US')} points are reachable. The poses stay on one IK branch (seeded from a frozen test pose in a compartment) with the gripper pointing into the cupboard, then each is turned slightly to keep the arm clear of obstacles and of itself. ${pct(M.report.grid.free_outside_cupboard)} of the poses outside the cupboard are collision-free, ${pct(M.report.grid.free_inside_cupboard)} inside it: the gripper is large next to the 21 cm high compartments, so most of their inside is within 5 mm of a panel for any pose.</p>
+    <p><b>Learned.</b> The ntrl-demo network embeds each pose separately and measures the time between two poses as a distance between their embeddings, so the page computes T(start, pose) for every grid point exactly as the network does (embeddings stored at float16: 99 % of times within 0.3 %). Its speed is 1 / |dT/dx| at a pose, with the page's own copy of the network (checked against PyTorch).</p>
+    <p><b>Ground truth.</b> The clearance label of every pose and of 16 points along every grid edge (to the 98 neighbours of the 5 × 5 × 5 block), turned into the speed the network is trained to match; the true time is the fastest path through these poses (Dijkstra, in your browser). It can only overestimate the time of an unconstrained motion. A free 6-D path optimizer, started from 96 of these paths per group, shortens them by a median of ${pct(a['outside, collision-free'].optimizer_gain_median)} (outside goals), ${pct(a['cupboard, collision-free'].optimizer_gain_median)} (collision-free goals in the cupboard) and ${pct(a['in contact'].optimizer_gain_median)} (goals in contact) from a start in front of the cupboard, and by ${pct(b['outside, collision-free'].optimizer_gain_median)}, ${pct(b['cupboard, collision-free'].optimizer_gain_median)} and ${pct(b['in contact'].optimizer_gain_median)} from a start in the middle compartment. Read the true times as upper bounds within about that much.</p>
+    <p><b>Units.</b> Both times are joint-space distances in the network's coordinates (each joint's full range = 1) divided by speed; speed 1 means at least 5 cm of clearance.</p>`;
+})();
+
+/* loop */
+function resize() { const r = viewport.getBoundingClientRect(); renderer.setSize(r.width, r.height, false); camera.aspect = r.width/Math.max(r.height, 1); camera.updateProjectionMatrix(); }
+new ResizeObserver(resize).observe(viewport);
+let resizeTimer = 0; new ResizeObserver(() => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { render(); scatter(); }, 120); }).observe(document.querySelector('.below'));
+function loop() { controls.update(); renderer.render(scene, camera); requestAnimationFrame(loop); }
+resize(); loop();
+(async () => {
+  try { await loadGrid(); } catch (err) { $('busy').textContent = 'Could not load the grid: ' + err.message; return; }
+  $('busy').textContent = 'Computing the true times…'; theme(); setStart(M.presets['middle compartment']); await loadModel(model);
+})();
+</script>

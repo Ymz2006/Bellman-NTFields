@@ -1,0 +1,108 @@
+{
+  "scene": "cabinet_clutter",
+  "rounds": [
+    {
+      "round": 0,
+      "candidates": 960,
+      "direct": 423,
+      "rrt_queries": 537,
+      "rrt_found": 452,
+      "rrt_certified": 452,
+      "rrt_iterations": 10000,
+      "rrt_seconds": 88.07862849300727
+    }
+  ],
+  "strata": {
+    "free_to_free": {
+      "start_pool": "free",
+      "goal_pool": "free",
+      "relation": null,
+      "candidates": 160,
+      "certified": 147,
+      "uncertified": 13,
+      "certified_direct": 106,
+      "selected_direct": 69
+    },
+    "free_to_compartment": {
+      "start_pool": "free",
+      "goal_pool": "compartment",
+      "relation": null,
+      "candidates": 160,
+      "certified": 150,
+      "uncertified": 10,
+      "certified_direct": 83,
+      "selected_direct": 57
+    },
+    "compartment_to_free": {
+      "start_pool": "compartment",
+      "goal_pool": "free",
+      "relation": null,
+      "candidates": 160,
+      "certified": 141,
+      "uncertified": 19,
+      "certified_direct": 70,
+      "selected_direct": 53
+    },
+    "compartment_to_compartment": {
+      "start_pool": "compartment",
+      "goal_pool": "compartment",
+      "relation": "different",
+      "candidates": 160,
+      "certified": 142,
+      "uncertified": 18,
+      "certified_direct": 33,
+      "selected_direct": 22
+    },
+    "same_compartment": {
+      "start_pool": "compartment",
+      "goal_pool": "compartment",
+      "relation": "same",
+      "candidates": 160,
+      "certified": 143,
+      "uncertified": 17,
+      "certified_direct": 39,
+      "selected_direct": 28
+    },
+    "anywhere": {
+      "start_pool": "box",
+      "goal_pool": "box",
+      "relation": null,
+      "candidates": 160,
+      "certified": 152,
+      "uncertified": 8,
+      "certified_direct": 92,
+      "selected_direct": 65
+    }
+  },
+  "pool_sizes": {
+    "free": 3774969,
+    "box": 6104790,
+    "near_bottle": 293307,
+    "near_jar": 99107,
+    "near_kettle": 116596,
+    "compartment": [
+      293307,
+      99107,
+      116596
+    ]
+  },
+  "rrt_targets": 300000,
+  "timing": {
+    "pools": 65.68135382200126,
+    "total": 159.7460682139499
+  },
+  "parameters": {
+    "samples": 400000000,
+    "round_size": 160,
+    "max_rounds": 8,
+    "rrt_iterations": 10000,
+    "rrt_step": 0.2,
+    "rrt_capacity": 10500,
+    "goal_bias": 0.1,
+    "min_cspace_l2": 0.02,
+    "max_cspace_l2": 4.0,
+    "per_stratum": 100,
+    "scorer_tilt_deg": 180.0
+  },
+  "complete": true
+}

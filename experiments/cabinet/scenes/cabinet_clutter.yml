@@ -1,0 +1,69 @@
+# Unconstrained motion planning among the household objects of experiments/obstacle_scenes/scenes/clutter.yml
+# (cuboids copied verbatim; no cupboard). Named cabinet_* because the cabinet task's launcher, registration
+# and frozen-suite layout take scenes named cabinet<suffix> (tests_clutter/); the task is the cabinet task's:
+# no zones or task axes, clearance-only speed, release scorer with its tilt gate off.
+#   bottle_left    0.08 x 0.08 x 0.30 at (0.48, +0.28)
+#   jar_center     0.10 x 0.10 x 0.16 at (0.62,  0.00)
+#   kettle_right   0.18 x 0.16 x 0.24 at (0.70, -0.33)
+# All stand on the table top (z = -0.035).
+
+cuboids:
+  - name: table
+    pose: [0.65, 0.0, -0.06, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.80, 1.20, 0.05]
+
+  - name: bottle_left
+    pose: [0.48, 0.28, 0.115, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.08, 0.08, 0.30]
+    color: [60, 150, 90]
+
+  - name: jar_center
+    pose: [0.62, 0.0, 0.045, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.10, 0.10, 0.16]
+    color: [220, 160, 40]
+
+  - name: kettle_right
+    pose: [0.70, -0.33, 0.085, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.18, 0.16, 0.24]
+    color: [170, 60, 60]
+
+viz_table:
+  name: viz_tabletop
+  pose: [0.75, 0.0, -0.06, 1.0, 0.0, 0.0, 0.0]
+  dims: [1.00, 1.20, 0.05]
+
+# Grasp-point sampling box: x and y of the obstacle scenes; z from the table top to 0.15 m above the
+# tallest object (bottle top 0.265). The frozen FK sampler reads x and y; z is checked against --height 0.45.
+sampling:
+  x: [0.29, 0.85]
+  y: [-0.55, 0.55]
+  z: [-0.035, 0.415]
+  rule: x, y of the obstacle scenes; z from the table top to 0.15 m above the tallest object
+
+# Near-object regions: each object's footprint widened by 0.08 m on every side (clipped to the sampling
+# box), from the table top to 0.05 m above the object's top. They take the compartments' place in the
+# test suites (compartment = near an object) and the coverage strata.
+compartments:
+  - name: near_bottle
+    x: [0.36, 0.60]
+    y: [0.16, 0.40]
+    z: [-0.035, 0.315]
+  - name: near_jar
+    x: [0.49, 0.75]
+    y: [-0.13, 0.13]
+    z: [-0.035, 0.175]
+  - name: near_kettle
+    x: [0.53, 0.85]
+    y: [-0.49, -0.17]
+    z: [-0.035, 0.255]
+
+# Focus box = bounding box of the near-object regions: the cluttered area. It replaces the cupboard's
+# outer box (coverage strata: half of the perturbed bases inside it; test region free = outside it).
+focus:
+  x: [0.36, 0.85]
+  y: [-0.49, 0.40]
+  z: [-0.035, 0.315]
+
+variant:
+  clearance_scale: null
+  rule: household objects of obstacle_scenes/clutter.yml on the table, no cupboard, no orientation rule

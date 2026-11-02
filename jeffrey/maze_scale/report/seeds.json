@@ -1,0 +1,70 @@
+{
+ "ntrl-demo": {
+  "87358": {
+   "total": 347,
+   "mid": 58,
+   "long": 32
+  },
+  "1": {
+   "total": 320,
+   "mid": 79,
+   "long": 4
+  },
+  "2": {
+   "total": 393,
+   "mid": 77,
+   "long": 34
+  }
+ },
+ "segment DP": {
+  "87358": {
+   "total": 262,
+   "mid": 45,
+   "long": 1
+  },
+  "1": {
+   "total": 280,
+   "mid": 55,
+   "long": 7
+  },
+  "2": {
+   "total": 263,
+   "mid": 36,
+   "long": 3
+  }
+ },
+ "segment DP + wall term": {
+  "87358": {
+   "total": 379,
+   "mid": 99,
+   "long": 3
+  },
+  "1": {
+   "total": 400,
+   "mid": 93,
+   "long": 34
+  },
+  "2": {
+   "total": 377,
+   "mid": 94,
+   "long": 6
+  }
+ },
+ "segment DP + wall term (weight 0.3)": {
+  "87358": {
+   "total": 451,
+   "mid": 114,
+   "long": 32
+  },
+  "1": {
+   "total": 456,
+   "mid": 107,
+   "long": 51
+  },
+  "2": {
+   "total": 420,
+   "mid": 96,
+   "long": 29
+  }
+ }
+}

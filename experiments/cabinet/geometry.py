@@ -16,13 +16,18 @@ MARGIN,OFFSET,SELF_SCALE=.05,.005,.5
 
 
 def scene_boxes(scene):
-    """Sampling box, cupboard outer box and compartment boxes (x, y, z ranges) of the cabinet scene."""
+    """Sampling box, cupboard outer box and compartment boxes (x, y, z ranges) of the cabinet scene.
+    A scene without a cupboard (cabinet_clutter, cabinet_platforms) names its focus box explicitly (`focus:`);
+    it takes the cupboard's place in the coverage strata and the test regions."""
     doc=yaml.safe_load(Path(scene).read_text())
     box=np.array([doc['sampling'][k] for k in 'xyz'],np.float32)
-    panels=[c for c in doc['cuboids'] if c['name'].startswith('shelf_')]
-    lo=np.min([np.subtract(c['pose'][:3],np.divide(c['dims'],2)) for c in panels],0)
-    hi=np.max([np.add(c['pose'][:3],np.divide(c['dims'],2)) for c in panels],0)
-    cupboard=np.stack([lo,hi],1).astype(np.float32)
+    if 'focus' in doc:
+        cupboard=np.array([doc['focus'][k] for k in 'xyz'],np.float32)
+    else:
+        panels=[c for c in doc['cuboids'] if c['name'].startswith('shelf_')]
+        lo=np.min([np.subtract(c['pose'][:3],np.divide(c['dims'],2)) for c in panels],0)
+        hi=np.max([np.add(c['pose'][:3],np.divide(c['dims'],2)) for c in panels],0)
+        cupboard=np.stack([lo,hi],1).astype(np.float32)
     compartments={c['name']:np.array([c[k] for k in 'xyz'],np.float32) for c in doc['compartments']}
     return box,cupboard,compartments
 

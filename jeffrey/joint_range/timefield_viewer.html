@@ -1,0 +1,720 @@
+<title>Cabinet Time Field</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: controls beside the arm in 3D, then a readout of the values under the cursor, then three chart columns
+   (the gripper moving along x, y and z through the picked point), each with travel time above speed on one axis. */
+:root {
+  --bg: #f4f6f7; --panel: #ffffff; --ink: #14181b; --ink-2: #4a5359; --ink-3: #737d86; --rule: #d9dee2; --well: #e9edf0; --grid: #e8ebee;
+  --accent: #2a78d6; --scene: #eef1f3; --wood: #9a6b3f; --wood-edge: #6e4a29; --table: #b9c0c6; --region: #4a5359;
+  --arm: #56616a; --ghost: #78828a; --handle: #e34948; --pick: #e34948;
+  --truth: #14181b; --m-f100: #2a78d6; --m-f0: #eb6834; --m-old: #1baf7a;
+  --band-floor: rgba(74, 83, 89, 0.11); --band-board: rgba(154, 107, 63, 0.32); --board-ink: #6e4a29;
+  --display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111416; --panel: #191d20; --ink: #e8ecee; --ink-2: #b4bcc2; --ink-3: #8b959e; --rule: #2c3337; --well: #22282c; --grid: #252b2f;
+  --accent: #3987e5; --scene: #15191c; --wood: #8a6040; --wood-edge: #c09060; --table: #3a4248; --region: #87919a;
+  --arm: #9aa4ad; --ghost: #87919a; --handle: #e66767; --pick: #e66767;
+  --truth: #e8ecee; --m-f100: #3987e5; --m-f0: #d95926; --m-old: #199e70;
+  --band-floor: rgba(180, 188, 194, 0.11); --band-board: rgba(192, 144, 96, 0.32); --board-ink: #d2a676; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #111416; --panel: #191d20; --ink: #e8ecee; --ink-2: #b4bcc2; --ink-3: #8b959e; --rule: #2c3337; --well: #22282c; --grid: #252b2f;
+  --accent: #3987e5; --scene: #15191c; --wood: #8a6040; --wood-edge: #c09060; --table: #3a4248; --region: #87919a;
+  --arm: #9aa4ad; --ghost: #87919a; --handle: #e66767; --pick: #e66767;
+  --truth: #e8ecee; --m-f100: #3987e5; --m-f0: #d95926; --m-old: #199e70;
+  --band-floor: rgba(180, 188, 194, 0.11); --band-board: rgba(192, 144, 96, 0.32); --board-ink: #d2a676; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 14px/1.45 var(--body); }
+.wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 18px 28px;
+        max-width: 1560px; margin: 0 auto; display: grid; gap: 14px; }
+.wrap > * { min-width: 0; }
+header { display: grid; gap: 4px; }
+h1 { font: 600 1.6rem/1.15 var(--display); margin: 0; text-wrap: balance; }
+h2 { font: 600 1.08rem/1.2 var(--display); margin: 0; letter-spacing: .01em; }
+.lede { color: var(--ink-2); margin: 0; max-width: 96ch; }
+.top { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 14px; align-items: stretch; }
+.side { display: grid; gap: 12px; min-width: 0; align-content: start; }
+.card { background: var(--panel); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 14px; display: grid; gap: 10px; min-width: 0; }
+.label { font: 500 11px var(--mono); letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); }
+.row { display: flex; align-items: baseline; justify-content: space-between; gap: 6px 12px; flex-wrap: wrap; }
+.muted { color: var(--ink-3); font-size: 12.5px; }
+.seg { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; background: var(--well); border-radius: 6px; padding: 3px; gap: 3px; }
+.seg button { font: 500 12.5px var(--body); color: var(--ink-2); background: transparent; border: 0; border-radius: 4px; padding: 6px 4px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--panel); color: var(--ink); box-shadow: 0 0 0 1px var(--rule); }
+.models { grid-auto-flow: row; grid-template-columns: 1fr 1fr; }
+button:focus-visible, input:focus-visible, svg:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.presets { display: flex; flex-wrap: wrap; gap: 6px; }
+.presets button { font: 500 12px var(--body); color: var(--ink-2); background: transparent; border: 1px solid var(--rule); border-radius: 6px; padding: 5px 9px; cursor: pointer; }
+.presets button:hover { color: var(--ink); border-color: var(--ink-3); }
+dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; margin: 0; font-size: 13px; }
+dt { color: var(--ink-3); }
+dd { margin: 0; text-align: right; font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; color: var(--ink); }
+.sliders { display: grid; gap: 4px; }
+.sl { display: grid; grid-template-columns: 16px minmax(0, 1fr) 7.5ch; align-items: center; gap: 8px; font: 500 13px var(--mono); color: var(--ink-2); }
+.sl input { width: 100%; margin: 0; accent-color: var(--pick); }
+.sl output { text-align: right; font-variant-numeric: tabular-nums; color: var(--ink); font-size: 12.5px; }
+.status { font: 12px var(--mono); color: var(--ink-3); }
+.viewport { position: relative; min-height: 420px; background: var(--scene); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; touch-action: none; }
+.viewport canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.vbar { position: absolute; top: 10px; right: 10px; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.vbar button { font: 500 12px var(--body); color: var(--ink-2); background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 5px 10px; cursor: pointer; }
+.vtag { position: absolute; top: 10px; left: 12px; font: 600 13px var(--display); color: var(--ink); background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 4px 9px; }
+.hint { position: absolute; left: 12px; bottom: 10px; font-size: 12px; color: var(--ink-3); pointer-events: none; max-width: calc(100% - 24px); }
+.busy { position: absolute; inset: 0; display: grid; place-items: center; font: 13px var(--mono); color: var(--ink-2); background: color-mix(in srgb, var(--panel) 70%, transparent); }
+.readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }
+.cell { background: var(--panel); padding: 9px 13px; display: grid; gap: 2px; align-content: start; min-width: 0; }
+.cell .l { font-size: 12px; color: var(--ink-3); }
+.cell .v { font: 17px var(--mono); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.cell .n { font: 12px var(--mono); color: var(--ink-2); font-variant-numeric: tabular-nums; display: grid; gap: 1px; }
+.cell .n span { display: flex; align-items: center; gap: 6px; }
+.cell.wide { grid-column: 1 / -1; }
+.cell .prompt { font-size: 13px; color: var(--ink-2); }
+.mrows { display: grid; grid-template-columns: 8px auto auto auto; justify-content: start; align-items: center; gap: 2px 8px; font: 12.5px var(--mono); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.mrows b { font-weight: 500; color: var(--ink); text-align: right; }
+.legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; font-size: 12.5px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { display: inline-block; width: 18px; height: 0; border-top: 2.5px solid; flex: none; }
+.sw.truth { border-color: var(--truth); } .sw.m-f100 { border-color: var(--m-f100); } .sw.m-f0 { border-color: var(--m-f0); } .sw.m-old { border-color: var(--m-old); border-top-style: dashed; }
+.sw.box { height: 11px; border: 0; border-radius: 2px; }
+.sw.band-floor { background: var(--band-floor); outline: 1px solid var(--rule); } .sw.band-board { background: var(--band-board); }
+.sw.pickmark { width: 0; height: 13px; border-top: 0; border-left: 1.5px dashed var(--pick); }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex: none; }
+.charts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; align-items: start; }
+.chart { gap: 6px; }
+.chart .sub { font-size: 12.5px; color: var(--ink-3); }
+.plot { min-width: 0; }
+.plot-title { font-size: 12.5px; font-weight: 500; color: var(--ink-2); margin: 4px 0 0; }
+.plot svg { display: block; width: 100%; cursor: crosshair; touch-action: none; overflow: visible; }
+svg .gridline { stroke: var(--grid); stroke-width: 1; }
+svg .axisline { stroke: var(--ink-3); stroke-width: 1; }
+svg .tick { font: 10.5px var(--mono); fill: var(--ink-3); }
+svg .axtitle { font: 11px var(--body); fill: var(--ink-3); }
+svg .board { font: 10.5px var(--body); fill: var(--board-ink); }
+svg .pickline { stroke: var(--pick); stroke-width: 1.5; stroke-dasharray: 3 3; }
+svg .picktext { font: 10.5px var(--body); fill: var(--pick); }
+svg .series { fill: none; stroke-width: 1.75; stroke-linejoin: round; stroke-linecap: round; }
+svg .series.truth { stroke: var(--truth); stroke-width: 2.25; }
+svg .series.m-f100 { stroke: var(--m-f100); } svg .series.m-f0 { stroke: var(--m-f0); } svg .series.m-old { stroke: var(--m-old); stroke-dasharray: 6 3; }
+svg .cursorline { stroke: var(--ink); stroke-opacity: .55; stroke-width: 1; }
+svg .cdot { stroke: var(--panel); stroke-width: 2; }
+svg .cdot.truth { fill: var(--truth); } svg .cdot.m-f100 { fill: var(--m-f100); } svg .cdot.m-f0 { fill: var(--m-f0); } svg .cdot.m-old { fill: var(--m-old); }
+svg .val { font: 11px var(--mono); fill: var(--ink); paint-order: stroke; stroke: var(--panel); stroke-width: 3px; stroke-linejoin: round; }
+.notes { display: grid; gap: 8px; font-size: 13px; color: var(--ink-2); max-width: 100ch; }
+.notes p { margin: 0; }
+@media (max-width: 1180px) { .charts { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 880px) { .top { grid-template-columns: minmax(0, 1fr); } .viewport { order: -1; height: 56vh; min-height: 340px; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Cabinet time field</h1>
+    <p class="lede">Pick a gripper position: drag the red handle, use the x, y, z sliders, or click a chart. The three charts follow the gripper along x, y and z through that point. Each shows, at every position on its line, the travel time from the picked point (top) and the speed (bottom): the trained ntrl-demo network against the ground truth from the arm's clearance. Every position uses one arm pose from inverse kinematics.</p>
+  </header>
+
+  <div class="top">
+    <aside class="side">
+      <section class="card" aria-labelledby="l-pick">
+        <span class="label" id="l-pick">Picked point</span>
+        <dl id="pick-info"></dl>
+        <div class="sliders">
+          <label class="sl"><span>x</span><input type="range" id="sx" min="0" max="1" step="1" aria-label="Picked point x"><output id="ox"></output></label>
+          <label class="sl"><span>y</span><input type="range" id="sy" min="0" max="1" step="1" aria-label="Picked point y"><output id="oy"></output></label>
+          <label class="sl"><span>z</span><input type="range" id="sz" min="0" max="1" step="1" aria-label="Picked point z"><output id="oz"></output></label>
+        </div>
+        <div class="presets" id="presets"></div>
+        <div class="muted">The point snaps to the nearest grid pose (2.5 cm) with at least 5 mm of clearance.</div>
+      </section>
+      <section class="card" aria-labelledby="l-model">
+        <span class="label" id="l-model">Learned field</span>
+        <div class="seg models" role="group" aria-labelledby="l-model" id="models"></div>
+        <div class="status" id="model-status">Loading…</div>
+      </section>
+      <section class="card" aria-labelledby="l-scale">
+        <span class="label" id="l-scale">Scales</span>
+        <div class="seg" role="group" aria-label="Travel-time scale">
+          <button id="t-full" aria-pressed="true">Time: full</button>
+          <button id="t-free" aria-pressed="false">Time: clear poses</button>
+        </div>
+        <div class="seg" role="group" aria-label="Speed scale">
+          <button id="s-log" aria-pressed="true">Speed: log</button>
+          <button id="s-linear" aria-pressed="false">Speed: linear</button>
+        </div>
+      </section>
+    </aside>
+
+    <div class="viewport" id="viewport">
+      <div class="vtag" id="vtag">Picked point</div>
+      <div class="vbar">
+        <button id="v-reset">Reset view</button>
+        <button id="v-cab">Look into cupboard</button>
+        <button id="v-top">Top</button>
+      </div>
+      <div class="hint">Drag the red handle to move the gripper · drag elsewhere to orbit · right-drag to pan · scroll to zoom</div>
+      <div class="busy" id="busy">Loading the grid…</div>
+    </div>
+  </div>
+
+  <section class="readout" id="readout" aria-live="polite" aria-label="Values under the cursor"></section>
+
+  <div class="legend" id="legend"></div>
+
+  <div class="charts">
+    <section class="card chart" aria-labelledby="h-x">
+      <div class="row"><h2 id="h-x">Along x</h2><span class="sub" id="sub-x"></span></div>
+      <div class="plot"><div class="plot-title">Travel time T from the picked point</div><svg id="c-Tx" role="img" aria-label="Travel time along x"></svg></div>
+      <div class="plot"><div class="plot-title">Speed S</div><svg id="c-Sx" role="img" aria-label="Speed along x"></svg></div>
+    </section>
+    <section class="card chart" aria-labelledby="h-y">
+      <div class="row"><h2 id="h-y">Along y</h2><span class="sub" id="sub-y"></span></div>
+      <div class="plot"><div class="plot-title">Travel time T from the picked point</div><svg id="c-Ty" role="img" aria-label="Travel time along y"></svg></div>
+      <div class="plot"><div class="plot-title">Speed S</div><svg id="c-Sy" role="img" aria-label="Speed along y"></svg></div>
+    </section>
+    <section class="card chart" aria-labelledby="h-z">
+      <div class="row"><h2 id="h-z">Along z</h2><span class="sub" id="sub-z"></span></div>
+      <div class="plot"><div class="plot-title">Travel time T from the picked point</div><svg id="c-Tz" role="img" aria-label="Travel time along z"></svg></div>
+      <div class="plot"><div class="plot-title">Speed S</div><svg id="c-Sz" role="img" aria-label="Speed along z"></svg></div>
+    </section>
+  </div>
+
+  <section class="card notes" aria-labelledby="l-notes">
+    <h2 id="l-notes">How the values are computed</h2>
+    <div id="notes"></div>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script id="core">
+/* Core math shared by the page, its workers and the offline check (timefield_check.js): float16 decoding, the
+   ntrl-demo metric network (forward pass, travel time and input gradient), Dijkstra on the grid graph, forward
+   kinematics, the trained target speed, and the points of a grid line with their ground-truth times. */
+const F16 = (() => { const t = new Float32Array(65536); for (let h = 0; h < 65536; h++) { const s = h & 0x8000 ? -1 : 1, e = (h >> 10) & 31, f = h & 1023;
+  t[h] = e === 0 ? s*f*5.960464477539063e-8 : e === 31 ? (f ? NaN : s*Infinity) : s*Math.pow(2, e-15)*(1+f/1024); } return t; })();
+function decodeF16(u16) { const out = new Float32Array(u16.length); for (let i = 0; i < u16.length; i++) out[i] = F16[u16[i]]; return out; }
+function unpackNet(buf) {
+  let o = 0; const take = n => { const a = buf.subarray(o, o+n); o += n; return a; };
+  const net = { B: take(6*128), L: [] };
+  for (let k = 0; k < 9; k++) net.L.push({ W: take(65536), b: take(256) });
+  net.g = take(2);
+  if (o !== buf.length) throw new Error('weights: expected ' + o + ' floats, got ' + buf.length);
+  return net;
+}
+function affine(W, b, x, y) { for (let i = 0; i < 256; i++) { let s = b[i]; const r = i*256; for (let j = 0; j < 256; j++) s += W[r+j]*x[j]; y[i] = s; } }
+function affineT(W, g, out) { out.fill(0); for (let i = 0; i < 256; i++) { const gi = g[i]; if (gi === 0) continue; const r = i*256; for (let j = 0; j < 256; j++) out[j] += W[r+j]*gi; } }
+function forward(net, x, keep) {
+  const xp = new Float64Array(128), xin = new Float64Array(256);
+  for (let k = 0; k < 128; k++) { let s = 0; for (let j = 0; j < 6; j++) s += x[j]*net.B[j*128+k]; xp[k] = s; xin[k] = Math.sin(s); xin[128+k] = Math.cos(s); }
+  const zu = new Float64Array(256), zv = new Float64Array(256); affine(net.L[0].W, net.L[0].b, xin, zu); affine(net.L[1].W, net.L[1].b, xin, zv);
+  const u = zu.map(Math.sin), v = zv.map(Math.sin); let h = xin; const blocks = [];
+  for (let ii = 0; ii < 2; ii++) {
+    const htmp = h, y1 = new Float64Array(256), y2 = new Float64Array(256), y3 = new Float64Array(256), h1 = new Float64Array(256), h2 = new Float64Array(256), hn = new Float64Array(256);
+    affine(net.L[2+3*ii].W, net.L[2+3*ii].b, htmp, y1); for (let k = 0; k < 256; k++) { const a = Math.sin(y1[k]); h1[k] = u[k]*a+v[k]*(1-a); }
+    affine(net.L[3+3*ii].W, net.L[3+3*ii].b, h1, y2); for (let k = 0; k < 256; k++) { const a = Math.sin(y2[k]); h2[k] = u[k]*a+v[k]*(1-a); }
+    affine(net.L[4+3*ii].W, net.L[4+3*ii].b, h2, y3); const g = net.g[ii]; for (let k = 0; k < 256; k++) hn[k] = (1-g)*htmp[k]+g*Math.sin(y3[k]);
+    blocks.push({ y1, y2, y3 }); h = hn;
+  }
+  const y = new Float64Array(256); affine(net.L[8].W, net.L[8].b, h, y);
+  let mean = 0; for (let k = 0; k < 256; k++) mean += y[k]; mean /= 256; let vr = 0; for (let k = 0; k < 256; k++) vr += (y[k]-mean)**2; vr /= 256;
+  const sd = Math.sqrt(vr+1e-5), e = new Float64Array(256); for (let k = 0; k < 256; k++) e[k] = (y[k]-mean)/sd;
+  return keep ? { e, sd, xp, zu, zv, u, v, blocks } : { e };
+}
+const _md = new Float64Array(16);
+function metric(a, ao, b, bo) {   // T between embeddings a[ao..ao+256) and b[bo..bo+256)
+  let T = 0; const d = _md;
+  for (let g = 0; g < 16; g++) { let m = -Infinity;
+    for (let k = 0; k < 16; k++) { const df = a[ao+16*g+k]-b[bo+16*g+k]; d[k] = Math.sqrt(df*df+1e-6); if (10*d[k] > m) m = 10*d[k]; }
+    let s = 0; for (let k = 0; k < 16; k++) s += Math.exp(10*d[k]-m); T += (m+Math.log(s)-Math.log(16))/10; }
+  return 0.2*T;
+}
+function fieldAt(net, es, x) {     // [T(es, e(x)), field speed 1 / |dT/dx|] at release coordinates x, source embedding es
+  const c = forward(net, x, true), e = c.e, gE = new Float64Array(256); let T = 0;
+  for (let g = 0; g < 16; g++) { let m = -Infinity; const d = new Float64Array(16), w = new Float64Array(16);
+    for (let k = 0; k < 16; k++) { const df = e[16*g+k]-es[16*g+k]; d[k] = Math.sqrt(df*df+1e-6); if (10*d[k] > m) m = 10*d[k]; }
+    let s = 0; for (let k = 0; k < 16; k++) { w[k] = Math.exp(10*d[k]-m); s += w[k]; }
+    T += (m+Math.log(s)-Math.log(16))/10;
+    for (let k = 0; k < 16; k++) gE[16*g+k] = 0.2*(w[k]/s)*(e[16*g+k]-es[16*g+k])/d[k]; }
+  let mg = 0, mge = 0; for (let k = 0; k < 256; k++) { mg += gE[k]; mge += gE[k]*e[k]; } mg /= 256; mge /= 256;
+  const gy = new Float64Array(256); for (let k = 0; k < 256; k++) gy[k] = (gE[k]-mg-e[k]*mge)/c.sd;
+  let gh = new Float64Array(256); affineT(net.L[8].W, gy, gh);
+  const gu = new Float64Array(256), gv = new Float64Array(256), t = new Float64Array(256);
+  for (let ii = 1; ii >= 0; ii--) {
+    const B = c.blocks[ii], g = net.g[ii], gy3 = new Float64Array(256), ghtmp = new Float64Array(256), gh2 = new Float64Array(256), gy2 = new Float64Array(256), gh1 = new Float64Array(256), gy1 = new Float64Array(256);
+    for (let k = 0; k < 256; k++) { gy3[k] = gh[k]*g*Math.cos(B.y3[k]); ghtmp[k] = gh[k]*(1-g); }
+    affineT(net.L[4+3*ii].W, gy3, gh2);
+    for (let k = 0; k < 256; k++) { const a = Math.sin(B.y2[k]); gu[k] += gh2[k]*a; gv[k] += gh2[k]*(1-a); gy2[k] = gh2[k]*(c.u[k]-c.v[k])*Math.cos(B.y2[k]); }
+    affineT(net.L[3+3*ii].W, gy2, gh1);
+    for (let k = 0; k < 256; k++) { const a = Math.sin(B.y1[k]); gu[k] += gh1[k]*a; gv[k] += gh1[k]*(1-a); gy1[k] = gh1[k]*(c.u[k]-c.v[k])*Math.cos(B.y1[k]); }
+    affineT(net.L[2+3*ii].W, gy1, t); for (let k = 0; k < 256; k++) ghtmp[k] += t[k];
+    gh = ghtmp;
+  }
+  const gzu = new Float64Array(256), gzv = new Float64Array(256), t0 = new Float64Array(256), t1 = new Float64Array(256);
+  for (let k = 0; k < 256; k++) { gzu[k] = gu[k]*Math.cos(c.zu[k]); gzv[k] = gv[k]*Math.cos(c.zv[k]); }
+  affineT(net.L[0].W, gzu, t0); affineT(net.L[1].W, gzv, t1);
+  let n2 = 0;
+  for (let j = 0; j < 6; j++) { let s = 0; for (let k = 0; k < 128; k++) { const gxin_s = gh[k]+t0[k]+t1[k], gxin_c = gh[128+k]+t0[128+k]+t1[128+k];
+    s += net.B[j*128+k]*(gxin_s*Math.cos(c.xp[k])-gxin_c*Math.sin(c.xp[k])); } n2 += s*s; }
+  return [0.2*T, 1/Math.max(Math.sqrt(n2), 1e-12)];
+}
+function speedAt(net, es, x) { return fieldAt(net, es, x)[1]; }
+function buildGraph(N, nbr, E, K) {   // CSR of the undirected grid graph from the canonical forward edges
+  const deg = new Int32Array(N+1);
+  for (let i = 0; i < N; i++) for (let k = 0; k < K; k++) { const j = nbr[i*K+k]; if (j >= 0 && isFinite(E[i*K+k])) { deg[i+1]++; deg[j+1]++; } }
+  for (let i = 0; i < N; i++) deg[i+1] += deg[i];
+  const fill = deg.slice(0, N), to = new Int32Array(deg[N]), w = new Float32Array(deg[N]);
+  for (let i = 0; i < N; i++) for (let k = 0; k < K; k++) { const j = nbr[i*K+k], c = E[i*K+k]; if (j >= 0 && isFinite(c)) { to[fill[i]] = j; w[fill[i]++] = c; to[fill[j]] = i; w[fill[j]++] = c; } }
+  return { N, off: deg, to, w };
+}
+function dijkstra(G, start) {
+  const dist = new Float64Array(G.N).fill(Infinity), pred = new Int32Array(G.N).fill(-1), done = new Uint8Array(G.N);
+  let hk = new Float64Array(1 << 16), hv = new Int32Array(1 << 16), n = 0;
+  const push = (k, v) => { if (n === hk.length) { const a = new Float64Array(2*n), b = new Int32Array(2*n); a.set(hk); b.set(hv); hk = a; hv = b; }
+    let i = n++; while (i > 0) { const p = (i-1) >> 1; if (hk[p] <= k) break; hk[i] = hk[p]; hv[i] = hv[p]; i = p; } hk[i] = k; hv[i] = v; };
+  const pop = () => { const v = hv[0], k = hk[--n], x = hv[n]; let i = 0;
+    while (true) { let c = 2*i+1; if (c >= n) break; if (c+1 < n && hk[c+1] < hk[c]) c++; if (hk[c] >= k) break; hk[i] = hk[c]; hv[i] = hv[c]; i = c; } hk[i] = k; hv[i] = x; return v; };
+  dist[start] = 0; push(0, start);
+  while (n) { const i = pop(); if (done[i]) continue; done[i] = 1; const di = dist[i];
+    for (let e = G.off[i]; e < G.off[i+1]; e++) { const j = G.to[e], nd = di+G.w[e]; if (nd < dist[j]) { dist[j] = nd; pred[j] = i; push(nd, j); } } }
+  return { dist, pred };
+}
+function matMul(A, B) { const C = new Float64Array(16); for (let r = 0; r < 4; r++) for (let c = 0; c < 4; c++) { let s = 0; for (let k = 0; k < 4; k++) s += A[r*4+k]*B[k*4+c]; C[r*4+c] = s; } return C; }
+function forwardKinematics(chain, q) {   // world transforms (row-major 4x4) of every chain link for joint angles q (rad)
+  let T = new Float64Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]); const out = { base_link: T };
+  for (const j of chain) { T = matMul(T, j.origin);
+    if (j.moving >= 0) { const c = Math.cos(q[j.moving]), s = Math.sin(q[j.moving]); T = matMul(T, new Float64Array([c, -s, 0, 0, s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])); }
+    out[j.child] = T; }
+  return out;
+}
+function targetSpeed(d, P) {       // the trainer's target s' from the clearance label d (m)
+  const s = Math.min(Math.max(d, P.offset), P.margin)/P.margin; return P.alpha*s*s*(2-s)*(2-s)+1-P.alpha;
+}
+function buildLine(C, src, axis) {  // the grid line through pose src along one axis: each grid pose, then the 15 interior points
+  const [, NY, NZ] = C.shape, n = C.shape[axis], sub = C.sub, cap = n*sub, w = sub-1;   // of its segment to the next pose
+  const L = { axis, n: 0, pos: new Float64Array(cap), a: new Int32Array(cap), b: new Int32Array(cap), k: new Int32Array(cap), run: new Int32Array(cap),
+              x: new Float64Array(6*cap), d: new Float64Array(cap), S: new Float64Array(cap) };
+  const c = [C.GI[3*src], C.GI[3*src+1], C.GI[3*src+2]], node = idx => { c[axis] = idx; return C.G2N[(c[0]*NY+c[1])*NZ+c[2]]; };
+  let run = 0, p = 0;
+  for (let idx = 0; idx < n; idx++) {
+    const a = node(idx); if (a < 0) { run++; continue; }
+    const b = idx+1 < n ? node(idx+1) : -1, seg = b >= 0 && isFinite(C.LD[(3*a+axis)*w]);
+    for (let k = 0; k < (seg ? sub : 1); k++) {
+      L.pos[p] = C.lo[axis]+(idx+k/sub)*C.h; L.a[p] = a; L.b[p] = k ? b : -1; L.k[p] = k; L.run[p] = run;
+      for (let j = 0; j < 6; j++) { const xa = C.Q[6*a+j]/C.qr[j]; L.x[6*p+j] = k ? xa+(k/sub)*(C.Q[6*b+j]/C.qr[j]-xa) : xa; }
+      L.d[p] = k ? C.LD[(3*a+axis)*w+k-1] : C.D[a]; L.S[p] = targetSpeed(L.d[p], C.P); p++;
+    }
+    if (!seg) run++;
+  }
+  L.n = p; return L;
+}
+function lineTruth(C, L, dist) {   // true time at every line point, and the grid pose its route comes through: at a grid pose
+  const sub = C.sub, w = sub-1, T = new Float64Array(L.n), via = new Int32Array(L.n), inv = new Float64Array(sub+1), part = new Float64Array(sub+1);
+  let segA = -1;                   // its Dijkstra time; between two, the smaller of the linear interpolation of their times
+  for (let p = 0; p < L.n; p++) {  // and the time through either pose and along the segment (16-step trapezoid, rescaled to the stored edge cost)
+    const a = L.a[p], b = L.b[p], k = L.k[p];
+    if (b < 0) { T[p] = dist[a]; via[p] = a; continue; }
+    if (a !== segA) { segA = a;
+      for (let m = 0; m <= sub; m++) inv[m] = 1/targetSpeed(m === 0 ? C.D[a] : m === sub ? C.D[b] : C.LD[(3*a+L.axis)*w+m-1], C.P);
+      let len = 0; for (let j = 0; j < 6; j++) { const dx = (C.Q[6*b+j]-C.Q[6*a+j])/C.qr[j]; len += dx*dx; } len = Math.sqrt(len);
+      part[0] = 0; for (let m = 1; m <= sub; m++) part[m] = part[m-1]+(inv[m-1]+inv[m])/2/sub*len;
+      const scale = C.E[a*C.K+C.kdir[L.axis]]/part[sub]; for (let m = 0; m <= sub; m++) part[m] *= scale; }
+    const ta = dist[a]+part[k], tb = dist[b]+(part[sub]-part[k]), lin = (1-k/sub)*dist[a]+(k/sub)*dist[b];
+    T[p] = Math.min(ta, tb, lin); via[p] = ta <= tb ? a : b;
+  }
+  L.T = T; L.via = via; return L;
+}
+</script>
+<script>
+const M = {"grid":{"lo":[0.08,0.03,-0.035],"h":0.025,"shape":[33,25,29]},"nodes":20841,"dirs":[[0,0,1],[0,1,-2],[0,1,-1],[0,1,0],[0,1,1],[0,1,2],[0,2,-1],[0,2,1],[1,-2,-2],[1,-2,-1],[1,-2,0],[1,-2,1],[1,-2,2],[1,-1,-2],[1,-1,-1],[1,-1,0],[1,-1,1],[1,-1,2],[1,0,-2],[1,0,-1],[1,0,0],[1,0,1],[1,0,2],[1,1,-2],[1,1,-1],[1,1,0],[1,1,1],[1,1,2],[1,2,-2],[1,2,-1],[1,2,0],[1,2,1],[1,2,2],[2,-2,-1],[2,-2,1],[2,-1,-2],[2,-1,-1],[2,-1,0],[2,-1,1],[2,-1,2],[2,0,-1],[2,0,1],[2,1,-2],[2,1,-1],[2,1,0],[2,1,1],[2,1,2],[2,2,-1],[2,2,1]],"orientation":[[0.0,-0.0,1.0],[0.1464391053535482,0.9892196866334861,0.0],[-0.9892196866334861,0.1464391053535482,0.0]],"seed":{"suite":"same_compartment","key":"starts_rad","index":87,"node":14879},"presets":{"middle compartment":16261,"top compartment":16270,"bottom compartment":16252,"in front of the cupboard":7789,"beside the cupboard":7522},"q_range":[12.566399574279785,12.566399574279785,6.283199787139893,12.566399574279785,12.566399574279785,12.566399574279785],"alpha":1.025,"margin":0.05,"offset":0.005,"steps":16,"jump":0.6,"boxes":[{"name":"table","center":[0.65,0.0,-0.06],"dims":[0.8,1.2,0.05]},{"name":"shelf_back","center":[0.87,0.33,0.315],"dims":[0.02,0.4,0.7]},{"name":"shelf_side_inner","center":[0.71,0.14,0.315],"dims":[0.3,0.02,0.7]},{"name":"shelf_side_outer","center":[0.71,0.52,0.315],"dims":[0.3,0.02,0.7]},{"name":"shelf_top","center":[0.71,0.33,0.655],"dims":[0.3,0.36,0.02]},{"name":"shelf_board_low","center":[0.71,0.33,0.2],"dims":[0.3,0.36,0.02]},{"name":"shelf_board_high","center":[0.71,0.33,0.43],"dims":[0.3,0.36,0.02]}],"sampling":{"x":[0.08,0.88],"y":[0.03,0.63],"z":[-0.035,0.665]},"compartments":[{"name":"bottom","x":[0.6,0.86],"y":[0.15,0.51],"z":[-0.035,0.19]},{"name":"middle","x":[0.6,0.86],"y":[0.15,0.51],"z":[0.21,0.42]},{"name":"top","x":[0.6,0.86],"y":[0.15,0.51],"z":[0.44,0.645]}],"chain":[{"child":"base_link_inertia","moving":-1,"origin":[-1.0,-1.2246468525851679e-16,0.0,0.0,1.2246468525851679e-16,-1.0,0.0,0.0,-0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0]},{"child":"shoulder_link","moving":0,"origin":[1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-0.0,0.0,1.0,0.16249999403953552,0.0,0.0,0.0,1.0]},{"child":"upper_arm_link","moving":1,"origin":[1.0,0.0,0.0,0.0,0.0,-2.051034342365199e-10,-1.0,0.0,-0.0,1.0,-2.051034342365199e-10,0.0,0.0,0.0,0.0,1.0]},{"child":"forearm_link","moving":2,"origin":[1.0,0.0,0.0,-0.42500001192092896,0.0,1.0,0.0,0.0,-0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0]},{"child":"wrist_1_link","moving":3,"origin":[1.0,0.0,0.0,-0.3921999931335449,0.0,1.0,0.0,0.0,-0.0,0.0,1.0,0.13330000638961792,0.0,0.0,0.0,1.0]},{"child":"wrist_2_link","moving":4,"origin":[1.0,0.0,0.0,0.0,0.0,-2.051034342365199e-10,-1.0,-0.09969999641180038,-0.0,1.0,-2.051034342365199e-10,-2.0448811047235615e-11,0.0,0.0,0.0,1.0]},{"child":"wrist_3_link","moving":5,"origin":[1.0,-1.2246468525851679e-16,1.2246468525851679e-16,0.0,-1.2246468525851679e-16,-2.0510354525882235e-10,1.0,0.09960000216960907,-1.2246468525851679e-16,-1.0,-2.0510354525882235e-10,-2.0428301411579142e-11,0.0,0.0,0.0,1.0]},{"child":"flange","moving":-1,"origin":[3.7493993930529855e-33,1.0,-6.123234262925839e-17,0.0,-6.123234262925839e-17,6.123234262925839e-17,1.0,0.0,1.0,0.0,6.123234262925839e-17,0.0,0.0,0.0,0.0,1.0]},{"child":"tool0","moving":-1,"origin":[6.123234262925839e-17,-6.123234262925839e-17,1.0,0.0,1.0,3.7493993930529855e-33,-6.123234262925839e-17,0.0,-0.0,1.0,6.123234262925839e-17,0.0,0.0,0.0,0.0,1.0]},{"child":"robotiq_arg2f_base_link","moving":-1,"origin":[0.0007963267271406949,-0.9999997019767761,0.0,0.0,0.9999997019767761,0.0007963267271406949,0.0,0.0,-0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0]},{"child":"grasp_frame","moving":-1,"origin":[1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-0.0,0.0,1.0,0.20000000298023224,0.0,0.0,0.0,1.0]}],"arm_links":["base_link","shoulder_link","upper_arm_link","forearm_link","wrist_1_link","wrist_2_link","wrist_3_link","grasp_frame"],"checkpoints":{"f100":{"title":"Test 3 \u00b7 100 % in-cabinet","run":"registered_20261031T220420Z-9105ec65","weights":592898,"embed_check_max_abs":1.1324882507324219e-06,"float16_T_rel_error_p99":0.002327768597751856},"f0":{"title":"Test 3 \u00b7 0 % in-cabinet","run":"registered_20261031T211045Z-3afa500d","weights":592898,"embed_check_max_abs":7.450580596923828e-08,"float16_T_rel_error_p99":0.0026804781518876553},"old":{"title":"Old-recipe baseline","run":"registered_20261025T065945Z-3c53b360","weights":592898,"embed_check_max_abs":1.1920928955078125e-07,"float16_T_rel_error_p99":0.0027059486601501703}},"report":{"label_check":{"configs":40000,"max_abs_m":7.748603820800781e-07,"p99_abs_m":4.731118679046631e-07},"grid":{"shape":[33,25,29],"points":23925,"solved":20841,"waves":24,"free_outside_cupboard":0.7538006188618324,"free_inside_cupboard":0.2386610878661088,"target_speed_median_outside":1.0,"orientation":[[0.0,-0.0,1.0],[0.1464,0.9892,0.0],[-0.9892,0.1464,0.0]],"seed_q":[4.2235,-2.1963,-1.7679,-1.671,-0.0889,-3.6034]},"relax":{"free_before":0.5755961806055372,"free_after":0.6061129504342402,"clear5mm_before":0.5482942277241974,"clear5mm_after":0.579386785662876,"neighbour_jump_max_rad":0.21557391710186646,"approach_x_min":0.2859954856752886,"approach_x_median":0.9271031175599757},"ik_error":{"position_max_m":2.0523053313115e-11},"edges":{"directions":49,"finite":898135,"dropped_jumps":0},"tightness":{"in front of the cupboard":{"outside, collision-free":{"paths":96,"graph_time_median":0.06987930973991752,"optimizer_gain_median":0.014693279571153628,"optimizer_gain_p90":0.04279981097609353,"optimizer_gain_max":0.11250190473087507},"cupboard, collision-free":{"paths":96,"graph_time_median":0.10352659621275961,"optimizer_gain_median":0.05030227452174857,"optimizer_gain_p90":0.11673421625606362,"optimizer_gain_max":0.1857528630343146},"in contact":{"paths":96,"graph_time_median":0.9633469777181745,"optimizer_gain_median":0.13055748216425328,"optimizer_gain_p90":0.2193263937306742,"optimizer_gain_max":0.7480927567021002}},"middle compartment":{"outside, collision-free":{"paths":96,"graph_time_median":0.128352485364303,"optimizer_gain_median":0.07985974755480518,"optimizer_gain_p90":0.13628312688368832,"optimizer_gain_max":0.15128164127846366},"cupboard, collision-free":{"paths":96,"graph_time_median":0.1267319037579,"optimizer_gain_median":0.10851348399193678,"optimizer_gain_p90":0.14763931279834908,"optimizer_gain_max":0.22822129670657942},"in contact":{"paths":96,"graph_time_median":0.948138291016221,"optimizer_gain_median":0.1429694760080189,"optimizer_gain_p90":0.2702897917012357,"optimizer_gain_max":0.5278821287188877}}}},"elapsed_seconds":131.3165480090538,"lines":{"sub":16,"report":{"edges_x":20114,"edges_y":19878,"edges_z":20082,"cost_vs_edges_rel_max":0.00016273369435985643,"cost_vs_edges_rel_p99":1.3295088745475841e-05,"gripper_off_line_max_m":0.0020352940869335194,"gripper_off_line_p99_m":0.0003257799101190177,"gripper_along_line_offset_max_m":0.00029198014817383156,"gripper_along_line_offset_p99_m":0.00011549003318831515}}};
+const CORE_SRC = document.getElementById('core').textContent;
+const N = M.nodes, SHAPE = M.grid.shape, [NX, NY, NZ] = SHAPE, LO = M.grid.lo, H = M.grid.h, K = M.dirs.length, QR = M.q_range, SUB = M.lines.sub;
+const AX = ['x', 'y', 'z'], MODELS = Object.keys(M.checkpoints);
+const KDIR = [0, 1, 2].map(a => M.dirs.findIndex(d => d.every((v, j) => v === (j === a ? 1 : 0))));
+const SHORT = { f100: '100 % in-cabinet', f0: '0 % in-cabinet', old: 'Old baseline' };
+const BOARD = { table: 'table', shelf_back: 'back panel', shelf_side_inner: 'inner side', shelf_side_outer: 'outer side', shelf_top: 'top panel', shelf_board_low: 'lower board', shelf_board_high: 'upper board' };
+const DIRTEXT = ['+x: away from the robot, into the cupboard', '+y: across the cupboard, inner to outer side', '+z: up'];
+const CUP = [[.56, .88], [.13, .53], [-.035, .665]];
+const fmt = (v, d = 3) => (v == null || !isFinite(v)) ? '–' : v.toFixed(d);
+const fmtV = v => (v == null || !isFinite(v)) ? '–' : v >= 100 ? v.toFixed(0) : v >= 10 ? v.toFixed(1) : v >= 1 ? v.toFixed(2) : v >= 0.01 ? v.toFixed(3) : v.toFixed(4);
+const cm = v => (v*100).toFixed(1);
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const $ = id => document.getElementById(id);
+const gridId = (ix, iy, iz) => (ix*NY+iy)*NZ+iz;
+
+/* ---------- state ---------- */
+let C = null, GI, Q, P, D, FREE, INCUP, G2N;
+let pick = -1, gen = 0, LINES = null, OFF = [0, 0, 0, 0], NP = 0, DIST = null, PRED = null;
+let models = [MODELS[0]], tScale = 'full', sScale = 'log', cursor = null;
+const NETBUF = {}, LRES = {}, netLoading = {};
+
+/* ---------- workers ---------- */
+function workerFrom(body) { return new Worker(URL.createObjectURL(new Blob([CORE_SRC, '\n', body], { type: 'text/javascript' }))); }
+const graphWorker = workerFrom(`let G; onmessage = ev => { const m = ev.data;
+  if (m.type === 'init') { G = buildGraph(m.N, m.nbr, m.E, m.K); postMessage({ type: 'ready' }); }
+  else if (m.type === 'run') { const r = dijkstra(G, m.start); postMessage({ type: 'dist', start: m.start, dist: r.dist, pred: r.pred }, [r.dist.buffer, r.pred.buffer]); } };`);
+const NW = Math.max(1, Math.min(4, (navigator.hardwareConcurrency || 4)-1));
+const pool = Array.from({ length: NW }, () => { const w = workerFrom(`const nets = {}; let ck = '', es = null;
+  onmessage = ev => { const m = ev.data;
+    if (m.type === 'net') { nets[m.key] = unpackNet(m.w); return; }
+    const net = nets[m.key], key = m.gen + '|' + m.key; if (key !== ck) { es = forward(net, m.src, false).e; ck = key; }
+    const n = m.idx.length, T = new Float32Array(n), S = new Float32Array(n);
+    for (let i = 0; i < n; i++) { const r = fieldAt(net, es, m.xs.subarray(6*i, 6*i+6)); T[i] = r[0]; S[i] = r[1]; }
+    postMessage({ gen: m.gen, key: m.key, idx: m.idx, T, S }, [T.buffer, S.buffer]); };`);
+  w.has = new Set(); w.busy = false; w.onmessage = ev => jobDone(w, ev.data); return w; });
+let jobQueue = [];
+function pump() {
+  for (const w of pool) { if (w.busy) continue;
+    const i = jobQueue.findIndex(j => NETBUF[j.key]); if (i < 0) return;
+    const j = jobQueue.splice(i, 1)[0];
+    if (!w.has.has(j.key)) { w.postMessage({ type: 'net', key: j.key, w: NETBUF[j.key] }); w.has.add(j.key); }
+    w.busy = true; w.postMessage(j); }
+}
+function jobDone(w, m) {
+  w.busy = false; const R = LRES[m.key];
+  if (R && R.gen === m.gen && m.gen === gen) { for (let i = 0; i < m.idx.length; i++) { R.T[m.idx[i]] = m.T[i]; R.S[m.idx[i]] = m.S[i]; } R.done += m.idx.length; scheduleDraw(); updateStatus(); }
+  pump();
+}
+const levelOf = k => k === 0 ? 0 : k % 8 === 0 ? 1 : k % 4 === 0 ? 2 : k % 2 === 0 ? 3 : 4;
+function locate(g) { const a = g < OFF[1] ? 0 : g < OFF[2] ? 1 : 2; return [LINES[a], g-OFF[a]]; }
+function xOf(i) { const x = new Float64Array(6); for (let j = 0; j < 6; j++) x[j] = Q[6*i+j]/QR[j]; return x; }
+function planJobs() {   // the network at every line point, coarse to fine (grid poses first), for the shown fields not yet planned
+  const order = []; for (let g = 0; g < NP; g++) order.push(g);
+  const lv = g => { const [L, p] = locate(g); return levelOf(L.k[p]); }; order.sort((u, v) => lv(u)-lv(v) || u-v);
+  const fresh = [], src = xOf(pick);
+  for (const key of models) {
+    if (LRES[key] && LRES[key].gen === gen) continue;
+    LRES[key] = { gen, T: new Float32Array(NP).fill(NaN), S: new Float32Array(NP).fill(NaN), done: 0 };
+    for (let s = 0; s < order.length; s += 24) { const idx = Int32Array.from(order.slice(s, s+24)), xs = new Float64Array(6*idx.length);
+      idx.forEach((g, j) => { const [L, p] = locate(g); xs.set(L.x.subarray(6*p, 6*p+6), 6*j); });
+      fresh.push({ type: 'job', gen, key, src, xs, idx, lvl: lv(idx[idx.length-1]) }); }
+    loadNet(key);
+  }
+  fresh.sort((u, v) => u.lvl-v.lvl);
+  jobQueue = fresh.concat(jobQueue.filter(j => j.gen === gen));
+  pump(); updateStatus();
+}
+function loadNet(key) {
+  if (NETBUF[key] || netLoading[key]) return;
+  netLoading[key] = fetchBin(`net_${key}.bin`).then(b => { NETBUF[key] = new Float32Array(b); pump(); updateStatus(); })
+    .catch(err => { $('model-status').textContent = `Could not load ${SHORT[key]}: ${err.message}`; });
+}
+function updateStatus() {
+  const parts = models.map(key => { const R = LRES[key]; if (!NETBUF[key]) return `${SHORT[key]}: loading weights`; if (!R || R.gen !== gen || R.done >= NP) return ''; return `${SHORT[key]} ${Math.round(100*R.done/NP)} %`; }).filter(Boolean);
+  $('model-status').textContent = parts.length ? 'Evaluating the network · ' + parts.join(' · ') : `Network evaluated at ${NP.toLocaleString('en-US')} line points`;
+}
+
+/* ---------- data ---------- */
+async function fetchBin(name) {   // the arrays are published as base64 text (<name>.b64.txt): artifacts serve no raw binary
+  const r = await fetch(name.replace(/\.bin$/, '.b64.txt')); if (!r.ok) throw new Error(name + ': HTTP ' + r.status);
+  const s = atob((await r.text()).trim()), u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return u.buffer;
+}
+async function loadGrid() {
+  const [nb, eb, lb] = await Promise.all([fetchBin('nodes.bin'), fetchBin('edges.bin'), fetchBin('lines.bin')]);
+  const A = new Float32Array(nb), E = new Float32Array(eb), LD = new Float32Array(lb);
+  GI = new Int32Array(3*N); Q = new Float32Array(6*N); P = new Float64Array(3*N); D = new Float32Array(N);
+  G2N = new Int32Array(NX*NY*NZ).fill(-1); INCUP = new Uint8Array(N); FREE = new Uint8Array(N);
+  for (let i = 0; i < N; i++) {
+    for (let a = 0; a < 3; a++) { GI[3*i+a] = Math.round(A[11*i+a]); P[3*i+a] = LO[a]+GI[3*i+a]*H; }
+    for (let j = 0; j < 6; j++) Q[6*i+j] = A[11*i+3+j];
+    D[i] = A[11*i+9]; G2N[gridId(GI[3*i], GI[3*i+1], GI[3*i+2])] = i;
+    INCUP[i] = [0, 1, 2].every(a => P[3*i+a] >= CUP[a][0] && P[3*i+a] <= CUP[a][1]) ? 1 : 0; FREE[i] = D[i] > M.offset ? 1 : 0;
+  }
+  const NBR = new Int32Array(N*K).fill(-1);
+  for (let i = 0; i < N; i++) for (let k = 0; k < K; k++) { const [dx, dy, dz] = M.dirs[k], a = GI[3*i]+dx, b = GI[3*i+1]+dy, c = GI[3*i+2]+dz;
+    if (a >= 0 && a < NX && b >= 0 && b < NY && c >= 0 && c < NZ) NBR[i*K+k] = G2N[gridId(a, b, c)]; }
+  C = { shape: SHAPE, lo: LO, h: H, sub: SUB, GI, G2N, Q, D, LD, E, K, kdir: KDIR, qr: QR, P: { alpha: M.alpha, margin: M.margin, offset: M.offset } };
+  await new Promise(res => { graphWorker.onmessage = ev => { if (ev.data.type === 'ready') res(); }; graphWorker.postMessage({ type: 'init', N, nbr: NBR, E, K }); });
+  graphWorker.onmessage = onGraph;
+}
+
+/* ---------- the picked point and its lines ---------- */
+let graphBusy = false, graphQueued = -1;
+function runGraph(i) { if (graphBusy) { graphQueued = i; return; } graphBusy = true; graphWorker.postMessage({ type: 'run', start: i }); }
+function onGraph(ev) {
+  const m = ev.data; if (m.type !== 'dist') return; graphBusy = false;
+  if (graphQueued >= 0) { const q = graphQueued; graphQueued = -1; if (q !== m.start) runGraph(q); }
+  if (m.start !== pick) return;
+  DIST = m.dist; PRED = m.pred; for (const L of LINES) lineTruth(C, L, DIST);
+  $('busy').hidden = true; scheduleDraw(); drawCursor3D(); readout();
+}
+function floorBands(L) {   // runs of line points where the true speed is at its floor (clearance <= 5 mm)
+  const out = [], half = H/SUB/2; let s = -1;
+  for (let p = 0; p <= L.n; p++) {
+    const slow = p < L.n && L.d[p] <= M.offset;
+    if (s >= 0 && (!slow || L.run[p] !== L.run[s])) { out.push([L.pos[s]-half, L.pos[p-1]+half]); s = -1; }
+    if (slow && s < 0) s = p;
+  }
+  return out;
+}
+function boardBands(axis) {   // where the gripper point on this line is inside a panel of the cupboard (or the table)
+  const out = [], c = [P[3*pick], P[3*pick+1], P[3*pick+2]], lo = LO[axis], hi = LO[axis]+(SHAPE[axis]-1)*H;
+  for (const b of M.boxes) { const bl = b.center.map((v, k) => v-b.dims[k]/2), bh = b.center.map((v, k) => v+b.dims[k]/2);
+    if ([0, 1, 2].some(o => o !== axis && (c[o] < bl[o] || c[o] > bh[o]))) continue;
+    const p0 = Math.max(bl[axis], lo-H/2), p1 = Math.min(bh[axis], hi+H/2); if (p1 > p0) out.push({ p0, p1, name: BOARD[b.name] || b.name }); }
+  return out;
+}
+function setPick(i) {
+  if (i < 0 || i === pick || !C) return;
+  pick = i; gen++; DIST = null; PRED = null; cursor = null;
+  LINES = [0, 1, 2].map(a => buildLine(C, i, a)); OFF = [0, LINES[0].n, LINES[0].n+LINES[1].n, LINES[0].n+LINES[1].n+LINES[2].n]; NP = OFF[3];
+  for (const L of LINES) { L.floor = floorBands(L); L.boards = boardBands(L.axis); }
+  runGraph(i); planJobs(); drawArm(); drawGuides(); drawCursor3D(); updatePickInfo(); scheduleDraw(); readout();
+}
+function nearestFree(x, y, z) {
+  const c = [(x-LO[0])/H, (y-LO[1])/H, (z-LO[2])/H].map(Math.round); let best = -1, bd = Infinity;
+  for (let r = 0; r <= 3 && best < 0; r++) for (let a = -r; a <= r; a++) for (let b = -r; b <= r; b++) for (let d = -r; d <= r; d++) {
+    const i = c[0]+a, j = c[1]+b, k = c[2]+d; if (i < 0 || j < 0 || k < 0 || i >= NX || j >= NY || k >= NZ) continue; const n = G2N[gridId(i, j, k)];
+    if (n >= 0 && FREE[n]) { const dd = (P[3*n]-x)**2+(P[3*n+1]-y)**2+(P[3*n+2]-z)**2; if (dd < bd) { bd = dd; best = n; } } }
+  return best;
+}
+function updatePickInfo() {
+  const i = pick;
+  $('pick-info').innerHTML = `<dt>Gripper</dt><dd>${cm(P[3*i])}, ${cm(P[3*i+1])}, ${cm(P[3*i+2])} cm</dd><dt>Clearance</dt><dd>${(D[i]*1000).toFixed(1)} mm</dd>
+    <dt>Place</dt><dd>${INCUP[i] ? 'inside the cupboard' : 'outside the cupboard'}</dd>`;
+  $('vtag').textContent = `Picked point · ${cm(P[3*i])}, ${cm(P[3*i+1])}, ${cm(P[3*i+2])} cm`;
+  for (let a = 0; a < 3; a++) { const s = $('s' + AX[a]); s.max = SHAPE[a]-1; s.value = GI[3*i+a]; $('o' + AX[a]).textContent = cm(P[3*i+a]) + ' cm';
+    const o = [0, 1, 2].filter(b => b !== a).map(b => `${AX[b]} ${cm(P[3*i+b])}`).join(', ');
+    $('sub-' + AX[a]).textContent = `${o} cm · ${DIRTEXT[a]}`; }
+}
+
+/* ---------- charts ---------- */
+const SVGNS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs, parent) { const e = document.createElementNS(SVGNS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+let drawPending = false;
+function scheduleDraw() { if (drawPending) return; drawPending = true; requestAnimationFrame(() => { drawPending = false; drawCharts(); }); }
+function niceStep(mx) { const raw = mx/4, p = Math.pow(10, Math.floor(Math.log10(raw))), f = raw/p; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10)*p; }
+function timeMax() {   // one time scale for the three charts: everything, or only the poses with clearance above 5 mm
+  let mx = 0;
+  for (let a = 0; a < 3; a++) { const L = LINES[a];
+    for (let p = 0; p < L.n; p++) { if (tScale === 'free' && L.d[p] <= M.offset) continue;
+      if (L.T && isFinite(L.T[p])) mx = Math.max(mx, L.T[p]);
+      for (const key of models) { const R = LRES[key]; if (R && R.gen === gen) { const v = R.T[OFF[a]+p]; if (isFinite(v)) mx = Math.max(mx, v); } } } }
+  mx = mx > 0 ? mx*1.04 : 0.2; const st = niceStep(mx); return { max: Math.ceil(mx/st-1e-9)*st, step: st };
+}
+const SLOG = [0.005, 4], SLIN = [0, 1.6];
+function series(L, axis, kind) {
+  const out = [];
+  out.push({ cls: 'truth', name: 'true', gap: true, v: kind === 'T' ? (L.T ? p => L.T[p] : null) : p => L.S[p] });
+  for (const key of models) { const R = LRES[key]; if (!R || R.gen !== gen) continue; const arr = kind === 'T' ? R.T : R.S, o = OFF[axis];
+    out.push({ cls: 'm-' + key, key, name: SHORT[key].replace(' in-cabinet', '').replace('Old baseline', 'old'), gap: false, v: p => arr[o+p] }); }
+  return out.filter(s => s.v);
+}
+function drawChart(axis, kind, ts) {
+  const svg = $(`c-${kind}${AX[axis]}`), L = LINES[axis];
+  const W = Math.max(260, Math.round(svg.parentNode.clientWidth)), Hh = kind === 'T' ? 222 : 172;
+  svg.setAttribute('viewBox', `0 0 ${W} ${Hh}`); svg.setAttribute('height', Hh); svg.replaceChildren();
+  const m = { l: 44, r: 10, t: kind === 'T' ? 32 : 10, b: 30 }, top = m.t, bot = Hh-m.b;
+  const x0 = LO[axis]-H/2, x1 = LO[axis]+(SHAPE[axis]-1)*H+H/2, X = p => m.l+(p-x0)/(x1-x0)*(W-m.l-m.r);
+  let Y, ticks, tf, ymin, ymax;
+  if (kind === 'T') { ymin = 0; ymax = ts.max; Y = v => top+(1-v/ymax)*(bot-top); ticks = []; for (let v = 0; v <= ymax+1e-9; v += ts.step) ticks.push(v);
+    const e10 = Math.floor(Math.log10(ts.step)+1e-9), dec = Math.max(0, -e10+(Math.abs(ts.step/Math.pow(10, e10)-2.5) < 1e-6 ? 1 : 0)); tf = v => v.toFixed(dec); }
+  else if (sScale === 'log') { [ymin, ymax] = SLOG; const lo = Math.log10(ymin), hi = Math.log10(ymax); Y = v => top+(1-(Math.log10(v)-lo)/(hi-lo))*(bot-top); ticks = [0.01, 0.03, 0.1, 0.3, 1, 3]; tf = v => String(v); }
+  else { [ymin, ymax] = SLIN; Y = v => top+(1-v/ymax)*(bot-top); ticks = [0, 0.25, 0.5, 0.75, 1, 1.25, 1.5]; tf = v => String(v); }
+  for (const [p0, p1] of L.floor) el('rect', { x: X(p0), y: top, width: Math.max(1, X(p1)-X(p0)), height: bot-top, fill: 'var(--band-floor)' }, svg);
+  const rows = [-1e9, -1e9];   // panel names on two rows above the plot, the second only where the first is taken
+  for (const b of L.boards.slice().sort((u, v) => u.p0-v.p0)) { el('rect', { x: X(b.p0), y: top, width: Math.max(2, X(b.p1)-X(b.p0)), height: bot-top, fill: 'var(--band-board)' }, svg);
+    if (kind !== 'T') continue;
+    const half = 2.9*b.name.length+3, cx = Math.max(m.l+half, Math.min(W-m.r-half, (X(b.p0)+X(b.p1))/2)), row = cx-half >= rows[0] ? 0 : 1; rows[row] = cx+half;
+    el('text', { x: cx, y: top-8-12*row, 'text-anchor': 'middle', class: 'board' }, svg).textContent = b.name; }
+  for (const t of ticks) { el('line', { x1: m.l, x2: W-m.r, y1: Y(t), y2: Y(t), class: 'gridline' }, svg); el('text', { x: m.l-6, y: Y(t)+3.5, 'text-anchor': 'end', class: 'tick' }, svg).textContent = tf(t); }
+  for (let c = Math.ceil((x0+1e-9)*10)/10; c <= x1; c += 0.1) { const xx = X(c);
+    el('line', { x1: xx, x2: xx, y1: bot, y2: bot+4, class: 'axisline' }, svg); el('text', { x: xx, y: bot+15, 'text-anchor': 'middle', class: 'tick' }, svg).textContent = Math.round(c*100); }
+  el('line', { x1: m.l, x2: W-m.r, y1: bot, y2: bot, class: 'axisline' }, svg);
+  el('text', { x: W-m.r, y: Hh-1, 'text-anchor': 'end', class: 'axtitle' }, svg).textContent = `gripper ${AX[axis]} (cm)`;
+  const pp = X(P[3*pick+axis]); el('line', { x1: pp, x2: pp, y1: top, y2: bot, class: 'pickline' }, svg);
+  for (const s of series(L, axis, kind)) {   // break the line at gaps in the grid and where it leaves the scale
+    let d = '', pen = false, run = -1;
+    for (let p = 0; p < L.n; p++) { const v = s.v(p);
+      if (!isFinite(v)) { if (s.gap) pen = false; continue; }
+      if (v > ymax || v < ymin || L.run[p] !== run) pen = false;
+      run = L.run[p]; if (v > ymax || v < ymin) continue;
+      d += `${pen ? 'L' : 'M'}${X(L.pos[p]).toFixed(1)},${Y(v).toFixed(1)}`; pen = true; }
+    el('path', { d, class: 'series ' + s.cls }, svg);
+  }
+  const cur = el('g', {}, svg);
+  svg._g = { X, Y, m, W, Hh, top, bot, ymin, ymax, x0, x1, cur, kind, axis };
+}
+function drawCharts() {
+  if (!LINES) return; const ts = timeMax();
+  for (let a = 0; a < 3; a++) { drawChart(a, 'T', ts); drawChart(a, 'S', ts); }
+  drawCursorCharts(); legend();
+}
+function drawCursorCharts() {
+  for (let a = 0; a < 3; a++) for (const kind of ['T', 'S']) {
+    const svg = $(`c-${kind}${AX[a]}`), g = svg._g; if (!g) continue; g.cur.replaceChildren();
+    if (!cursor || cursor.axis !== a) continue;
+    const L = LINES[a], p = cursor.p, x = g.X(L.pos[p]);
+    el('line', { x1: x, x2: x, y1: g.top, y2: g.bot, class: 'cursorline' }, g.cur);
+    const right = x < (g.m.l+g.W-g.m.r)/2, marks = [];
+    for (const s of series(L, a, kind)) { const v = s.v(p); if (!isFinite(v)) continue;
+      marks.push({ s, v, y: g.Y(Math.min(Math.max(v, g.ymin), g.ymax)), out: v > g.ymax || v < g.ymin }); }
+    const labels = marks.map(mk => ({ mk, ly: mk.y+4 })).sort((u, v) => u.ly-v.ly);
+    for (let i = 1; i < labels.length; i++) labels[i].ly = Math.max(labels[i].ly, labels[i-1].ly+13);
+    const over = labels.length ? labels[labels.length-1].ly-(g.bot-2) : 0; if (over > 0) for (const l of labels) l.ly -= over;
+    for (const l of labels) l.ly = Math.max(g.top+9, l.ly);
+    for (const { mk, ly } of labels) {
+      if (!mk.out) el('circle', { cx: x, cy: mk.y, r: 4.5, class: 'cdot ' + mk.s.cls }, g.cur);
+      el('text', { x: x+(right ? 9 : -9), y: ly, 'text-anchor': right ? 'start' : 'end', class: 'val' }, g.cur).textContent = `${mk.s.name} ${fmtV(mk.v)}${mk.out ? (mk.v > g.ymax ? ' ↑' : ' ↓') : ''}`;
+    }
+  }
+}
+function nearestPoint(L, pos) {
+  if (!L.n) return -1; let lo = 0, hi = L.n-1;
+  while (hi-lo > 1) { const mid = (lo+hi) >> 1; if (L.pos[mid] < pos) lo = mid; else hi = mid; }
+  const p = Math.abs(L.pos[lo]-pos) <= Math.abs(L.pos[hi]-pos) ? lo : hi; return Math.abs(L.pos[p]-pos) <= H*0.75 ? p : -1;
+}
+function setCursor(c) {
+  if ((c && cursor && c.axis === cursor.axis && c.p === cursor.p) || (!c && !cursor)) return;
+  cursor = c; drawCursorCharts(); readout(); drawCursor3D();
+}
+for (let a = 0; a < 3; a++) for (const kind of ['T', 'S']) {
+  const svg = $(`c-${kind}${AX[a]}`);
+  const at = ev => { const g = svg._g; if (!g || !LINES) return -1; const r = svg.getBoundingClientRect(), px = (ev.clientX-r.left)/r.width*g.W;
+    return nearestPoint(LINES[a], g.x0+(px-g.m.l)/(g.W-g.m.l-g.m.r)*(g.x1-g.x0)); };
+  svg.addEventListener('pointermove', ev => { const p = at(ev); setCursor(p >= 0 ? { axis: a, p } : null); });
+  svg.addEventListener('pointerleave', () => setCursor(null));
+  svg.addEventListener('click', ev => { const p = at(ev); if (p < 0) return; const L = LINES[a], c = [P[3*pick], P[3*pick+1], P[3*pick+2]]; c[a] = L.pos[p]; setPick(nearestFree(...c)); });
+}
+function legend() {
+  const items = [`<span><i class="sw truth"></i>Ground truth</span>`].concat(models.map(k => `<span><i class="sw m-${k}"></i>${SHORT[k]}</span>`))
+    .concat([`<span><i class="sw box band-floor"></i>arm within 5 mm of contact: slowest true speed, 0.012</span>`, `<span><i class="sw box band-board"></i>gripper point inside a panel</span>`, `<span><i class="sw pickmark"></i>picked point</span>`]);
+  $('legend').innerHTML = items.join('');
+}
+function readout() {
+  const box = $('readout');
+  if (!cursor || !LINES) { box.innerHTML = `<div class="cell wide"><span class="l">Under the cursor</span><span class="prompt">Hover a chart to read the values at that point and see the arm pose and the true fastest route in 3D. Click to move the picked point there.</span></div>`; return; }
+  const L = LINES[cursor.axis], p = cursor.p, pos = [P[3*pick], P[3*pick+1], P[3*pick+2]]; pos[cursor.axis] = L.pos[p];
+  const tt = L.T ? L.T[p] : NaN, d = L.d[p];
+  const ratio = r => !isFinite(r) ? '' : r >= 100 ? r.toFixed(0)+'×' : r >= 10 ? r.toFixed(1)+'×' : r.toFixed(2)+'×';
+  const learned = kind => {   // one model: its value and the ratio to the truth; several: one compact row each
+    const ref = kind === 'T' ? tt : L.S[p], vals = models.map(k => { const R = LRES[k]; return [k, R && R.gen === gen ? (kind === 'T' ? R.T : R.S)[OFF[cursor.axis]+p] : NaN]; });
+    const rel = v => isFinite(v) && isFinite(ref) && ref > 0 ? ratio(v/ref) : '';
+    if (vals.length === 1) { const v = vals[0][1]; return `<span class="v">${isFinite(v) ? fmtV(v) : '…'}</span><span class="n">${rel(v) ? rel(v) + ' the true value' : '&nbsp;'}</span>`; }
+    return `<span class="mrows">${vals.map(([k, v]) => `<i class="dot" style="background:var(--m-${k})"></i><span>${SHORT[k].replace(' in-cabinet', '').replace('Old baseline', 'old')}</span><b>${isFinite(v) ? fmtV(v) : '…'}</b><span>${rel(v)}</span>`).join('')}</span>`; };
+  box.innerHTML = `
+    <div class="cell"><span class="l">Gripper, along ${AX[cursor.axis]}</span><span class="v">${cm(pos[0])}, ${cm(pos[1])}, ${cm(pos[2])}</span><span class="n">cm · ${L.k[p] ? 'between two grid poses' : 'grid pose'}</span></div>
+    <div class="cell"><span class="l">Clearance</span><span class="v">${(d*1000).toFixed(1)} mm</span><span class="n">${d <= 0 ? 'in contact' : d <= M.offset ? 'within 5 mm: slowest speed' : d >= M.margin ? 'beyond 5 cm: full speed' : 'speed rising with clearance'}</span></div>
+    <div class="cell"><span class="l">True travel time</span><span class="v">${fmtV(tt)}</span><span class="n">from the picked point</span></div>
+    <div class="cell"><span class="l">Learned travel time${models.length === 1 ? ' · ' + SHORT[models[0]] : ''}</span>${learned('T')}</div>
+    <div class="cell"><span class="l">True speed</span><span class="v">${fmtV(L.S[p])}</span><span class="n">the network's training target</span></div>
+    <div class="cell"><span class="l">Learned speed 1 / |dT/dx|${models.length === 1 ? ' · ' + SHORT[models[0]] : ''}</span>${learned('S')}</div>`;
+}
+
+/* ---------- 3D ---------- */
+const viewport = $('viewport'), renderer = new THREE.WebGLRenderer({ antialias: true }); renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); viewport.prepend(renderer.domElement);
+const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(40, 1, .01, 50); camera.up.set(0, 0, 1);
+const controls = new THREE.OrbitControls(camera, renderer.domElement); controls.enableDamping = true;
+const VIEWS = { reset: { pos: [-0.75, -1.35, 1.05], target: [0.45, 0.3, 0.25] }, cab: { pos: [-0.2, 0.33, 0.42], target: [0.75, 0.33, 0.30] }, top: { pos: [0.4, 0.3, 2.6], target: [0.4, 0.3, 0.0] } };
+function view(v) { camera.position.set(...VIEWS[v].pos); controls.target.set(...VIEWS[v].target); controls.update(); }
+view('reset');
+const cab = new THREE.Group(); scene.add(cab); const boxMats = [];
+for (const b of M.boxes) { const g = new THREE.BoxGeometry(...b.dims), isTable = b.name === 'table';
+  const fill = new THREE.MeshBasicMaterial({ transparent: true, opacity: isTable ? .2 : .26, depthWrite: false }), edge = new THREE.LineBasicMaterial({ transparent: true, opacity: isTable ? .5 : .9 });
+  const m = new THREE.Mesh(g, fill), e = new THREE.LineSegments(new THREE.EdgesGeometry(g), edge); m.position.set(...b.center); e.position.set(...b.center); cab.add(m, e); boxMats.push({ fill, edge, isTable }); }
+const SB = M.sampling, regionMat = new THREE.LineBasicMaterial({ transparent: true, opacity: .35 });
+const region = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(SB.x[1]-SB.x[0], SB.y[1]-SB.y[0], SB.z[1]-SB.z[0])), regionMat);
+region.position.set((SB.x[0]+SB.x[1])/2, (SB.y[0]+SB.y[1])/2, (SB.z[0]+SB.z[1])/2); scene.add(region);
+const baseMat = new THREE.MeshBasicMaterial(), base = new THREE.Mesh(new THREE.CylinderGeometry(.06, .07, .02, 32), baseMat); base.rotation.x = Math.PI/2; scene.add(base);
+const armGroup = new THREE.Group(), ghostGroup = new THREE.Group(); scene.add(armGroup, ghostGroup);
+const armMat = new THREE.MeshBasicMaterial(), ghostMat = new THREE.MeshBasicMaterial({ transparent: true, opacity: .45, depthWrite: false });
+const handleMat = new THREE.MeshBasicMaterial(), handle = new THREE.Mesh(new THREE.SphereGeometry(.03, 24, 16), handleMat); scene.add(handle);
+const pathMat = new THREE.LineBasicMaterial(), pathLine = new THREE.Line(new THREE.BufferGeometry(), pathMat); pathLine.visible = false; scene.add(pathLine);
+const dotMat = new THREE.MeshBasicMaterial(), cursorDot = new THREE.Mesh(new THREE.SphereGeometry(.012, 16, 12), dotMat); cursorDot.visible = false; scene.add(cursorDot);
+const guideMats = [0, 1, 2].map(() => new THREE.LineBasicMaterial({ transparent: true }));
+const guides = guideMats.map(mat => { const l = new THREE.Line(new THREE.BufferGeometry(), mat); scene.add(l); return l; });
+const guideTags = [0, 1, 2].map(() => { const s = new THREE.Sprite(new THREE.SpriteMaterial({ depthTest: false, transparent: true })); s.scale.set(.05, .05, 1); s.renderOrder = 5; scene.add(s); return s; });
+const JOINT_GEO = new THREE.SphereGeometry(.018, 16, 12), LINK_GEO = new THREE.CylinderGeometry(.01, .01, 1, 12), STUB_GEO = new THREE.CylinderGeometry(.006, .006, 1, 8);
+function armMeshes(q, mat, group) {   // shared unit geometries, scaled per link, so redrawing never allocates GPU buffers
+  group.clear(); const T = forwardKinematics(M.chain, q), up = new THREE.Vector3(0, 1, 0);
+  const pts = M.arm_links.map(l => new THREE.Vector3(T[l][3], T[l][7], T[l][11]));
+  const rod = (a, b, geo) => { const d = b.clone().sub(a), len = d.length(); if (len < 1e-4) return; const c = new THREE.Mesh(geo, mat);
+    c.position.copy(a.clone().add(b).multiplyScalar(.5)); c.quaternion.setFromUnitVectors(up, d.normalize()); c.scale.set(1, len, 1); group.add(c); };
+  pts.forEach((a, k) => { const j = new THREE.Mesh(JOINT_GEO, mat); j.position.copy(a); group.add(j); if (k+1 < pts.length) rod(a, pts[k+1], LINK_GEO); });
+  const g = T[M.arm_links[M.arm_links.length-1]], tip = pts[pts.length-1];
+  rod(tip, tip.clone().add(new THREE.Vector3(g[2], g[6], g[10]).multiplyScalar(-0.07)), STUB_GEO);   // a short stub back along the approach axis
+  return tip;
+}
+function drawArm() { if (pick < 0) return; const tip = armMeshes(Q.subarray(6*pick, 6*pick+6), armMat, armGroup); handle.position.copy(tip); }
+function drawGuides() {   // the three lines through the picked point, across the test area
+  if (pick < 0) return;
+  for (let a = 0; a < 3; a++) { const p0 = [P[3*pick], P[3*pick+1], P[3*pick+2]], p1 = p0.slice(); p0[a] = LO[a]; p1[a] = LO[a]+(SHAPE[a]-1)*H;
+    guides[a].geometry.dispose(); guides[a].geometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(...p0), new THREE.Vector3(...p1)]);
+    p1[a] += 0.03; guideTags[a].position.set(...p1); }
+}
+function pathTo(n) { const out = [n]; let k = 0; while (out[out.length-1] !== pick && k++ < 5000) { const p = PRED[out[out.length-1]]; if (p < 0) break; out.push(p); } return out; }
+function drawCursor3D() {
+  ghostGroup.clear(); cursorDot.visible = false; pathLine.visible = false;
+  for (let a = 0; a < 3; a++) { const on = cursor && cursor.axis === a; guideMats[a].color = new THREE.Color(css(on ? '--ink' : '--ink-3')); guideMats[a].opacity = on ? 1 : .6; }
+  if (!cursor || !LINES) return;
+  const L = LINES[cursor.axis], p = cursor.p, pos = [P[3*pick], P[3*pick+1], P[3*pick+2]]; pos[cursor.axis] = L.pos[p];
+  cursorDot.position.set(...pos); cursorDot.visible = true;
+  const q = new Float64Array(6); for (let j = 0; j < 6; j++) q[j] = L.x[6*p+j]*QR[j]; armMeshes(q, ghostMat, ghostGroup);
+  if (PRED && L.T && isFinite(L.T[p])) { const pts = [new THREE.Vector3(...pos)].concat(pathTo(L.via[p]).map(n => new THREE.Vector3(P[3*n], P[3*n+1], P[3*n+2])));
+    pathLine.geometry.dispose(); pathLine.geometry = new THREE.BufferGeometry().setFromPoints(pts); pathLine.visible = true; }
+}
+function tagTexture(text, color) {
+  const c = document.createElement('canvas'); c.width = 64; c.height = 64; const ctx = c.getContext('2d');
+  ctx.font = '600 42px "IBM Plex Sans", system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = color; ctx.fillText(text, 32, 34);
+  return new THREE.CanvasTexture(c);
+}
+function theme() {
+  scene.background = new THREE.Color(css('--scene'));
+  for (const b of boxMats) { b.fill.color = new THREE.Color(css(b.isTable ? '--table' : '--wood')); b.edge.color = new THREE.Color(css(b.isTable ? '--table' : '--wood-edge')); }
+  regionMat.color = new THREE.Color(css('--region')); baseMat.color = new THREE.Color(css('--ink-3')); armMat.color = new THREE.Color(css('--arm')); ghostMat.color = new THREE.Color(css('--ghost'));
+  handleMat.color = new THREE.Color(css('--handle')); pathMat.color = new THREE.Color(css('--truth')); dotMat.color = new THREE.Color(css('--ink'));
+  guideTags.forEach((s, a) => { if (s.material.map) s.material.map.dispose(); s.material.map = tagTexture(AX[a], css('--ink-2')); s.material.needsUpdate = true; });
+  drawCursor3D(); scheduleDraw();
+}
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', theme);
+new MutationObserver(theme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+/* drag the handle: move along the plane through the handle facing the camera, snap to the nearest collision-free pose */
+const ray = new THREE.Raycaster(), mouse = new THREE.Vector2(); let dragging = false; const dragPlane = new THREE.Plane(), hit = new THREE.Vector3();
+function setMouse(ev) { const r = renderer.domElement.getBoundingClientRect(); mouse.set((ev.clientX-r.left)/r.width*2-1, -(ev.clientY-r.top)/r.height*2+1); ray.setFromCamera(mouse, camera); }
+renderer.domElement.addEventListener('pointerdown', ev => { if (pick < 0) return; setMouse(ev); if (!ray.intersectObject(handle).length) return;
+  dragging = true; controls.enabled = false; renderer.domElement.setPointerCapture(ev.pointerId); dragPlane.setFromNormalAndCoplanarPoint(camera.getWorldDirection(new THREE.Vector3()), handle.position); }, { capture: true });
+renderer.domElement.addEventListener('pointermove', ev => { setMouse(ev);
+  if (!dragging) { renderer.domElement.style.cursor = pick >= 0 && ray.intersectObject(handle).length ? 'grab' : ''; return; }
+  if (ray.ray.intersectPlane(dragPlane, hit)) setPick(nearestFree(hit.x, hit.y, hit.z)); });
+const endDrag = ev => { if (!dragging) return; dragging = false; controls.enabled = true; try { renderer.domElement.releasePointerCapture(ev.pointerId); } catch (e) {} };
+renderer.domElement.addEventListener('pointerup', endDrag); renderer.domElement.addEventListener('pointercancel', endDrag);
+$('v-reset').addEventListener('click', () => view('reset')); $('v-cab').addEventListener('click', () => view('cab')); $('v-top').addEventListener('click', () => view('top'));
+
+/* ---------- controls ---------- */
+function group(ids, fn) { for (const id of ids) $(id).addEventListener('click', () => { ids.forEach(x => $(x).setAttribute('aria-pressed', String(x === id))); fn(id); }); }
+group(['t-full', 't-free'], id => { tScale = id.slice(2); scheduleDraw(); });
+group(['s-log', 's-linear'], id => { sScale = id.slice(2); scheduleDraw(); });
+$('models').innerHTML = MODELS.map((k, i) => `<button id="m-${k}" aria-pressed="${i === 0}">${SHORT[k]}</button>`).join('') + `<button id="m-all" aria-pressed="false">All three</button>`;
+group(MODELS.map(k => 'm-' + k).concat(['m-all']), id => { const k = id.slice(2); models = k === 'all' ? MODELS.slice() : [k]; if (pick >= 0) planJobs(); scheduleDraw(); readout(); });
+$('presets').innerHTML = Object.keys(M.presets).map(k => `<button data-p="${k}">${k[0].toUpperCase()+k.slice(1)}</button>`).join('');
+$('presets').addEventListener('click', ev => { const b = ev.target.closest('button'); if (b) setPick(M.presets[b.dataset.p]); });
+for (let a = 0; a < 3; a++) $('s' + AX[a]).addEventListener('input', () => {
+  if (pick < 0) return; const c = [P[3*pick], P[3*pick+1], P[3*pick+2]]; c[a] = LO[a]+(+$('s' + AX[a]).value)*H;
+  const n = nearestFree(...c); if (n >= 0) setPick(n); else updatePickInfo(); });
+
+/* ---------- notes ---------- */
+(function notes() {
+  const t = M.report.tightness, pct = v => (v*100).toFixed(v < 0.1 ? 1 : 0) + ' %', r = M.lines.report;
+  const a = t['in front of the cupboard'], b = t['middle compartment'];
+  $('notes').innerHTML = `
+    <p><b>The lines.</b> Every point of the test area's 2.5 cm grid (${SHAPE.join(' × ')}) has one arm pose from inverse kinematics (${M.nodes.toLocaleString('en-US')} of ${(NX*NY*NZ).toLocaleString('en-US')} points are reachable), all on one IK branch with the gripper pointing into the cupboard and each turned slightly to keep clear of obstacles and of the arm itself. Between two neighbouring grid poses on a line, the charts add 15 poses on the straight joint-space segment between them, so every chart has a point every 1.6 mm. On these segments the gripper stays within ${(r.gripper_off_line_max_m*1000).toFixed(1)} mm of the straight line (99 % within ${(r.gripper_off_line_p99_m*1000).toFixed(2)} mm). A gap in a line is a grid point without a pose.</p>
+    <p><b>True speed.</b> The clearance label of the arm at that pose (distance to the cupboard and table, half the distance between its own links) turned into the speed the network is trained to match: 0.012 within 5 mm of contact, rising to 1 at 5 cm. The shaded bands mark the slowest stretches. The gripper is large next to the 21 cm compartments, so inside them the arm is within 5 mm of a panel almost everywhere; the brown bands mark only where the gripper point itself is inside a panel.</p>
+    <p><b>True travel time.</b> At each grid pose, the fastest path from the picked pose through the grid's poses (Dijkstra over the 98 neighbours of each pose's 5 × 5 × 5 block, each edge costing the integral of 1 / speed along its joint-space segment, run in your browser). This can only overestimate the time of an unconstrained motion. Between two grid poses the chart takes the smaller of the straight interpolation of their two times and the time of reaching either one and then moving along the segment. The second is a real path, but in a contact zone it would draw a false peak between every two grid poses, because crawling along the segment is the only way in it knows. A free 6-D path optimizer, started from 96 of these paths per group, shortens them by a median of ${pct(a['outside, collision-free'].optimizer_gain_median)} (goals outside the cupboard), ${pct(a['cupboard, collision-free'].optimizer_gain_median)} (collision-free goals in the cupboard) and ${pct(a['in contact'].optimizer_gain_median)} (goals in contact) from a start in front of the cupboard, and by ${pct(b['outside, collision-free'].optimizer_gain_median)}, ${pct(b['cupboard, collision-free'].optimizer_gain_median)} and ${pct(b['in contact'].optimizer_gain_median)} from a start in the middle compartment.</p>
+    <p><b>Learned.</b> T(picked pose, line pose) evaluated by your browser with the trained network's own weights, and the speed 1 / |dT/dx| at the line pose with the picked pose as the source, as in training (checked against PyTorch to 1e-5). Near the picked point the learned T is flat, so the learned speed shoots up there.</p>
+    <p><b>Units.</b> Times are joint-space distances in the network's coordinates (each joint's full range = 1) divided by speed; at speed 1, moving one joint by 1/100 of its range takes 0.01.</p>`;
+})();
+
+/* ---------- loop ---------- */
+function resize() { const r = viewport.getBoundingClientRect(); renderer.setSize(r.width, r.height, false); camera.aspect = r.width/Math.max(r.height, 1); camera.updateProjectionMatrix(); }
+new ResizeObserver(resize).observe(viewport);
+let resizeTimer = 0; new ResizeObserver(() => { clearTimeout(resizeTimer); resizeTimer = setTimeout(scheduleDraw, 100); }).observe(document.querySelector('.charts'));
+function loop() { controls.update(); renderer.render(scene, camera); requestAnimationFrame(loop); }
+resize(); loop(); readout(); legend();
+(async () => {
+  try { await loadGrid(); } catch (err) { $('busy').textContent = 'Could not load the grid: ' + err.message; return; }
+  $('busy').textContent = 'Computing the true times…'; theme(); setPick(M.presets['middle compartment']);
+})();
+</script>

@@ -1,0 +1,319 @@
+<title>Parking Thin-Wall Test</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;800&family=Overpass+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one reading column (~66ch) with charts and figures at full column width; figures sit on a light plate in both themes. */
+:root {
+  --bg: #f3f4f1;
+  --surface: #fcfcfb;
+  --ink: #15181b;
+  --ink-2: #4a5159;
+  --muted: #767d86;
+  --rule: #dadde0;
+  --axis: #c2c5c8;
+  --stripe: #e6a800;
+  --plate: #ffffff;
+  --s1: #2a78d6;
+  --s2: #eb6834;
+  --s3: #1baf7a;
+  --s4: #eda100;
+  --font-display: 'Overpass', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Overpass', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-data: 'Overpass Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121315; --surface: #1a1a19; --ink: #eceef0; --ink-2: #b8bec5; --muted: #8b929a; --rule: #2a2d31; --axis: #3b3f44;
+    --stripe: #d29b00; --plate: #f4f4f1; --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121315; --surface: #1a1a19; --ink: #eceef0; --ink-2: #b8bec5; --muted: #8b929a; --rule: #2a2d31; --axis: #3b3f44;
+  --stripe: #d29b00; --plate: #f4f4f1; --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; color-scheme: dark;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.6; }
+.page { max-width: 760px; margin: 0 auto; padding-block: 40px 72px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 28px; }
+header { display: grid; gap: 12px; padding-bottom: 20px; border-bottom: 1px solid var(--rule); position: relative; }
+header::after { content: ""; position: absolute; left: 0; bottom: -1px; width: 96px; height: 3px; background: repeating-linear-gradient(90deg, var(--stripe) 0 20px, transparent 20px 28px); }
+.eyebrow { font-family: var(--font-data); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--font-display); font-weight: 800; font-size: clamp(30px, 6vw, 44px); line-height: 1.08; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+h2 { font-family: var(--font-display); font-weight: 800; font-size: 22px; line-height: 1.25; margin: 0; text-wrap: balance; }
+h3 { font-size: 16px; font-weight: 600; margin: 0; }
+p { margin: 0; max-width: 66ch; }
+.lede { font-size: 18px; color: var(--ink); }
+section { display: grid; gap: 14px; min-width: 0; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.tile { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 14px 16px; display: grid; gap: 4px; align-content: start; }
+.tile .v { font-weight: 800; font-size: 26px; line-height: 1.15; }
+.tile .l { font-size: 13px; color: var(--ink-2); line-height: 1.4; }
+.chart { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 14px 14px 8px; position: relative; display: grid; gap: 8px; min-width: 0; }
+.chart h3 { font-size: 15px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 18px; height: 0; border-top: 2px solid; display: inline-block; }
+svg.plot { width: 100%; height: auto; display: block; overflow: visible; }
+svg.plot text { font-family: var(--font-body); font-size: 11px; fill: var(--muted); }
+svg.plot .grid { stroke: var(--rule); stroke-width: 1; }
+svg.plot .base { stroke: var(--axis); stroke-width: 1; }
+svg.plot .xlab, svg.plot .ylab { fill: var(--ink-2); font-size: 12px; }
+svg.plot .cross { stroke: var(--muted); stroke-width: 1; }
+svg.plot .hit:focus { outline: none; }
+svg.plot .hit:focus-visible + .focusring { stroke: var(--ink); }
+.focusring { fill: none; stroke: transparent; stroke-width: 2; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 8px 10px; font-size: 12px; line-height: 1.45; color: var(--ink-2); box-shadow: 0 4px 14px rgba(0,0,0,0.12); min-width: 160px; z-index: 2; }
+.tip b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.tip .row { display: flex; align-items: center; gap: 8px; }
+.tip .row i { width: 14px; border-top: 2px solid; display: inline-block; }
+.tip .hd { color: var(--ink); font-weight: 600; margin-bottom: 2px; }
+details { font-size: 14px; }
+summary { cursor: pointer; color: var(--ink-2); font-size: 13px; }
+summary:focus-visible { outline: 2px solid var(--s1); outline-offset: 2px; }
+.tablewrap { overflow-x: auto; margin-top: 8px; }
+table { border-collapse: collapse; font-size: 13px; min-width: 100%; }
+th, td { padding: 5px 10px; border-bottom: 1px solid var(--rule); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+th { color: var(--ink-2); font-weight: 600; }
+figure { margin: 0; display: grid; gap: 8px; min-width: 0; }
+figure .plate { background: var(--plate); border-radius: 6px; padding: 8px; overflow-x: auto; }
+figure img { display: block; width: 100%; max-width: 100%; height: auto; min-width: 560px; }
+figcaption { font-size: 13px; color: var(--ink-2); max-width: 66ch; }
+ul { margin: 0; padding-left: 20px; max-width: 66ch; display: grid; gap: 6px; }
+code, .mono { font-family: var(--font-data); font-size: 0.88em; }
+.note { font-size: 14px; color: var(--ink-2); }
+.runs { font-family: var(--font-data); font-size: 12px; color: var(--ink-2); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="page">
+  <header>
+    <div class="eyebrow">ntrl-demo · rectangle car in (x, y, θ) · 2026-10-30 and 31</div>
+    <h1>Parking Thin-Wall Test</h1>
+    <p class="lede">{{lede}}</p>
+  </header>
+
+  <div class="tiles" aria-label="Headline numbers">{{tiles}}</div>
+
+  <section>
+    <h2>The scene</h2>
+    <p>A 0.30 × 0.13 rectangle car parks nose-in in bay A and has to reach bay B: back out (−x), move down (−y), drive in (+x). The lot is the unit square, about 3.3 car lengths a side, closed by outer walls. The divider between the two bays is the wall that gets thinner. Every query is a parked pose in one bay to a parked pose in the other (50 A→B, 50 B→A), certified by a collision-free witness path.</p>
+    <figure>
+      <div class="plate"><img src="{{fig:scene}}" alt="The parking lot drawn for dividers 0.30, 0.05 and 0.005, with the car parked in both bays and the route marked; a red band shows where the car centre overlaps the divider."></div>
+      <figcaption>The red band is the set of car-centre positions (θ = 0) where the car overlaps the divider: the wall as the planner sees it in configuration space. It is the divider plus the car width.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>Thinning the divider</h2>
+    <p>{{walls_text}}</p>
+    <div class="chart" id="c-walls"></div>
+  </section>
+
+  <section>
+    <h2>Why the divider alone cannot break it</h2>
+    <p>{{why_text}}</p>
+  </section>
+
+  <section>
+    <h2>Halving the wall the field has to resolve</h2>
+    <p>{{gap_text}}</p>
+    <div class="chart" id="c-gap"></div>
+    <figure>
+      <div class="plate"><img src="{{fig:narrow}}" alt="Planned car-centre paths at car widths 0.13, 0.03, 0.02 and 0.01: at 0.13 every path loops around the divider, at narrower widths more and more paths stop at or drive through it."></div>
+      <figcaption>Car-centre paths for the 50 bay A → bay B queries at four car widths (training seed 87358, planning seed 0). Green reached bay B, red failed, × marks where a car got stuck; the green car is the start, the blue outline the goal, the red band the no-go zone for the car's centre (divider + car width).</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>What fails is the field, not the planner</h2>
+    <p>{{mech_text}}</p>
+    <div class="chart" id="c-sharp"></div>
+    <figure>
+      <div class="plate"><img src="{{fig:profiles}}" alt="Travel time from the bay-A pose along a vertical line through both bays, truth against trained fields, for C-space walls 0.135, 0.035 (two training seeds) and 0.015."></div>
+      <figcaption>Travel time from the start pose to the car placed on the red dashed line. The truth rises into the wall (crawling through it at ntrl-demo's slowest speed) and settles in bay B at the cost of driving around. Every field draws the wall; the ones that fail put bay B barely above the near side of the wall.</figcaption>
+    </figure>
+    <figure>
+      <div class="plate"><img src="{{fig:slices}}" alt="Travel-time maps at theta zero for car widths 0.01, 0.05 and 0.13, ntrl-demo above and truth below, with A to B paths drawn on the ntrl-demo maps."></div>
+      <figcaption>θ = 0 travel-time maps from bay A (top: ntrl-demo, bottom: truth) with the A→B paths of planning seed 0 (green: success, red: collision). At car width 0.01 the field paints both bays alike and every path drives through the wall.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>Widening the car: narrow bays</h2>
+    <p>{{widen_text}}</p>
+    <div class="chart" id="c-widen"></div>
+    <figure>
+      <div class="plate"><img src="{{fig:widen_paths}}" alt="Car-centre paths as the car widens in 0.23-wide bays, side gaps 0.05, 0.021 and 0.0125; beside each, every path's backing-out distance against its sideways slide toward the divider. Failing cars slide into the divider without backing out."></div>
+      <figcaption>Left: car-centre paths with the small-step MPPI (training seed 1, planning seed 0, 50 bay A → bay B queries). Right: the same paths in the bay's own frame, how far each car backed out against how far it slid toward the divider; × is the first contact with a wall. The cars that fail never back out: they slide into the divider and, here, carry on through it.</figcaption>
+    </figure>
+    <figure>
+      <div class="plate"><img src="{{fig:widen_profiles}}" alt="Travel time from the bay-A pose across both bays and along bay B's centre line, truth against the trained field, at side gaps 0.025, 0.0125 and 0.005."></div>
+      <figcaption>Top: travel time along a vertical line through both bays. At a 0.025 gap the field keeps the truth's barrier at the divider; at 0.0125 and 0.005 it ramps straight across it, so bay B is reached through the wall. Bottom: along bay B's centre line the truth climbs at the slope the narrow bay demands; at 0.005 the field is steeper than that but runs the wrong way.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>Setup</h2>
+    <ul>{{setup}}</ul>
+  </section>
+
+  <section>
+    <h2>Caveats</h2>
+    <ul>{{caveats}}</ul>
+  </section>
+
+  <section>
+    <h2>Runs</h2>
+    <p class="note">Registered with the repository's experiment registry; outputs in <code>results/registered_&lt;id&gt;/</code>. Code and README in <code>jeffrey/parking/</code>.</p>
+    <div class="tablewrap" id="t-runs"></div>
+  </section>
+</div>
+
+<script>
+const DATA = /*DATA*/null;
+const SLOT = i => `var(--s${i})`;
+const fmt = v => (Math.abs(v) >= 0.1 || v === 0) ? String(+v.toFixed(3)) : String(+v.toPrecision(2));
+
+function el(tag, attrs = {}, parent) {
+  const ns = ['svg', 'g', 'line', 'path', 'circle', 'rect', 'text'].includes(tag) ? 'http://www.w3.org/2000/svg' : null;
+  const e = ns ? document.createElementNS(ns, tag) : document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+
+function mark(parent, shape, x, y, color, r = 4) {
+  if (shape === 'square') return el('rect', { x: x - r, y: y - r, width: 2 * r, height: 2 * r, fill: color, stroke: 'var(--surface)', 'stroke-width': 2 }, parent);
+  if (shape === 'diamond') return el('path', { d: `M${x},${y - r * 1.3}L${x + r * 1.3},${y}L${x},${y + r * 1.3}L${x - r * 1.3},${y}Z`, fill: color, stroke: 'var(--surface)', 'stroke-width': 2 }, parent);
+  return el('circle', { cx: x, cy: y, r, fill: color, stroke: 'var(--surface)', 'stroke-width': 2 }, parent);
+}
+
+function chart(id, spec, title, ylabelFmt) {
+  const box = document.getElementById(id);
+  el('h3', {}, box).textContent = title;
+  const legend = el('div', { class: 'legend' }, box);
+  for (const s of spec.series) {
+    const item = el('span', {}, legend);
+    const key = el('svg', { width: 22, height: 12, viewBox: '0 0 22 12', 'aria-hidden': 'true' }, item);
+    el('line', { x1: 1, x2: 21, y1: 6, y2: 6, stroke: SLOT(s.slot), 'stroke-width': 2 }, key);
+    mark(key, s.marker, 11, 6, SLOT(s.slot), 3.5);
+    item.appendChild(document.createTextNode(s.name));
+  }
+  for (const ref of spec.refs || []) {
+    const item = el('span', {}, legend);
+    const key = el('svg', { width: 22, height: 12, viewBox: '0 0 22 12', 'aria-hidden': 'true' }, item);
+    el('line', { x1: 1, x2: 21, y1: 6, y2: 6, stroke: 'var(--ink-2)', 'stroke-width': 1.5 }, key);
+    item.appendChild(document.createTextNode(ref.label));
+  }
+  const W = 720, H = 300, m = { l: 52, r: 18, t: 14, b: 46 };
+  const svg = el('svg', { class: 'plot', viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': title }, box);
+  const xs = [...new Set(spec.series.flatMap(s => s.points.map(p => p.x)))].sort((a, b) => a - b);
+  const lx0 = Math.log10(xs[0]) - 0.08, lx1 = Math.log10(xs[xs.length - 1]) + 0.08;
+  const X = x => m.l + (Math.log10(x) - lx0) / (lx1 - lx0) * (W - m.l - m.r);
+  const Y = y => m.t + (1 - y / spec.ymax) * (H - m.t - m.b);
+  const yt = spec.ymax === 100 ? [0, 25, 50, 75, 100] : [0, 0.25, 0.5, 0.75, 1];
+  for (const t of yt) {
+    el('line', { class: t === 0 ? 'base' : 'grid', x1: m.l, x2: W - m.r, y1: Y(t), y2: Y(t) }, svg);
+    el('text', { x: m.l - 8, y: Y(t) + 4, 'text-anchor': 'end' }, svg).textContent = ylabelFmt(t);
+  }
+  const ticks = [0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5].filter(t => Math.log10(t) >= lx0 && Math.log10(t) <= lx1);
+  for (const t of ticks) {
+    el('line', { class: 'grid', x1: X(t), x2: X(t), y1: m.t, y2: H - m.b, 'stroke-opacity': 0.5 }, svg);
+    el('text', { x: X(t), y: H - m.b + 16, 'text-anchor': 'middle' }, svg).textContent = String(t);
+  }
+  el('text', { class: 'xlab', x: (m.l + W - m.r) / 2, y: H - 8, 'text-anchor': 'middle' }, svg).textContent = spec.xlabel + ' (log scale)';
+  el('text', { class: 'ylab', x: -(m.t + (H - m.t - m.b) / 2), y: 14, transform: 'rotate(-90)', 'text-anchor': 'middle' }, svg).textContent = spec.ylabel;
+  for (const ref of spec.refs || []) {
+    el('line', { x1: m.l, x2: W - m.r, y1: Y(ref.y), y2: Y(ref.y), stroke: 'var(--ink-2)', 'stroke-width': 1.5, 'stroke-opacity': 0.75 }, svg);
+  }
+  for (const s of spec.series) {
+    const pts = [...s.points].sort((a, b) => a.x - b.x);
+    const g = el('g', {}, svg);
+    for (const p of pts) if (p.lo !== undefined && p.hi > p.lo) el('line', { x1: X(p.x), x2: X(p.x), y1: Y(p.lo), y2: Y(p.hi), stroke: SLOT(s.slot), 'stroke-width': 2, 'stroke-opacity': 0.45, 'stroke-linecap': 'round' }, g);
+    el('path', { d: pts.map((p, i) => `${i ? 'L' : 'M'}${X(p.x).toFixed(1)},${Y(p.y).toFixed(1)}`).join(''), fill: 'none', stroke: SLOT(s.slot), 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, g);
+    for (const p of pts) mark(g, s.marker, X(p.x), Y(p.y), SLOT(s.slot));
+  }
+  const cross = el('line', { class: 'cross', y1: m.t, y2: H - m.b, visibility: 'hidden' }, svg);
+  const hit = el('rect', { class: 'hit', x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, fill: 'transparent', tabindex: 0, 'aria-label': `${title}: use the arrow keys to read values` }, svg);
+  el('rect', { class: 'focusring', x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, rx: 3 }, svg);
+  const tip = el('div', { class: 'tip', hidden: '' }, box);
+  let cur = -1;
+  function show(i) {
+    cur = Math.max(0, Math.min(xs.length - 1, i));
+    const x = xs[cur], px = X(x);
+    cross.setAttribute('x1', px); cross.setAttribute('x2', px); cross.setAttribute('visibility', 'visible');
+    tip.replaceChildren();
+    el('div', { class: 'hd' }, tip).textContent = `${spec.xlabel.split(' (')[0].split(' =')[0]}: ${fmt(x)}`;
+    for (const s of spec.series) {
+      const p = s.points.find(q => q.x === x);
+      if (!p) continue;
+      const row = el('div', { class: 'row' }, tip);
+      const key = el('svg', { width: 14, height: 10, viewBox: '0 0 14 10', 'aria-hidden': 'true' }, row);
+      mark(key, s.marker, 7, 5, SLOT(s.slot), 3);
+      const b = el('b', {}, row);
+      b.textContent = ylabelFmt(p.y) + (p.lo !== undefined && p.hi > p.lo ? ` (${ylabelFmt(p.lo)}–${ylabelFmt(p.hi)}, ${p.n} seeds)` : (p.n > 1 ? ` (${p.n} seeds)` : ''));
+      row.appendChild(document.createTextNode(s.name));
+    }
+    tip.hidden = false;
+    const r = svg.getBoundingClientRect(), br = box.getBoundingClientRect();
+    const left = (px / W) * r.width + (r.left - br.left);
+    tip.style.top = `${(r.top - br.top) + 10}px`;
+    tip.style.left = `${Math.min(Math.max(8, left + 12), br.width - tip.offsetWidth - 8)}px`;
+    if (left + 12 + tip.offsetWidth > br.width - 8) tip.style.left = `${Math.max(8, left - tip.offsetWidth - 12)}px`;
+  }
+  function hide() { cross.setAttribute('visibility', 'hidden'); tip.hidden = true; }
+  hit.addEventListener('pointermove', e => {
+    const r = svg.getBoundingClientRect(), px = (e.clientX - r.left) / r.width * W;
+    let best = 0;
+    xs.forEach((x, i) => { if (Math.abs(X(x) - px) < Math.abs(X(xs[best]) - px)) best = i; });
+    show(best);
+  });
+  hit.addEventListener('pointerleave', hide);
+  hit.addEventListener('focus', () => show(cur < 0 ? xs.length - 1 : cur));
+  hit.addEventListener('blur', hide);
+  hit.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') { show(cur - 1); e.preventDefault(); }
+    if (e.key === 'ArrowRight') { show(cur + 1); e.preventDefault(); }
+  });
+  const det = el('details', {}, box);
+  el('summary', {}, det).textContent = 'Table view';
+  const wrap = el('div', { class: 'tablewrap' }, det);
+  const t = el('table', {}, wrap);
+  const hr = el('tr', {}, el('thead', {}, t));
+  el('th', {}, hr).textContent = spec.xlabel.split(' (')[0];
+  for (const s of spec.series) el('th', {}, hr).textContent = s.name;
+  const tb = el('tbody', {}, t);
+  for (const x of [...xs].reverse()) {
+    const tr = el('tr', {}, tb);
+    el('td', {}, tr).textContent = fmt(x);
+    for (const s of spec.series) {
+      const p = s.points.find(q => q.x === x);
+      el('td', {}, tr).textContent = p ? ylabelFmt(p.y) + (p.lo !== undefined && p.hi > p.lo ? ` (${ylabelFmt(p.lo)}–${ylabelFmt(p.hi)})` : '') : '–';
+    }
+  }
+}
+
+const pctFmt = v => `${+v.toFixed(1)}%`;
+const ratioFmt = v => v.toFixed(2);
+chart('c-walls', DATA.charts.walls, 'Bay-to-bay success as the divider thins (car 0.13 wide)', pctFmt);
+chart('c-gap', DATA.charts.gap, 'Bay-to-bay success against the C-space wall', pctFmt);
+chart('c-sharp', DATA.charts.sharp, 'Travel time the field assigns between the bays, as a fraction of the truth', ratioFmt);
+if (DATA.charts.widen) chart('c-widen', DATA.charts.widen, 'Bay-to-bay success as the car widens in fixed 0.23 bays', pctFmt);
+
+(function runs() {
+  const wrap = document.getElementById('t-runs');
+  const t = el('table', {}, wrap);
+  const hr = el('tr', {}, el('thead', {}, t));
+  for (const h of ['Package', 'Car width', 'Bay width', 'Divider', 'C-space wall', 'Side gap', 'Training seeds', "ntrl-demo's MPPI /300 per seed", 'Small-step MPPI /300 per seed', 'Oracle /300 (own / small-step)', 'Registered runs']) el('th', {}, hr).textContent = h;
+  const tb = el('tbody', {}, t);
+  const rows = [...DATA.rows].sort((a, b) => a.variant.localeCompare(b.variant) || b.cspace_gap - a.cspace_gap)
+    .map(r => [r.variant, fmt(r.car_w), fmt(r.car_w + 0.1), fmt(r.wall), fmt(r.cspace_gap), '0.05', r.seeds.join(', '), r.default.join(', '), '–', String(r.oracle), r.runs.join(' ')]);
+  for (const r of [...(DATA.wrows || [])].sort((a, b) => b.side_gap - a.side_gap))
+    rows.push(['metric', fmt(r.car_w), fmt(r.bay_w), fmt(r.wall), fmt(r.cspace_wall), fmt(r.side_gap), r.seeds.join(', '),
+               r.seeds.map(s => r.per_seed[s].default).join(', '), r.seeds.map(s => r.per_seed[s].fine).join(', '), `${r.oracle.default} / ${r.oracle.fine}`, r.runs.join(' ')]);
+  for (const r of rows) {
+    const tr = el('tr', {}, tb);
+    r.forEach((v, i) => { el('td', i === r.length - 1 ? { class: 'runs' } : {}, tr).textContent = v; });
+  }
+})();
+</script>

@@ -1,0 +1,40 @@
+{
+  "curobo_equivalence": {
+    "n": 20000,
+    "max_abs_err_d_obstacle": 7.972121238708496e-07,
+    "max_abs_err_d_self": 4.917383193969727e-07,
+    "max_abs_err_ee": 7.748603820800781e-07
+  },
+  "box_contains_spheres_max_excess_m": 1.4901161193847656e-07,
+  "brute_force": {
+    "pairs": 300,
+    "disjoint": 278,
+    "max_brute_minus_exact": 2.3283064365386963e-06,
+    "min_brute_minus_exact": -1.4901161193847656e-08,
+    "max_allowed": 0.0018872766522690654,
+    "intersecting_max_signed": -0.00026148557662963867
+  },
+  "covers": {
+    "face_obstacle_minus_release_max": -0.00015974044799804688,
+    "sphere_cover_max_err": 0.0,
+    "link_cover_max_err": 0.0,
+    "mean_release_speed": 0.582294225692749,
+    "mean_face_speed": 0.5036989450454712,
+    "share_face_speed_at_floor": 0.223388671875,
+    "share_release_speed_at_floor": 0.082275390625
+  },
+  "gradient": {
+    "n": 1024,
+    "cosine_median": 0.9999999403953552,
+    "share_cosine_above_0_99": 0.9990234375,
+    "zero_autograd": 0
+  },
+  "seconds_per_4096_faces": {
+    "pieces": 0.020510435104370117,
+    "gradient": 0.06556034088134766
+  },
+  "seconds_per_4096_spheres": {
+    "pieces": 0.004553079605102539,
+    "gradient": 0.004363059997558594
+  }
+}

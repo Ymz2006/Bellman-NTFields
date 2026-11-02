@@ -1,0 +1,414 @@
+<title>Slab Line Explorer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: controls beside the arm and the slab in 3D, then the values under the cursor, then two wide charts on one
+   shared horizontal axis (displacement along the chosen joint axis): travel time above, speed below. */
+:root {
+  --bg: #f4f6f7; --panel: #ffffff; --ink: #14181b; --ink-2: #4a5359; --ink-3: #737d86; --rule: #d9dee2; --well: #e9edf0; --grid: #e8ebee;
+  --accent: #2a78d6; --scene: #eef1f3; --slab: #9a6b3f; --slab-edge: #6e4a29; --arm: #56616a; --ghost: #78828a; --pick: #e34948;
+  --truth: #14181b; --m1: #2a78d6; --m2: #eb6834; --m3: #1baf7a; --m4: #c98a00; --m5: #d55181;
+  --band-contact: rgba(227, 73, 72, 0.13); --band-slow: rgba(201, 138, 0, 0.13); --band-off: rgba(74, 83, 89, 0.10); --contact-ink: #b8312f;
+  --display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111416; --panel: #191d20; --ink: #e8ecee; --ink-2: #b4bcc2; --ink-3: #8b959e; --rule: #2c3337; --well: #22282c; --grid: #252b2f;
+  --accent: #3987e5; --scene: #15191c; --slab: #8a6040; --slab-edge: #c09060; --arm: #9aa4ad; --ghost: #87919a; --pick: #e66767;
+  --truth: #e8ecee; --m1: #3987e5; --m2: #d95926; --m3: #199e70; --m4: #c98500; --m5: #d55181;
+  --band-contact: rgba(230, 103, 103, 0.16); --band-slow: rgba(201, 133, 0, 0.16); --band-off: rgba(180, 188, 194, 0.09); --contact-ink: #e88a8a; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #111416; --panel: #191d20; --ink: #e8ecee; --ink-2: #b4bcc2; --ink-3: #8b959e; --rule: #2c3337; --well: #22282c; --grid: #252b2f;
+  --accent: #3987e5; --scene: #15191c; --slab: #8a6040; --slab-edge: #c09060; --arm: #9aa4ad; --ghost: #87919a; --pick: #e66767;
+  --truth: #e8ecee; --m1: #3987e5; --m2: #d95926; --m3: #199e70; --m4: #c98500; --m5: #d55181;
+  --band-contact: rgba(230, 103, 103, 0.16); --band-slow: rgba(201, 133, 0, 0.16); --band-off: rgba(180, 188, 194, 0.09); --contact-ink: #e88a8a; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 14px/1.45 var(--body); }
+.wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 18px 28px;
+        max-width: 1440px; margin: 0 auto; display: grid; gap: 14px; }
+.wrap > * { min-width: 0; }
+header { display: grid; gap: 4px; }
+h1 { font: 600 1.6rem/1.15 var(--display); margin: 0; text-wrap: balance; }
+h2 { font: 600 1.08rem/1.2 var(--display); margin: 0; letter-spacing: .01em; }
+.lede { color: var(--ink-2); margin: 0; max-width: 100ch; }
+.top { display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 14px; align-items: stretch; }
+.side { display: grid; gap: 12px; min-width: 0; align-content: start; }
+.card { background: var(--panel); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 14px; display: grid; gap: 10px; min-width: 0; }
+.label { font: 500 11px var(--mono); letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); }
+.row { display: flex; align-items: baseline; justify-content: space-between; gap: 6px 12px; flex-wrap: wrap; }
+.muted { color: var(--ink-3); font-size: 12.5px; }
+.seg { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; background: var(--well); border-radius: 6px; padding: 3px; gap: 3px; }
+.seg button { font: 500 12.5px var(--body); color: var(--ink-2); background: transparent; border: 0; border-radius: 4px; padding: 6px 4px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--panel); color: var(--ink); box-shadow: 0 0 0 1px var(--rule); }
+.seg.axes button { font-family: var(--mono); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips button { display: inline-flex; align-items: center; gap: 7px; font: 500 12.5px var(--mono); color: var(--ink-3); background: transparent; border: 1px solid var(--rule);
+  border-radius: 6px; padding: 5px 9px; cursor: pointer; }
+.chips button[aria-pressed="true"] { color: var(--ink); border-color: var(--ink-3); background: var(--well); }
+.chips button[aria-pressed="false"] .sw { opacity: .3; }
+button:focus-visible, input:focus-visible, svg:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; margin: 0; font-size: 13px; }
+dt { color: var(--ink-3); }
+dd { margin: 0; text-align: right; font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; color: var(--ink); }
+.sl { display: grid; grid-template-columns: minmax(0, 1fr) 9ch; align-items: center; gap: 10px; font: 500 13px var(--mono); color: var(--ink-2); }
+.sl input { width: 100%; margin: 0; accent-color: var(--pick); }
+.sl output { text-align: right; font-variant-numeric: tabular-nums; color: var(--ink); font-size: 12.5px; }
+.status { font: 12px var(--mono); color: var(--ink-3); }
+.viewport { position: relative; min-height: 440px; background: var(--scene); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; touch-action: none; }
+.viewport canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.vbar { position: absolute; top: 10px; right: 10px; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.vbar button { font: 500 12px var(--body); color: var(--ink-2); background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 5px 10px; cursor: pointer; }
+.vtag { position: absolute; top: 10px; left: 12px; font: 600 13px var(--display); color: var(--ink); background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 4px 9px; max-width: calc(100% - 24px); }
+.vkey { position: absolute; left: 12px; bottom: 10px; display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--ink-2); background: color-mix(in srgb, var(--panel) 82%, transparent);
+  border-radius: 6px; padding: 4px 8px; pointer-events: none; max-width: calc(100% - 24px); }
+.vkey span { display: inline-flex; align-items: center; gap: 6px; }
+.busy { position: absolute; inset: 0; display: grid; place-items: center; font: 13px var(--mono); color: var(--ink-2); background: color-mix(in srgb, var(--panel) 70%, transparent); }
+.readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }
+.cell { background: var(--panel); padding: 9px 13px; display: grid; gap: 2px; align-content: start; min-width: 0; }
+.cell .l { font-size: 12px; color: var(--ink-3); display: flex; align-items: center; gap: 6px; }
+.cell .v { font: 16px var(--mono); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.cell .n { font: 12px var(--mono); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.cell.contact .v { color: var(--contact-ink); }
+.legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; font-size: 12.5px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { display: inline-block; width: 18px; height: 0; border-top: 2.5px solid; flex: none; }
+.sw.dash { border-top-style: dashed; }
+.sw.box { height: 11px; border: 0; border-radius: 2px; }
+.sw.b-contact { background: var(--band-contact); outline: 1px solid var(--rule); } .sw.b-slow { background: var(--band-slow); outline: 1px solid var(--rule); }
+.sw.b-off { background: var(--band-off); outline: 1px solid var(--rule); }
+.sw.pickmark { width: 0; height: 13px; border-top: 0; border-left: 1.5px dashed var(--pick); }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex: none; }
+.charts { display: grid; gap: 6px; }
+.charts .sub { font-size: 12.5px; color: var(--ink-3); }
+.plot { min-width: 0; }
+.plot-title { font-size: 12.5px; font-weight: 500; color: var(--ink-2); margin: 6px 0 0; }
+.plot svg { display: block; width: 100%; cursor: crosshair; touch-action: none; overflow: visible; }
+.badge { display: inline-block; font: 500 12px var(--body); color: var(--ink-2); background: var(--well); border-radius: 5px; padding: 3px 8px; }
+svg .gridline { stroke: var(--grid); stroke-width: 1; }
+svg .axisline { stroke: var(--ink-3); stroke-width: 1; }
+svg .tick { font: 10.5px var(--mono); fill: var(--ink-3); }
+svg .axtitle { font: 11px var(--body); fill: var(--ink-3); }
+svg .bandtext { font: 10.5px var(--body); fill: var(--contact-ink); }
+svg .pickline { stroke: var(--pick); stroke-width: 1.5; stroke-dasharray: 3 3; }
+svg .picktext { font: 10.5px var(--body); fill: var(--pick); }
+svg .series { fill: none; stroke-width: 1.75; stroke-linejoin: round; stroke-linecap: round; }
+svg .series.truth { stroke: var(--truth); stroke-width: 2.25; }
+svg .series.dash { stroke-dasharray: 6 3; }
+svg .cursorline { stroke: var(--ink); stroke-opacity: .55; stroke-width: 1; }
+svg .cdot { stroke: var(--panel); stroke-width: 2; }
+svg .clipnote { font: 10.5px var(--mono); fill: var(--ink-3); }
+.notes { display: grid; gap: 8px; font-size: 13px; color: var(--ink-2); }
+.notes p { margin: 0; max-width: 104ch; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; font-size: 12.5px; min-width: 560px; }
+th, td { text-align: right; padding: 4px 10px; border-bottom: 1px solid var(--rule); font-variant-numeric: tabular-nums; }
+th:first-child, td:first-child { text-align: left; }
+th { font: 500 11px var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--ink-3); }
+td { font-family: var(--mono); color: var(--ink); }
+@media (max-width: 900px) { .top { grid-template-columns: minmax(0, 1fr); } .viewport { order: -1; height: 52vh; min-height: 320px; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Slab line explorer</h1>
+    <p class="lede">Task 0 of the representability test. The scene is one slab (0.40 × 0.02 × 0.70 m) placed so the gripper hits it when the arm moves along the trained +y joint direction. Pick a point on that trained line, pick an axis (the trained direction or one single joint), and the charts follow the arm along that axis through the picked point: travel time from the picked point on top, speed below, each trained network against the truth from the arm's clearance. Hover a chart to move the ghost arm.</p>
+  </header>
+
+  <div class="top">
+    <aside class="side">
+      <section class="card" aria-labelledby="l-pick">
+        <span class="label" id="l-pick">Picked point on the trained line</span>
+        <label class="sl"><input type="range" id="sb" min="0" max="20" step="1" value="10" aria-label="Position s on the trained line"><output id="osb"></output></label>
+        <dl id="pick-info"></dl>
+      </section>
+      <section class="card" aria-labelledby="l-axis">
+        <span class="label" id="l-axis">Move along</span>
+        <div class="seg axes" role="group" aria-labelledby="l-axis" id="axes"></div>
+        <div class="muted" id="axis-note"></div>
+      </section>
+      <section class="card" aria-labelledby="l-data">
+        <span class="label" id="l-data">Training data</span>
+        <div class="seg" role="group" aria-labelledby="l-data">
+          <button id="set-line" aria-pressed="true">On the line</button>
+          <button id="set-tube" aria-pressed="false">Tube, radius 0.02</button>
+        </div>
+        <div class="muted" id="set-note"></div>
+      </section>
+      <section class="card" aria-labelledby="l-model">
+        <span class="label" id="l-model">Trained networks</span>
+        <div class="chips" role="group" aria-labelledby="l-model" id="models"></div>
+        <div class="seg" role="group" aria-label="Time axis">
+          <button id="t-truth" aria-pressed="true">Time: fit truth</button>
+          <button id="t-all" aria-pressed="false">Time: fit all</button>
+        </div>
+        <div class="seg" role="group" aria-label="Speed axis">
+          <button id="s-log" aria-pressed="true">Speed: log</button>
+          <button id="s-linear" aria-pressed="false">Speed: linear</button>
+        </div>
+        <div class="status" id="status">Loading…</div>
+      </section>
+    </aside>
+
+    <div class="viewport" id="viewport">
+      <div class="vtag" id="vtag">Picked point</div>
+      <div class="vbar">
+        <button id="v-reset">Reset view</button>
+        <button id="v-front">From the robot</button>
+        <button id="v-top">Top</button>
+      </div>
+      <div class="vkey"><span><i class="dot" style="background:var(--arm)"></i>arm at the picked point</span><span><i class="dot" style="background:var(--ghost);opacity:.6"></i>arm at the cursor</span><span><i class="sw" style="border-color:var(--ink-3)"></i>gripper path along the axis</span><span><i class="sw" style="border-color:var(--pick)"></i>in contact</span></div>
+      <div class="busy" id="busy">Loading the data…</div>
+    </div>
+  </div>
+
+  <section class="readout" id="readout" aria-live="polite" aria-label="Values under the cursor"></section>
+
+  <section class="card charts" aria-labelledby="h-chart">
+    <div class="row"><h2 id="h-chart">Along the trained line</h2><span class="sub" id="sub-chart"></span></div>
+    <div class="legend" id="legend"></div>
+    <div class="plot"><div class="plot-title">Travel time T from the picked point</div><svg id="c-T" role="img" aria-label="Travel time along the chosen axis"></svg></div>
+    <div class="plot"><div class="plot-title">Speed: the target s′(d) from the clearance, and each network's 1 / |∇T|</div><svg id="c-S" role="img" aria-label="Speed along the chosen axis"></svg></div>
+  </section>
+
+  <section class="card notes" aria-labelledby="l-tab">
+    <h2 id="l-tab">At the picked point, along this axis</h2>
+    <div class="tablewrap"><table id="table"></table></div>
+  </section>
+
+  <section class="card notes" aria-labelledby="l-notes">
+    <h2 id="l-notes">How the values are computed</h2>
+    <p>The trained line is x(s) = x* + s·u in release units (joint angle divided by its range: 12.57 rad for five joints, 6.28 rad for the elbow), with x* the middle-compartment pose and u the least-norm IK joint direction that moves the gripper in +y, scaled to unit length. Along it the gripper travels 6.2 m per unit of s, so the line spans about ±31 cm. The single-joint axes are scaled the same way: one release unit is 12.57 rad (6.28 rad for J3), so ±0.05 is ±0.63 rad (±0.31 rad).</p>
+    <p>Truth: the clearance label d of the arm against the slab (and the arm's own self distance), the trained target speed s′(d) = 1.025 S²(2 − S)² − 0.025 with S = clip(d, 5 mm, 5 cm) / 5 cm, and the travel time by integrating 1/s′ along the axis from the picked point. On the trained line this is the exact 1-D answer the networks were trained toward. Along a single joint it is the time for moving that joint alone, which is an upper bound: the true 6-D shortest time can be lower by using other joints.</p>
+    <p>Networks: ntrl-demo's metric network with its own loss (base), with the log eikonal loss (log), and with the embedding stretched 5× (metric factor 1 instead of 0.2, "stretch"), trained for 4,000 updates of 2,000 pairs; the original method's TravelCost with the eikonal loss (TravelCost) and with ntrl-demo's direction term added at weight 1 (TravelCost + direction), 15,620 updates of 256 pairs. Each family is retrained here with the line test's seed; the line models reproduce the reported table. Line data: pairs with both ends on the line, s ∈ [−0.05, 0.05]. Tube data: each end moved off the line by up to 0.02 release units in a random direction orthogonal to u. Shaded grey: points the training data never reached.</p>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const CHAIN = {"chain": [{"child": "base_link_inertia", "moving": -1, "origin": [-1.0, -1.2246468525851679e-16, 0.0, 0.0, 1.2246468525851679e-16, -1.0, 0.0, 0.0, -0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]}, {"child": "shoulder_link", "moving": 0, "origin": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, -0.0, 0.0, 1.0, 0.16249999403953552, 0.0, 0.0, 0.0, 1.0]}, {"child": "upper_arm_link", "moving": 1, "origin": [1.0, 0.0, 0.0, 0.0, 0.0, -2.051034342365199e-10, -1.0, 0.0, -0.0, 1.0, -2.051034342365199e-10, 0.0, 0.0, 0.0, 0.0, 1.0]}, {"child": "forearm_link", "moving": 2, "origin": [1.0, 0.0, 0.0, -0.42500001192092896, 0.0, 1.0, 0.0, 0.0, -0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]}, {"child": "wrist_1_link", "moving": 3, "origin": [1.0, 0.0, 0.0, -0.3921999931335449, 0.0, 1.0, 0.0, 0.0, -0.0, 0.0, 1.0, 0.13330000638961792, 0.0, 0.0, 0.0, 1.0]}, {"child": "wrist_2_link", "moving": 4, "origin": [1.0, 0.0, 0.0, 0.0, 0.0, -2.051034342365199e-10, -1.0, -0.09969999641180038, -0.0, 1.0, -2.051034342365199e-10, -2.0448811047235615e-11, 0.0, 0.0, 0.0, 1.0]}, {"child": "wrist_3_link", "moving": 5, "origin": [1.0, -1.2246468525851679e-16, 1.2246468525851679e-16, 0.0, -1.2246468525851679e-16, -2.0510354525882235e-10, 1.0, 0.09960000216960907, -1.2246468525851679e-16, -1.0, -2.0510354525882235e-10, -2.0428301411579142e-11, 0.0, 0.0, 0.0, 1.0]}, {"child": "flange", "moving": -1, "origin": [3.7493993930529855e-33, 1.0, -6.123234262925839e-17, 0.0, -6.123234262925839e-17, 6.123234262925839e-17, 1.0, 0.0, 1.0, 0.0, 6.123234262925839e-17, 0.0, 0.0, 0.0, 0.0, 1.0]}, {"child": "tool0", "moving": -1, "origin": [6.123234262925839e-17, -6.123234262925839e-17, 1.0, 0.0, 1.0, 3.7493993930529855e-33, -6.123234262925839e-17, 0.0, -0.0, 1.0, 6.123234262925839e-17, 0.0, 0.0, 0.0, 0.0, 1.0]}, {"child": "robotiq_arg2f_base_link", "moving": -1, "origin": [0.0007963267271406949, -0.9999997019767761, 0.0, 0.0, 0.9999997019767761, 0.0007963267271406949, 0.0, 0.0, -0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]}, {"child": "grasp_frame", "moving": -1, "origin": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, -0.0, 0.0, 1.0, 0.20000000298023224, 0.0, 0.0, 0.0, 1.0]}], "arm_links": ["base_link", "shoulder_link", "upper_arm_link", "forearm_link", "wrist_1_link", "wrist_2_link", "wrist_3_link", "grasp_frame"]};
+const MODELS = [
+  { key: 'ntrl-base', name: 'ntrl base', c: '--m1', dash: false },
+  { key: 'ntrl-log', name: 'ntrl log', c: '--m2', dash: false },
+  { key: 'ntrl-s1', name: 'ntrl stretch', c: '--m3', dash: false },
+  { key: 'tc-h4', name: 'TravelCost', c: '--m4', dash: true },
+  { key: 'tc-h4-n1', name: 'TravelCost + direction', c: '--m5', dash: true },
+];
+const AXNAME = ['+y line', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6'];
+const AXLONG = ['the trained +y direction', 'joint 1 (base)', 'joint 2 (shoulder)', 'joint 3 (elbow)', 'joint 4 (wrist 1)', 'joint 5 (wrist 2)', 'joint 6 (wrist 3)'];
+const MARGIN = 0.05, OFFSET = 0.005, TUBE = 0.02, SMAX = 0.05;
+const $ = id => document.getElementById(id);
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const fmtV = v => (v == null || !isFinite(v)) ? '–' : Math.abs(v) >= 100 ? v.toFixed(0) : Math.abs(v) >= 10 ? v.toFixed(1) : Math.abs(v) >= 1 ? v.toFixed(2) : Math.abs(v) >= 0.01 ? v.toFixed(3) : v.toFixed(4);
+const cm = v => (v*100).toFixed(1);
+let D = null, NB, NA, NT, U, QS, QR, TT, BASES;
+let bi = 10, ax = 0, set = 'line', shown = new Set(['ntrl-base', 'ntrl-log', 'tc-h4']), tFit = 'truth', sScale = 'log', cur = null;
+
+function f32(b64) { const s = atob(b64), u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return new Float32Array(u.buffer); }
+const at = (arr, b, a, i) => arr[(b*NA+a)*NT+i];
+function axisVec(a) { const v = new Float64Array(6); if (a === 0) v.set(U); else v[a-1] = 1; return v; }
+function qAt(b, a, t) { const v = axisVec(a), q = new Float64Array(6); for (let j = 0; j < 6; j++) q[j] = QS[j]+QR[j]*(BASES[b]*U[j]+t*v[j]); return q; }
+function offLine(b, a, t) {   // release-unit distance of the point from the trained segment's line, and whether it is beyond the segment's ends
+  if (a === 0) return { dist: 0, beyond: Math.abs(BASES[b]+t) > SMAX+1e-9 };
+  const ua = U[a-1]; return { dist: Math.abs(t)*Math.sqrt(Math.max(0, 1-ua*ua)), beyond: Math.abs(BASES[b]+t*ua) > SMAX+1e-9 };
+}
+function inData(b, a, t) { const o = offLine(b, a, t); return !o.beyond && o.dist <= (set === 'tube' ? TUBE : 1e-9); }
+function xLabel(a) { return a === 0 ? 'Δs along the trained line (release units; 0.01 = 6.2 cm of gripper travel in y)' : `Δ${AXNAME[a]} (rad)`; }
+function xScale(a) { return a === 0 ? 1 : QR[a-1]; }
+
+/* ---------- controls ---------- */
+$('axes').innerHTML = AXNAME.map((n, a) => `<button id="ax-${a}" aria-pressed="${a === 0}">${n}</button>`).join('');
+AXNAME.forEach((_, a) => $('ax-' + a).onclick = () => { ax = a; cur = null; refresh(); });
+$('models').innerHTML = MODELS.map(m => `<button id="m-${m.key}" aria-pressed="${shown.has(m.key)}"><i class="sw${m.dash ? ' dash' : ''}" style="border-color:var(${m.c})"></i>${m.name}</button>`).join('');
+MODELS.forEach(m => $('m-' + m.key).onclick = () => { shown.has(m.key) ? shown.delete(m.key) : shown.add(m.key); refresh(); });
+$('set-line').onclick = () => { set = 'line'; refresh(); }; $('set-tube').onclick = () => { set = 'tube'; refresh(); };
+$('t-truth').onclick = () => { tFit = 'truth'; refresh(); }; $('t-all').onclick = () => { tFit = 'all'; refresh(); };
+$('s-log').onclick = () => { sScale = 'log'; refresh(); }; $('s-linear').onclick = () => { sScale = 'linear'; refresh(); };
+$('sb').oninput = e => { bi = +e.target.value; cur = null; refresh(); };
+
+/* ---------- charts ---------- */
+const SVGNS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs, parent) { const e = document.createElementNS(SVGNS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+function niceStep(mx) { const raw = mx/4, p = Math.pow(10, Math.floor(Math.log10(raw))), f = raw/p; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10)*p; }
+function bands() {   // runs of contact (d <= 0), slow band (0 < d < 5 cm) and out-of-data along the current axis
+  const out = { contact: [], slow: [], off: [] }, h = (TT[1]-TT[0])/2;
+  const push = (list, i0, i1) => list.push([TT[i0]-h, TT[i1]+h]);
+  for (const [key, test] of [['contact', i => at(D.d, bi, ax, i) <= 0], ['slow', i => { const d = at(D.d, bi, ax, i); return d > 0 && d < MARGIN; }], ['off', i => !inData(bi, ax, TT[i])]]) {
+    let s = -1; for (let i = 0; i <= NT; i++) { const on = i < NT && test(i); if (on && s < 0) s = i; if (!on && s >= 0) { push(out[key], s, i-1); s = -1; } } }
+  return out;
+}
+function seriesList(kind) {
+  const out = [{ key: 'truth', name: 'truth', c: '--truth', dash: false, arr: kind === 'T' ? D.T : D.S }];
+  for (const m of MODELS) if (shown.has(m.key)) out.push({ ...m, arr: D.models[set][m.key][kind] });
+  return out;
+}
+function drawChart(kind) {
+  const svg = $('c-' + kind), W = Math.max(300, Math.round(svg.parentNode.clientWidth)), Hh = kind === 'T' ? 260 : 210;
+  svg.setAttribute('viewBox', `0 0 ${W} ${Hh}`); svg.setAttribute('height', Hh); svg.replaceChildren();
+  const m = { l: 52, r: 14, t: 26, b: 34 }, top = m.t, bot = Hh-m.b, sc = xScale(ax);
+  const X = t => m.l+(t-TT[0])/(TT[NT-1]-TT[0])*(W-m.l-m.r);
+  const list = seriesList(kind);
+  let Y, ticks, tf, ymax, ymin;
+  if (kind === 'T') {
+    let mx = 0; for (let i = 0; i < NT; i++) mx = Math.max(mx, at(D.T, bi, ax, i));
+    if (tFit === 'all') for (const s of list) for (let i = 0; i < NT; i++) { const v = at(s.arr, bi, ax, i); if (isFinite(v)) mx = Math.max(mx, v); }
+    mx = Math.max(mx*1.06, 0.05); const st = niceStep(mx); ymax = Math.ceil(mx/st-1e-9)*st; ymin = 0;
+    Y = v => top+(1-v/ymax)*(bot-top); ticks = []; for (let v = 0; v <= ymax+1e-9; v += st) ticks.push(v);
+    const dec = Math.max(0, -Math.floor(Math.log10(st)+1e-9)+(Math.abs(st/Math.pow(10, Math.floor(Math.log10(st)+1e-9))-2.5) < 1e-6 ? 1 : 0)); tf = v => v.toFixed(dec);
+  } else if (sScale === 'log') { ymin = 0.005; ymax = 4; const lo = Math.log10(ymin), hi = Math.log10(ymax); Y = v => top+(1-(Math.log10(Math.min(Math.max(v, ymin), ymax))-lo)/(hi-lo))*(bot-top); ticks = [0.01, 0.03, 0.1, 0.3, 1, 3]; tf = v => String(v); }
+  else { ymin = 0; ymax = 1.6; Y = v => top+(1-Math.min(Math.max(v, 0), ymax)/ymax)*(bot-top); ticks = [0, 0.25, 0.5, 0.75, 1, 1.25, 1.5]; tf = v => String(v); }
+  const B = bands();
+  for (const [a0, a1] of B.off) el('rect', { x: X(a0), y: top, width: Math.max(1, X(a1)-X(a0)), height: bot-top, fill: 'var(--band-off)' }, svg);
+  for (const [a0, a1] of B.slow) el('rect', { x: X(a0), y: top, width: Math.max(1, X(a1)-X(a0)), height: bot-top, fill: 'var(--band-slow)' }, svg);
+  for (const [a0, a1] of B.contact) { el('rect', { x: X(a0), y: top, width: Math.max(1, X(a1)-X(a0)), height: bot-top, fill: 'var(--band-contact)' }, svg);
+    if (kind === 'T' && X(a1)-X(a0) > 52) el('text', { x: (X(a0)+X(a1))/2, y: top-8, 'text-anchor': 'middle', class: 'bandtext' }, svg).textContent = 'in contact'; }
+  for (const v of ticks) { el('line', { x1: m.l, x2: W-m.r, y1: Y(v), y2: Y(v), class: 'gridline' }, svg); el('text', { x: m.l-6, y: Y(v)+3.5, 'text-anchor': 'end', class: 'tick' }, svg).textContent = tf(v); }
+  const xst = niceStep((TT[NT-1]-TT[0])*sc*0.6), xs = [];
+  for (let v = Math.ceil(TT[0]*sc/xst-1e-9)*xst; v <= TT[NT-1]*sc+1e-9; v += xst) xs.push(v);
+  const xdec = Math.max(0, -Math.floor(Math.log10(xst)+1e-9)+(Math.abs(xst/Math.pow(10, Math.floor(Math.log10(xst)+1e-9))-2.5) < 1e-6 ? 1 : 0));
+  for (const v of xs) { const x = X(v/sc); el('line', { x1: x, x2: x, y1: bot, y2: bot+4, class: 'axisline' }, svg); el('text', { x, y: bot+16, 'text-anchor': 'middle', class: 'tick' }, svg).textContent = (Math.abs(v) < 1e-12 ? 0 : v).toFixed(xdec); }
+  el('line', { x1: m.l, x2: W-m.r, y1: bot, y2: bot, class: 'axisline' }, svg);
+  if (kind === 'S') el('text', { x: W-m.r, y: bot+30, 'text-anchor': 'end', class: 'axtitle' }, svg).textContent = xLabel(ax);
+  el('line', { x1: X(0), x2: X(0), y1: top, y2: bot, class: 'pickline' }, svg);
+  if (kind === 'T') el('text', { x: X(0)+4, y: top+11, class: 'picktext' }, svg).textContent = 'picked point';
+  const clipId = 'clip-' + kind, cp = el('clipPath', { id: clipId }, el('defs', {}, svg)); el('rect', { x: m.l, y: top, width: W-m.l-m.r, height: bot-top }, cp);
+  const g = el('g', { 'clip-path': `url(#${clipId})` }, svg); let clipped = 0;
+  for (const s of list.slice(1).concat(list.slice(0, 1))) {   // truth drawn last, on top
+    let d = '', pen = false;
+    for (let i = 0; i < NT; i++) { const v = at(s.arr, bi, ax, i); if (!isFinite(v)) { pen = false; continue; }
+      if (kind === 'T' && v > ymax) clipped = Math.max(clipped, v);
+      d += (pen ? 'L' : 'M') + X(TT[i]).toFixed(1) + ' ' + Y(Math.min(v, ymax*1.5)).toFixed(1); pen = true; }
+    el('path', { d, class: 'series' + (s.key === 'truth' ? ' truth' : '') + (s.dash ? ' dash' : ''), stroke: `var(${s.c})` }, g);
+  }
+  if (kind === 'T' && clipped > 0) el('text', { x: W-m.r, y: top+11, 'text-anchor': 'end', class: 'clipnote' }, svg).textContent = `curves above ${tf(ymax)} cut off (max ${fmtV(clipped)})`;
+  const cl = el('line', { x1: 0, x2: 0, y1: top, y2: bot, class: 'cursorline', visibility: 'hidden' }, svg); const dots = list.map(s => el('circle', { r: 4, class: 'cdot', fill: `var(${s.c})`, visibility: 'hidden' }, svg));
+  svg._cursor = i => { if (i == null) { cl.setAttribute('visibility', 'hidden'); dots.forEach(c => c.setAttribute('visibility', 'hidden')); return; }
+    const x = X(TT[i]); cl.setAttribute('x1', x); cl.setAttribute('x2', x); cl.setAttribute('visibility', 'visible');
+    list.forEach((s, k) => { const v = at(s.arr, bi, ax, i); if (!isFinite(v) || v < ymin || v > ymax) { dots[k].setAttribute('visibility', 'hidden'); return; }
+      dots[k].setAttribute('cx', x); dots[k].setAttribute('cy', Y(v)); dots[k].setAttribute('visibility', 'visible'); }); };
+  const pick = ev => { const r = svg.getBoundingClientRect(), px = (ev.clientX-r.left)/r.width*W, t = TT[0]+(px-m.l)/(W-m.l-m.r)*(TT[NT-1]-TT[0]);
+    return Math.max(0, Math.min(NT-1, Math.round((t-TT[0])/(TT[1]-TT[0])))); };
+  svg.onpointermove = ev => setCursor(pick(ev)); svg.onpointerleave = () => setCursor(null);
+  svg.onclick = ev => { if (ax !== 0) return; const s = BASES[bi]+TT[pick(ev)], b = Math.round((s-BASES[0])/(BASES[1]-BASES[0])); if (b >= 0 && b < NB && b !== bi) { bi = b; $('sb').value = b; cur = null; refresh(); } };
+  svg.style.cursor = ax === 0 ? 'pointer' : 'crosshair';
+}
+function setCursor(i) { cur = i; $('c-T')._cursor && $('c-T')._cursor(i); $('c-S')._cursor && $('c-S')._cursor(i); readout(); drawGhost(); }
+
+/* ---------- readout, legend, table ---------- */
+function readout() {
+  const i = cur == null ? (NT-1)/2 : cur, t = TT[i], d = at(D.d, bi, ax, i), p = [0, 1, 2].map(k => D.grip[((bi*NA+ax)*NT+i)*3+k]);
+  const where = cur == null ? 'at the picked point' : 'under the cursor';
+  let h = `<div class="cell"><div class="l">Position ${where}</div><div class="v">${ax === 0 ? 's = ' + (BASES[bi]+t).toFixed(4) : 'Δ' + AXNAME[ax] + ' = ' + (t*QR[ax-1]).toFixed(3) + ' rad'}</div><div class="n">gripper ${cm(p[0])}, ${cm(p[1])}, ${cm(p[2])} cm</div></div>`;
+  h += `<div class="cell${d <= 0 ? ' contact' : ''}"><div class="l">Clearance</div><div class="v">${d <= 0 ? 'contact' : (d*1000).toFixed(1) + ' mm'}</div><div class="n">${inData(bi, ax, t) ? 'inside the training data' : 'outside the training data'}</div></div>`;
+  h += `<div class="cell"><div class="l"><i class="sw" style="border-color:var(--truth)"></i>Truth</div><div class="v">T ${fmtV(at(D.T, bi, ax, i))}</div><div class="n">speed ${fmtV(at(D.S, bi, ax, i))}</div></div>`;
+  for (const m of MODELS) if (shown.has(m.key)) { const R = D.models[set][m.key];
+    h += `<div class="cell"><div class="l"><i class="sw${m.dash ? ' dash' : ''}" style="border-color:var(${m.c})"></i>${m.name}</div><div class="v">T ${fmtV(at(R.T, bi, ax, i))}</div><div class="n">speed ${cur == null ? '– (undefined at its own source)' : fmtV(at(R.S, bi, ax, i))}</div></div>`; }
+  $('readout').innerHTML = h;
+}
+function legend() {
+  let h = '<span><i class="sw" style="border-color:var(--truth)"></i>truth</span>';
+  for (const m of MODELS) if (shown.has(m.key)) h += `<span><i class="sw${m.dash ? ' dash' : ''}" style="border-color:var(${m.c})"></i>${m.name}</span>`;
+  h += '<span><i class="sw box b-contact"></i>arm in contact</span><span><i class="sw box b-slow"></i>within 5 cm (slow band)</span><span><i class="sw box b-off"></i>outside the training data</span><span><i class="sw pickmark"></i>picked point</span>';
+  $('legend').innerHTML = h;
+}
+function table() {   // per network: T at both ends of the axis, steepest learned slope, speed at the first contact point
+  const ends = [0, NT-1], first = (() => { const c = (NT-1)/2; for (let k = 0; k <= c; k++) for (const i of [c+k, c-k]) if (at(D.d, bi, ax, i) <= 0) return i; return -1; })();
+  const tl = v => (ax === 0 ? 's ' + (BASES[bi]+v).toFixed(3) : (v*QR[ax-1] > 0 ? '+' : '') + (v*QR[ax-1]).toFixed(2) + ' rad');
+  const rows = [{ name: 'truth', arr: D.T, sarr: D.S }].concat(MODELS.map(m => ({ name: m.name, arr: D.models[set][m.key].T, sarr: D.models[set][m.key].S })));
+  let h = `<tr><th>Field</th><th>T at ${tl(TT[0])}</th><th>T at ${tl(TT[NT-1])}</th><th>Speed at the nearest contact</th></tr>`;
+  for (const r of rows) h += `<tr><td>${r.name}</td>${ends.map(i => `<td>${fmtV(at(r.arr, bi, ax, i))}</td>`).join('')}<td>${first < 0 ? 'no contact' : fmtV(at(r.sarr, bi, ax, first))}</td></tr>`;
+  $('table').innerHTML = h;
+}
+
+/* ---------- 3D ---------- */
+const viewport = $('viewport'), renderer = new THREE.WebGLRenderer({ antialias: true }); renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); viewport.prepend(renderer.domElement);
+const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(40, 1, .01, 50); camera.up.set(0, 0, 1);
+const controls = new THREE.OrbitControls(camera, renderer.domElement); controls.enableDamping = true;
+const VIEWS = { reset: { pos: [-0.55, -0.95, 0.95], target: [0.4, 0.25, 0.3] }, front: { pos: [-0.45, 0.4, 0.45], target: [0.7, 0.45, 0.3] }, top: { pos: [0.4, 0.3, 2.2], target: [0.4, 0.3, 0.0] } };
+function view(v) { camera.position.set(...VIEWS[v].pos); controls.target.set(...VIEWS[v].target); controls.update(); }
+view('reset'); $('v-reset').onclick = () => view('reset'); $('v-front').onclick = () => view('front'); $('v-top').onclick = () => view('top');
+const grid = new THREE.GridHelper(1.6, 16); grid.rotation.x = Math.PI/2; grid.position.set(0.4, 0.2, 0); scene.add(grid);
+const slabFill = new THREE.MeshBasicMaterial({ transparent: true, opacity: .3, depthWrite: false }), slabEdge = new THREE.LineBasicMaterial();
+let slab = null, slabE = null;
+const baseMat = new THREE.MeshBasicMaterial(), base = new THREE.Mesh(new THREE.CylinderGeometry(.06, .07, .02, 32), baseMat); base.rotation.x = Math.PI/2; scene.add(base);
+const armGroup = new THREE.Group(), ghostGroup = new THREE.Group(); scene.add(armGroup, ghostGroup);
+const armMat = new THREE.MeshBasicMaterial(), ghostMat = new THREE.MeshBasicMaterial({ transparent: true, opacity: .4, depthWrite: false });
+const pathMat = new THREE.LineBasicMaterial(), contactMat = new THREE.LineBasicMaterial(), lineMat = new THREE.LineBasicMaterial({ transparent: true, opacity: .45 });
+const pathLine = new THREE.LineSegments(new THREE.BufferGeometry(), pathMat), contactLine = new THREE.LineSegments(new THREE.BufferGeometry(), contactMat), trained = new THREE.Line(new THREE.BufferGeometry(), lineMat);
+scene.add(pathLine, contactLine, trained);
+const tipMat = new THREE.MeshBasicMaterial(), tip = new THREE.Mesh(new THREE.SphereGeometry(.014, 18, 12), tipMat), gtip = new THREE.Mesh(new THREE.SphereGeometry(.011, 18, 12), ghostMat); scene.add(tip, gtip);
+const JOINT_GEO = new THREE.SphereGeometry(.018, 16, 12), LINK_GEO = new THREE.CylinderGeometry(.01, .01, 1, 12), STUB_GEO = new THREE.CylinderGeometry(.006, .006, 1, 10);
+function matMul(A, B) { const C = new Float64Array(16); for (let r = 0; r < 4; r++) for (let c = 0; c < 4; c++) { let s = 0; for (let k = 0; k < 4; k++) s += A[r*4+k]*B[k*4+c]; C[r*4+c] = s; } return C; }
+function forwardKinematics(chain, q) { let T = new Float64Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]); const out = { base_link: T };
+  for (const j of chain) { T = matMul(T, j.origin); if (j.moving >= 0) { const c = Math.cos(q[j.moving]), s = Math.sin(q[j.moving]); T = matMul(T, new Float64Array([c, -s, 0, 0, s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])); } out[j.child] = T; }
+  return out; }
+function armMeshes(q, mat, group) {
+  group.clear(); const T = forwardKinematics(CHAIN.chain, q), up = new THREE.Vector3(0, 1, 0);
+  const pts = CHAIN.arm_links.map(l => new THREE.Vector3(T[l][3], T[l][7], T[l][11]));
+  const rod = (a, b, geo) => { const d = b.clone().sub(a), len = d.length(); if (len < 1e-4) return; const c = new THREE.Mesh(geo, mat);
+    c.position.copy(a.clone().add(b).multiplyScalar(.5)); c.quaternion.setFromUnitVectors(up, d.normalize()); c.scale.set(1, len, 1); group.add(c); };
+  pts.forEach((a, k) => { const j = new THREE.Mesh(JOINT_GEO, mat); j.position.copy(a); group.add(j); if (k+1 < pts.length) rod(a, pts[k+1], LINK_GEO); });
+  const g = T[CHAIN.arm_links[CHAIN.arm_links.length-1]], tp = pts[pts.length-1];
+  rod(tp, tp.clone().add(new THREE.Vector3(g[2], g[6], g[10]).multiplyScalar(-0.07)), STUB_GEO); return tp;
+}
+function gp(b, a, i) { const o = ((b*NA+a)*NT+i)*3; return new THREE.Vector3(D.grip[o], D.grip[o+1], D.grip[o+2]); }
+function drawScene() {
+  const t0 = armMeshes(qAt(bi, ax, 0), armMat, armGroup); tip.position.copy(t0);
+  const free = [], hit = [];
+  for (let i = 0; i+1 < NT; i++) { const a = gp(bi, ax, i), b = gp(bi, ax, i+1); ((at(D.d, bi, ax, i) <= 0 || at(D.d, bi, ax, i+1) <= 0) ? hit : free).push(a, b); }
+  pathLine.geometry.dispose(); pathLine.geometry = new THREE.BufferGeometry().setFromPoints(free);
+  contactLine.geometry.dispose(); contactLine.geometry = new THREE.BufferGeometry().setFromPoints(hit);
+  const tl = []; for (let i = 0; i < NT; i++) tl.push(gp(0, 0, i));
+  trained.visible = ax !== 0; trained.geometry.dispose(); trained.geometry = new THREE.BufferGeometry().setFromPoints(tl);
+  drawGhost();
+}
+function drawGhost() { if (!D) return; if (cur == null) { ghostGroup.clear(); gtip.visible = false; return; } gtip.position.copy(armMeshes(qAt(bi, ax, TT[cur]), ghostMat, ghostGroup)); gtip.visible = true; }
+function themeScene() {
+  scene.background = new THREE.Color(css('--scene')); slabFill.color = new THREE.Color(css('--slab')); slabEdge.color = new THREE.Color(css('--slab-edge'));
+  armMat.color = new THREE.Color(css('--arm')); ghostMat.color = new THREE.Color(css('--ghost')); baseMat.color = new THREE.Color(css('--ink-3'));
+  pathMat.color = new THREE.Color(css('--ink-2')); contactMat.color = new THREE.Color(css('--pick')); lineMat.color = new THREE.Color(css('--ink-3')); tipMat.color = new THREE.Color(css('--pick'));
+  const gc = new THREE.Color(css('--rule')); grid.material.color = gc; if (grid.material.length) grid.material.forEach(m => m.color = gc);
+}
+function resize() { const r = viewport.getBoundingClientRect(); renderer.setSize(r.width, r.height, false); camera.aspect = r.width/Math.max(1, r.height); camera.updateProjectionMatrix(); }
+new ResizeObserver(() => { resize(); if (D) { drawChart('T'); drawChart('S'); } }).observe(viewport);
+(function loop() { controls.update(); renderer.render(scene, camera); requestAnimationFrame(loop); })();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { themeScene(); });
+new MutationObserver(themeScene).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+themeScene(); resize();
+
+/* ---------- state ---------- */
+function refresh() {
+  if (!D) return;
+  for (let a = 0; a < NA; a++) $('ax-' + a).setAttribute('aria-pressed', a === ax);
+  for (const m of MODELS) $('m-' + m.key).setAttribute('aria-pressed', shown.has(m.key));
+  $('set-line').setAttribute('aria-pressed', set === 'line'); $('set-tube').setAttribute('aria-pressed', set === 'tube');
+  $('t-truth').setAttribute('aria-pressed', tFit === 'truth'); $('t-all').setAttribute('aria-pressed', tFit === 'all');
+  $('s-log').setAttribute('aria-pressed', sScale === 'log'); $('s-linear').setAttribute('aria-pressed', sScale === 'linear');
+  const s = BASES[bi], d0 = at(D.d, bi, 0, (NT-1)/2), p = gp(bi, 0, (NT-1)/2);
+  $('osb').textContent = 's = ' + s.toFixed(3);
+  $('pick-info').innerHTML = `<dt>Gripper</dt><dd>${cm(p.x)}, ${cm(p.y)}, ${cm(p.z)} cm</dd><dt>Clearance</dt><dd>${d0 <= 0 ? 'in contact' : (d0*1000).toFixed(1) + ' mm'}</dd><dt>Slab centre</dt><dd>y ${cm(D.block_centre[1])} cm</dd><dt>Contact on the line</dt><dd>from s = 0.009</dd>`;
+  $('vtag').textContent = `s = ${s.toFixed(3)} · moving ${AXNAME[ax]}`;
+  const ua = ax === 0 ? 1 : Math.abs(U[ax-1]);
+  $('axis-note').textContent = ax === 0 ? 'The direction every training pair lies on. Moving +s pushes the gripper +y into the slab.'
+    : `Only ${AXLONG[ax]} moves; ${ax === 0 ? '' : `±0.05 release units = ±${(0.05*QR[ax-1]).toFixed(2)} rad. Its share of the trained direction: |u${ax}| = ${ua.toFixed(2)}${ua < 1e-6 ? ' (J6 does not take part in the trained motion)' : ''}.`}`;
+  $('set-note').textContent = set === 'line' ? 'Every training point lies on the trained line. Along a single joint the networks leave their data at once.'
+    : 'Training points up to 0.02 release units off the line in random orthogonal directions. Grey marks where an axis leaves that tube.';
+  $('h-chart').textContent = ax === 0 ? 'Along the trained +y line' : `Along ${AXLONG[ax]}`;
+  $('sub-chart').textContent = `through s = ${s.toFixed(3)} · ${set === 'line' ? 'networks trained on the line' : 'networks trained on the tube'}`;
+  legend(); drawChart('T'); drawChart('S'); readout(); table(); drawScene();
+  $('status').textContent = `${shown.size} of ${MODELS.length} networks shown · ${NT} points per axis`;
+}
+fetch('data.json').then(r => { if (!r.ok) throw new Error('data.json: HTTP ' + r.status); return r.json(); }).then(j => {
+  [NB, NA, NT] = j.shape; U = j.u; QS = j.q_star; QR = j.q_range; TT = j.t; BASES = j.bases;
+  D = { d: f32(j.d), S: f32(j.S), T: f32(j.T), grip: f32(j.grip), block_centre: j.block_centre, models: {} };
+  for (const s in j.models) { D.models[s] = {}; for (const k in j.models[s]) { const R = { T: f32(j.models[s][k].T), S: f32(j.models[s][k].S) };
+    for (let b = 0; b < NB; b++) for (let a = 0; a < NA; a++) R.S[(b*NA+a)*NT+(NT-1)/2] = NaN;   // 1/|grad T(x_b, x)| is undefined at x = x_b
+    D.models[s][k] = R; } }
+  const g = new THREE.BoxGeometry(...j.panel); slab = new THREE.Mesh(g, slabFill); slabE = new THREE.LineSegments(new THREE.EdgesGeometry(g), slabEdge);
+  slab.position.set(...j.block_centre); slabE.position.set(...j.block_centre); scene.add(slab, slabE);
+  $('sb').max = NB-1; $('busy').hidden = true; refresh();
+}).catch(err => { $('busy').textContent = 'Could not load the data: ' + err.message; $('status').textContent = err.message; });
+</script>

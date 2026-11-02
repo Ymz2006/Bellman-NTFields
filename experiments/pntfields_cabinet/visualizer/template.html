@@ -1,0 +1,413 @@
+<meta charset="utf-8">
+<title>P-NTFields Path Viewer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: instrument panel. Controls and evidence on the left, the 3D scene and its clearance timeline on the right. */
+:root {
+  --bg: #f4f6f7; --panel: #ffffff; --ink: #14181b; --ink-2: #4a5359; --ink-3: #78828a; --rule: #d9dee2; --well: #e9edf0;
+  --accent: #2a78d6;
+  --pnt: #2a78d6; --ntrl: #eb6834; --released: #1baf7a; --witness: #78828a;
+  --good: #1f7a3a; --bad: #c42b2b; --bad-wash: rgba(196,43,43,.14);
+  --scene-bg: #eef1f3;
+  --display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111416; --panel: #191d20; --ink: #e8ecee; --ink-2: #b4bcc2; --ink-3: #87919a; --rule: #2c3337; --well: #22282c;
+  --accent: #3987e5; --pnt: #3987e5; --ntrl: #d95926; --released: #199e70; --witness: #87919a;
+  --good: #4cb36b; --bad: #ef5d5d; --bad-wash: rgba(239,93,93,.18); --scene-bg: #15191c; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #111416; --panel: #191d20; --ink: #e8ecee; --ink-2: #b4bcc2; --ink-3: #87919a; --rule: #2c3337; --well: #22282c;
+  --accent: #3987e5; --pnt: #3987e5; --ntrl: #d95926; --released: #199e70; --witness: #87919a;
+  --good: #4cb36b; --bad: #ef5d5d; --bad-wash: rgba(239,93,93,.18); --scene-bg: #15191c; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 14px/1.45 var(--body); }
+.wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 18px 28px; max-width: 1480px; margin: 0 auto; display: grid; gap: 14px; }
+header { display: grid; gap: 4px; }
+h1 { font: 600 1.6rem/1.15 var(--display); margin: 0; letter-spacing: .005em; text-wrap: balance; }
+.lede { color: var(--ink-2); margin: 0; max-width: 78ch; }
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.tabs button { font: 500 13px var(--body); color: var(--ink-2); background: transparent; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; cursor: pointer; }
+.tabs button[aria-selected="true"] { color: var(--ink); background: var(--panel); border-color: var(--ink-3); }
+.tabs button:focus-visible, button:focus-visible, input:focus-visible, .q:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.tabs .k { font: 500 11px var(--mono); color: var(--ink-3); margin-right: 6px; letter-spacing: .04em; }
+.grid { display: grid; grid-template-columns: minmax(300px, 380px) minmax(0, 1fr); gap: 14px; align-items: start; }
+@media (max-width: 920px) { .grid { grid-template-columns: minmax(0, 1fr); } .stage { order: -1; } }
+aside { display: grid; gap: 14px; min-width: 0; }
+section.card { background: var(--panel); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 14px; display: grid; gap: 10px; min-width: 0; }
+h2 { font: 600 12px var(--body); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); margin: 0; }
+.note { color: var(--ink-3); font-size: 12px; margin: 0; }
+/* totals */
+.bars { display: grid; gap: 8px; }
+.bar-group { display: grid; gap: 3px; }
+.bar-group .name { font-size: 12.5px; color: var(--ink-2); display: flex; justify-content: space-between; gap: 8px; }
+.bar-row { display: grid; grid-template-columns: 1fr 112px; gap: 8px; align-items: center; }
+.track { position: relative; height: 10px; background: var(--well); border-radius: 0 4px 4px 0; }
+.fill { position: absolute; inset: 0 auto 0 0; border-radius: 0 4px 4px 0; }
+.ref { position: absolute; top: -3px; bottom: -3px; width: 0; border-left: 2px solid var(--ink); }
+.val { font: 12px var(--mono); color: var(--ink-2); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.val b { color: var(--ink); font-weight: 500; }
+/* queries */
+.qlist { display: grid; gap: 2px; max-height: 330px; overflow-y: auto; margin: 0 -6px; padding: 0 6px; }
+.qhead { font: 500 11px var(--mono); color: var(--ink-3); text-transform: uppercase; letter-spacing: .06em; padding: 8px 2px 2px; }
+.q { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: center; text-align: left; background: transparent; border: 1px solid transparent; border-radius: 6px; padding: 5px 8px; cursor: pointer; color: var(--ink); font: 13px var(--body); }
+.q:hover { background: var(--well); }
+.q[aria-pressed="true"] { background: var(--well); border-color: var(--rule); }
+.q .lab { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.q .lab small { color: var(--ink-3); font: 11.5px var(--mono); margin-left: 4px; }
+.marks { display: flex; gap: 4px; }
+.mk { display: inline-flex; align-items: center; gap: 3px; font: 11px var(--mono); color: var(--ink-2); }
+.sw { width: 8px; height: 8px; border-radius: 2px; display: inline-block; flex: none; }
+.ok { color: var(--good); } .no { color: var(--bad); }
+/* sources */
+.srcs { display: grid; gap: 4px; }
+.src { display: grid; grid-template-columns: auto 26px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 5px 6px; border-radius: 6px; border: 1px solid transparent; }
+.src[data-active="true"] { background: var(--well); border-color: var(--rule); }
+.src input { margin: 0; accent-color: var(--accent); }
+.src .pick { all: unset; cursor: pointer; min-width: 0; display: grid; gap: 1px; }
+.src .pick span { font-size: 13px; }
+.src .pick small { font: 11.5px var(--mono); color: var(--ink-3); }
+.dash { width: 26px; height: 8px; }
+.chip { font: 500 11.5px var(--mono); padding: 2px 7px; border-radius: 999px; white-space: nowrap; border: 1px solid currentColor; }
+.chip.ok { color: var(--good); } .chip.no { color: var(--bad); }
+/* stage */
+.stage { display: grid; gap: 10px; min-width: 0; position: relative; }
+.viewport { position: relative; height: min(68vh, 640px); min-height: 360px; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; background: var(--scene-bg); }
+.viewport canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.overlay { position: absolute; left: 10px; top: 10px; right: 10px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; pointer-events: none; }
+.overlay > * { pointer-events: auto; }
+.legend3d { background: color-mix(in srgb, var(--panel) 88%, transparent); border: 1px solid var(--rule); border-radius: 6px; padding: 6px 9px; font-size: 12px; color: var(--ink-2); display: grid; gap: 2px; max-width: 360px; }
+.legend3d b { color: var(--ink); font-weight: 600; }
+.status { font: 500 12px var(--mono); padding: 5px 9px; border-radius: 6px; background: color-mix(in srgb, var(--panel) 88%, transparent); border: 1px solid var(--rule); color: var(--ink-2); align-self: start; }
+.status.hit { color: var(--bad); border-color: var(--bad); background: color-mix(in srgb, var(--panel) 80%, var(--bad-wash)); }
+.btn { font: 500 12.5px var(--body); color: var(--ink); background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 5px 10px; cursor: pointer; }
+.btn:hover { border-color: var(--ink-3); }
+.timeline { background: var(--panel); border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; display: grid; gap: 8px; min-width: 0; }
+.tl-top { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+.tl-top .controls { display: flex; gap: 8px; align-items: center; }
+.tl-top .read { font: 12px var(--mono); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+#scrub { width: 100%; accent-color: var(--accent); margin: 0; }
+.strip { position: relative; }
+.strip svg { display: block; width: 100%; height: 86px; overflow: visible; }
+.tip { position: absolute; pointer-events: none; background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 4px 8px; font: 12px var(--mono); color: var(--ink); white-space: nowrap; transform: translate(-50%, -100%); }
+footer { color: var(--ink-3); font-size: 12px; display: grid; gap: 4px; max-width: 110ch; }
+footer code { font: 11.5px var(--mono); }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>P-NTFields path viewer</h1>
+    <p class="lede" id="lede"></p>
+  </header>
+  <nav class="tabs" role="tablist" id="tabs"></nav>
+  <div class="grid">
+    <aside>
+      <section class="card" aria-labelledby="h-totals">
+        <h2 id="h-totals">Success over the full test set</h2>
+        <div class="bars" id="bars"></div>
+        <p class="note" id="totals-note"></p>
+      </section>
+      <section class="card" aria-labelledby="h-queries">
+        <h2 id="h-queries">Queries</h2>
+        <p class="note" id="queries-note"></p>
+        <div class="qlist" id="qlist"></div>
+      </section>
+      <section class="card" aria-labelledby="h-sources">
+        <h2 id="h-sources">Paths for this query</h2>
+        <p class="note">Tick to draw the gripper trace. Click a name to move the arm along that path.</p>
+        <div class="srcs" id="srcs"></div>
+      </section>
+    </aside>
+    <div class="stage">
+      <div class="viewport" id="viewport">
+        <div class="overlay">
+          <div class="legend3d" id="legend3d"></div>
+          <div style="display:flex; gap:8px; align-items:start;">
+            <div class="status" id="status">frame</div>
+            <button class="btn" id="reset" type="button">Reset view</button>
+          </div>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="tl-top">
+          <div class="controls">
+            <button class="btn" id="play" type="button" aria-label="Play">Play</button>
+            <span class="read" id="readout"></span>
+          </div>
+          <span class="read" id="tl-title"></span>
+        </div>
+        <input type="range" id="scrub" min="0" max="1000" value="0" step="1" aria-label="Position along the path">
+        <div class="strip" id="strip"><svg id="stripsvg" role="img" aria-label="Clearance along the path"></svg><div class="tip" id="tip" hidden></div></div>
+      </div>
+    </div>
+  </div>
+  <footer id="about"></footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+/*KINEMATICS_JS*/
+</script>
+<script>
+const DATA = /*DATA*/;
+const $ = id => document.getElementById(id);
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const fmtPct = (s, n) => `${(100*s/n).toFixed(1)}%`;
+const mm = v => v >= .999 ? '≥ 1 m' : `${(v*1000).toFixed(1)} mm`;
+const decode = (b64, Type) => { const s = atob(b64), u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return new Type(u.buffer); };
+
+// --- kinematics check against the Python reference poses ---
+const KIN = {}, kinCheck = {};
+for (const [key, robot] of Object.entries(DATA.robots)) {
+  KIN[key] = Kinematics.build(robot); let err = 0; const ref = robot.reference;
+  ref.q.forEach((q, i) => { const T = Kinematics.transforms(KIN[key], q, ref.links); ref.links.forEach((l, k) => T[l].forEach((v, e) => { err = Math.max(err, Math.abs(v - ref.poses[i][k][e])); })); });
+  kinCheck[key] = { err, n: ref.q.length, links: ref.links.length };
+  console.log(`[viewer] kinematics ${key}: max |error| ${err.toExponential(2)} over ${ref.q.length} configurations`);
+}
+
+// --- three.js scene, z up, metres ---
+const viewport = $('viewport');
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); viewport.prepend(renderer.domElement);
+const scene3 = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(40, 1, .01, 50); camera.up.set(0, 0, 1);
+const controls = new THREE.OrbitControls(camera, renderer.domElement); controls.enableDamping = true;
+scene3.add(new THREE.HemisphereLight(0xffffff, 0x8899aa, .75));
+const sun = new THREE.DirectionalLight(0xffffff, .65); sun.position.set(-1.5, -2, 3); scene3.add(sun);
+const fill = new THREE.DirectionalLight(0xffffff, .25); fill.position.set(2, 1.5, 1); scene3.add(fill);
+const world = new THREE.Group(); scene3.add(world);
+const grid = new THREE.GridHelper(2.4, 24); grid.rotation.x = Math.PI/2; grid.position.z = -.0005; scene3.add(grid);
+
+function themeColors() {
+  renderer.setClearColor(new THREE.Color(css('--scene-bg')));
+  grid.material.color = new THREE.Color(css('--rule')); grid.material.opacity = .9; grid.material.transparent = true;
+  if (state.scene) { buildTraces(); paintArm(); }
+  drawStrip();
+}
+
+// Robot instances (shared geometry per robot): the moving arm and faint start / goal ghosts.
+const robotGeo = {};
+function geometries(key) {
+  if (robotGeo[key]) return robotGeo[key];
+  return (robotGeo[key] = DATA.robots[key].meshes.map(m => {
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(decode(m.positions, Float32Array), 3));
+    g.setIndex(new THREE.BufferAttribute(decode(m.indices, Uint32Array), 1)); g.computeVertexNormals();
+    return { g, link: m.link, origin: new THREE.Matrix4().set(...m.origin) };
+  }));
+}
+function makeArm(key, opacity) {
+  const group = new THREE.Group(), mat = new THREE.MeshStandardMaterial({ color: 0xb9c0c6, roughness: .55, metalness: .1, transparent: opacity < 1, opacity, depthWrite: opacity >= .5 });
+  const parts = geometries(key).map(p => { const m = new THREE.Mesh(p.g, mat); m.matrixAutoUpdate = false; group.add(m); return { m, ...p }; });
+  return { group, parts, mat };
+}
+function pose(arm, key, q) {
+  const T = Kinematics.transforms(KIN[key], q, arm.parts.map(p => p.link));
+  arm.parts.forEach(p => { p.m.matrix.set(...T[p.link]).multiply(p.origin); p.m.matrixWorldNeedsUpdate = true; });
+}
+function eeOf(key, q) { const T = Kinematics.transforms(KIN[key], q, [DATA.robots[key].ee_link])[DATA.robots[key].ee_link]; return new THREE.Vector3(T[3], T[7], T[11]); }
+
+// --- state ---
+const state = { scene: null, query: 0, active: null, shown: new Set(), t: 0, playing: false };
+let arm = null, ghostStart = null, ghostGoal = null, obstacles = new THREE.Group(), traces = new THREE.Group(), markers = new THREE.Group();
+world.add(obstacles, traces, markers);
+
+const SRC_STYLE = key => DATA.sourceStyle[key];
+const colorOf = key => css(SRC_STYLE(key).color);
+
+function buildObstacles(S) {
+  obstacles.clear();
+  if (S.obstacle.cuboids) {
+    S.obstacle.cuboids.forEach(c => {
+      const size = c.hi.map((h, i) => h - c.lo[i]), mid = c.hi.map((h, i) => (h + c.lo[i])/2);
+      const isTable = c.name === 'table';
+      const box = new THREE.Mesh(new THREE.BoxGeometry(...size), new THREE.MeshStandardMaterial({ color: new THREE.Color(...c.color.map(v => v/255)), roughness: .85, transparent: true, opacity: isTable ? .35 : .42, depthWrite: false }));
+      box.position.set(...mid); obstacles.add(box);
+      const edges = new THREE.LineSegments(new THREE.EdgesGeometry(box.geometry), new THREE.LineBasicMaterial({ color: new THREE.Color(...c.color.map(v => v/255)).multiplyScalar(.7), transparent: true, opacity: .8 }));
+      edges.position.copy(box.position); obstacles.add(edges);
+    });
+  } else {
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(decode(S.obstacle.mesh.positions, Float32Array), 3));
+    g.setIndex(new THREE.BufferAttribute(decode(S.obstacle.mesh.indices, Uint32Array), 1)); g.computeVertexNormals();
+    obstacles.add(new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: 0x9a7350, roughness: .85, transparent: true, opacity: .42, side: THREE.DoubleSide, depthWrite: false })));
+    obstacles.add(new THREE.LineSegments(new THREE.EdgesGeometry(g, 25), new THREE.LineBasicMaterial({ color: 0x6b4e35, transparent: true, opacity: .7 })));
+  }
+}
+
+function setScene(id, keepQuery) {
+  const S = DATA.scenes.find(s => s.id === id); state.scene = S;
+  document.querySelectorAll('#tabs button').forEach(b => b.setAttribute('aria-selected', b.dataset.id === id));
+  try { localStorage.setItem('pnt-viewer-scene', id); } catch (e) {}
+  [arm, ghostStart, ghostGoal].forEach(a => a && world.remove(a.group));
+  arm = makeArm(S.robot, 1); ghostStart = makeArm(S.robot, .16); ghostGoal = makeArm(S.robot, .16);
+  world.add(arm.group, ghostStart.group, ghostGoal.group);
+  buildObstacles(S); renderTotals(); renderQueries();
+  resetView();
+  setQuery(keepQuery ?? S.startQuery);
+}
+
+function resetView() { const v = state.scene.view; camera.position.set(...v.eye); controls.target.set(...v.target); controls.update(); }
+
+// --- totals ---
+function renderTotals() {
+  const S = state.scene, Q = S.queries[state.query];
+  $('bars').innerHTML = S.totals.map(g => `<div class="bar-group"><div class="name"><span>${g.label}</span></div>${g.rows.map(r => {
+    const suite = Q && r.per_suite && Q.suite in r.per_suite ? ` · suite ${r.per_suite[Q.suite]}/${r.n/6}` : '';
+    return `<div class="bar-row" title="${r.label}: ${r.success}/${r.n}${suite}"><div class="track"><div class="fill" style="width:${100*r.success/r.n}%; background: var(${SRC_STYLE(r.key).color})"></div>${g.ref ? `<div class="ref" style="left:${g.ref.value}%" title="${g.ref.label}"></div>` : ''}</div>
+      <div class="val"><b>${fmtPct(r.success, r.n)}</b> ${r.success}/${r.n}</div></div>`; }).join('')}
+      <div class="name" style="font-size:11.5px; color: var(--ink-3)">${g.rows.map(r => `<span><span class="sw" style="background: var(${SRC_STYLE(r.key).color})"></span> ${r.short}${r.per_suite && Q ? ` · this suite ${r.per_suite[Q.suite]}/${r.n/6}` : ''}</span>`).join('')}</div>
+      ${g.ref ? `<div class="name" style="font-size:11.5px; color: var(--ink-3)"><span>▏${g.ref.label}</span></div>` : ''}</div>`).join('');
+  $('totals-note').textContent = S.totalsNote;
+}
+
+// --- queries ---
+function renderQueries() {
+  const S = state.scene; let html = '', last = null;
+  S.queries.forEach((q, i) => {
+    if (q.group !== last) { html += `<div class="qhead">${q.group}</div>`; last = q.group; }
+    const marks = S.keySources.map(k => { const p = q.plans[k]; return `<span class="mk" title="${DATA.sources[k]}: ${p.success ? 'solved' : p.reasons.join(', ')}"><span class="sw" style="background: var(${SRC_STYLE(k).color})"></span><span class="${p.success ? 'ok' : 'no'}">${p.success ? '✓' : '✕'}</span></span>`; }).join('');
+    html += `<button class="q" type="button" data-i="${i}" aria-pressed="${i === state.query}"><span class="lab">${q.name}<small>${q.detail}</small></span><span class="marks">${marks}</span></button>`;
+  });
+  $('qlist').innerHTML = html;
+  $('queries-note').innerHTML = S.queriesNote;
+  $('qlist').querySelectorAll('.q').forEach(b => b.addEventListener('click', () => setQuery(+b.dataset.i)));
+}
+
+function setQuery(i) {
+  const S = state.scene; state.query = i; const Q = S.queries[i];
+  $('qlist').querySelectorAll('.q').forEach(b => b.setAttribute('aria-pressed', +b.dataset.i === i));
+  state.shown = new Set(S.defaultShown.filter(k => k in Q.plans));
+  state.active = S.defaultActive;
+  const any = Object.keys(Q.plans)[0];
+  pose(ghostStart, S.robot, Q.plans[any].path[0]); pose(ghostGoal, S.robot, Q.plans[any].path.at(-1));
+  renderSources(); renderTotals(); buildTraces(); setT(tightest());
+}
+
+function tightest() { const p = activePlan(); let k = 0; p.clearance.forEach((c, i) => { if (c < p.clearance[k]) k = i; }); const hit = p.clearance.findIndex((_, i) => hitAt(p, i)); return hit >= 0 ? hit : k; }
+
+function renderSources() {
+  const S = state.scene, Q = S.queries[state.query];
+  $('srcs').innerHTML = S.sourceOrder.filter(k => k in Q.plans).map(k => {
+    const p = Q.plans[k], st = SRC_STYLE(k);
+    const verdict = p.success ? '<span class="chip ok">✓ solved</span>' : `<span class="chip no">✕ ${p.reasons.join(' + ').replace(/_/g, ' ')}</span>`;
+    return `<div class="src" data-k="${k}" data-active="${k === state.active}"><input type="checkbox" id="show-${k}" aria-label="Draw trace: ${DATA.sources[k]}" ${state.shown.has(k) ? 'checked' : ''}>
+      <svg class="dash" viewBox="0 0 26 8" aria-hidden="true"><line x1="1" y1="4" x2="25" y2="4" stroke="var(${st.color})" stroke-width="2.5" stroke-dasharray="${st.dash ? st.dash.join(' ') : 'none'}" stroke-linecap="round"/></svg>
+      <button class="pick" type="button"><span>${DATA.sources[k]}</span><small>min clearance ${mm(p.min_clearance)} · ${p.waypoints} waypoints</small></button>${verdict}</div>`;
+  }).join('');
+  $('srcs').querySelectorAll('.src').forEach(row => {
+    const k = row.dataset.k;
+    row.querySelector('input').addEventListener('change', e => { e.target.checked ? state.shown.add(k) : state.shown.delete(k); buildTraces(); });
+    row.querySelector('.pick').addEventListener('click', () => { state.active = k; state.shown.add(k); renderSources(); buildTraces(); setT(tightest()); });
+  });
+}
+
+const activePlan = () => state.scene.queries[state.query].plans[state.active];
+const hitAt = (p, i) => p.collide[i] || (state.scene.selfScored && p.self_collide[i]);
+
+// --- traces: gripper position along each shown path; frames in contact drawn as red points ---
+function buildTraces() {
+  traces.clear(); markers.clear();
+  const S = state.scene, Q = S.queries[state.query], bad = new THREE.Color(css('--bad'));
+  for (const k of S.sourceOrder) {
+    if (!state.shown.has(k) || !(k in Q.plans)) continue;
+    const p = Q.plans[k], st = SRC_STYLE(k), col = new THREE.Color(colorOf(k));
+    const pts = p.path.map(q => eeOf(S.robot, q));
+    const g = new THREE.BufferGeometry().setFromPoints(pts);
+    const mat = st.dash ? new THREE.LineDashedMaterial({ color: col, dashSize: st.dash[0]*.006, gapSize: st.dash[1]*.006 }) : new THREE.LineBasicMaterial({ color: col });
+    const line = new THREE.Line(g, mat); if (st.dash) line.computeLineDistances(); traces.add(line);
+    const hits = pts.filter((_, i) => hitAt(p, i));
+    if (hits.length) traces.add(new THREE.Points(new THREE.BufferGeometry().setFromPoints(hits), new THREE.PointsMaterial({ color: bad, size: k === state.active ? 7 : 4, sizeAttenuation: false })));
+    if (k === state.active) traces.add(new THREE.Points(g, new THREE.PointsMaterial({ color: col, size: 3.5, sizeAttenuation: false })));
+  }
+  const any = Q.plans[state.active], ink = new THREE.Color(css('--ink'));
+  const s = new THREE.Mesh(new THREE.SphereGeometry(.014, 18, 12), new THREE.MeshBasicMaterial({ color: ink })); s.position.copy(eeOf(S.robot, any.path[0])); markers.add(s);
+  const gbox = new THREE.Mesh(new THREE.BoxGeometry(.024, .024, .024), new THREE.MeshBasicMaterial({ color: ink, wireframe: true })); gbox.position.copy(eeOf(S.robot, any.path.at(-1))); markers.add(gbox);
+  $('legend3d').innerHTML = `<span><b>${S.title}</b></span><span>● start &nbsp; ▢ goal &nbsp; faint arms: start and goal poses</span><span><span class="sw" style="background: var(--bad)"></span> frames in contact (${S.contactRule})</span>`;
+}
+
+// --- timeline ---
+function setT(t) {
+  const p = activePlan(), n = p.path.length; state.t = Math.max(0, Math.min(n - 1, t));
+  $('scrub').max = String((n - 1)*20); $('scrub').value = String(Math.round(state.t*20));
+  paintArm(); drawStrip();
+}
+function frameQ(p, t) { const i = Math.floor(t), f = t - i, a = p.path[i], b = p.path[Math.min(i + 1, p.path.length - 1)]; return a.map((v, k) => v + (b[k] - v)*f); }
+function paintArm() {
+  if (!arm) return;
+  const p = activePlan(), i = Math.round(state.t), hit = hitAt(p, i), sc = state.scene.selfScored ? 'self contact' : 'self contact (not scored)';
+  pose(arm, state.scene.robot, frameQ(p, state.t));
+  arm.mat.color = new THREE.Color(hit ? css('--bad') : '#b9c0c6'); arm.mat.emissive = new THREE.Color(hit ? css('--bad') : '#000000'); arm.mat.emissiveIntensity = hit ? .25 : 0;
+  const what = p.collide[i] && p.self_collide[i] ? `cabinet contact + ${sc}` : p.collide[i] ? 'cabinet contact' : p.self_collide[i] ? sc : 'clear';
+  $('status').textContent = `frame ${i + 1}/${p.path.length} · ${what}`; $('status').className = 'status' + (hit ? ' hit' : '');
+  $('readout').textContent = `clearance ${mm(p.clearance[i])}`;
+  $('tl-title').textContent = DATA.sources[state.active];
+}
+function drawStrip() {
+  const svg = $('stripsvg'); if (!state.scene) return;
+  const p = activePlan(), n = p.path.length, W = svg.clientWidth || 600, H = 86, top = 8, bot = 18, CAP = state.scene.clearanceCap;
+  const x = i => n > 1 ? 2 + (W - 4)*i/(n - 1) : W/2, y = v => top + (H - top - bot)*(1 - Math.min(v, CAP)/CAP);
+  const col = colorOf(state.active), line = p.clearance.map((v, i) => `${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+  const bands = p.clearance.map((_, i) => hitAt(p, i) ? `<rect x="${(x(i) - (W - 4)/(2*Math.max(n - 1, 1))).toFixed(1)}" y="${top}" width="${Math.max(2, (W - 4)/Math.max(n - 1, 1)).toFixed(1)}" height="${H - top - bot}" fill="var(--bad-wash)"/>` : '').join('');
+  const thr = state.scene.contactMargin, ticks = state.scene.clearanceTicks;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.innerHTML = `${bands}
+    ${ticks.map(v => `<line x1="0" x2="${W}" y1="${y(v)}" y2="${y(v)}" stroke="var(--rule)" stroke-width="1"/><text x="${W - 2}" y="${y(v) - 3}" text-anchor="end" font-size="10.5" font-family="var(--mono)" fill="var(--ink-3)">${v === CAP ? '≥ ' : ''}${Math.round(v*1000)} mm</text>`).join('')}
+    ${thr > 0 ? `<line x1="0" x2="${W}" y1="${y(thr)}" y2="${y(thr)}" stroke="var(--bad)" stroke-width="1" stroke-dasharray="3 3"/><text x="4" y="${y(thr) - 3}" font-size="10.5" font-family="var(--mono)" fill="var(--bad)">contact margin ${thr*1000} mm</text>` : ''}
+    <polyline points="${x(0)},${y(0)} ${line} ${x(n - 1)},${y(0)}" fill="${col}" fill-opacity=".12" stroke="none"/>
+    <polyline points="${line}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round"/>
+    <line x1="${x(state.t)}" x2="${x(state.t)}" y1="${top - 4}" y2="${H - bot + 2}" stroke="var(--ink)" stroke-width="1.5"/>
+    <text x="2" y="${H - 4}" font-size="10.5" font-family="var(--mono)" fill="var(--ink-3)">start</text><text x="${W - 2}" y="${H - 4}" text-anchor="end" font-size="10.5" font-family="var(--mono)" fill="var(--ink-3)">goal</text>
+    <text x="${W/2}" y="${H - 4}" text-anchor="middle" font-size="10.5" font-family="var(--mono)" fill="var(--ink-3)">${state.scene.clearanceLabel}</text>`;
+}
+const strip = $('strip');
+function stripIndex(e) { const r = $('stripsvg').getBoundingClientRect(), n = activePlan().path.length; return Math.max(0, Math.min(n - 1, Math.round((e.clientX - r.left - 2)/(r.width - 4)*(n - 1)))); }
+strip.addEventListener('pointermove', e => {
+  const i = stripIndex(e), p = activePlan(), tip = $('tip'), r = strip.getBoundingClientRect();
+  tip.hidden = false; tip.style.left = `${Math.min(Math.max(e.clientX - r.left, 70), r.width - 70)}px`; tip.style.top = '4px';
+  tip.textContent = `frame ${i + 1} · ${mm(p.clearance[i])}${p.collide[i] ? ' · cabinet contact' : ''}${p.self_collide[i] ? ' · self contact' : ''}`;
+});
+strip.addEventListener('pointerleave', () => { $('tip').hidden = true; });
+strip.addEventListener('click', e => { stop(); setT(stripIndex(e)); });
+$('scrub').addEventListener('input', e => { stop(); setT(+e.target.value/20); });
+$('reset').addEventListener('click', resetView);
+
+let last = null;
+function stop() { state.playing = false; $('play').textContent = 'Play'; $('play').setAttribute('aria-label', 'Play'); }
+$('play').addEventListener('click', () => {
+  if (state.playing) return stop();
+  if (state.t >= activePlan().path.length - 1.01) state.t = 0;
+  state.playing = true; last = null; $('play').textContent = 'Pause'; $('play').setAttribute('aria-label', 'Pause');
+});
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function loop(now) {
+  requestAnimationFrame(loop);
+  if (state.playing) {
+    const n = activePlan().path.length, dt = last === null ? 0 : (now - last)/1000; last = now;
+    const t = state.t + dt*(n - 1)/(reduced ? 8 : 5);
+    if (t >= n - 1) { setT(n - 1); stop(); } else setT(t);
+  }
+  controls.update(); renderer.render(scene3, camera);
+}
+function resize() { const r = viewport.getBoundingClientRect(); renderer.setSize(r.width, r.height, false); camera.aspect = r.width/Math.max(r.height, 1); camera.updateProjectionMatrix(); drawStrip(); }
+new ResizeObserver(resize).observe(viewport);
+
+// --- page chrome ---
+$('lede').textContent = DATA.lede;
+$('tabs').innerHTML = DATA.scenes.map(s => `<button type="button" role="tab" data-id="${s.id}"><span class="k">${s.tabKey}</span>${s.tab}</button>`).join('');
+$('tabs').querySelectorAll('button').forEach(b => b.addEventListener('click', () => { stop(); setScene(b.dataset.id); }));
+$('about').innerHTML = DATA.about.map(t => `<span>${t}</span>`).join('') +
+  `<span>Kinematics check in this browser: ${Object.entries(kinCheck).map(([k, c]) => `${DATA.robots[k].name} link poses match the Python kinematics to ${c.err.toExponential(1)} m over ${c.n} random configurations × ${c.links} links`).join('; ')}.</span>`;
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', themeColors);
+new MutationObserver(themeColors).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+let first = DATA.scenes[0].id; try { const s = localStorage.getItem('pnt-viewer-scene'); if (s && DATA.scenes.some(x => x.id === s)) first = s; } catch (e) {}
+if (/^#[A-Za-z0-9_.~-]+$/.test(location.hash) && DATA.scenes.some(x => x.id === location.hash.slice(1))) first = location.hash.slice(1);
+setScene(first); resize(); themeColors(); requestAnimationFrame(loop);
+</script>

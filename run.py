@@ -11,14 +11,33 @@ REGISTRY=HERE/'tools/experiment_registry/registry.py'
 
 def main():
     p=argparse.ArgumentParser()
-    p.add_argument('action',choices=['doctor','train','evaluate','reproduce','wall-audit','wall-evaluate','wall-reproduce','rebuild-reproduce','from-source','from-source-prepare','doctor-source','transition-wall','obstacle-scene','obstacle-tests','obstacle-evaluate','speed-test','cabinet-tests','cabinet','cabinet-metric','cabinet-evaluate'])
+    p.add_argument('action',choices=['doctor','train','evaluate','reproduce','wall-audit','wall-evaluate','wall-reproduce','rebuild-reproduce','from-source','from-source-prepare','doctor-source','transition-wall','obstacle-scene','obstacle-tests','obstacle-evaluate','speed-test','cabinet-tests','cabinet','cabinet-metric','cabinet-evaluate','face-speed','face-speed-evaluate','face-speed-accuracy','face-speed-guard','point-field','point-field-bellman','ntrl-cabinet','pntfields-cabinet'])
     p.add_argument('--smoke',action='store_true')
+    p.add_argument('--self-net',help='point-field: split run whose self-collision network replaces the exact self term in the learned-self controls')
+    p.add_argument('--speed',choices=['learned','exact'],help='point-field-bellman: hierarchical speed with the learned point field (--run: the point-field run) or the exact scene distance')
+    p.add_argument('--reference',help='point-field-bellman: baseline rerun whose seed states and bank transitions must be reproduced')
     p.add_argument('--repeat-reason')
     p.add_argument('--prepare-only',action='store_true')
     p.add_argument('--scene',help='transition-wall: scene in experiments/transition_wall/scenes (wall40 or wall80); obstacle-scene: scene in experiments/obstacle_scenes/scenes (platforms, shelf or clutter); cabinet*: scene in experiments/cabinet/scenes (cabinet, cabinet_plus10 or cabinet_plus20; default cabinet)')
     p.add_argument('--gpu',help='transition-wall, obstacle-*, speed-test, cabinet*: run on this GPU index instead of all GPUs')
     p.add_argument('--run',help='obstacle-evaluate, speed-test, cabinet-evaluate: registered run (results/registered_<id>) whose checkpoint to evaluate or speed network to test')
+    p.add_argument('--ntrl-args',help='ntrl-cabinet: options passed verbatim to experiments/ntrl_cabinet/pipeline.py, e.g. "--variant metric_arm --coords ntrl"')
+    p.add_argument('--pnt-args',help='pntfields-cabinet: options passed verbatim to experiments/pntfields_cabinet/pipeline.py, e.g. "--joint-limit 3.14159"')
     p.add_argument('--suite',choices=['scene','frozen600'],default='scene',help="obstacle-evaluate: the scene's frozen test suites (default) or the frozen 600 queries")
+    p.add_argument('--method',choices=['bellman','metric'],help='face-speed: which field to train with the per-piece speed')
+    p.add_argument('--cover',choices=['faces','spheres','links','split','environment','release'],help='face-speed: pieces of the speed (faces of the box cover, spheres, links, environment+self split, environment only without self-collision, or the release label)')
+    p.add_argument('--speed-model',choices=['shared','separate'],default='shared',help='face-speed bellman: one trunk with an output per piece (default) or one separate network per piece')
+    p.add_argument('--data',help='face-speed metric: registered run whose data/ to reuse (baseline rerun)')
+    p.add_argument('--sampled',help='face-speed bellman: registered cabinet run whose sampled/ FK pool and coverage set to reuse')
+    p.add_argument('--speed-steps',type=int,default=20000,help='face-speed bellman: speed network steps (default 20000)')
+    p.add_argument('--runs',nargs='*',help='face-speed-accuracy: registered runs whose prepared/speed.pt to test')
+    p.add_argument('--filter',choices=['cover','release'],default='cover',help='face-speed metric: clearance used by the x0 near-obstacle filter (default: the cover clearance)')
+    p.add_argument('--margin',type=float,help='face-speed metric: speed label margin in m (default 0.05)')
+    p.add_argument('--offset',type=float,help='face-speed metric: speed label offset (lower clip) in m (default 0.005)')
+    p.add_argument('--pairs',type=int,help='face-speed metric: training pairs (default 500000)')
+    p.add_argument('--rows',choices=['pieces','body','none'],default='pieces',help='face-speed-guard: one constraint per piece (default), one for the body speed, or none (control)')
+    p.add_argument('--alpha',type=float,default=.5,help='face-speed-guard: barrier rate (default 0.5)')
+    p.add_argument('--floor',type=float,default=.15,help='face-speed-guard: speed floor (default 0.15)')
     a=p.parse_args()
     if a.action=='transition-wall':
         from experiments.transition_wall.run import execute
@@ -30,6 +49,22 @@ def main():
         return
     if a.action=='speed-test':
         from experiments.speed_test.run import execute
+        execute(a)
+        return
+    if a.action=='ntrl-cabinet':
+        from experiments.ntrl_cabinet.run import execute
+        execute(a)
+        return
+    if a.action=='pntfields-cabinet':
+        from experiments.pntfields_cabinet.run import execute
+        execute(a)
+        return
+    if a.action in ('point-field','point-field-bellman'):
+        from experiments.point_field.run import execute
+        execute(a)
+        return
+    if a.action.startswith('face-speed'):
+        from experiments.face_speed.run import execute
         execute(a)
         return
     if a.action in ('cabinet-tests','cabinet','cabinet-metric','cabinet-evaluate'):

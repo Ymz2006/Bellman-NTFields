@@ -1,0 +1,515 @@
+<title>Cabinet Training Pairs</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: instrument panel. Controls and readouts in a left column, the 3D scene on the right; the pair-length chart and the full-data comparison run full width below. */
+:root {
+  --bg: #f4f6f7; --panel: #ffffff; --ink: #14181b; --ink-2: #4a5359; --ink-3: #78828a; --rule: #d9dee2; --well: #e9edf0; --grid: #e6e9ec;
+  --accent: #2a78d6; --scene: #eef1f3; --wood: #9a6b3f; --wood-edge: #6e4a29; --table: #b9c0c6; --region: #4a5359; --link: #4a5359;
+  --x0: #2a78d6; --x1: #eb6834; --test: #1baf7a; --sel: #e34948;
+  --r0: #86b6ef; --r1: #5598e7; --r2: #2a78d6; --r3: #1c5cab; --r4: #104281; --r5: #0d366b;
+  --display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111416; --panel: #191d20; --ink: #e8ecee; --ink-2: #b4bcc2; --ink-3: #87919a; --rule: #2c3337; --well: #22282c; --grid: #262c30;
+  --accent: #3987e5; --scene: #15191c; --wood: #8a6040; --wood-edge: #c09060; --table: #3a4248; --region: #87919a; --link: #87919a;
+  --x0: #3987e5; --x1: #d95926; --test: #199e70; --sel: #e66767;
+  --r0: #184f95; --r1: #256abf; --r2: #3987e5; --r3: #6da7ec; --r4: #9ec5f4; --r5: #cde2fb; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #111416; --panel: #191d20; --ink: #e8ecee; --ink-2: #b4bcc2; --ink-3: #87919a; --rule: #2c3337; --well: #22282c; --grid: #262c30;
+  --accent: #3987e5; --scene: #15191c; --wood: #8a6040; --wood-edge: #c09060; --table: #3a4248; --region: #87919a; --link: #87919a;
+  --x0: #3987e5; --x1: #d95926; --test: #199e70; --sel: #e66767;
+  --r0: #184f95; --r1: #256abf; --r2: #3987e5; --r3: #6da7ec; --r4: #9ec5f4; --r5: #cde2fb; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 14px/1.45 var(--body); }
+.wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 18px 28px;
+        max-width: 1480px; margin: 0 auto; display: grid; gap: 14px; }
+header { display: grid; gap: 4px; }
+h1 { font: 600 1.6rem/1.15 var(--display); margin: 0; text-wrap: balance; }
+h2 { font: 600 1.05rem/1.2 var(--display); margin: 0; letter-spacing: .01em; }
+.lede { color: var(--ink-2); margin: 0; max-width: 88ch; }
+.main { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 14px; align-items: start; }
+.side { display: grid; gap: 12px; min-width: 0; }
+.card { background: var(--panel); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 14px; display: grid; gap: 10px; min-width: 0; }
+.label { font: 500 11px var(--mono); letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); }
+.row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.big { font: 600 1.5rem/1 var(--display); font-variant-numeric: tabular-nums; }
+.muted { color: var(--ink-3); font-size: 12.5px; }
+input[type=range] { width: 100%; accent-color: var(--accent); }
+.seg { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; background: var(--well); border-radius: 6px; padding: 3px; gap: 3px; }
+.seg button { font: 500 12.5px var(--body); color: var(--ink-2); background: transparent; border: 0; border-radius: 4px; padding: 6px 4px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--panel); color: var(--ink); box-shadow: 0 0 0 1px var(--rule); }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.checks { display: grid; gap: 6px; }
+.checks label { display: flex; gap: 8px; align-items: center; cursor: pointer; color: var(--ink-2); }
+.checks input { accent-color: var(--accent); width: 15px; height: 15px; }
+.key { display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.key.sq { border-radius: 2px; }
+.key.ln { width: 14px; height: 2px; border-radius: 1px; }
+.ramp { height: 10px; border-radius: 3px; }
+.ticks { display: flex; justify-content: space-between; font: 11px var(--mono); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; margin: 0; font-size: 13px; }
+dt { color: var(--ink-3); }
+dd { margin: 0; text-align: right; font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; color: var(--ink); }
+.viewport { position: relative; height: min(76vh, 800px); min-height: 380px; background: var(--scene); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; touch-action: none; }
+.viewport canvas { display: block; width: 100%; height: 100%; }
+.vbar { position: absolute; top: 10px; right: 10px; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.vbar button { font: 500 12px var(--body); color: var(--ink-2); background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 5px 10px; cursor: pointer; }
+.vbar button:hover { color: var(--ink); }
+.vtag { position: absolute; top: 10px; left: 12px; font: 600 13px var(--display); color: var(--ink); background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 4px 9px; }
+.hint { position: absolute; left: 12px; bottom: 10px; font-size: 12px; color: var(--ink-3); pointer-events: none; }
+.tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--bg); font: 12px/1.45 var(--mono); padding: 6px 9px; border-radius: 5px; white-space: nowrap; transform: translate(12px, -50%); z-index: 3; }
+.sel-empty { color: var(--ink-3); font-size: 13px; }
+.btn { font: 500 12.5px var(--body); color: var(--ink-2); background: transparent; border: 1px solid var(--rule); border-radius: 6px; padding: 5px 10px; cursor: pointer; justify-self: start; }
+.below { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 14px; align-items: start; }
+.chart { position: relative; }
+.chart svg { display: block; width: 100%; height: auto; }
+.chart text { font-family: var(--mono); font-size: 11px; fill: var(--ink-3); }
+.chart text.lab { font-family: var(--body); font-size: 12px; fill: var(--ink-2); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 7px; }
+.tablebox { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; font-variant-numeric: tabular-nums; }
+th, td { padding: 7px 10px; text-align: right; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; white-space: normal; }
+thead th { font-weight: 500; color: var(--ink-2); font-size: 12px; }
+tbody tr:last-child td { border-bottom: 0; }
+td.hl { font-weight: 600; }
+th.hl { color: var(--ink); font-weight: 600; }
+.ctip { position: absolute; pointer-events: none; background: var(--ink); color: var(--bg); font: 12px/1.45 var(--mono); padding: 6px 9px; border-radius: 5px; white-space: nowrap; z-index: 3; }
+@media (max-width: 980px) { .below { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 860px) {
+  .main { grid-template-columns: minmax(0, 1fr); }
+  .viewport { height: 62vh; order: -1; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Cabinet training pairs</h1>
+    <p class="lede">ntrl-demo trains on pairs of arm poses (x0, x1). Each pose is drawn where its gripper ends up, and a thin link joins the two grippers of a pair. x0 always has its gripper in the test area and lies close to an obstacle; x1 is a random joint-space step from it. <b>In-cabinet pairs</b> are Test 3's new data: at least one of the two grippers is inside the cupboard. <b>Mixture</b> shows what each Test 3 run trained on, a share of in-cabinet pairs with in-area pairs for the rest, next to that run's planning result. <b>In-area pairs</b> keep both grippers in the test area. The <b>old recipe</b> is the registered baseline's data, where x1 can go anywhere. The page holds a fixed random subset of each set; the slider shows the first N.</p>
+  </header>
+
+  <div class="main">
+    <aside class="side">
+      <section class="card" aria-labelledby="l-set">
+        <span class="label" id="l-set">Data set</span>
+        <div class="seg" role="group" aria-labelledby="l-set">
+          <button id="d-cabinet" aria-pressed="true">In-cabinet</button>
+          <button id="d-mix" aria-pressed="false">Mixture</button>
+          <button id="d-inarea" aria-pressed="false">In-area</button>
+          <button id="d-old" aria-pressed="false">Old recipe</button>
+        </div>
+        <div class="muted" id="set-note"></div>
+      </section>
+
+      <section class="card" id="mix-card" aria-labelledby="l-mix" hidden>
+        <div class="row"><span class="label" id="l-mix">In-cabinet share</span><span class="big" id="mix-out">50 %</span></div>
+        <input type="range" id="mix" min="0" max="10" step="1" value="5" aria-labelledby="l-mix">
+        <div class="ticks"><span>0 %</span><span>50 %</span><span>100 %</span></div>
+        <dl id="mix-res"></dl>
+        <div class="muted">Each Test 3 run trained on 200,000 pairs: this share from the in-cabinet set, the rest from the in-area set. The points mix the two sets' displayed samples in the same proportion. The table and chart below use the run's exact pairs.</div>
+      </section>
+
+      <section class="card" aria-labelledby="l-n">
+        <div class="row"><span class="label" id="l-n">Pairs shown</span><span class="big" id="n-out">1,000</span></div>
+        <input type="range" id="n" min="100" max="4000" step="100" value="1000" aria-labelledby="l-n">
+        <div class="ticks"><span>100</span><span id="n-max">4,000</span></div>
+        <div class="row"><span class="label" id="l-size">Point size</span><span class="muted" id="size-out">4 px</span></div>
+        <input type="range" id="size" min="2" max="9" step="1" value="4" aria-labelledby="l-size">
+      </section>
+
+      <section class="card" aria-labelledby="l-color">
+        <span class="label" id="l-color">Color points by</span>
+        <div class="seg" role="group" aria-labelledby="l-color">
+          <button id="m-role" aria-pressed="true">x0 / x1</button>
+          <button id="m-speed" aria-pressed="false">Speed</button>
+          <button id="m-step" aria-pressed="false">Pair length</button>
+        </div>
+        <div id="legend"></div>
+      </section>
+
+      <section class="card" aria-labelledby="l-show">
+        <span class="label" id="l-show">Show</span>
+        <div class="checks">
+          <label><input type="checkbox" id="c-x0" checked><span class="key" style="background:var(--x0)"></span>x0 grippers</label>
+          <label><input type="checkbox" id="c-x1" checked><span class="key" style="background:var(--x1)"></span>x1 grippers</label>
+          <label><input type="checkbox" id="c-link" checked><span class="key ln" style="background:var(--link)"></span>Pair links</label>
+          <label><input type="checkbox" id="c-test"><span class="key" style="background:var(--test)"></span>Frozen test endpoints (1,200)</label>
+          <label><input type="checkbox" id="c-region" checked><span class="key sq" style="background:transparent;border:1px solid var(--region)"></span>Test area (sampling box)</label>
+          <label><input type="checkbox" id="c-cab" checked><span class="key sq" style="background:var(--wood)"></span>Cupboard</label>
+          <label><input type="checkbox" id="c-table" checked><span class="key sq" style="background:var(--table)"></span>Table</label>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="l-stats">
+        <span class="label" id="l-stats">Shown pairs</span>
+        <dl id="stats"></dl>
+      </section>
+
+      <section class="card" aria-labelledby="l-sel">
+        <span class="label" id="l-sel">Selected pair</span>
+        <div id="sel"><span class="sel-empty">Click a gripper point to draw both arm poses of its pair.</span></div>
+      </section>
+    </aside>
+
+    <div class="viewport" id="viewport">
+      <div class="vtag" id="vtag">In-cabinet pairs</div>
+      <div class="vbar">
+        <button id="v-reset">Reset view</button>
+        <button id="v-cab">Look into cupboard</button>
+        <button id="v-top">Top</button>
+      </div>
+      <div class="hint">Drag to orbit · right-drag or two fingers to pan · scroll to zoom · click a point</div>
+      <div class="tip" id="tip" hidden></div>
+    </div>
+  </div>
+
+  <div class="below">
+    <section class="card" aria-labelledby="l-hist">
+      <h2 id="l-hist">How far apart are the two poses of a pair?</h2>
+      <div class="muted">Joint-space distance |x1 − x0| in release units (each joint's full range = 1), share of pairs per 0.01 bin, over all pairs of each data set. Test queries: start–goal distance of the 600 frozen cabinet queries.</div>
+      <div class="legend" id="hlegend"></div>
+      <div class="chart" id="hist"><div class="ctip" id="ctip" hidden></div></div>
+    </section>
+    <section class="card" aria-labelledby="l-cmp">
+      <h2 id="l-cmp">All pairs</h2>
+      <div class="tablebox"><table id="cmp"></table></div>
+      <div class="muted">"Contact" counts poses at the floor speed (within 5 mm of an obstacle or in it). Runs: in-cabinet pairs ac3c7c7c (Test 3), in-area pairs 772f8677 (the joint-range test), old recipe 30d4d872 (trained baseline 3c53b360). The mixture column is the exact training data of the selected Test 3 run.</div>
+    </section>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const D = /*DATA*/null;
+const fmt = n => n.toLocaleString('en-US');
+const pct = v => (v*100).toFixed(1)+' %';
+function f32(s) { const b = atob(s), u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return new Float32Array(u.buffer); }
+const SETS = {};
+for (const [k, v] of Object.entries(D.sets)) SETS[k] = { ...v, EE0: f32(v.ee0), EE1: f32(v.ee1), ARM0: f32(v.arm0), ARM1: f32(v.arm1), Q0: f32(v.q0), Q1: f32(v.q1), S0: f32(v.s0), S1: f32(v.s1), STEP: f32(v.step) };
+const NAMES = { cabinet: 'In-cabinet pairs', inarea: 'In-area pairs', old: 'Old recipe', mix: 'Mixture' };
+const SRC_NAMES = ['in-area', 'in-cabinet'];
+const NOTES = {
+  cabinet: `${fmt(D.sets.cabinet.full.pairs)} pairs. Both grippers in the test area, and x0's or x1's gripper inside the cupboard.`,
+  inarea: `${fmt(D.sets.inarea.full.pairs)} pairs. Both grippers in the test area.`,
+  old: `${fmt(D.sets.old.full.pairs)} pairs. x0's gripper in the test area; ${pct(1 - D.sets.old.full.x1_in_box)} of the x1 grippers are outside it.`,
+  mix: `${fmt(D.mix[0].stats.pairs)} pairs per run, from the in-cabinet and in-area sets. Pick the share below.`,
+};
+const TEST = f32(D.test.ends), NL = D.links.length, K = D.count;
+let mixStep = 5;
+const mixShare = () => D.mix[mixStep].fraction;
+const mixPct = () => Math.round(mixShare()*100);
+function buildMix() {
+  // Slot i takes the next in-cabinet pair when floor((i + 1) p / 100) steps up, so the first N slots hold the share for every N.
+  const A = SETS.cabinet, B = SETS.inarea, p = mixPct();
+  const m = { EE0: new Float32Array(K*3), EE1: new Float32Array(K*3), ARM0: new Float32Array(K*NL*3), ARM1: new Float32Array(K*NL*3), Q0: new Float32Array(K*6), Q1: new Float32Array(K*6),
+              S0: new Float32Array(K), S1: new Float32Array(K), STEP: new Float32Array(K), SRC: new Uint8Array(K), index: new Array(K), full: D.mix[mixStep].stats };
+  let a = 0, b = 0;
+  for (let i = 0; i < K; i++) {
+    const fromCab = Math.floor((i+1)*p/100) > Math.floor(i*p/100), s = fromCab ? A : B, j = fromCab ? a++ : b++;
+    m.SRC[i] = fromCab ? 1 : 0; m.index[i] = s.index[j]; m.S0[i] = s.S0[j]; m.S1[i] = s.S1[j]; m.STEP[i] = s.STEP[j];
+    m.EE0.set(s.EE0.subarray(3*j, 3*j+3), 3*i); m.EE1.set(s.EE1.subarray(3*j, 3*j+3), 3*i);
+    m.Q0.set(s.Q0.subarray(6*j, 6*j+6), 6*i); m.Q1.set(s.Q1.subarray(6*j, 6*j+6), 6*i);
+    m.ARM0.set(s.ARM0.subarray(3*NL*j, 3*NL*(j+1)), 3*NL*i); m.ARM1.set(s.ARM1.subarray(3*NL*j, 3*NL*(j+1)), 3*NL*i);
+  }
+  SETS.mix = m;
+}
+function mixResults() {
+  const r = D.mix[mixStep], t = r.totals;
+  document.getElementById('mix-out').textContent = mixPct()+' %';
+  document.getElementById('mix-res').innerHTML =
+    `<dt>Training run</dt><dd>${r.run.split('T').pop()}</dd>
+     <dt>ntrl-demo MPPI</dt><dd>${fmt(t.ntrl_mppi)} / 1,800</dd>
+     <dt>Release MPPI</dt><dd>${fmt(t.matched_mppi)} / 1,800</dd>
+     <dt>RK4</dt><dd>${t.native_rk4} / 600</dd>
+     <dt>Both ends in cupboard, ntrl-demo MPPI</dt><dd>${(r.by_k.ntrl_mppi[2]*100).toFixed(1)} %</dd>
+     <dt>Both ends in cupboard, release MPPI</dt><dd>${(r.by_k.matched_mppi[2]*100).toFixed(1)} %</dd>`;
+}
+const nIn = document.getElementById('n'); nIn.max = K; document.getElementById('n-max').textContent = fmt(K);
+
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const col = n => new THREE.Color(css(n));
+const RAMP = ['--r0', '--r1', '--r2', '--r3', '--r4', '--r5'];
+function rampColor(t) {
+  t = Math.min(1, Math.max(0, t)); const x = t*(RAMP.length-1), i = Math.min(RAMP.length-2, Math.floor(x));
+  return col(RAMP[i]).lerp(col(RAMP[i+1]), x-i);
+}
+
+/* ---------- scene ---------- */
+const viewport = document.getElementById('viewport');
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+viewport.prepend(renderer.domElement);
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(40, 1, .01, 50); camera.up.set(0, 0, 1);
+const controls = new THREE.OrbitControls(camera, renderer.domElement); controls.enableDamping = true;
+const VIEWS = {
+  reset: { pos: [-0.9, -1.45, 1.15], target: [0.4, 0.2, 0.2] },
+  cab: { pos: [-0.25, 0.33, 0.42], target: [0.75, 0.33, 0.30] },
+  top: { pos: [0.3, 0.1, 3.0], target: [0.3, 0.1, 0.0] },
+};
+function view(v) { camera.position.set(...VIEWS[v].pos); controls.target.set(...VIEWS[v].target); controls.update(); }
+view('reset');
+
+const cab = new THREE.Group(), table = new THREE.Group(); scene.add(cab, table);
+const boxMats = [];
+for (const b of D.boxes) {
+  const g = new THREE.BoxGeometry(...b.dims), isTable = b.name === 'table';
+  const fill = new THREE.MeshBasicMaterial({ transparent: true, opacity: isTable ? .22 : .30, depthWrite: false });
+  const edge = new THREE.LineBasicMaterial({ transparent: true, opacity: isTable ? .5 : .9 });
+  const m = new THREE.Mesh(g, fill), e = new THREE.LineSegments(new THREE.EdgesGeometry(g), edge);
+  m.position.set(...b.center); e.position.set(...b.center);
+  (isTable ? table : cab).add(m, e); boxMats.push({ fill, edge, isTable });
+}
+const S = D.sampling, regionGeo = new THREE.BoxGeometry(S.x[1]-S.x[0], S.y[1]-S.y[0], S.z[1]-S.z[0]);
+const regionMat = new THREE.LineBasicMaterial({ transparent: true, opacity: .6 });
+const region = new THREE.LineSegments(new THREE.EdgesGeometry(regionGeo), regionMat);
+region.position.set((S.x[0]+S.x[1])/2, (S.y[0]+S.y[1])/2, (S.z[0]+S.z[1])/2); scene.add(region);
+const baseMat = new THREE.MeshBasicMaterial();
+const base = new THREE.Mesh(new THREE.CylinderGeometry(.06, .07, .02, 32), baseMat); base.rotation.x = Math.PI/2; scene.add(base);
+
+function disc() {
+  const c = document.createElement('canvas'); c.width = c.height = 64; const g = c.getContext('2d');
+  g.beginPath(); g.arc(32, 32, 30, 0, Math.PI*2); g.fillStyle = '#fff'; g.fill();
+  return new THREE.CanvasTexture(c);
+}
+const DISC = disc(), PR = renderer.getPixelRatio();
+function cloud(count) {
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(count*3), 3));
+  geo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(count*3), 3));
+  return new THREE.Points(geo, new THREE.PointsMaterial({ size: 4*PR, sizeAttenuation: false, vertexColors: true, map: DISC, alphaTest: .5 }));
+}
+const P0 = cloud(K), P1 = cloud(K), PT = cloud(D.test.n*2); scene.add(P0, P1, PT);
+PT.geometry.attributes.position.array.set(TEST); PT.geometry.attributes.position.needsUpdate = true;
+const linkGeo = new THREE.BufferGeometry(); linkGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(K*6), 3));
+const linkMat = new THREE.LineBasicMaterial({ transparent: true, opacity: .28, depthWrite: false });
+const links = new THREE.LineSegments(linkGeo, linkMat); scene.add(links);
+const armGroup = new THREE.Group(); scene.add(armGroup);
+const arm0Mat = new THREE.MeshBasicMaterial(), arm1Mat = new THREE.MeshBasicMaterial(), selMat = new THREE.MeshBasicMaterial();
+
+/* ---------- state ---------- */
+let set = 'cabinet', mode = 'role', N = +nIn.value, selected = null;
+const cur = () => SETS[set];
+function loadSet() {
+  if (set === 'mix') buildMix();
+  document.getElementById('mix-card').hidden = set !== 'mix';
+  const s = cur();
+  P0.geometry.attributes.position.array.set(s.EE0); P0.geometry.attributes.position.needsUpdate = true;
+  P1.geometry.attributes.position.array.set(s.EE1); P1.geometry.attributes.position.needsUpdate = true;
+  const L = linkGeo.attributes.position.array;
+  for (let i = 0; i < K; i++) for (let k = 0; k < 3; k++) { L[6*i+k] = s.EE0[3*i+k]; L[6*i+3+k] = s.EE1[3*i+k]; }
+  linkGeo.attributes.position.needsUpdate = true;
+  for (const g of [P0.geometry, P1.geometry, linkGeo]) g.computeBoundingSphere();
+  document.getElementById('vtag').textContent = set === 'mix' ? `Mixture · ${mixPct()} % in-cabinet` : NAMES[set];
+  document.getElementById('set-note').textContent = NOTES[set];
+  select(null); paint(); setN(); drawHist(); compareTable(); mixResults();
+}
+function paint() {
+  const s = cur(), c0 = P0.geometry.attributes.color, c1 = P1.geometry.attributes.color;
+  const a = col('--x0'), b = col('--x1');
+  for (let i = 0; i < K; i++) {
+    let k0, k1;
+    if (mode === 'role') { k0 = a; k1 = b; }
+    else if (mode === 'speed') { k0 = rampColor((s.S0[i]-.1)/.9); k1 = rampColor((s.S1[i]-.1)/.9); }
+    else { k0 = k1 = rampColor(s.STEP[i]/.5); }
+    c0.setXYZ(i, k0.r, k0.g, k0.b); c1.setXYZ(i, k1.r, k1.g, k1.b);
+  }
+  c0.needsUpdate = true; c1.needsUpdate = true;
+  const t = PT.geometry.attributes.color, tc = col('--test');
+  for (let i = 0; i < D.test.n*2; i++) t.setXYZ(i, tc.r, tc.g, tc.b);
+  t.needsUpdate = true; legend();
+}
+function theme() {
+  scene.background = col('--scene');
+  for (const b of boxMats) { b.fill.color = b.isTable ? col('--table') : col('--wood'); b.edge.color = b.isTable ? col('--table') : col('--wood-edge'); }
+  regionMat.color = col('--region'); baseMat.color = col('--ink-3'); linkMat.color = col('--link');
+  arm0Mat.color = col('--x0'); arm1Mat.color = col('--x1'); selMat.color = col('--sel');
+  paint(); drawHist();
+}
+function legend() {
+  const el = document.getElementById('legend');
+  const stops = RAMP.map((r, i) => `var(${r}) ${i/(RAMP.length-1)*100}%`).join(',');
+  if (mode === 'role') el.innerHTML = `<div class="muted">x0 in blue (the anchor, near an obstacle), x1 in orange (the random step).</div>`;
+  else if (mode === 'speed') el.innerHTML = `<div class="ramp" style="background:linear-gradient(90deg,${stops})"></div><div class="ticks"><span>0.1</span><span>0.55</span><span>1.0</span></div>
+      <div class="muted">Speed label of each pose: clearance clipped to 5 mm–5 cm, divided by 5 cm (0.1 at or inside an obstacle).</div>`;
+  else el.innerHTML = `<div class="ramp" style="background:linear-gradient(90deg,${stops})"></div><div class="ticks"><span>0</span><span>0.25</span><span>0.5</span></div>
+      <div class="muted">Joint-space distance |x1 − x0| of the pair, release units. Both points of a pair share its color.</div>`;
+}
+const mq = matchMedia('(prefers-color-scheme: dark)'); mq.addEventListener('change', theme);
+new MutationObserver(theme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+/* ---------- controls ---------- */
+function setN() {
+  N = +nIn.value; document.getElementById('n-out').textContent = fmt(N);
+  P0.geometry.setDrawRange(0, N); P1.geometry.setDrawRange(0, N); linkGeo.setDrawRange(0, 2*N); stats();
+}
+nIn.addEventListener('input', setN);
+const sizeIn = document.getElementById('size');
+sizeIn.addEventListener('input', () => { const v = +sizeIn.value; for (const p of [P0, P1, PT]) p.material.size = v*PR; document.getElementById('size-out').textContent = v+' px'; });
+function group(ids, fn) {
+  for (const id of ids) document.getElementById(id).addEventListener('click', () => {
+    ids.forEach(x => document.getElementById(x).setAttribute('aria-pressed', String(x === id))); fn(id);
+  });
+}
+group(['d-cabinet', 'd-mix', 'd-inarea', 'd-old'], id => { set = id.slice(2); loadSet(); });
+const mixIn = document.getElementById('mix');
+mixIn.addEventListener('input', () => { mixStep = +mixIn.value; if (set === 'mix') loadSet(); else mixResults(); });
+group(['m-role', 'm-speed', 'm-step'], id => { mode = id.slice(2); paint(); });
+const bind = (id, obj) => { const c = document.getElementById(id); const f = () => { obj.visible = c.checked; }; c.addEventListener('change', f); f(); };
+bind('c-x0', P0); bind('c-x1', P1); bind('c-link', links); bind('c-test', PT); bind('c-region', region); bind('c-cab', cab); bind('c-table', table);
+document.getElementById('v-reset').addEventListener('click', () => view('reset'));
+document.getElementById('v-cab').addEventListener('click', () => view('cab'));
+document.getElementById('v-top').addEventListener('click', () => view('top'));
+
+const inBox = (E, i, b) => E[3*i] >= b[0][0] && E[3*i] <= b[0][1] && E[3*i+1] >= b[1][0] && E[3*i+1] <= b[1][1] && E[3*i+2] >= b[2][0] && E[3*i+2] <= b[2][1];
+const BOX = [S.x, S.y, S.z], CUP = D.cupboard;
+function stats() {
+  const s = cur(); let out = 0, c0 = 0, c1 = 0, contact = 0, pc = 0, cp = 0, cc = 0, fromCab = 0; const st = [];
+  for (let i = 0; i < N; i++) {
+    const a0 = inBox(s.EE0, i, CUP), a1 = inBox(s.EE1, i, CUP);
+    if (!inBox(s.EE1, i, BOX)) out++;
+    if (a0) { c0++; cp++; if (s.S0[i] <= .1001) cc++; }
+    if (a1) { c1++; cp++; if (s.S1[i] <= .1001) cc++; }
+    if (a0 || a1) pc++;
+    if (s.S1[i] <= .1001) contact++;
+    if (s.SRC && s.SRC[i]) fromCab++;
+    st.push(s.STEP[i]);
+  }
+  st.sort((a, b) => a - b);
+  document.getElementById('stats').innerHTML =
+    (s.SRC ? `<dt>From the in-cabinet set</dt><dd>${fmt(fromCab)} · ${pct(fromCab/N)}</dd>` : '') +
+    `<dt>Pairs with a gripper in the cupboard</dt><dd>${fmt(pc)} · ${pct(pc/N)}</dd>
+     <dt>x0 gripper in the cupboard</dt><dd>${fmt(c0)} · ${pct(c0/N)}</dd>
+     <dt>x1 gripper in the cupboard</dt><dd>${fmt(c1)} · ${pct(c1/N)}</dd>
+     <dt>Cupboard grippers in contact</dt><dd>${cp ? pct(cc/cp) : '–'}</dd>
+     <dt>x1 gripper outside the test area</dt><dd>${fmt(out)} · ${pct(out/N)}</dd>
+     <dt>x1 in contact</dt><dd>${pct(contact/N)}</dd>
+     <dt>Median pair length</dt><dd>${st[Math.floor(N/2)].toFixed(3)}</dd>`;
+}
+
+/* ---------- picking ---------- */
+const ray = new THREE.Raycaster(), mouse = new THREE.Vector2(), tip = document.getElementById('tip');
+let moved = false, lastEv = null, downAt = null;
+function pick(ev) {
+  const r = renderer.domElement.getBoundingClientRect();
+  mouse.set((ev.clientX - r.left)/r.width*2-1, -(ev.clientY - r.top)/r.height*2+1);
+  ray.setFromCamera(mouse, camera); ray.params.Points.threshold = .012*camera.position.distanceTo(controls.target);
+  const hits = []; if (P0.visible) hits.push(...ray.intersectObject(P0).map(h => ({ ...h, role: 0 }))); if (P1.visible) hits.push(...ray.intersectObject(P1).map(h => ({ ...h, role: 1 })));
+  hits.sort((a, b) => a.distanceToRay - b.distanceToRay || a.distance - b.distance);
+  const h = hits.find(x => x.index < N); return h ? { i: h.index, role: h.role } : null;
+}
+renderer.domElement.addEventListener('pointermove', ev => { moved = true; lastEv = ev; });
+renderer.domElement.addEventListener('pointerleave', () => { tip.hidden = true; lastEv = null; });
+renderer.domElement.addEventListener('pointerdown', ev => { downAt = [ev.clientX, ev.clientY]; });
+renderer.domElement.addEventListener('pointerup', ev => {
+  if (!downAt || Math.hypot(ev.clientX-downAt[0], ev.clientY-downAt[1]) > 5) return;
+  const h = pick(ev); select(h ? h.i : null);
+});
+function hoverTip() {
+  if (!moved || !lastEv) return; moved = false;
+  const h = pick(lastEv); renderer.domElement.style.cursor = h ? 'pointer' : '';
+  if (!h) { tip.hidden = true; return; }
+  const s = cur(), r = viewport.getBoundingClientRect();
+  tip.innerHTML = `${h.role ? 'x1' : 'x0'} of ${s.SRC ? SRC_NAMES[s.SRC[h.i]]+' ' : ''}pair ${fmt(s.index[h.i])}<br>speed ${(h.role ? s.S1 : s.S0)[h.i].toFixed(3)} · length ${s.STEP[h.i].toFixed(3)}`;
+  tip.style.left = (lastEv.clientX - r.left)+'px'; tip.style.top = (lastEv.clientY - r.top)+'px'; tip.hidden = false;
+}
+const DEG = 180/Math.PI, JN = ['pan', 'lift', 'elbow', 'wrist 1', 'wrist 2', 'wrist 3'];
+function drawArm(A, i, mat) {
+  const P = k => new THREE.Vector3(A[(i*NL+k)*3], A[(i*NL+k)*3+1], A[(i*NL+k)*3+2]), up = new THREE.Vector3(0, 1, 0);
+  for (let k = 0; k < NL; k++) {
+    const a = P(k); const j = new THREE.Mesh(new THREE.SphereGeometry(.016, 16, 12), mat); j.position.copy(a); armGroup.add(j);
+    if (k + 1 < NL) {
+      const b = P(k+1), d = b.clone().sub(a), len = d.length(); if (len < 1e-4) continue;
+      const c = new THREE.Mesh(new THREE.CylinderGeometry(.008, .008, len, 12), mat);
+      c.position.copy(a.clone().add(b).multiplyScalar(.5)); c.quaternion.setFromUnitVectors(up, d.normalize()); armGroup.add(c);
+    }
+  }
+}
+function select(i) {
+  armGroup.clear(); selected = i; const el = document.getElementById('sel');
+  if (i == null) { el.innerHTML = '<span class="sel-empty">Click a gripper point to draw both arm poses of its pair.</span>'; return; }
+  const s = cur(); drawArm(s.ARM0, i, arm0Mat); drawArm(s.ARM1, i, arm1Mat);
+  const rows = JN.map((n, k) => `<dt>${n}</dt><dd>${(s.Q0[6*i+k]*DEG).toFixed(0)}° → ${(s.Q1[6*i+k]*DEG).toFixed(0)}°</dd>`).join('');
+  el.innerHTML = `<dl>
+    <dt>Pair</dt><dd>${s.SRC ? SRC_NAMES[s.SRC[i]]+' ' : ''}#${fmt(s.index[i])}</dd>
+    <dt>Speed x0 → x1</dt><dd>${s.S0[i].toFixed(3)} → ${s.S1[i].toFixed(3)}</dd>
+    <dt>Pair length</dt><dd>${s.STEP[i].toFixed(3)}</dd>
+    <dt>x1 gripper in the test area</dt><dd>${inBox(s.EE1, i, BOX) ? 'yes' : 'no'}</dd>${rows}
+  </dl><div class="muted">Blue arm: x0. Orange arm: x1.</div><button class="btn" id="clear">Clear selection</button>`;
+  document.getElementById('clear').addEventListener('click', () => select(null));
+}
+
+/* ---------- pair-length chart ---------- */
+const DASH = { cabinet: '2 3', inarea: '', old: '7 4', mix: '', test: '' };
+const SERIES = () => [
+  { key: 'cabinet', name: 'In-cabinet pairs', hist: D.sets.cabinet.full.hist, med: D.sets.cabinet.full.step_median },
+  { key: 'inarea', name: 'In-area pairs', hist: D.sets.inarea.full.hist, med: D.sets.inarea.full.step_median },
+  { key: 'old', name: 'Old recipe', hist: D.sets.old.full.hist, med: D.sets.old.full.step_median },
+  ...(set === 'mix' ? [{ key: 'mix', name: `Mixture ${mixPct()} %`, hist: D.mix[mixStep].stats.hist, med: D.mix[mixStep].stats.step_median }] : []),
+  { key: 'test', name: 'Frozen test queries', hist: D.test.hist, med: D.test.median },
+];
+const dashAttr = k => DASH[k] ? ` stroke-dasharray="${DASH[k]}"` : '';
+const ctip = document.getElementById('ctip');
+function drawHist() {
+  const box = document.getElementById('hist'), W = 720, H = 260, m = { l: 44, r: 16, t: 14, b: 34 };
+  const B = D.bins, n = B.length - 1, ser = SERIES(), ymax = Math.ceil(Math.max(...ser.flatMap(s => s.hist))*100/2)*2;
+  const X = v => m.l + v/B[n]*(W-m.l-m.r), Y = v => m.t + (1 - v*100/ymax)*(H-m.t-m.b);
+  const stroke = s => s.key === 'test' ? 'var(--test)' : (s.key === set ? 'var(--ink)' : 'var(--ink-3)');
+  let g = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Pair-length distributions, medians: ${ser.map(s => `${s.name} ${s.med.toFixed(3)}`).join(', ')}">`;
+  for (let t = 0; t <= ymax; t += ymax > 8 ? 2 : 1) g += `<line x1="${m.l}" x2="${W-m.r}" y1="${Y(t/100)}" y2="${Y(t/100)}" stroke="var(${t ? '--grid' : '--rule'})"/><text x="${m.l-6}" y="${Y(t/100)+4}" text-anchor="end">${t}%</text>`;
+  for (let t = 0; t <= .6001; t += .1) g += `<text x="${X(t)}" y="${H-m.b+16}" text-anchor="middle">${t.toFixed(1)}</text>`;
+  g += `<text class="lab" x="${(m.l+W-m.r)/2}" y="${H-4}" text-anchor="middle">|x1 − x0| (release units)</text>`;
+  for (const s of [...ser].sort((a, b) => (a.key === set) - (b.key === set))) {
+    let d = `M${X(B[0])},${Y(0)}`;
+    for (let i = 0; i < n; i++) d += `L${X(B[i])},${Y(s.hist[i])}L${X(B[i+1])},${Y(s.hist[i])}`;
+    d += `L${X(B[n])},${Y(0)}`;
+    const w = s.key === set || s.key === 'test' ? 2 : 1.5;
+    g += `<path d="${d}" fill="none" stroke="${stroke(s)}" stroke-width="${w}" stroke-linejoin="round"${dashAttr(s.key)}/>`;
+    g += `<line x1="${X(s.med)}" x2="${X(s.med)}" y1="${m.t}" y2="${H-m.b}" stroke="${stroke(s)}" stroke-width="1" opacity=".6"/>`;
+  }
+  g += `<rect id="hhit" x="${m.l}" y="${m.t}" width="${W-m.l-m.r}" height="${H-m.t-m.b}" fill="transparent"/></svg>`;
+  box.querySelector('svg')?.remove(); box.insertAdjacentHTML('afterbegin', g);
+  document.getElementById('hlegend').innerHTML = ser.map(s => `<span><svg width="22" height="8" aria-hidden="true"><line x1="0" y1="4" x2="22" y2="4" stroke="${stroke(s)}" stroke-width="2"${dashAttr(s.key)}/></svg>${s.name} · median ${s.med.toFixed(3)}</span>`).join('');
+  const svg = box.querySelector('svg');
+  svg.querySelector('#hhit').addEventListener('mousemove', e => {
+    const r = svg.getBoundingClientRect(), v = ((e.clientX - r.left)/r.width*W - m.l)/(W-m.l-m.r)*B[n], i = Math.min(n-1, Math.max(0, Math.floor(v/(B[1]-B[0]))));
+    ctip.innerHTML = `${B[i].toFixed(2)}–${B[i+1].toFixed(2)}<br>` + ser.map(s => `${s.name}: ${(s.hist[i]*100).toFixed(1)} %`).join('<br>');
+    const br = box.getBoundingClientRect(); ctip.style.left = Math.min(e.clientX - br.left + 12, br.width - 230)+'px'; ctip.style.top = (e.clientY - br.top - 10)+'px'; ctip.hidden = false;
+  });
+  svg.querySelector('#hhit').addEventListener('mouseleave', () => { ctip.hidden = true; });
+}
+function compareTable() {
+  const cols = [['old', 'Old recipe', D.sets.old.full], ['inarea', 'In-area pairs', D.sets.inarea.full], ['cabinet', 'In-cabinet pairs', D.sets.cabinet.full]];
+  if (set === 'mix') cols.push(['mix', `Mixture ${mixPct()} %`, D.mix[mixStep].stats]);
+  const rows = [
+    ['Pairs', f => fmt(f.pairs)],
+    ['x0 gripper in the test area', f => pct(f.x0_in_box)],
+    ['x1 gripper in the test area', f => pct(f.x1_in_box)],
+    ['Pairs with a gripper in the cupboard', f => pct(f.pair_cupboard)],
+    ['x0 gripper in the cupboard', f => pct(f.x0_cupboard)],
+    ['x1 gripper in the cupboard', f => pct(f.x1_cupboard)],
+    ['Cupboard grippers in contact', f => pct(f.cupboard_contact)],
+    ['x1 in contact', f => pct(f.x1_floor_speed)],
+    ['Median pair length', f => f.step_median.toFixed(3)],
+    ['90th percentile pair length', f => f.step_p90.toFixed(3)],
+    [`Pairs longer than the median test query (${D.test.median.toFixed(3)})`, f => pct(f.longer_than_test_median)],
+  ];
+  const hl = k => k === set ? ' class="hl"' : '';
+  document.getElementById('cmp').innerHTML = `<thead><tr><th></th>${cols.map(c => `<th${hl(c[0])}>${c[1]}</th>`).join('')}</tr></thead><tbody>` +
+    rows.map(r => `<tr><td>${r[0]}</td>${cols.map(c => `<td${hl(c[0])}>${r[1](c[2])}</td>`).join('')}</tr>`).join('') + '</tbody>';
+}
+
+/* ---------- loop ---------- */
+function resize() { const r = viewport.getBoundingClientRect(); renderer.setSize(r.width, r.height, false); camera.aspect = r.width/Math.max(r.height, 1); camera.updateProjectionMatrix(); }
+new ResizeObserver(resize).observe(viewport);
+function loop() { controls.update(); hoverTip(); renderer.render(scene, camera); requestAnimationFrame(loop); }
+compareTable(); theme(); loadSet(); resize(); loop();
+</script>

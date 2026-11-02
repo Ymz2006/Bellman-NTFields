@@ -1,0 +1,444 @@
+<title>UR5e Collision Covers</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Semi+Condensed:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: an instrument console. Viewport on the left fills the screen; a fixed-width control rail on the right
+   (stacks under the viewport on phones). Colour is reserved for speed: red at the floor, amber mid, green free. */
+:root {
+  --bg: #e9edf0; --surface: #f8fafb; --ink: #16212b; --muted: #5c6a76; --line: #cfd7dd; --accent: #2b62c9;
+  --speed-floor: #cf3f37; --speed-mid: #e3a134; --speed-free: #3f9466; --self: #a33fb8;
+  --scene: #dfe5ea; --wood: #b98a55; --mesh: #9aa6b1; --grid: #c3ccd3;
+  --display: "Barlow Semi Condensed", "Arial Narrow", system-ui, sans-serif;
+  --body: "Barlow", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --rail: 360px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f151a; --surface: #161e25; --ink: #e2e8ed; --muted: #8d9aa5; --line: #2a3640; --accent: #6c9cf0;
+  --speed-floor: #e2584f; --speed-mid: #e9b04c; --speed-free: #57b07f; --self: #c873dc;
+  --scene: #1a232b; --wood: #8f6a42; --mesh: #6d7983; --grid: #2c3842; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0f151a; --surface: #161e25; --ink: #e2e8ed; --muted: #8d9aa5; --line: #2a3640; --accent: #6c9cf0;
+  --speed-floor: #e2584f; --speed-mid: #e9b04c; --speed-free: #57b07f; --self: #c873dc;
+  --scene: #1a232b; --wood: #8f6a42; --mesh: #6d7983; --grid: #2c3842; color-scheme: dark }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 14px; }
+.app { display: grid; grid-template-columns: minmax(0, 1fr) var(--rail); height: 100%; }
+.stage { position: relative; min-width: 0; min-height: 0; background: var(--scene); }
+#view { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+.stage-head { position: absolute; top: 12px; left: max(16px, env(safe-area-inset-left, 0px)); right: 16px; display: flex; gap: 12px; align-items: flex-start; flex-wrap: wrap; pointer-events: none; }
+.stage-head h1 { font-family: var(--display); font-weight: 600; font-size: 20px; letter-spacing: .01em; margin: 0; text-wrap: balance; }
+.stage-head p { margin: 2px 0 0; color: var(--muted); font-size: 13px; max-width: 52ch; }
+.legend { margin-left: auto; display: flex; flex-direction: column; gap: 4px; align-items: flex-end; font-size: 12px; color: var(--muted); }
+.ramp { width: 180px; height: 8px; border-radius: 2px; background: linear-gradient(90deg, var(--speed-floor), var(--speed-mid), var(--speed-free)); }
+.ramp-labels { width: 180px; display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; }
+.pick { position: absolute; left: max(16px, env(safe-area-inset-left, 0px)); bottom: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; font-size: 13px; max-width: calc(100% - 32px); }
+.pick b { font-family: var(--mono); font-weight: 500; }
+.rail { background: var(--surface); border-left: 1px solid var(--line); overflow-y: auto; min-width: 0; padding-block: 14px 24px; padding-left: 16px; padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 18px; }
+section h2 { font-family: var(--display); font-weight: 600; font-size: 12px; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+.seg { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.seg button { font: 500 13px var(--body); color: var(--ink); background: transparent; border: 0; padding: 7px 4px; cursor: pointer; border-left: 1px solid var(--line); }
+.seg button:first-child { border-left: 0; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--surface); }
+.seg button:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.note { color: var(--muted); font-size: 12.5px; line-height: 1.45; margin: 8px 0 0; }
+.toggles { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px; }
+.toggles label, .radio label { display: flex; gap: 6px; align-items: center; cursor: pointer; font-size: 13px; }
+.radio { display: flex; gap: 14px; margin-top: 8px; }
+.meter { display: grid; grid-template-columns: 74px minmax(0, 1fr) 46px; gap: 4px 8px; align-items: center; }
+.meter .k { font-size: 13px; }
+.meter .k.on { font-weight: 600; color: var(--accent); }
+.bar { height: 8px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.bar i { display: block; height: 100%; border-radius: 2px; }
+.meter .v { font-family: var(--mono); font-size: 12px; text-align: right; font-variant-numeric: tabular-nums; }
+.meter .sub { grid-column: 2 / 4; font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: -2px; overflow-wrap: anywhere; }
+table.pieces { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+table.pieces td { padding: 3px 0; border-top: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+table.pieces td:first-child { font-family: var(--mono); font-size: 11.5px; overflow-wrap: anywhere; }
+table.pieces td.n { text-align: right; font-family: var(--mono); font-size: 12px; width: 64px; }
+table.pieces tr { cursor: pointer; }
+table.pieces tr.sel td { color: var(--accent); }
+.sw { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 6px; vertical-align: 0; }
+.joint { display: grid; grid-template-columns: 82px minmax(0, 1fr) 54px; gap: 8px; align-items: center; font-size: 12.5px; }
+.joint output { font-family: var(--mono); font-size: 12px; text-align: right; font-variant-numeric: tabular-nums; }
+input[type=range] { width: 100%; accent-color: var(--accent); }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+select { font: 13px var(--body); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 5px; padding: 5px 6px; min-width: 0; flex: 1; }
+button.btn { font: 500 13px var(--body); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 5px; padding: 5px 10px; cursor: pointer; }
+.chip { font-family: var(--display); font-weight: 600; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; border: 1px solid currentColor; }
+.chip.ok { color: var(--speed-free); } .chip.bad { color: var(--speed-floor); } .chip.cert { color: var(--muted); }
+#strip { width: 100%; height: 120px; display: block; }
+.strip-key { display: flex; gap: 12px; font-size: 12px; color: var(--muted); flex-wrap: wrap; }
+.strip-key span::before { content: ""; display: inline-block; width: 14px; height: 2px; margin-right: 5px; vertical-align: 3px; background: var(--c); }
+.err { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); padding: 24px; text-align: center; }
+@media (max-width: 820px) {
+  html, body { height: auto; }
+  .app { grid-template-columns: 1fr; height: auto; }
+  .stage { height: 62vh; min-height: 340px; }
+  .rail { border-left: 0; border-top: 1px solid var(--line); overflow: visible; padding-left: max(16px, env(safe-area-inset-left, 0px)); }
+  .legend { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="app">
+  <div class="stage">
+    <canvas id="view" aria-label="3D view of the arm, its collision pieces and the cabinet"></canvas>
+    <div class="stage-head">
+      <div>
+        <h1>UR5e collision covers</h1>
+        <p id="caption">Drag to orbit, scroll to zoom, right-drag to pan. Click a sphere or a box face to read its clearance.</p>
+      </div>
+      <div class="legend" aria-hidden="true">
+        <span>piece speed = clip(d, 5 mm, 50 mm) / 50 mm</span>
+        <div class="ramp"></div>
+        <div class="ramp-labels"><span>0.1</span><span>0.5</span><span>1.0</span></div>
+      </div>
+    </div>
+    <div class="pick" id="pick" hidden></div>
+  </div>
+
+  <aside class="rail">
+    <section>
+      <h2>Collision model</h2>
+      <div class="seg" role="group" aria-label="Collision model">
+        <button id="cover-spheres" data-cover="spheres" aria-pressed="true">Spheres</button>
+        <button id="cover-links" data-cover="links" aria-pressed="false">Links</button>
+        <button id="cover-faces" data-cover="faces" aria-pressed="false">Box faces</button>
+      </div>
+      <p class="note" id="cover-note"></p>
+    </section>
+
+    <section>
+      <h2>Body speed by model</h2>
+      <div class="meter" id="meters"></div>
+      <p class="note">Body speed is the minimum over the model's pieces, including the self-collision piece (half the closest checked sphere pair).</p>
+    </section>
+
+    <section>
+      <h2>Closest pieces</h2>
+      <table class="pieces" id="pieces"><tbody></tbody></table>
+    </section>
+
+    <section>
+      <h2>Show</h2>
+      <div class="toggles">
+        <label><input type="checkbox" id="show-mesh" checked> Link meshes</label>
+        <label><input type="checkbox" id="show-spheres" checked> Spheres</label>
+        <label><input type="checkbox" id="show-boxes"> Boxes</label>
+        <label><input type="checkbox" id="show-self" checked> Self pair</label>
+        <label><input type="checkbox" id="show-cabinet" checked> Cabinet</label>
+        <label><input type="checkbox" id="show-trace" checked> Gripper path</label>
+      </div>
+      <div class="radio" role="radiogroup" aria-label="Colour pieces by">
+        <label><input type="radio" name="color" id="color-speed" value="speed" checked> Colour by speed</label>
+        <label><input type="radio" name="color" id="color-body" value="body"> by link</label>
+      </div>
+    </section>
+
+    <section>
+      <h2>Path</h2>
+      <div class="row">
+        <select id="query" aria-label="Query"></select>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <select id="source" aria-label="Path source">
+          <option value="witness">Certified witness path</option>
+          <option value="release">Bellman RK4, release speed field</option>
+          <option value="faces">Bellman RK4, box-face speed field</option>
+        </select>
+        <span id="verdict" class="chip cert">certified</span>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn" id="play" aria-label="Play path">Play</button>
+        <input type="range" id="scrub" min="0" max="1000" value="420" aria-label="Position along path" style="flex:1">
+      </div>
+      <canvas id="strip" aria-label="Body speed along the path for each collision model"></canvas>
+      <div class="strip-key"><span style="--c: var(--ink)">spheres (release label)</span><span style="--c: var(--accent)">box faces</span><span style="--c: var(--self)">self piece</span></div>
+    </section>
+
+    <section>
+      <h2>Joints</h2>
+      <div id="joints" style="display:flex;flex-direction:column;gap:6px"></div>
+      <div class="row" style="margin-top:8px"><button class="btn" id="zero">All joints 0°</button></div>
+    </section>
+
+    <section>
+      <h2>About the geometry</h2>
+      <p class="note" id="about"></p>
+    </section>
+  </aside>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script type="application/json" id="geometry-data">/*DATA*/</script>
+<script>/*GEOMETRY_JS*/</script>
+<script>
+(() => {
+const stage = document.querySelector('.stage');
+if (!window.THREE || !THREE.OrbitControls) { stage.insertAdjacentHTML('beforeend', '<div class="err">The 3D library did not load. Check the connection and reload the page.</div>'); return; }
+const G = JSON.parse(document.getElementById('geometry-data').textContent);
+const M = ArmGeometry.build(G);
+const $ = id => document.getElementById(id);
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const COVERS = {
+  spheres: { label: 'Spheres', note: `${G.spheres.filter(s => !s.ignored).length} padded cuRobo spheres, each its own piece. The minimum over them is exactly the release speed label the scorer uses. The two shoulder spheres (hatched) are ignored for obstacles.` },
+  links: { label: 'Links', note: `${M.linksWithSpheres.length} links, each piece the minimum of its own spheres. Same body speed as the spheres model, coarser pieces.` },
+  faces: { label: 'Box faces', note: `${G.bodies.length} boxes (one per rigid body, the smallest box holding its spheres), ${M.faces.length} rectangular faces, exact rectangle-to-cuboid distance. Contains the spheres, so it is never faster than the release label.` },
+};
+const state = { cover: 'spheres', color: 'speed', q: [0, -1.4, 1.6, -1.8, -1.57, 0], selected: null, query: 0, source: 'witness', t: .42, playing: false };
+
+// --- three.js scene (z up, metres) ---
+const canvas = $('view');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(38, 1, .01, 20); camera.up.set(0, 0, 1); camera.position.set(-.55, -1.25, .95);
+const controls = new THREE.OrbitControls(camera, canvas); controls.target.set(.42, .2, .25); controls.enableDamping = true; controls.update();
+scene.add(new THREE.HemisphereLight(0xffffff, 0x8899aa, .85));
+const sun = new THREE.DirectionalLight(0xffffff, .55); sun.position.set(-1, -2, 3); scene.add(sun);
+const grid = new THREE.GridHelper(2.4, 24); grid.rotation.x = Math.PI/2; grid.position.z = -.0851; scene.add(grid);
+const mat4 = a => new THREE.Matrix4().set(...a);
+const color = new THREE.Color();
+
+// Cabinet
+const cabinet = new THREE.Group(); scene.add(cabinet); const cuboidEdges = [];
+G.cuboids.forEach(c => {
+  const size = c.hi.map((h, i) => h-c.lo[i]), mid = c.hi.map((h, i) => (h+c.lo[i])/2);
+  const geo = new THREE.BoxGeometry(...size);
+  const m = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ transparent: true, opacity: c.name === 'table' ? .55 : .32, depthWrite: false, roughness: .9 }));
+  m.position.set(...mid); m.userData.name = c.name; cabinet.add(m);
+  const e = new THREE.LineSegments(new THREE.EdgesGeometry(geo), new THREE.LineBasicMaterial({ transparent: true, opacity: .7 })); e.position.copy(m.position); cabinet.add(e); cuboidEdges.push({ mesh: m, edges: e, name: c.name });
+});
+
+// Link meshes
+const meshGroup = new THREE.Group(); scene.add(meshGroup); const meshMat = new THREE.MeshStandardMaterial({ roughness: .6, metalness: .1, transparent: true, opacity: .5, depthWrite: false });
+const decode = (b64, T) => { const s = atob(b64), u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return new T(u.buffer); };
+const linkMeshes = G.meshes.map(m => {
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(decode(m.positions, Float32Array), 3)); g.setIndex(new THREE.BufferAttribute(decode(m.indices, Uint32Array), 1)); g.computeVertexNormals();
+  const mesh = new THREE.Mesh(g, meshMat); mesh.matrixAutoUpdate = false; meshGroup.add(mesh); return { mesh, link: m.link, origin: m.origin };
+});
+
+// Spheres (instanced), ignored shoulder spheres as wireframe
+const sphereGeo = new THREE.SphereGeometry(1, 28, 18);
+const sphereMat = new THREE.MeshStandardMaterial({ roughness: .55, transparent: true, opacity: .78 });
+const kept = G.spheres.map((s, i) => i).filter(i => !G.spheres[i].ignored), ignored = G.spheres.map((s, i) => i).filter(i => G.spheres[i].ignored);
+const sphereInst = new THREE.InstancedMesh(sphereGeo, sphereMat, kept.length); scene.add(sphereInst);
+const ignoredInst = new THREE.InstancedMesh(sphereGeo, new THREE.MeshBasicMaterial({ wireframe: true, transparent: true, opacity: .35 }), ignored.length); scene.add(ignoredInst);
+const selRing = new THREE.Mesh(sphereGeo, new THREE.MeshBasicMaterial({ wireframe: true })); selRing.visible = false; scene.add(selRing);
+
+// Boxes: 30 face quads + 5 edge cages
+const boxGroup = new THREE.Group(); scene.add(boxGroup);
+const quadGeo = new THREE.PlaneGeometry(1, 1);
+const faceMeshes = M.faces.map((f, i) => { const m = new THREE.Mesh(quadGeo, new THREE.MeshStandardMaterial({ side: THREE.DoubleSide, transparent: true, opacity: .5, depthWrite: false, roughness: .8 })); m.matrixAutoUpdate = false; m.userData.face = i; boxGroup.add(m); return m; });
+const cageGeo = new THREE.EdgesGeometry(new THREE.BoxGeometry(1, 1, 1));
+const cages = G.bodies.map(() => { const l = new THREE.LineSegments(cageGeo, new THREE.LineBasicMaterial({ transparent: true, opacity: .9 })); l.matrixAutoUpdate = false; boxGroup.add(l); return l; });
+
+// Self pair, gripper trace, grasp frame marker
+const selfLine = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), new THREE.Vector3()]), new THREE.LineBasicMaterial({ linewidth: 2 })); scene.add(selfLine);
+const selfDots = [0, 1].map(() => { const m = new THREE.Mesh(new THREE.SphereGeometry(.006, 12, 8), new THREE.MeshBasicMaterial()); scene.add(m); return m; });
+const trace = new THREE.Line(new THREE.BufferGeometry(), new THREE.LineBasicMaterial({ transparent: true, opacity: .9 })); scene.add(trace);
+const traceEnds = [0, 1].map(() => { const m = new THREE.Mesh(new THREE.SphereGeometry(.009, 14, 10), new THREE.MeshBasicMaterial()); scene.add(m); return m; });
+const ee = new THREE.AxesHelper(.06); ee.matrixAutoUpdate = false; scene.add(ee);
+
+// --- colour helpers ---
+let palette = {};
+function readPalette() {
+  ['--speed-floor', '--speed-mid', '--speed-free', '--accent', '--ink', '--muted', '--self', '--scene', '--wood', '--mesh', '--grid', '--line', '--surface'].forEach(k => palette[k] = new THREE.Color(css(k)));
+  renderer.setClearColor(palette['--scene']);
+  grid.material.color = palette['--grid']; grid.material.vertexColors = false; grid.material.transparent = true; grid.material.opacity = .6;
+  cuboidEdges.forEach(c => { c.mesh.material.color.copy(palette['--wood']); c.edges.material.color.copy(palette['--wood']); });
+  meshMat.color.copy(palette['--mesh']); ignoredInst.material.color.copy(palette['--muted']); selRing.material.color.copy(palette['--accent']);
+  selfLine.material.color.copy(palette['--self']); selfDots.forEach(d => d.material.color.copy(palette['--self']));
+  trace.material.color.copy(palette['--accent']); traceEnds[0].material.color.copy(palette['--muted']); traceEnds[1].material.color.copy(palette['--accent']);
+}
+const speedColor = (s, out = new THREE.Color()) => { const t = (s-.1)/.9; return t < .5 ? out.copy(palette['--speed-floor']).lerp(palette['--speed-mid'], t/.5) : out.copy(palette['--speed-mid']).lerp(palette['--speed-free'], (t-.5)/.5); };
+const speedCss = s => '#'+speedColor(s).getHexString();
+const BODY_HUES = [210, 28, 150, 280, 350, 95, 190, 45];
+const bodyColor = (k, out = new THREE.Color()) => out.setHSL(BODY_HUES[k % BODY_HUES.length]/360, .5, document.documentElement.matches('[data-theme="dark"]') || (matchMedia('(prefers-color-scheme: dark)').matches && !document.documentElement.matches('[data-theme="light"]')) ? .6 : .48);
+// Which box body owns a collision link (for "colour by link" consistency between spheres and boxes)
+const linkBody = {}; G.bodies.forEach((b, k) => b.links.forEach(l => { linkBody[l] = k; }));
+const sphereBodyIndex = i => { const l = G.collision_links[G.spheres[i].link]; return l in linkBody ? linkBody[l] : G.bodies.length + G.spheres[i].link % 3; };
+
+// --- per-frame update ---
+const tmpM = new THREE.Matrix4(), tmpV = new THREE.Vector3(), tmpQ = new THREE.Quaternion();
+let last = null;
+function update() {
+  const e = ArmGeometry.evaluate(M, state.q); last = e;
+  const P = e.pieces, cover = state.cover;
+  linkMeshes.forEach(m => { m.mesh.matrix.copy(mat4(ArmGeometry.mul(e.T[m.link], m.origin))); });
+  // spheres: in the spheres cover each sphere is its piece; in the links cover it takes its link's piece speed
+  const linkSpeed = {}; P.links.names.forEach((n, i) => { linkSpeed[n] = P.links.speed[i]; });
+  kept.forEach((i, k) => {
+    const s = e.spheres[i]; tmpM.compose(tmpV.set(...s.c), tmpQ.identity(), new THREE.Vector3(s.r, s.r, s.r)); sphereInst.setMatrixAt(k, tmpM);
+    const sp = cover === 'links' ? linkSpeed[G.collision_links[G.spheres[i].link]] : ArmGeometry.speedOf(M.C, e.sphereClear[i].d);
+    sphereInst.setColorAt(k, state.color === 'speed' ? speedColor(sp, color) : bodyColor(sphereBodyIndex(i), color));
+  });
+  ignored.forEach((i, k) => { const s = e.spheres[i]; tmpM.compose(tmpV.set(...s.c), tmpQ.identity(), new THREE.Vector3(s.r, s.r, s.r)); ignoredInst.setMatrixAt(k, tmpM); });
+  sphereInst.instanceMatrix.needsUpdate = true; if (sphereInst.instanceColor) sphereInst.instanceColor.needsUpdate = true; ignoredInst.instanceMatrix.needsUpdate = true;
+  sphereMat.opacity = cover === 'faces' ? .28 : .8;
+  // faces: basis (U*2a, V*2b, n) at the face centre
+  e.faces.forEach((f, i) => {
+    const m = faceMeshes[i];
+    m.matrix.set(f.U[0]*2*f.a, f.V[0]*2*f.b, f.n[0], f.c[0], f.U[1]*2*f.a, f.V[1]*2*f.b, f.n[1], f.c[1], f.U[2]*2*f.a, f.V[2]*2*f.b, f.n[2], f.c[2], 0, 0, 0, 1);
+    if (state.color === 'speed') speedColor(ArmGeometry.speedOf(M.C, f.d), m.material.color); else bodyColor(f.body, m.material.color);
+    m.material.opacity = cover === 'faces' ? .55 : .22;
+  });
+  e.bodyBoxes.forEach((b, k) => {
+    const S = [2*b.half[0], 0, 0, b.center[0], 0, 2*b.half[1], 0, b.center[1], 0, 0, 2*b.half[2], b.center[2], 0, 0, 0, 1];
+    cages[k].matrix.copy(mat4(ArmGeometry.mul(b.T, S))); cages[k].material.color.copy(state.color === 'speed' ? palette['--ink'] : bodyColor(k));
+  });
+  // self pair
+  const [a, b] = e.selfPair, ca = e.spheres[a].c, cb = e.spheres[b].c;
+  selfLine.geometry.setFromPoints([new THREE.Vector3(...ca), new THREE.Vector3(...cb)]); selfDots[0].position.set(...ca); selfDots[1].position.set(...cb);
+  ee.matrix.copy(mat4(e.T[G.ee_link]));
+  // limiting obstacle highlight
+  const lim = P[cover].limiting, limName = P[cover].names[lim];
+  let limCuboid = -1;
+  if (limName !== 'self') limCuboid = cover === 'faces' ? e.faces[lim].cuboid : cover === 'spheres' ? e.sphereClear[kept[lim]].cuboid : (() => { let best = Infinity, k = -1; kept.forEach(i => { if (G.collision_links[G.spheres[i].link] === limName && e.sphereClear[i].d < best) { best = e.sphereClear[i].d; k = e.sphereClear[i].cuboid; } }); return k; })();
+  cuboidEdges.forEach((c, k) => { c.edges.material.color.copy(k === limCuboid ? palette['--accent'] : palette['--wood']); c.edges.material.opacity = k === limCuboid ? 1 : .7; });
+  applyVisibility(); renderPanel(e); renderSelection(e);
+}
+
+function applyVisibility() {
+  meshGroup.visible = $('show-mesh').checked; sphereInst.visible = ignoredInst.visible = $('show-spheres').checked;
+  boxGroup.visible = $('show-boxes').checked; cabinet.visible = $('show-cabinet').checked;
+  selfLine.visible = selfDots[0].visible = selfDots[1].visible = $('show-self').checked;
+  trace.visible = traceEnds[0].visible = traceEnds[1].visible = $('show-trace').checked;
+}
+
+// --- side panel ---
+const mm = d => `${(d*1000).toFixed(1)} mm`;
+function renderPanel(e) {
+  const rows = [['spheres', 'Spheres'], ['links', 'Links'], ['faces', 'Box faces']].map(([k, label]) => {
+    const p = e.pieces[k], s = p.bodySpeed;
+    return `<span class="k${k === state.cover ? ' on' : ''}">${label}</span><span class="bar"><i style="width:${(s*100).toFixed(1)}%;background:${speedCss(s)}"></i></span><span class="v">${s.toFixed(2)}</span><span class="sub">${mm(p.clearance)} · ${p.names[p.limiting]}</span>`;
+  });
+  rows.push(`<span class="k">Self</span><span class="bar"><i style="width:${(ArmGeometry.speedOf(M.C, M.C.self_scale*e.dSelf)*100).toFixed(1)}%;background:var(--self)"></i></span><span class="v">${ArmGeometry.speedOf(M.C, M.C.self_scale*e.dSelf).toFixed(2)}</span><span class="sub">pair ${mm(e.dSelf)} · ${G.spheres[e.selfPair[0]].name} ↔ ${G.spheres[e.selfPair[1]].name}</span>`);
+  $('meters').innerHTML = rows.join('');
+  const p = e.pieces[state.cover], order = p.d.map((d, i) => i).sort((a, b) => p.d[a]-p.d[b]).slice(0, 7);
+  $('pieces').tBodies[0].innerHTML = order.map(i => `<tr data-piece="${i}" class="${state.selected && state.selected.cover === state.cover && state.selected.index === i ? 'sel' : ''}"><td><span class="sw" style="background:${p.names[i] === 'self' ? 'var(--self)' : speedCss(p.speed[i])}"></span>${p.names[i]}</td><td class="n">${mm(p.d[i])}</td><td class="n">${p.speed[i].toFixed(2)}</td></tr>`).join('');
+}
+$('pieces').addEventListener('click', ev => { const tr = ev.target.closest('tr'); if (!tr) return; select(state.cover, +tr.dataset.piece); });
+
+function select(cover, index) { state.selected = { cover, index }; update(); }
+function renderSelection(e) {
+  const pick = $('pick'); selRing.visible = false;
+  if (!state.selected) { pick.hidden = true; return; }
+  const { cover, index } = state.selected, p = e.pieces[cover], name = p.names[index];
+  if (name === undefined) { pick.hidden = true; return; }
+  pick.hidden = false;
+  pick.innerHTML = `<b>${name}</b> · ${COVERS[cover].label.toLowerCase()} piece · clearance ${mm(p.d[index])} · speed ${p.speed[index].toFixed(2)}${index === p.limiting ? ' · <b>limits the body</b>' : ''}`;
+  if (cover === 'spheres' && name !== 'self') { const s = e.spheres[kept[index]]; selRing.position.set(...s.c); selRing.scale.setScalar(s.r*1.12); selRing.visible = true; }
+  if (cover === 'faces' && name !== 'self') { faceMeshes[index].material.opacity = .9; }
+}
+
+// --- picking in the viewport ---
+const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(); let down = null;
+canvas.addEventListener('pointerdown', ev => { down = [ev.clientX, ev.clientY]; });
+canvas.addEventListener('pointerup', ev => {
+  if (!down || Math.hypot(ev.clientX-down[0], ev.clientY-down[1]) > 4) return;
+  const r = canvas.getBoundingClientRect(); ndc.set((ev.clientX-r.left)/r.width*2-1, -(ev.clientY-r.top)/r.height*2+1); ray.setFromCamera(ndc, camera);
+  const targets = []; if (sphereInst.visible) targets.push(sphereInst); if (boxGroup.visible) targets.push(...faceMeshes);
+  const hit = ray.intersectObjects(targets, false)[0];
+  if (!hit) { state.selected = null; update(); return; }
+  if (hit.object === sphereInst) { if (state.cover === 'links') { const ln = G.collision_links[G.spheres[kept[hit.instanceId]].link]; select('links', last.pieces.links.names.indexOf(ln)); } else select('spheres', hit.instanceId); }
+  else { setCover('faces', false); select('faces', hit.object.userData.face); }
+});
+
+// --- controls ---
+function setCover(c, layers = true) {
+  state.cover = c; document.querySelectorAll('.seg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.cover === c)));
+  $('cover-note').textContent = COVERS[c].note;
+  if (layers) { $('show-spheres').checked = c !== 'faces'; $('show-boxes').checked = c === 'faces'; }
+  if (state.selected && state.selected.cover !== c) state.selected = null;
+  update();
+}
+document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => setCover(b.dataset.cover)));
+['show-mesh', 'show-spheres', 'show-boxes', 'show-self', 'show-cabinet', 'show-trace'].forEach(id => $(id).addEventListener('change', update));
+document.querySelectorAll('input[name=color]').forEach(r => r.addEventListener('change', () => { state.color = r.value; update(); }));
+
+const jointBox = $('joints'), sliders = [];
+G.joint_names.forEach((n, i) => {
+  const lo = Math.max(G.q_min[i], -Math.PI), hi = Math.min(G.q_max[i], Math.PI);
+  jointBox.insertAdjacentHTML('beforeend', `<div class="joint"><label for="joint-${i}">${n.replace('_joint', '').replace('_', ' ')}</label><input type="range" id="joint-${i}" min="${lo}" max="${hi}" step="0.001"><output id="joint-out-${i}"></output></div>`);
+  const el = $(`joint-${i}`); sliders.push(el); el.addEventListener('input', () => { stop(); state.q[i] = +el.value; syncSliders(); update(); markStrip(null); });
+});
+function syncSliders() { sliders.forEach((el, i) => { const v = Math.atan2(Math.sin(state.q[i]), Math.cos(state.q[i])); el.value = v; $(`joint-out-${i}`).textContent = `${(state.q[i]*180/Math.PI).toFixed(1)}°`; }); }
+$('zero').addEventListener('click', () => { stop(); state.q = [0, 0, 0, 0, 0, 0]; syncSliders(); update(); markStrip(null); });
+
+// --- paths ---
+const qSel = $('query');
+G.queries.forEach((q, i) => qSel.insertAdjacentHTML('beforeend', `<option value="${i}">${q.suite.replace(/_/g, ' ')} · query ${q.query}</option>`));
+let path = null, cum = null, stripData = null;
+function loadPath() {
+  const Q = G.queries[state.query]; const src = state.source;
+  path = src === 'witness' ? Q.witness : Q.plans[src].path;
+  cum = [0]; for (let i = 1; i < path.length; i++) cum.push(cum[i-1]+Math.hypot(...path[i].map((v, k) => v-path[i-1][k])));
+  const v = $('verdict');
+  if (src === 'witness') { v.className = 'chip cert'; v.textContent = 'certified'; }
+  else { const pl = Q.plans[src]; v.className = 'chip '+(pl.success ? 'ok' : 'bad'); v.textContent = pl.success ? 'scorer: success' : 'scorer: '+pl.reasons.join(', '); }
+  const pts = []; const N = 160; stripData = [];
+  for (let k = 0; k <= N; k++) {
+    const q = sample(k/N), e = ArmGeometry.evaluate(M, q); pts.push(new THREE.Vector3(...e.ee));
+    stripData.push([e.pieces.spheres.bodySpeed, e.pieces.faces.bodySpeed, ArmGeometry.speedOf(M.C, M.C.self_scale*e.dSelf)]);
+  }
+  trace.geometry.dispose(); trace.geometry = new THREE.BufferGeometry().setFromPoints(pts); traceEnds[0].position.copy(pts[0]); traceEnds[1].position.copy(pts[pts.length-1]);
+  // open at the tightest moment of the path (lowest release-label speed, ties broken by the box-face speed)
+  let k = 0; stripData.forEach((r, i) => { if (r[0] < stripData[k][0] || (r[0] === stripData[k][0] && r[1] < stripData[k][1])) k = i; });
+  goTo(k/N);
+}
+function sample(t) {
+  const L = cum[cum.length-1]*t; let i = 1; while (i < cum.length-1 && cum[i] < L) i++;
+  const seg = cum[i]-cum[i-1], u = seg > 0 ? (L-cum[i-1])/seg : 0; return path[i-1].map((v, k) => v+(path[i][k]-v)*u);
+}
+function goTo(t) { state.t = t; state.q = sample(t); $('scrub').value = Math.round(t*1000); syncSliders(); update(); markStrip(t); }
+qSel.addEventListener('change', () => { stop(); state.query = +qSel.value; loadPath(); });
+$('source').addEventListener('change', () => { stop(); state.source = $('source').value; loadPath(); });
+$('scrub').addEventListener('input', () => { stop(); goTo(+$('scrub').value/1000); });
+let raf = null, t0 = 0;
+function stop() { state.playing = false; $('play').textContent = 'Play'; if (raf) cancelAnimationFrame(raf); raf = null; }
+$('play').addEventListener('click', () => {
+  if (state.playing) return stop();
+  state.playing = true; $('play').textContent = 'Pause'; if (state.t >= .999) state.t = 0; t0 = performance.now() - state.t*6000;
+  const step = now => { if (!state.playing) return; const t = Math.min((now-t0)/6000, 1); goTo(t); if (t >= 1) return stop(); raf = requestAnimationFrame(step); };
+  raf = requestAnimationFrame(step);
+});
+
+// strip chart
+const strip = $('strip'); let stripT = null;
+function markStrip(t) { stripT = t; drawStrip(); }
+function drawStrip() {
+  const dpr = Math.min(devicePixelRatio, 2), w = strip.clientWidth, h = strip.clientHeight; if (!w) return;
+  strip.width = w*dpr; strip.height = h*dpr; const g = strip.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, w, h);
+  const L = 30, Rr = 6, T = 8, B = 18, X = t => L+t*(w-L-Rr), Y = s => T+(1-s)*(h-T-B);
+  g.font = `11px ${css('--mono')}`; g.fillStyle = css('--muted'); g.strokeStyle = css('--line'); g.lineWidth = 1;
+  [.1, .5, 1].forEach(s => { g.beginPath(); g.moveTo(L, Y(s)); g.lineTo(w-Rr, Y(s)); g.stroke(); g.fillText(s.toFixed(1), 2, Y(s)+4); });
+  g.fillText('start', L, h-4); g.textAlign = 'right'; g.fillText('goal', w-Rr, h-4); g.textAlign = 'left';
+  if (!stripData) return;
+  [[2, css('--self'), 1.2], [0, css('--ink'), 1.6], [1, css('--accent'), 1.6]].forEach(([k, c, lw]) => {
+    g.strokeStyle = c; g.lineWidth = lw; g.beginPath(); stripData.forEach((r, i) => { const x = X(i/(stripData.length-1)), y = Y(r[k]); i ? g.lineTo(x, y) : g.moveTo(x, y); }); g.stroke();
+  });
+  if (stripT !== null) { g.strokeStyle = css('--accent'); g.lineWidth = 1; g.setLineDash([3, 3]); g.beginPath(); g.moveTo(X(stripT), T); g.lineTo(X(stripT), h-B); g.stroke(); g.setLineDash([]); }
+}
+
+// --- about text, from the data ---
+const tri = G.meshes.reduce((s, m) => s+m.triangles, 0);
+$('about').innerHTML = `Kinematics, spheres, boxes and meshes come from ${G.urdf} and the release cuRobo sphere file, exported by experiments/face_speed/visualizer/export.py. Sphere radii include cuRobo's ${(G.constants.sphere_buffer*1000).toFixed(0)} mm buffer. Self-collision checks ${G.self_pairs.length} sphere pairs (the release mask). Collision meshes: ${G.meshes.length} links, ${tri.toLocaleString('en-US')} triangles, for reference only; no clearance uses them. The JavaScript clearances match the experiment's Python to under 0.001 mm (check.cjs). Bellman paths: runs ${G.runs.release.slice(-8)} (release speed) and ${G.runs.faces.slice(-8)} (box-face speed).`;
+
+// --- sizing, theme, start ---
+function resize() { const r = stage.getBoundingClientRect(); renderer.setSize(r.width, r.height, false); camera.aspect = r.width/Math.max(r.height, 1); camera.updateProjectionMatrix(); drawStrip(); }
+new ResizeObserver(resize).observe(stage);
+const retheme = () => { readPalette(); if (last) update(); drawStrip(); };
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', retheme);
+new MutationObserver(retheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+readPalette();
+const startQuery = G.queries.findIndex(q => q.suite === 'compartment_to_free' && q.plans.faces.success && !q.plans.release.success);
+state.query = startQuery >= 0 ? startQuery : 0; qSel.value = state.query;
+setCover('spheres'); loadPath(); resize();
+(function loop() { controls.update(); renderer.render(scene, camera); requestAnimationFrame(loop); })();
+})();
+</script>

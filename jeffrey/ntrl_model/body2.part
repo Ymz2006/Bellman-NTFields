@@ -1,0 +1,61 @@
+  </div>
+  <figcaption>Forward pass, with tensor shapes for a batch of N pairs. Start and goal share every weight. The encoder turns each into a 256-number embedding, and T is a fixed distance between the two embeddings: 16 soft maximum gaps added together. Shapes and parameter counts were checked by building the network from the ntrl-demo source.</figcaption>
+</figure>
+
+<div class="cols">
+<section>
+  <h2>Where the weights are</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Layer</th><th>Shape</th><th class="n">Params</th></tr></thead>
+    <tbody>
+      <tr><td>B (Fourier matrix)</td><td class="m">128 × d, fixed</td><td class="n">0</td></tr>
+      <tr><td>Modulation pair u, v</td><td class="m">2 × 256→256</td><td class="n">131,584</td></tr>
+      <tr><td>Block 1: two M layers + sin layer</td><td class="m">3 × 256→256</td><td class="n">197,376</td></tr>
+      <tr><td>Block 2: same</td><td class="m">3 × 256→256</td><td class="n">197,376</td></tr>
+      <tr><td>Skip-mix gates</td><td class="m">2 scalars</td><td class="n">2</td></tr>
+      <tr><td>Final linear layer</td><td class="m">256→256</td><td class="n">65,792</td></tr>
+      <tr><td>InstanceNorm, output head</td><td class="m">none</td><td class="n">0</td></tr>
+      <tr class="tot"><td>Used in the forward pass</td><td></td><td class="n">592,130</td></tr>
+      <tr><td class="muted">Unused <span class="m">Linear(252, 256)</span> and 2 gate biases left in the code</td><td></td><td class="n muted">64,770</td></tr>
+      <tr class="tot"><td>Stored in the checkpoint</td><td></td><td class="n">656,900</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>metric and metric_arm</h2>
+  <p class="muted">The maze, cabinet and two-cube runs use <span class="m">metric</span>. ntrl-demo's own arm script trains <span class="m">metric_arm</span>. The layers are identical; only these constants differ.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Constant</th><th>metric</th><th>metric_arm</th></tr></thead>
+    <tbody>
+      <tr><td>Fourier matrix B</td><td class="m">N(0,1), cut at ±2</td><td class="m">0.2 · N(0,1)</td></tr>
+      <tr><td>Output factor</td><td class="m">0.2 · Σ</td><td class="m">0.1 · Σ</td></tr>
+      <tr><td>TD step</td><td class="m">0.03</td><td class="m">0.02</td></tr>
+      <tr><td>Speed stretch α</td><td class="m">1.025</td><td class="m">1.0</td></tr>
+    </tbody>
+  </table></div>
+</section>
+</div>
+
+<section class="read">
+  <h2>How it is trained</h2>
+  <p>Each training row is a pair of poses with their target speeds S₀, S₁ and the unit clearance gradients n₀, n₁ (pointing away from the nearest obstacle). Every term below is computed at both ends of the pair.</p>
+  <ul class="terms">
+    <li><span class="w">eikonal · weight 10⁻²</span><span class="eq">(√(S · |∇T|) − 1)²</span><span>Makes the slope of T match one over the target speed.</span></li>
+    <li><span class="w">TD · weight 10⁻³</span><span class="eq">( T(x₀, x₁) − [ T(x₀′, x₁) + 0.03/S ] )²,  x₀′ = x₀ − 0.03 · S · ∇ₓ₀T</span><span>Take one short step downhill; T here should equal the step's time plus T from where it lands. The bracket is held fixed (no gradient), and the term is skipped when T is shorter than one step.</span></li>
+    <li><span class="w">normal (the wall term) · weight 10⁻³</span><span class="eq">(1.001 − S) · |S · ∇T + n|²</span><span>Only acts where S is small, next to obstacles. It makes T rise steeply going into the obstacle, which pushes the planner away from it.</span></li>
+  </ul>
+  <p>The sum is multiplied by <span class="eq">exp(−0.5 · T)</span>, with gradient flowing through T, then averaged over the batch. Far pairs therefore count less. The network can also lower this loss by making T larger everywhere, which is how the strong-cabinet trainings collapsed to slow everywhere.</p>
+  <p>Other details of the trainer: target speeds are stretched first, s ← s²(2 − s)², then α·s + 1 − α. The optimiser is AdamW with learning rate 5·10⁻⁴ and weight decay 0.5, in 5,000 epochs of 5 batches of 2,000 pairs. Each epoch's loss is rescaled by one over the previous epoch's loss. If an epoch's loss rises more than 1.2×, a random one of the last five saved states is reloaded and the epoch is repeated.</p>
+</section>
+
+<section class="read">
+  <h2>What limits sharp walls</h2>
+  <ol class="why">
+    <li><strong>Sharp changes have few places to come from.</strong> Every linear layer is clamped to be smooth, so steep features come from the 128 fixed frequencies in B and from the u·sin y products. Rescaling the input (the maze zoom control, the same as scaling B) recovered a lot at 13×13: 444 vs 347 of 600.</li>
+    <li><strong>One embedding sets every distance.</strong> The same 256 numbers per pose decide both the wall barrier nearby and the travel time to far goals. More walls share the same capacity. At 40×40, the field's direction next to a wall matched "away from the wall" with cosine 0.07–0.10, against 0.98 at small sizes.</li>
+    <li><strong>The slowest speed is capped.</strong> The per-row normalisation and the fixed 0.2 factor bound |∇T|, so there is a limit on how slow the field can make the space next to an obstacle.</li>
+    <li><strong>Far pairs get less training signal.</strong> The exp(−0.5·T) weight shrinks the loss for long pairs, so long-range accuracy is learned more weakly than short-range accuracy.</li>
+  </ol>
+</section>
+</main>

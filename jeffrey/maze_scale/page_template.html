@@ -1,0 +1,456 @@
+<title>Maze Scale Test</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;650;750&family=Public+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column (~68ch) with full-width chart bands; small multiples in a wrapping grid, one panel per maze. */
+:root {
+  --bg: #f5f6f8; --surface: #ffffff; --ink: #15181d; --ink2: #4b525c; --muted: #737b86; --rule: #dde1e6; --wash: #eef1f5;
+  --accent: #2a78d6;
+  --s-ntrl: #2a78d6; --s-dp: #eb6834; --s-zoom: #1baf7a; --s-wall: #6250d6; --s-ref: #8b929b;
+  --good: #2b7d3f; --bad: #b4382f;
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+    --accent: #3987e5; --s-ntrl: #3987e5; --s-dp: #d95926; --s-zoom: #199e70; --s-wall: #9085e9; --s-ref: #7d858f;
+    --good: #5bb46f; --bad: #e0675d; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+  --accent: #3987e5; --s-ntrl: #3987e5; --s-dp: #d95926; --s-zoom: #199e70; --s-wall: #9085e9; --s-ref: #7d858f;
+  --good: #5bb46f; --bad: #e0675d; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 15.5px/1.6 var(--f-body); margin: 0; }
+.page { max-width: 1120px; margin: 0 auto; padding-block: 40px 72px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 44px; }
+.col { max-width: 70ch; min-width: 0; }
+header { display: grid; gap: 14px; }
+.eyebrow { font: 500 12px/1.4 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 750 clamp(30px, 5vw, 46px)/1.05 var(--f-display); letter-spacing: -0.015em; margin: 0; text-wrap: balance; }
+h2 { font: 650 23px/1.2 var(--f-display); margin: 0 0 10px; text-wrap: balance; }
+h3 { font: 650 16px/1.3 var(--f-display); margin: 18px 0 6px; }
+p { margin: 0 0 12px; }
+.lede { font-size: 17.5px; line-height: 1.55; color: var(--ink); }
+.lede strong, p strong { font-weight: 600; }
+section { display: grid; gap: 14px; min-width: 0; }
+.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+figure { margin: 0; background: #ffffff; border: 1px solid var(--rule); border-radius: 6px; padding: 10px; overflow-x: auto; }
+figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+figcaption { color: #4b525c; font-size: 13px; margin-top: 6px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.tile { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 12px 14px; display: grid; gap: 2px; }
+.tile .k { font: 500 12px/1.3 var(--f-mono); color: var(--muted); }
+.tile .v { font: 650 26px/1.15 var(--f-display); font-variant-numeric: tabular-nums; }
+.tile .s { font-size: 12.5px; color: var(--ink2); }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.controls .lab { font: 500 12px var(--f-mono); color: var(--muted); margin-right: 4px; }
+.chip { display: inline-flex; align-items: center; gap: 7px; font: 500 13px var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 999px; padding: 5px 11px; cursor: pointer; }
+.chip[aria-pressed="false"] { color: var(--muted); background: transparent; }
+.chip[aria-pressed="false"] .key { opacity: 0.35; }
+.chip:focus-visible, .panel:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.key { width: 18px; height: 0; border-top: 3px solid currentColor; border-radius: 2px; }
+.key.dash { border-top-style: dashed; border-top-width: 2px; }
+.key.dot { border-top-style: dotted; border-top-width: 2px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+.panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 10px 4px; position: relative; min-width: 0; }
+.panel h4 { font: 650 14px var(--f-display); margin: 0 0 2px 4px; display: flex; justify-content: space-between; gap: 8px; }
+.panel h4 span { font: 400 12px var(--f-mono); color: var(--muted); }
+.panel svg { display: block; width: 100%; height: auto; overflow: visible; }
+.axis text { fill: var(--muted); font: 9.5px var(--f-mono); }
+.gridline { stroke: var(--rule); stroke-width: 1; }
+.tip { position: absolute; z-index: 5; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--rule); border-radius: 6px; padding: 8px 10px; box-shadow: 0 4px 14px rgba(0,0,0,0.12); font-size: 12.5px; min-width: 190px; }
+.tip .h { font: 500 11.5px var(--f-mono); color: var(--muted); margin-bottom: 4px; }
+.tip .r { display: grid; grid-template-columns: 14px auto 1fr; gap: 6px; align-items: center; }
+.tip .r b { font: 500 13px var(--f-mono); font-variant-numeric: tabular-nums; }
+.tip .r i { font-style: normal; color: var(--ink2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tip .r .key { width: 14px; }
+details { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 14px; }
+summary { cursor: pointer; font: 600 14px var(--f-body); }
+.tablewrap { overflow-x: auto; margin-top: 10px; }
+table { border-collapse: collapse; font-size: 13px; min-width: 520px; }
+th, td { padding: 5px 9px; border-bottom: 1px solid var(--rule); text-align: right; white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+table.named th:nth-child(2), table.named td:nth-child(2) { text-align: left; }
+thead th { font: 600 12px var(--f-mono); color: var(--muted); }
+td.num, td .num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+tbody tr:hover { background: var(--wash); }
+.note { font-size: 13.5px; color: var(--ink2); }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; align-items: start; }
+.two > * { min-width: 0; }
+ul.tight { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+code { font: 13px var(--f-mono); background: var(--wash); padding: 1px 4px; border-radius: 4px; }
+@media (prefers-reduced-motion: no-preference) { .chip { transition: background-color 120ms, color 120ms; } }
+</style>
+
+<div class="page">
+  <header class="col">
+    <div class="eyebrow">jeffrey/maze_scale · ntrl-demo · 1 Nov 2026</div>
+    <h1>Maze Scale Test</h1>
+    <p class="lede" id="lede">ntrl-demo plans flawlessly on mazes up to the size of its own demo maze (7&nbsp;&times;&nbsp;7 cells) and falls apart beyond it: <strong>99.7&nbsp;% of runs on 4&times;4 and 7&times;7, 59&nbsp;% on 13&times;13, 23&nbsp;% on 22&times;22 and 11&nbsp;% on 40&times;40</strong>, where it does no better than driving straight at the goal. It fails by hitting walls: as the maze grows, the walls fade out of its travel-time field. Segment DP alone repairs the long-range travel times but plans worse. With ntrl-demo&rsquo;s own wall term in every DP level it beats ntrl-demo at every distance on 13&times;13 (74 vs 59&nbsp;%) and doubles it on 22&times;22 (43 vs 21&nbsp;%); on 40&times;40 nothing tested gets past 8 cells.</p>
+  </header>
+
+  <section>
+    <div class="col">
+      <h2>Five mazes, one robot</h2>
+      <p>Perfect mazes (randomized Kruskal) with 15&nbsp;% of the remaining walls removed to open loops, like ntrl-demo&rsquo;s demo maze, at 4, 7, 13, 22 and 40 cells a side; the last is 10&times; the first in each direction. Each is an <code>.obj</code> normalized exactly as ntrl-demo&rsquo;s <code>to_off</code> does. The robot is a 0.5 &times; 0.2-cell rectangle planned in SE(2) as q&nbsp;=&nbsp;(x,&nbsp;y,&nbsp;&phi;) with &phi;&nbsp;=&nbsp;0.25&nbsp;&theta; in cell units: it can turn on a corridor&rsquo;s centre line but drives slowly broadside. Margin, planner step, tolerance and temperature are all set in cells, so only the number of cells changes between mazes.</p>
+    </div>
+    <figure><img src="mazes.png" alt="The five mazes, 4, 7, 13, 22 and 40 cells a side, each drawn at the same size with the longest test query's true path." width="2015" height="429"><figcaption>Each maze fills ntrl-demo's unit box, so a bigger maze is the same world with more cells. Orange: the longest certified query's true path.</figcaption></figure>
+    <div class="tiles" id="tiles"></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Success by distance</h2>
+      <p>Queries are binned by their true travel distance (cells at full speed, from a ground-truth grid solver), 40 per bin, each certified by a collision-free truth path. Each point pools 3 training seeds &times; 3 planning seeds; the whisker is the training-seed range. The oracle, the same MPPI driven by the true travel time, solves every query, so every loss is the learned field&rsquo;s. Hover a panel for the numbers.</p>
+    </div>
+    <div class="controls" id="legend" role="group" aria-label="Series shown in the charts"><span class="lab">show</span></div>
+    <div class="grid" id="panels"></div>
+    <details id="tables"><summary>All numbers as tables</summary><div id="tablebox"></div></details>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Why it breaks: the walls fade out</h2>
+      <p>At 7&times;7 the learned speed redraws every wall. At 13&times;13 most walls survive, at 22&times;22 only a connected subset, at 40&times;40 almost none. On held-out pairs the learned speed&rsquo;s log-correlation with the true speed falls 0.96, 0.92, 0.69, 0.32, 0.16 from 4 to 40 cells. At poses next to a wall the field&rsquo;s rise into the wall (ntrl-demo&rsquo;s eikonal target is 1) falls from 0.84&ndash;0.89 to 0.20, and its pull away from the wall (cosine with the into-wall direction, target 1) from 0.98 to 0.07&ndash;0.10. On the 40&times;40 maze MPPI hits the first wall it meets, a median 0.4&ndash;0.8 cells after the start.</p>
+    </div>
+    <figure><img src="speedmaps.png" alt="True speed and the learned speed 1/|grad T| at heading 0, for the 7, 13, 22 and 40-cell mazes, with the zoom control below." width="1440" height="1116"><figcaption>Speed towards goal 0 at heading 0 (dark = slow, i.e. a wall). Top: truth. Middle: ntrl-demo. Bottom: ntrl-demo trained on zoomed coordinates (one cell spans the same input length as in the 7-cell maze).</figcaption></figure>
+    <div class="col"><p><strong>Control: zoomed input.</strong> Training ntrl-demo on coordinates scaled so one cell spans the same input length as in the 7&times;7 maze (the same as multiplying its Fourier matrix B by 1.85, 3.11 or 5.65) recovers a lot at 13&times;13 (444 vs 347 of 600 runs for the same training seed) and some at 22&times;22 (213 vs 152 of 720), but not at 40&times;40 (108 vs 89 of 840; speed fit still 0.15). Input frequency per cell explains part of the loss at 13 and 22 cells; at 40 cells one network does not hold about 1,400 walls even at the right frequency.</p></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Segment DP</h2>
+      <p>Segment DP (the interval-DP transition of <code>jeffrey/segment_dp</code>) builds travel times for long gaps from shorter ones: T(i,&nbsp;j)&nbsp;=&nbsp;min<sub>k</sub> T(i,&nbsp;k)&nbsp;+&nbsp;T(k,&nbsp;j) over pool poses k within the shorter segments&rsquo; range. Gaps are cut geometrically from 0.5 cells (ntrl-demo&rsquo;s own field below) to the maze diameter, 8 to 16 levels, each a warm-started ntrl-demo network fit to its DP targets. The chain fixes the long-range values (13&times;13, 16&ndash;32 cells: 1.35 &times; the true travel time vs 2.04) and directions, yet plans <strong>worse</strong> on every maze ntrl-demo had not already solved. The levels are fit to values only, so they lose the wall barrier that ntrl-demo&rsquo;s near-wall terms give its own field (near-wall table below), and MPPI collides sooner.</p>
+    </div>
+    <div class="tablewrap" id="dptable"></div>
+    <div class="tablewrap" id="walltable"></div>
+    <div class="col"><p>Excluding through-wall base pieces from the DP (checked pieces) or starting from the zoomed field does not change this. Fitting ntrl-demo&rsquo;s own wall-direction term in every DP level (<code>segdp3.py</code>) brings the barrier back (near-wall table above), and the chains stop hitting walls; what still fails stalls in a local minimum of the long-range field (crosses in the figure). The term&rsquo;s weight matters. At weight 1 the long-range values drift low and long queries stall; at <strong>weight 0.3</strong> the chain beats ntrl-demo on all three 13&times;13 training seeds (451 / 456 / 420 vs 347 / 320 / 393 of 600 runs), at every distance including the longest (16&ndash;32 cells: 32 / 51 / 29 vs 32 / 4 / 34 of 120), doubles it on 22&times;22 (308 vs 152 of 720) and helps on 40&times;40 below 8 cells (155 vs 89 of 840). Where ntrl-demo is already perfect (7&times;7) the chain costs a little (454 vs 480).</p></div>
+    <figure><img src="paths13.png" alt="Three queries on the 13-cell maze: the truth path and the paths planned by ntrl-demo, segment DP and segment DP with the wall term." width="1326" height="481"><figcaption>13 &times; 13 maze, planning seed 0, training seed 87358. Dashed: truth. A cross marks where a run that never reached the goal stopped.</figcaption></figure>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Fewer networks</h2>
+      <!--LEVELS_TEXT-->
+    </div>
+    <div class="tablewrap" id="levelstable"></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>More split candidates</h2>
+      <!--CANDIDATES_TEXT-->
+    </div>
+    <div class="tablewrap" id="candtable"></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Higher Fourier frequencies</h2>
+      <!--FOURIER_TEXT-->
+    </div>
+    <div class="grid" id="fpanels"></div>
+    <div class="tablewrap" id="fouriertable"></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Segment DP on a scaled embedding</h2>
+      <!--SCALEDDP_TEXT-->
+    </div>
+    <div class="tablewrap" id="scaleddptable"></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>U-turns around a wall end</h2>
+      <!--UTURN_TEXT-->
+    </div>
+    <!--UTURN_FIG-->
+    <div class="tablewrap" id="uturntable"></div>
+  </section>
+
+  <section class="col">
+    <h2>How it was measured</h2>
+    <ul class="tight"><li><strong>Training</strong>: ntrl-demo&rsquo;s point recipe in the robot&rsquo;s C-space (500,000 pairs; applied in the unit cube the C-space box maps to, since the heading axis is thin) and its <code>models/metric</code> <code>Model.train()</code> unchanged, dim 3, 5,000 epochs, training seeds 87358 / 1 / 2.</li><li><strong>Speed</strong>: clip(d / margin, 0.1, 1) with margin 0.175 cells (ntrl-demo&rsquo;s test-maze ratio), stretched by the trainer; d is the exact rectangle-to-wall clearance (matches shapely to 4&middot;10<sup>&minus;6</sup> cells).</li><li><strong>Planner</strong>: ntrl-demo&rsquo;s MPPI (50 samples, horizon 5, cost 10&nbsp;T(first)&nbsp;+&nbsp;T(last)), its defaults on the 4&times;4 maze and scaled per cell elsewhere; budget 3&times; the true path. Success = reached the goal without touching a wall (exact clearance every 0.005 cells).</li><li><strong>Truth</strong>: travel time on a C-space grid (1/15 cell, 13 headings; within 1&nbsp;% of a 4&times; finer grid), 48 goals per maze; queries from 200,000 random starts, binned by true travel distance, 40 per bin.</li><li><strong>Segment DP</strong>: 100,000 pool pairs per level, 128 split candidates (half near the straight line, half uniform in the lens), |log&nbsp;T&nbsp;&minus;&nbsp;log&nbsp;y| loss, 6,000 steps of 2,000.</li></ul>
+  </section>
+
+  <section class="col">
+    <h2>Caveats</h2>
+    <ul class="tight"><li>One maze layout per size; 40 queries per distance bin.</li><li>On 13&times;13, ntrl-demo, segment DP and both wall-term weights have three training seeds; every other DP and zoom number is training seed 87358 only. ntrl-demo&rsquo;s 13&times;13 seeds differ by up to 73 of 600 runs, mostly in the long bins.</li><li>The wall-term weight was tried at 1 and 0.3 only, chosen on 13&times;13 and carried to the other mazes.</li><li>Only ntrl-demo&rsquo;s MPPI was used as the planner; a gradient-descent planner was not tried.</li><li>The zoom control changes three things at once: Fourier frequency per cell, TD step (0.03 of the zoomed box) and time units (divided back out for the planner).</li></ul>
+  </section>
+
+  <details class="col"><summary>Registered runs</summary><div class="tablewrap" id="runs"></div></details>
+</div>
+
+<script>
+const D = /*DATA*/null;
+const SERIES = [
+  {name: 'ntrl-demo', css: '--s-ntrl', on: true},
+  {name: 'ntrl-demo, zoomed input', css: '--s-zoom', on: true},
+  {name: 'segment DP', css: '--s-dp', on: true},
+  {name: 'segment DP + wall term (weight 0.3)', css: '--s-wall', on: true},
+  {name: 'oracle (MPPI on T*)', css: '--s-ref', ref: 'oracle', dash: 'dash', on: true},
+  {name: 'straight line', css: '--s-ref', ref: 'straight', dash: 'dot', on: true},
+];
+const NS = 'http://www.w3.org/2000/svg';
+const el = (tag, attrs = {}, parent) => { const e = document.createElementNS(NS, tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); if (parent) parent.appendChild(e); return e; };
+const h = (tag, cls, text, parent) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; if (parent) parent.appendChild(e); return e; };
+const pct = v => v == null ? '–' : `${Math.round(v)}%`;
+
+function seriesValues(m, s) {
+  if (s.ref) return {pct: m[s.ref], counts: null};
+  const f = m.fields[s.name];
+  return f ? f : null;
+}
+
+function drawPanel(m, box) {
+  box.textContent = '';
+  const W = 320, H = 210, L = 34, R = 10, T = 10, B = 40;
+  const svg = el('svg', {viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': `Success by distance, ${m.n} by ${m.n} maze`});
+  const n = m.bins.length, x = i => L + (n === 1 ? (W - L - R) / 2 : i * (W - L - R) / (n - 1)), y = v => T + (100 - v) * (H - T - B) / 100;
+  const ax = el('g', {class: 'axis'}, svg);
+  for (const v of [0, 25, 50, 75, 100]) { el('line', {x1: L, x2: W - R, y1: y(v), y2: y(v), class: 'gridline'}, svg); const t = el('text', {x: L - 6, y: y(v) + 3, 'text-anchor': 'end'}, ax); t.textContent = v; }
+  m.bins.forEach((b, i) => { const t = el('text', {x: x(i), y: H - B + 14, 'text-anchor': 'middle'}, ax); t.textContent = b; });
+  const lab = el('text', {x: (L + W - R) / 2, y: H - 6, 'text-anchor': 'middle'}, ax); lab.textContent = 'true travel distance (cells)';
+  for (const s of SERIES) {
+    if (!s.on) continue;
+    const sv = seriesValues(m, s); if (!sv) continue;
+    const col = `var(${s.css})`;
+    if (sv.lo) sv.lo.forEach((lo, i) => { if (lo != null && sv.hi[i] - lo > 0.5) el('line', {x1: x(i), x2: x(i), y1: y(lo), y2: y(sv.hi[i]), stroke: col, 'stroke-width': 1.5, 'stroke-opacity': 0.55}, svg); });
+    let d = ''; sv.pct.forEach((v, i) => { if (v != null) d += `${d ? 'L' : 'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`; });
+    el('path', {d, fill: 'none', stroke: col, 'stroke-width': s.ref ? 1.5 : 2.2, 'stroke-dasharray': s.dash === 'dash' ? '5 4' : s.dash === 'dot' ? '1.5 3.5' : 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+    if (!s.ref) sv.pct.forEach((v, i) => { if (v != null) el('circle', {cx: x(i), cy: y(v), r: 4, fill: col, stroke: 'var(--surface)', 'stroke-width': 2}, svg); });
+  }
+  const cross = el('line', {y1: T, y2: H - B, stroke: 'var(--ink2)', 'stroke-width': 1, 'stroke-dasharray': '2 3', visibility: 'hidden'}, svg);
+  const hit = el('rect', {x: L - 14, y: T, width: W - L - R + 28, height: H - T - B, fill: 'transparent'}, svg);
+  box.appendChild(svg);
+  const tip = h('div', 'tip', null, box); tip.hidden = true;
+  const show = i => {
+    cross.setAttribute('x1', x(i)); cross.setAttribute('x2', x(i)); cross.setAttribute('visibility', 'visible');
+    tip.textContent = ''; h('div', 'h', `${m.n}×${m.n} · ${m.bins[i]} cells · ${m.per_bin[i]} queries × 3 planning seeds per training seed`, tip);
+    for (const s of SERIES) {
+      if (!s.on) continue; const sv = seriesValues(m, s); if (!sv || sv.pct[i] == null) continue;
+      const r = h('div', 'r', null, tip); const k = h('span', 'key' + (s.dash ? ' ' + s.dash : ''), null, r); k.style.color = `var(${s.css})`;
+      h('b', null, pct(sv.pct[i]), r);
+      const c = sv.counts && sv.counts[i] ? ` ${sv.counts[i][0]}/${sv.counts[i][1]}` + (sv.seeds && sv.seeds.length > 1 ? `, seeds ${Math.round(sv.lo[i])}–${Math.round(sv.hi[i])}%` : '') : '';
+      const ns = sv.seeds ? ` [${sv.seeds.length} training seed${sv.seeds.length > 1 ? 's' : ''}]` : '';
+      h('i', null, s.name + ns + c, r);
+    }
+    tip.hidden = false;
+    const bw = box.getBoundingClientRect().width, px = x(i) / W * bw;
+    tip.style.left = Math.max(4, Math.min(bw - tip.offsetWidth - 4, px + 12)) + 'px'; tip.style.top = '34px';
+  };
+  const hide = () => { tip.hidden = true; cross.setAttribute('visibility', 'hidden'); };
+  const pick = ev => { const r = svg.getBoundingClientRect(); const px = (ev.clientX - r.left) / r.width * W; let best = 0; for (let i = 1; i < n; i++) if (Math.abs(x(i) - px) < Math.abs(x(best) - px)) best = i; return best; };
+  hit.addEventListener('pointermove', ev => show(pick(ev)));
+  hit.addEventListener('pointerleave', hide);
+  box.tabIndex = 0; let cur = -1;
+  box.addEventListener('keydown', ev => { if (ev.key === 'ArrowRight' || ev.key === 'ArrowLeft') { cur = Math.max(0, Math.min(n - 1, cur + (ev.key === 'ArrowRight' ? 1 : -1))); show(cur); ev.preventDefault(); } if (ev.key === 'Escape') hide(); });
+  box.addEventListener('blur', hide);
+}
+
+function render() {
+  const panels = document.getElementById('panels'); panels.textContent = '';
+  for (const m of D.mazes) {
+    const p = h('div', 'panel', null, panels);
+    const t = h('h4', null, `${m.n} × ${m.n} cells`, p);
+    const f = m.fields['ntrl-demo'];
+    if (f) h('span', null, `ntrl-demo ${pct(100 * f.total[0] / f.total[1])} overall`, t);
+    const box = h('div', null, null, p); box.style.position = 'relative';
+    drawPanel(m, box);
+  }
+}
+
+function legend() {
+  const lg = document.getElementById('legend');
+  for (const s of SERIES) {
+    const b = h('button', 'chip', null, lg); b.type = 'button'; b.setAttribute('aria-pressed', 'true');
+    const k = h('span', 'key' + (s.dash ? ' ' + s.dash : ''), null, b); k.style.color = `var(${s.css})`; h('span', null, s.name, b);
+    b.addEventListener('click', () => { s.on = !s.on; b.setAttribute('aria-pressed', String(s.on)); render(); });
+  }
+}
+
+function tiles() {
+  const box = document.getElementById('tiles');
+  for (const m of D.mazes) {
+    const f = m.fields['ntrl-demo']; if (!f) continue;
+    const t = h('div', 'tile', null, box);
+    h('div', 'k', `${m.n} × ${m.n} cells`, t);
+    h('div', 'v', pct(100 * f.total[0] / f.total[1]), t);
+    h('div', 's', `ntrl-demo MPPI success, ${f.total[0]} of ${f.total[1]} runs; speed fit ${f.speed_fit != null ? f.speed_fit.toFixed(2) : '–'}`, t);
+  }
+}
+
+function tables() {
+  const box = document.getElementById('tablebox');
+  for (const m of D.mazes) {
+    h('h3', null, `${m.n} × ${m.n} cells (prepare run ${m.id})`, box);
+    const w = h('div', 'tablewrap', null, box); const tb = h('table', null, null, w);
+    const hr = h('tr', null, null, h('thead', null, null, tb)); h('th', null, 'field', hr); m.bins.forEach(b => h('th', null, b, hr)); h('th', null, 'all', hr);
+    const body = h('tbody', null, null, tb);
+    const row = (name, vals, counts, total) => { const r = h('tr', null, null, body); h('td', null, name, r); vals.forEach((v, i) => h('td', 'num', pct(v) + (counts && counts[i] ? ` (${counts[i][0]}/${counts[i][1]})` : ''), r)); h('td', 'num', total || '', r); };
+    row('oracle (MPPI on T*)', m.oracle, null, '');
+    row('straight line', m.straight, null, '');
+    for (const [name, f] of Object.entries(m.fields)) row(`${name} [${f.seeds.length} seed${f.seeds.length > 1 ? 's' : ''}]`, f.pct, f.counts, `${pct(100 * f.total[0] / f.total[1])} (${f.total[0]}/${f.total[1]})`);
+  }
+}
+
+function runs() {
+  const box = document.getElementById('runs'); const tb = h('table', null, null, box);
+  const hr = h('tr', null, null, h('thead', null, null, tb)); ['maze', 'stage', 'training seed', 'run id (results/registered_<id>)'].forEach(x => h('th', null, x, hr));
+  const body = h('tbody', null, null, tb);
+  for (const m of D.mazes) {
+    const r = h('tr', null, null, body); h('td', null, `${m.n}`, r); h('td', null, 'prepare (maze, data, truth, queries, oracle)', r); h('td', null, '–', r); h('td', 'num', m.id, r);
+    for (const [name, f] of Object.entries(m.fields)) f.seeds.forEach((s, i) => { const r = h('tr', null, null, body); h('td', null, `${m.n}`, r); h('td', null, name, r); h('td', 'num', `${s}`, r); h('td', 'num', f.ids[i], r); });
+  }
+}
+
+
+function dpTable() {
+  const box = document.getElementById('dptable'); if (!D.dp) return;
+  h('h3', null, 'MPPI success by distance, training seed 87358 (%)', box);
+  const tb = h('table', 'named', null, box);
+  const bins = D.dp.bins; const hr = h('tr', null, null, h('thead', null, null, tb));
+  ['maze', 'field'].concat(bins).concat(['all']).forEach(x => h('th', null, x, hr));
+  const body = h('tbody', null, null, tb);
+  for (const row of D.dp.rows) { const r = h('tr', null, null, body); h('td', null, row.maze, r); h('td', null, row.name, r); row.cells.forEach(c => h('td', 'num', c, r)); h('td', 'num', row.all, r); }
+}
+function wallTable() {
+  const box = document.getElementById('walltable'); if (!D.wallfeel) return;
+  h('h3', null, 'At near-wall poses: rise into the wall / direction', box);
+  const tb = h('table', 'named', null, box); const gaps = ['0-0.5', '0.5-2', '2-8', '>8'];
+  const hr = h('tr', null, null, h('thead', null, null, tb)); ['maze', 'field'].concat(gaps.map(g => g + ' cells')).forEach(x => h('th', null, x, hr));
+  const body = h('tbody', null, null, tb);
+  let last = '';
+  for (const [key, v] of Object.entries(D.wallfeel)) { const [n, name] = key.split('|'); const r = h('tr', null, null, body); h('td', null, n === last ? '' : `${n}×${n}`, r); last = n; h('td', null, name, r);
+    gaps.forEach(g => h('td', 'num', v[g] ? `${v[g].slope.toFixed(2)} / ${v[g].cos.toFixed(2)}` : '–', r)); }
+  h('p', 'note', 'Median S·|∇T| (target 1) / cosine of ∇T with the into-wall direction (target 1) on held-out pairs whose start is next to a wall, by gap to the goal.', box);
+}
+dpTable(); wallTable();
+
+const frac = (a, b) => b ? `${Math.round(100 * a / b)}%` : '–';
+function levelsTable() {
+  const L = D.extras && D.extras.levels; const box = document.getElementById('levelstable'); if (!L) return;
+  h('h3', null, `${L.maze} × ${L.maze} maze: MPPI success by true distance, 3 training seeds × 3 planning seeds`, box);
+  const tb = h('table', 'named', null, box); const hr = h('tr', null, null, h('thead', null, null, tb));
+  ['networks', 'field', 'edge ratio'].concat(L.bins.map(b => b + ' cells')).concat(['all', 'per training seed', 'T/T* (16–32)', 'DP minutes']).forEach(x => h('th', null, x, hr));
+  const body = h('tbody', null, null, tb);
+  for (const r of L.rows) {
+    const tr = h('tr', null, null, body); h('td', 'num', r.networks, tr);
+    h('td', null, r.networks === 1 ? 'ntrl-demo' : `segment DP + wall term, ${r.networks - 1} levels`, tr);
+    h('td', 'num', r.ratio == null ? '–' : r.ratio.toFixed(3), tr);
+    r.per_bin.forEach(([a, b]) => h('td', 'num', frac(a, b), tr));
+    h('td', 'num', `${frac(r.total[0], r.total[1])} (${r.total[0]}/${r.total[1]})`, tr);
+    h('td', 'num', r.per_seed.join(' / ') + ` of ${r.per_seed_of}`, tr);
+    h('td', 'num', r.t_over_tstar_16_32 == null ? '–' : r.t_over_tstar_16_32.toFixed(2), tr);
+    h('td', 'num', r.minutes ? r.minutes.map(m => Math.round(m)).join(' / ') : '–', tr);
+  }
+  h('p', 'note', 'Same ntrl-demo base network per training seed, same first edge (0.5 cells) and per-level budget; edges grow by the ratio until the next would pass the largest gap (15.5–15.7 cells), so r = 2^(5/L) gives L levels. Per training seed in the order 87358 / 1 / 2.', box);
+}
+
+function fourierPanels() {
+  const F = D.extras && D.extras.fourier; const box = document.getElementById('fpanels'); if (!F || !F.length) return;
+  box.textContent = '';
+  for (const m of F) {
+    const p = h('div', 'panel', null, box); const t = h('h4', null, `${m.n} × ${m.n} cells`, p);
+    const b0 = m.cols.find(c => c.scale === 1); if (b0) h('span', null, `B × 1: ${frac(b0.total[0], b0.total[1])}`, t);
+    const W = 320, H = 190, Lm = 34, R = 14, T = 10, B = 40;
+    const svg = el('svg', {viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': `Success against Fourier scale, ${m.n} by ${m.n} maze`});
+    const xs = [1, 1.5, 3, 6]; const lx = v => Math.log(v), x = v => Lm + (lx(v) - lx(1)) / (lx(6) - lx(1)) * (W - Lm - R), y = v => T + (100 - v) * (H - T - B) / 100;
+    const ax = el('g', {class: 'axis'}, svg);
+    for (const v of [0, 25, 50, 75, 100]) { el('line', {x1: Lm, x2: W - R, y1: y(v), y2: y(v), class: 'gridline'}, svg); const tt = el('text', {x: Lm - 6, y: y(v) + 3, 'text-anchor': 'end'}, ax); tt.textContent = v; }
+    xs.forEach(v => { const tt = el('text', {x: x(v), y: H - B + 14, 'text-anchor': 'middle'}, ax); tt.textContent = `×${v}`; });
+    const lab = el('text', {x: (Lm + W - R) / 2, y: H - 6, 'text-anchor': 'middle'}, ax); lab.textContent = 'Fourier matrix B scale (log axis)';
+    const pts = m.cols.map(c => ({s: c.scale, v: 100 * c.total[0] / c.total[1], seeds: c.per_seed.map(k => 100 * k / c.per_seed_of), c}));
+    pts.forEach(q => { if (q.seeds.length > 1) el('line', {x1: x(q.s), x2: x(q.s), y1: y(Math.min(...q.seeds)), y2: y(Math.max(...q.seeds)), stroke: 'var(--s-ntrl)', 'stroke-width': 1.5, 'stroke-opacity': 0.55}, svg); });
+    el('path', {d: pts.map((q, i) => `${i ? 'L' : 'M'}${x(q.s).toFixed(1)},${y(q.v).toFixed(1)}`).join(''), fill: 'none', stroke: 'var(--s-ntrl)', 'stroke-width': 2.2, 'stroke-linejoin': 'round'}, svg);
+    pts.forEach(q => el('circle', {cx: x(q.s), cy: y(q.v), r: 4, fill: 'var(--s-ntrl)', stroke: 'var(--surface)', 'stroke-width': 2}, svg));
+    if (m.zoom && m.zoom.scale <= 6.5) { const zv = 100 * m.zoom.total[0] / m.zoom.total[1]; el('rect', {x: x(m.zoom.scale) - 4, y: y(zv) - 4, width: 8, height: 8, fill: 'var(--s-zoom)', stroke: 'var(--surface)', 'stroke-width': 2, transform: `rotate(45 ${x(m.zoom.scale)} ${y(zv)})`}, svg); }
+    p.appendChild(svg);
+    const tip = h('div', 'tip', null, p); tip.hidden = true;
+    const hit = el('rect', {x: Lm - 14, y: T, width: W - Lm - R + 28, height: H - T - B, fill: 'transparent'}, svg);
+    hit.addEventListener('pointermove', ev => {
+      const r = svg.getBoundingClientRect(); const px = (ev.clientX - r.left) / r.width * W;
+      let q = pts[0]; for (const c of pts) if (Math.abs(x(c.s) - px) < Math.abs(x(q.s) - px)) q = c;
+      tip.textContent = ''; h('div', 'h', `${m.n}×${m.n} · B × ${q.s}`, tip);
+      const row = h('div', 'r', null, tip); const k = h('span', 'key', null, row); k.style.color = 'var(--s-ntrl)';
+      h('b', null, `${Math.round(q.v)}%`, row); h('i', null, `ntrl-demo ${q.c.total[0]}/${q.c.total[1]}; seeds ${q.c.per_seed.join(' / ')} of ${q.c.per_seed_of}`, row);
+      if (m.zoom) { const r2 = h('div', 'r', null, tip); const k2 = h('span', 'key', null, r2); k2.style.color = 'var(--s-zoom)'; h('b', null, frac(m.zoom.total[0], m.zoom.total[1]), r2); h('i', null, `zoomed input ×${m.zoom.scale.toFixed(2)} (seed ${m.zoom.seed})`, r2); }
+      tip.hidden = false; const bw = p.getBoundingClientRect().width; tip.style.left = Math.max(4, Math.min(bw - tip.offsetWidth - 4, x(q.s) / W * bw + 12)) + 'px'; tip.style.top = '34px';
+    });
+    hit.addEventListener('pointerleave', () => { tip.hidden = true; });
+  }
+  const t = document.getElementById('fouriertable'); t.textContent = '';
+  h('h3', null, 'MPPI success by true distance (%), pooled over training seeds', t);
+  const bins = D.dp.bins; const tb = h('table', 'named', null, t); const hr = h('tr', null, null, h('thead', null, null, tb));
+  ['maze', 'B scale'].concat(bins).concat(['all', 'per training seed', 'speed fit']).forEach(x => h('th', null, x, hr));
+  const body = h('tbody', null, null, tb);
+  for (const m of F) m.cols.forEach((c, k) => {
+    const tr = h('tr', null, null, body); h('td', null, k ? '' : `${m.n}×${m.n}`, tr); h('td', null, `×${c.scale}` + (c.scale === 1 ? ' (ntrl-demo)' : ''), tr);
+    bins.forEach(b => { const i = m.bins.indexOf(b); const v = i >= 0 ? c.per_bin[i] : null; h('td', 'num', v ? frac(v[0], v[1]) : '', tr); });
+    h('td', 'num', `${frac(c.total[0], c.total[1])} (${c.total[0]}/${c.total[1]})`, tr); h('td', 'num', c.per_seed.join(' / ') + ` of ${c.per_seed_of}`, tr);
+    h('td', 'num', c.speed_fit == null ? '–' : c.speed_fit.toFixed(2), tr);
+  });
+  h('p', 'note', 'Blue: ntrl-demo with its Fourier matrix B multiplied by the scale (same random draw per seed; data, losses, step and time units unchanged); the line joins the pooled success, whiskers span the training seeds. Green diamond: the zoom control at its scale (one seed). Speed fit: log-correlation of learned and true speed on held-out pairs.', t);
+}
+
+function uturnTable() {
+  const U = D.extras && D.extras.uturn; const box = document.getElementById('uturntable'); if (!U || !U.length) return;
+  const names = []; for (const m of U) for (const k of Object.keys(m.fields)) if (!names.includes(k)) names.push(k);
+  const order = n => n === 'ntrl-demo' ? 0 : n.startsWith('ntrl-demo, B') ? 1 : n.startsWith('ntrl-demo') ? 2 : 3;
+  names.sort((a, b) => order(a) - order(b) || a.localeCompare(b, undefined, {numeric: true}));
+  h('h3', null, 'U-turn success (%), 40 queries per maze × 3 planning seeds per training seed', box);
+  const tb = h('table', 'named', null, box); const hr = h('tr', null, null, h('thead', null, null, tb));
+  h('th', null, 'field', hr); U.forEach(m => h('th', null, `${m.n}×${m.n}`, hr));
+  const body = h('tbody', null, null, tb);
+  const row = (label, f) => { const tr = h('tr', null, null, body); h('td', null, label, tr); U.forEach(m => { const v = f(m); h('td', 'num', v || '', tr); }); };
+  row('oracle (MPPI on T*)', m => `${frac(m.oracle[0], m.oracle[1])}`);
+  row('straight line', m => `${frac(m.straight[0], m.straight[1])}`);
+  for (const n of names) row(n, m => { const f = m.fields[n]; if (!f) return ''; return `${frac(f.total[0], f.total[1])} (${f.seeds.length > 1 ? f.seeds.map(s => f.per_seed[s][0]).join('/') : f.total[0]})`; });
+  h('p', 'note', 'Pooled success; in brackets the runs solved per training seed (87358 / 1 / 2, each of 120) or the count for a single seed. Start and goal are the centres of the two cells beside the last wall segment, 0.5 cells from the wall and 0.5 cells back from its free end, with random headings; the true path goes round the end (median ' + U.map(m => m.path_cells_median.toFixed(1)).join(' / ') + ' cells for the 4 … 40 mazes).', box);
+}
+function candTable() {
+  const C = D.extras && D.extras.candidates; const box = document.getElementById('candtable'); if (!C || !C.rows.length) return;
+  h('h3', null, `${C.maze} × ${C.maze} maze, segment DP + wall term (weight 0.3), 13 networks: MPPI success by true distance`, box);
+  const tb = h('table', 'named', null, box); const hr = h('tr', null, null, h('thead', null, null, tb));
+  ['split candidates', 'training seeds'].concat(C.bins.map(b => b + ' cells')).concat(['all', 'per training seed', 'top-level target / T*', 'minutes per run']).forEach(x => h('th', null, x, hr));
+  const body = h('tbody', null, null, tb);
+  for (const r of C.rows) {
+    const tr = h('tr', null, null, body); h('td', 'num', r.candidates, tr); h('td', 'num', r.seeds.length, tr);
+    r.per_bin.forEach(([a, b]) => h('td', 'num', frac(a, b), tr));
+    h('td', 'num', `${frac(r.total[0], r.total[1])} (${r.total[0]}/${r.total[1]})`, tr);
+    h('td', 'num', r.per_seed.join(' / ') + ` of ${r.per_seed_of}`, tr);
+    h('td', 'num', r.top_target_over_truth.toFixed(3), tr);
+    h('td', 'num', r.minutes.map(m => Math.round(m)).join(' / '), tr);
+  }
+  h('p', 'note', 'Split candidates per DP pair: half the lens poses nearest the straight line, half uniform over the lens (the lens holds a few hundred pool poses at the first level and up to ~190,000 at the last). Top-level target / T*: median DP target over the true travel time on 2,000 truth probes at the last level. Per training seed in the order 87358 / 1 / 2.', box);
+}
+function scaledTable() {
+  const S = D.extras && D.extras.scaled_dp; const box = document.getElementById('scaleddptable'); if (!S || !S.length) return;
+  for (const m of S) {
+    h('h3', null, `${m.n} × ${m.n} maze: MPPI success by true distance, pooled over training seeds`, box);
+    const tb = h('table', 'named', null, box); const hr = h('tr', null, null, h('thead', null, null, tb));
+    ['field', 'networks'].concat(m.bins.map(b => b + ' cells')).concat(['all', 'per training seed']).forEach(x => h('th', null, x, hr));
+    const body = h('tbody', null, null, tb);
+    for (const r of m.rows) {
+      const tr = h('tr', null, null, body); h('td', null, r.name, tr); h('td', 'num', r.name.startsWith('segment') ? 'chain' : '1', tr);
+      r.per_bin.forEach(([a, b]) => h('td', 'num', frac(a, b), tr));
+      h('td', 'num', `${frac(r.total[0], r.total[1])} (${r.total[0]}/${r.total[1]})`, tr);
+      h('td', 'num', r.per_seed.join(' / ') + ` of ${r.per_seed_of}`, tr);
+    }
+  }
+  h('p', 'note', 'The scaled chain starts from the B-scaled ntrl-demo network of the same training seed and warm-starts every DP level from the one below, so all levels keep the scaled Fourier matrix; the wall term, edges (ratio 1.35) and per-level budget are those of the unscaled chain. Per training seed in the order 87358 / 1 / 2.', box);
+}
+levelsTable(); candTable(); fourierPanels(); scaledTable(); uturnTable();
+
+
+legend(); render(); tiles(); tables(); runs();
+let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(render, 150); });
+</script>

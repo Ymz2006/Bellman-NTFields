@@ -1,0 +1,9 @@
+{
+  "source_run": "registered_20261026T032734Z-34cb5d44",
+  "scene": "cabinet_pi",
+  "scene_sha256": "0a78e4fa4730cac9a0cd71ba62ca395b8cc655e3de7db2841ba16630dd5e1252",
+  "generator_sha256": "8fd5ea5de9d25b3b266aa1df7b16b5870c9b0848c22f2d507cecb77d96e95315",
+  "suite_manifest_sha256": "c670b2e7f39ff6d66cd6d60aedd1336de69202903b0e4e7950c3ae37a2d78fc9",
+  "total": 600,
+  "note": "Frozen testing data: never resample or edit; evaluate.py checks these hashes."
+}

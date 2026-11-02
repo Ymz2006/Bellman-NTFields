@@ -1,0 +1,350 @@
+<title>Cabinet Training Poses</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: instrument panel. Controls, legend and readouts in a left column; the 3D scene fills the right. */
+:root {
+  --bg: #f4f6f7; --panel: #ffffff; --ink: #14181b; --ink-2: #4a5359; --ink-3: #78828a; --rule: #d9dee2; --well: #e9edf0;
+  --accent: #2a78d6; --scene: #eef1f3; --wood: #9a6b3f; --wood-edge: #6e4a29; --table: #b9c0c6; --region: #4a5359;
+  --pt: #2a78d6; --test: #eb6834; --arm: #14181b; --sel: #e34948;
+  --r0: #86b6ef; --r1: #5598e7; --r2: #2a78d6; --r3: #1c5cab; --r4: #104281; --r5: #0d366b;
+  --display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111416; --panel: #191d20; --ink: #e8ecee; --ink-2: #b4bcc2; --ink-3: #87919a; --rule: #2c3337; --well: #22282c;
+  --accent: #3987e5; --scene: #15191c; --wood: #8a6040; --wood-edge: #c09060; --table: #3a4248; --region: #87919a;
+  --pt: #3987e5; --test: #d95926; --arm: #e8ecee; --sel: #e66767;
+  --r0: #184f95; --r1: #256abf; --r2: #3987e5; --r3: #6da7ec; --r4: #9ec5f4; --r5: #cde2fb; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #111416; --panel: #191d20; --ink: #e8ecee; --ink-2: #b4bcc2; --ink-3: #87919a; --rule: #2c3337; --well: #22282c;
+  --accent: #3987e5; --scene: #15191c; --wood: #8a6040; --wood-edge: #c09060; --table: #3a4248; --region: #87919a;
+  --pt: #3987e5; --test: #d95926; --arm: #e8ecee; --sel: #e66767;
+  --r0: #184f95; --r1: #256abf; --r2: #3987e5; --r3: #6da7ec; --r4: #9ec5f4; --r5: #cde2fb; color-scheme: dark; }
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font: 14px/1.45 var(--body); }
+.wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 18px 22px;
+        max-width: 1480px; margin: 0 auto; display: grid; gap: 14px; }
+header { display: grid; gap: 4px; }
+h1 { font: 600 1.6rem/1.15 var(--display); margin: 0; text-wrap: balance; }
+.lede { color: var(--ink-2); margin: 0; max-width: 84ch; }
+.main { display: grid; grid-template-columns: 310px minmax(0, 1fr); gap: 14px; align-items: start; }
+.side { display: grid; gap: 12px; min-width: 0; }
+.card { background: var(--panel); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 14px; display: grid; gap: 10px; min-width: 0; }
+.label { font: 500 11px var(--mono); letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); }
+.row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.big { font: 600 1.5rem/1 var(--display); font-variant-numeric: tabular-nums; }
+.muted { color: var(--ink-3); font-size: 12.5px; }
+input[type=range] { width: 100%; accent-color: var(--accent); }
+.seg { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--well); border-radius: 6px; padding: 3px; gap: 3px; }
+.seg button { font: 500 12.5px var(--body); color: var(--ink-2); background: transparent; border: 0; border-radius: 4px; padding: 6px 4px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--panel); color: var(--ink); box-shadow: 0 0 0 1px var(--rule); }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.checks { display: grid; gap: 6px; }
+.checks label { display: flex; gap: 8px; align-items: center; cursor: pointer; color: var(--ink-2); }
+.checks input { accent-color: var(--accent); width: 15px; height: 15px; }
+.key { display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.ramp { height: 10px; border-radius: 3px; }
+.ticks { display: flex; justify-content: space-between; font: 11px var(--mono); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.gens { display: grid; grid-template-columns: repeat(8, 1fr); gap: 2px; }
+.gens span { height: 10px; border-radius: 2px; }
+dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; margin: 0; font-size: 13px; }
+dt { color: var(--ink-3); }
+dd { margin: 0; text-align: right; font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; color: var(--ink); }
+.viewport { position: relative; height: min(78vh, 820px); min-height: 380px; background: var(--scene); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; touch-action: none; }
+.viewport canvas { display: block; width: 100%; height: 100%; }
+.vbar { position: absolute; top: 10px; right: 10px; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.vbar button { font: 500 12px var(--body); color: var(--ink-2); background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 5px 10px; cursor: pointer; }
+.vbar button:hover { color: var(--ink); }
+.hint { position: absolute; left: 12px; bottom: 10px; font-size: 12px; color: var(--ink-3); pointer-events: none; }
+.tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--bg); font: 12px/1.45 var(--mono); padding: 6px 9px; border-radius: 5px; white-space: nowrap; transform: translate(12px, -50%); z-index: 3; }
+.sel-empty { color: var(--ink-3); font-size: 13px; }
+.btn { font: 500 12.5px var(--body); color: var(--ink-2); background: transparent; border: 1px solid var(--rule); border-radius: 6px; padding: 5px 10px; cursor: pointer; justify-self: start; }
+@media (max-width: 860px) {
+  .main { grid-template-columns: minmax(0, 1fr); }
+  .viewport { height: 62vh; order: -1; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Cabinet training poses</h1>
+    <p class="lede">Each point is one anchor pose from the frozen cabinet training bank, drawn where its gripper (grasp frame) ends up. The bank holds <span id="t-total"></span> collision-checked anchors with <span id="t-actions"></span> transitions each. The same anchors are the pool that the segment-DP pairs and split points come from. This page uses a fixed random subset of <span id="t-count"></span>; the slider shows the first N of it.</p>
+  </header>
+
+  <div class="main">
+    <aside class="side">
+      <section class="card" aria-labelledby="l-n">
+        <div class="row"><span class="label" id="l-n">Points shown</span><span class="big" id="n-out">1,500</span></div>
+        <input type="range" id="n" min="100" max="5000" step="100" value="1500" aria-labelledby="l-n">
+        <div class="ticks"><span>100</span><span id="n-max">5,000</span></div>
+        <div class="row"><span class="label" id="l-size">Point size</span><span class="muted" id="size-out">4 px</span></div>
+        <input type="range" id="size" min="2" max="9" step="1" value="4" aria-labelledby="l-size">
+      </section>
+
+      <section class="card" aria-labelledby="l-color">
+        <span class="label" id="l-color">Color by</span>
+        <div class="seg" role="group" aria-labelledby="l-color">
+          <button id="m-speed" aria-pressed="true">Speed</button>
+          <button id="m-gen" aria-pressed="false">Generation</button>
+          <button id="m-one" aria-pressed="false">One color</button>
+        </div>
+        <div id="legend"></div>
+      </section>
+
+      <section class="card" aria-labelledby="l-show">
+        <span class="label" id="l-show">Show</span>
+        <div class="checks">
+          <label><input type="checkbox" id="c-test"><span class="key" style="background:var(--test)"></span>Frozen test endpoints (<span id="t-test"></span>)</label>
+          <label><input type="checkbox" id="c-region" checked><span class="key" style="background:transparent;border:1px solid var(--region);border-radius:2px"></span>Test sampling box</label>
+          <label><input type="checkbox" id="c-cab" checked><span class="key" style="background:var(--wood);border-radius:2px"></span>Cupboard</label>
+          <label><input type="checkbox" id="c-table" checked><span class="key" style="background:var(--table);border-radius:2px"></span>Table</label>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="l-stats">
+        <span class="label" id="l-stats">Shown points</span>
+        <dl id="stats"></dl>
+      </section>
+
+      <section class="card" aria-labelledby="l-sel">
+        <span class="label" id="l-sel">Selected pose</span>
+        <div id="sel"><span class="sel-empty">Click a point to draw the arm configuration that produced it.</span></div>
+      </section>
+    </aside>
+
+    <div class="viewport" id="viewport">
+      <div class="vbar">
+        <button id="v-reset">Reset view</button>
+        <button id="v-cab">Look into cupboard</button>
+        <button id="v-top">Top</button>
+      </div>
+      <div class="hint">Drag to orbit · right-drag or two fingers to pan · scroll to zoom · click a point</div>
+      <div class="tip" id="tip" hidden></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const D = /*DATA*/null;
+const fmt = n => n.toLocaleString('en-US');
+function f32(s) { const b = atob(s), u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return new Float32Array(u.buffer); }
+const EE = f32(D.ee), ARM = f32(D.arm), SPEED = f32(D.speed), TEST = f32(D.test), QRAD = f32(D.q_rad), GEN = D.generation, NL = D.links.length;
+document.getElementById('t-total').textContent = fmt(D.total);
+document.getElementById('t-actions').textContent = D.actions_per_anchor;
+document.getElementById('t-count').textContent = fmt(D.count);
+document.getElementById('t-test').textContent = fmt(D.test_count);
+const nIn = document.getElementById('n'); nIn.max = D.count; document.getElementById('n-max').textContent = fmt(D.count);
+
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const col = n => new THREE.Color(css(n));
+const RAMP = ['--r0', '--r1', '--r2', '--r3', '--r4', '--r5'];
+function rampColor(t) {          // t in [0, 1] across the six ramp steps
+  t = Math.min(1, Math.max(0, t)); const x = t*(RAMP.length-1), i = Math.min(RAMP.length-2, Math.floor(x));
+  return col(RAMP[i]).lerp(col(RAMP[i+1]), x-i);
+}
+
+/* ---------- scene ---------- */
+const viewport = document.getElementById('viewport');
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+viewport.prepend(renderer.domElement);
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(40, 1, .01, 50); camera.up.set(0, 0, 1);
+const controls = new THREE.OrbitControls(camera, renderer.domElement); controls.enableDamping = true;
+const VIEWS = {
+  reset: { pos: [-1.05, -1.55, 1.25], target: [0.25, 0.05, 0.15] },
+  cab: { pos: [-0.25, 0.33, 0.42], target: [0.75, 0.33, 0.30] },
+  top: { pos: [0.1, 0.0, 3.4], target: [0.1, 0.0, 0.0] },
+};
+function view(v) { camera.position.set(...VIEWS[v].pos); controls.target.set(...VIEWS[v].target); controls.update(); }
+view('reset');
+
+// cuboids
+const cab = new THREE.Group(), table = new THREE.Group(); scene.add(cab, table);
+const boxMats = [];
+for (const b of D.boxes) {
+  const g = new THREE.BoxGeometry(...b.dims), isTable = b.name === 'table';
+  const fill = new THREE.MeshBasicMaterial({ transparent: true, opacity: isTable ? .22 : .30, depthWrite: false });
+  const edge = new THREE.LineBasicMaterial({ transparent: true, opacity: isTable ? .5 : .9 });
+  const m = new THREE.Mesh(g, fill), e = new THREE.LineSegments(new THREE.EdgesGeometry(g), edge);
+  m.position.set(...b.center); e.position.set(...b.center);
+  (isTable ? table : cab).add(m, e); boxMats.push({ fill, edge, isTable });
+}
+// test sampling box
+const S = D.sampling, regionGeo = new THREE.BoxGeometry(S.x[1]-S.x[0], S.y[1]-S.y[0], S.z[1]-S.z[0]);
+const regionMat = new THREE.LineBasicMaterial({ transparent: true, opacity: .55 });
+const region = new THREE.LineSegments(new THREE.EdgesGeometry(regionGeo), regionMat);
+region.position.set((S.x[0]+S.x[1])/2, (S.y[0]+S.y[1])/2, (S.z[0]+S.z[1])/2); scene.add(region);
+// robot base marker
+const baseMat = new THREE.MeshBasicMaterial();
+const base = new THREE.Mesh(new THREE.CylinderGeometry(.06, .07, .02, 32), baseMat); base.rotation.x = Math.PI/2; scene.add(base);
+
+// round sprite for points
+function disc() {
+  const c = document.createElement('canvas'); c.width = c.height = 64; const g = c.getContext('2d');
+  g.beginPath(); g.arc(32, 32, 30, 0, Math.PI*2); g.fillStyle = '#fff'; g.fill();
+  const t = new THREE.CanvasTexture(c); return t;
+}
+const DISC = disc();
+const PR = renderer.getPixelRatio();
+function pointCloud(positions, count) {
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(count*3), 3));
+  const mat = new THREE.PointsMaterial({ size: 4*PR, sizeAttenuation: false, vertexColors: true, map: DISC, alphaTest: .5 });
+  return new THREE.Points(geo, mat);
+}
+const cloud = pointCloud(EE, D.count); scene.add(cloud);
+const testCloud = pointCloud(TEST, D.test_count); testCloud.visible = false; scene.add(testCloud);
+
+// selected arm (stick figure) and marker
+const armGroup = new THREE.Group(); scene.add(armGroup);
+const armMat = new THREE.MeshBasicMaterial(), selMat = new THREE.MeshBasicMaterial();
+const marker = new THREE.Mesh(new THREE.SphereGeometry(.014, 20, 14), selMat); marker.visible = false; scene.add(marker);
+
+/* ---------- colors and theme ---------- */
+let mode = 'speed';
+const SMIN = 0.1, SMAX = 1.0;
+function paint() {
+  const c = cloud.geometry.attributes.color, one = col('--pt');
+  for (let i = 0; i < D.count; i++) {
+    const k = mode === 'speed' ? rampColor((SPEED[i]-SMIN)/(SMAX-SMIN)) : mode === 'gen' ? rampColor(GEN[i]/(D.generations-1)) : one;
+    c.setXYZ(i, k.r, k.g, k.b);
+  }
+  c.needsUpdate = true;
+  const t = testCloud.geometry.attributes.color, tc = col('--test');
+  for (let i = 0; i < D.test_count; i++) t.setXYZ(i, tc.r, tc.g, tc.b);
+  t.needsUpdate = true;
+  legend();
+}
+function theme() {
+  scene.background = col('--scene');
+  for (const b of boxMats) { b.fill.color = b.isTable ? col('--table') : col('--wood'); b.edge.color = b.isTable ? col('--table') : col('--wood-edge'); }
+  regionMat.color = col('--region'); baseMat.color = col('--ink-3'); armMat.color = col('--arm'); selMat.color = col('--sel');
+  paint();
+}
+function legend() {
+  const el = document.getElementById('legend');
+  if (mode === 'speed') {
+    const stops = RAMP.map((r, i) => `var(${r}) ${i/(RAMP.length-1)*100}%`).join(',');
+    el.innerHTML = `<div class="ramp" style="background:linear-gradient(90deg,${stops})"></div>
+      <div class="ticks"><span>0.1</span><span>0.55</span><span>1.0</span></div>
+      <div class="muted">Frozen speed network at the pose (the training coefficient: 0.1 next to obstacles, 1.0 in clear space).</div>`;
+  } else if (mode === 'gen') {
+    const sw = Array.from({ length: D.generations }, (_, g) => `<span style="background:rgb(${rampColor(g/(D.generations-1)).toArray().map(v => Math.round(v*255)).join(',')})"></span>`).join('');
+    el.innerHTML = `<div class="gens">${sw}</div><div class="ticks"><span>0</span><span>${D.generations-1}</span></div>
+      <div class="muted">Roll-forward generation that produced the anchor. 50,000 walkers take ${D.generations} steps from FK-sampled seed poses, so later generations have moved farther from the seeds.</div>`;
+  } else {
+    el.innerHTML = `<div class="muted">Every anchor in one color, to judge density alone.</div>`;
+  }
+}
+const mq = matchMedia('(prefers-color-scheme: dark)'); mq.addEventListener('change', theme);
+new MutationObserver(theme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+/* ---------- controls ---------- */
+let N = +nIn.value;
+function setN() {
+  N = +nIn.value; document.getElementById('n-out').textContent = fmt(N);
+  cloud.geometry.setDrawRange(0, N); stats();
+}
+nIn.addEventListener('input', setN);
+const sizeIn = document.getElementById('size');
+sizeIn.addEventListener('input', () => { const s = +sizeIn.value; cloud.material.size = s*PR; testCloud.material.size = s*PR; document.getElementById('size-out').textContent = s+' px'; });
+for (const [id, m] of [['m-speed', 'speed'], ['m-gen', 'gen'], ['m-one', 'one']]) {
+  document.getElementById(id).addEventListener('click', () => {
+    mode = m; document.querySelectorAll('.seg button').forEach(b => b.setAttribute('aria-pressed', String(b.id === id))); paint();
+  });
+}
+const bind = (id, obj) => { const c = document.getElementById(id); const f = () => { obj.visible = c.checked; }; c.addEventListener('change', f); f(); };
+bind('c-test', testCloud); bind('c-region', region); bind('c-cab', cab); bind('c-table', table);
+document.getElementById('v-reset').addEventListener('click', () => view('reset'));
+document.getElementById('v-cab').addEventListener('click', () => view('cab'));
+document.getElementById('v-top').addEventListener('click', () => view('top'));
+
+function stats() {
+  let inCab = 0, inBox = 0, below = 0; const sp = [];
+  for (let i = 0; i < N; i++) {
+    const x = EE[3*i], y = EE[3*i+1], z = EE[3*i+2];
+    if (x > .56 && x < .88 && y > .13 && y < .53 && z > -.035 && z < .665) inCab++;
+    if (x >= S.x[0] && x <= S.x[1] && y >= S.y[0] && y <= S.y[1] && z >= S.z[0] && z <= S.z[1]) inBox++;
+    if (z < -.035) below++;
+    sp.push(SPEED[i]);
+  }
+  sp.sort((a, b) => a - b); const pct = v => (v/N*100).toFixed(1)+' %';
+  document.getElementById('stats').innerHTML =
+    `<dt>Gripper inside the cupboard</dt><dd>${fmt(inCab)} · ${pct(inCab)}</dd>
+     <dt>Inside the test sampling box</dt><dd>${fmt(inBox)} · ${pct(inBox)}</dd>
+     <dt>Below the table top</dt><dd>${fmt(below)} · ${pct(below)}</dd>
+     <dt>Median speed</dt><dd>${sp[Math.floor(N/2)].toFixed(3)}</dd>
+     <dt>Speed ≤ 0.2</dt><dd>${pct(sp.filter(v => v <= .2).length)}</dd>`;
+}
+
+/* ---------- picking ---------- */
+const ray = new THREE.Raycaster(), mouse = new THREE.Vector2(), tip = document.getElementById('tip');
+let hover = null, moved = false, downAt = null;
+function pick(ev) {
+  const r = renderer.domElement.getBoundingClientRect();
+  mouse.set((ev.clientX - r.left)/r.width*2-1, -(ev.clientY - r.top)/r.height*2+1);
+  ray.setFromCamera(mouse, camera);
+  ray.params.Points.threshold = .012*camera.position.distanceTo(controls.target);
+  const hit = ray.intersectObject(cloud)[0];
+  return hit && hit.index < N ? hit.index : null;
+}
+renderer.domElement.addEventListener('pointermove', ev => { moved = true; lastEv = ev; });
+let lastEv = null;
+renderer.domElement.addEventListener('pointerleave', () => { tip.hidden = true; lastEv = null; });
+renderer.domElement.addEventListener('pointerdown', ev => { downAt = [ev.clientX, ev.clientY]; });
+renderer.domElement.addEventListener('pointerup', ev => {
+  if (!downAt || Math.hypot(ev.clientX-downAt[0], ev.clientY-downAt[1]) > 5) return;
+  const i = pick(ev); select(i);
+});
+function hoverTip() {
+  if (!moved || !lastEv) return; moved = false;
+  const i = pick(lastEv); renderer.domElement.style.cursor = i == null ? '' : 'pointer';
+  if (i == null) { tip.hidden = true; return; }
+  const r = viewport.getBoundingClientRect();
+  tip.innerHTML = `anchor ${fmt(D.index[i])}<br>speed ${SPEED[i].toFixed(3)} · gen ${GEN[i]}`;
+  tip.style.left = (lastEv.clientX - r.left)+'px'; tip.style.top = (lastEv.clientY - r.top)+'px'; tip.hidden = false;
+}
+const DEG = 180/Math.PI, NAMES = ['pan', 'lift', 'elbow', 'wrist 1', 'wrist 2', 'wrist 3'];
+function select(i) {
+  armGroup.clear(); marker.visible = false;
+  const el = document.getElementById('sel');
+  if (i == null) { el.innerHTML = '<span class="sel-empty">Click a point to draw the arm configuration that produced it.</span>'; return; }
+  const P = k => new THREE.Vector3(ARM[(i*NL+k)*3], ARM[(i*NL+k)*3+1], ARM[(i*NL+k)*3+2]);
+  const up = new THREE.Vector3(0, 1, 0);
+  for (let k = 0; k < NL; k++) {
+    const a = P(k);
+    const j = new THREE.Mesh(new THREE.SphereGeometry(.018, 16, 12), armMat); j.position.copy(a); armGroup.add(j);
+    if (k + 1 < NL) {
+      const b = P(k+1), d = b.clone().sub(a), len = d.length(); if (len < 1e-4) continue;
+      const c = new THREE.Mesh(new THREE.CylinderGeometry(.009, .009, len, 12), armMat);
+      c.position.copy(a.clone().add(b).multiplyScalar(.5)); c.quaternion.setFromUnitVectors(up, d.normalize()); armGroup.add(c);
+    }
+  }
+  marker.position.copy(P(NL-1)); marker.visible = true;
+  const q = Array.from({ length: 6 }, (_, k) => QRAD[6*i+k]);
+  el.innerHTML = `<dl>
+    <dt>Bank anchor</dt><dd>#${fmt(D.index[i])}</dd>
+    <dt>Gripper x, y, z (m)</dt><dd>${[0, 1, 2].map(k => EE[3*i+k].toFixed(3)).join(', ')}</dd>
+    <dt>Speed</dt><dd>${SPEED[i].toFixed(3)}</dd>
+    <dt>Generation</dt><dd>${GEN[i]}</dd>
+    ${q.map((v, k) => `<dt>${NAMES[k]}</dt><dd>${(v*DEG).toFixed(1)}°</dd>`).join('')}
+  </dl><button class="btn" id="clear">Clear selection</button>`;
+  document.getElementById('clear').addEventListener('click', () => select(null));
+}
+
+/* ---------- loop ---------- */
+function resize() { const r = viewport.getBoundingClientRect(); renderer.setSize(r.width, r.height, false); camera.aspect = r.width/Math.max(r.height, 1); camera.updateProjectionMatrix(); }
+new ResizeObserver(resize).observe(viewport);
+function loop() { controls.update(); hoverTip(); renderer.render(scene, camera); requestAnimationFrame(loop); }
+theme(); setN(); resize(); loop();
+</script>

@@ -1,0 +1,82 @@
+# Larger cabinet cabinet_w15: scenes/cabinet.yml with every compartment opening 1.5 x as wide and each compartment
+# 1.2 x as tall, centre line moved to y 0.24. Written by experiments/ntrl_cabinet/make_scenes.py; do not edit by hand.
+# Cupboard (open towards the robot, -X): outer box x 0.56-0.88, y -0.05-0.53, z -0.035-0.793,
+# 0.02 m panels. Three compartments 0.3 deep x 0.54 wide (y -0.03-0.51), bottom 0.27 tall, middle 0.252 tall, top 0.246 tall.
+# Unchanged from cabinet.yml: table, panel thickness, floor, back face, depth.
+#
+# Sampling box for the grasp point, from the cupboard's outer box:
+#   height = cupboard height = 0.828  z -0.035-0.793 (FK sampler: table top + --height 0.828)
+#   width  = 1.5 x 0.58 = 0.87  y -0.195-0.675 (centred on the cupboard)
+#   depth  = 2.5 x 0.32 = 0.8  x 0.08-0.88 (back face of the cupboard towards the robot)
+#
+# No task orientation: no zones or task_axes. Speed is clearance only.
+
+cuboids:
+  - name: table
+    pose: [0.65, 0.0, -0.06, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.8, 1.2, 0.05]
+
+  - name: shelf_back
+    pose: [0.87, 0.24, 0.379, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.02, 0.58, 0.828]
+    color: [150, 105, 60]
+
+  - name: shelf_side_inner
+    pose: [0.71, -0.04, 0.379, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.3, 0.02, 0.828]
+    color: [150, 105, 60]
+
+  - name: shelf_side_outer
+    pose: [0.71, 0.52, 0.379, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.3, 0.02, 0.828]
+    color: [150, 105, 60]
+
+  - name: shelf_top
+    pose: [0.71, 0.24, 0.783, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.3, 0.54, 0.02]
+    color: [150, 105, 60]
+
+  - name: shelf_board_low
+    pose: [0.71, 0.24, 0.245, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.3, 0.54, 0.02]
+    color: [170, 125, 75]
+
+  - name: shelf_board_high
+    pose: [0.71, 0.24, 0.517, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.3, 0.54, 0.02]
+    color: [170, 125, 75]
+
+viz_table:
+  name: viz_tabletop
+  pose: [0.75, 0.0, -0.06, 1.0, 0.0, 0.0, 0.0]
+  dims: [1.0, 1.2, 0.05]
+
+# The frozen FK sampler reads x and y; z is recorded for the other stages and checked against it.
+sampling:
+  x: [0.08, 0.88]
+  y: [-0.195, 0.675]
+  z: [-0.035, 0.793]
+
+# Grasp-point boxes of the compartment interiors (0.04 m past the opening). Used by the test suites and the coverage strata.
+compartments:
+  - name: bottom
+    x: [0.6, 0.86]
+    y: [-0.03, 0.51]
+    z: [-0.035, 0.235]
+  - name: middle
+    x: [0.6, 0.86]
+    y: [-0.03, 0.51]
+    z: [0.255, 0.507]
+  - name: top
+    x: [0.6, 0.86]
+    y: [-0.03, 0.51]
+    z: [0.527, 0.773]
+
+# Derivation (make_scenes.py); not read by the runtime.
+variant:
+  base: cabinet.yml
+  clearance_scale: 1.2
+  width_scale: 1.5
+  height_scale: 1.2
+  centre_y: 0.24
+  rule: each compartment opening width_scale x as wide and each compartment height_scale x as tall, cupboard centred on y = centre_y; panels, floor, back face and depth unchanged

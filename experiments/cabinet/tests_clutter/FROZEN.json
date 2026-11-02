@@ -1,0 +1,9 @@
+{
+  "source_run": "registered_20261029T223856Z-1fb06127",
+  "scene": "cabinet_clutter",
+  "scene_sha256": "5c7e9384b132ec6d30de8cfb7e3e8e5c7c0586f7e5b7c56714eeeab0b925abcb",
+  "generator_sha256": "8fd5ea5de9d25b3b266aa1df7b16b5870c9b0848c22f2d507cecb77d96e95315",
+  "suite_manifest_sha256": "781ed846361d70edd3fe6d59d6a1908fb1c1975cfd6b8abd3544db877f8e144e",
+  "total": 600,
+  "note": "Frozen testing data: never resample or edit; evaluate.py checks these hashes."
+}

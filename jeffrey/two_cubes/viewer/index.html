@@ -1,0 +1,400 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Two Cube Planning</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: results table first, then the query picker beside the 3D scene with the planned path, then the query readout. */
+:root {
+  --bg: #f4f6f7; --panel: #ffffff; --ink: #14181b; --ink-2: #4a5359; --ink-3: #737d86; --rule: #d9dee2; --well: #e9edf0; --grid: #e8ebee;
+  --accent: #2a78d6; --scene: #eef1f3; --slab: #9a6b3f; --slab-edge: #6e4a29; --arm: #56616a; --ghost: #78828a; --pick: #e34948;
+  --truth: #14181b; --m1: #2a78d6; --m2: #eb6834; --m3: #1baf7a; --m4: #c98a00; --m5: #d55181;
+  --band-contact: rgba(227, 73, 72, 0.13); --band-slow: rgba(201, 138, 0, 0.13); --band-off: rgba(74, 83, 89, 0.10); --contact-ink: #b8312f;
+  --display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111416; --panel: #191d20; --ink: #e8ecee; --ink-2: #b4bcc2; --ink-3: #8b959e; --rule: #2c3337; --well: #22282c; --grid: #252b2f;
+  --accent: #3987e5; --scene: #15191c; --slab: #8a6040; --slab-edge: #c09060; --arm: #9aa4ad; --ghost: #87919a; --pick: #e66767;
+  --truth: #e8ecee; --m1: #3987e5; --m2: #d95926; --m3: #199e70; --m4: #c98500; --m5: #d55181;
+  --band-contact: rgba(230, 103, 103, 0.16); --band-slow: rgba(201, 133, 0, 0.16); --band-off: rgba(180, 188, 194, 0.09); --contact-ink: #e88a8a; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #111416; --panel: #191d20; --ink: #e8ecee; --ink-2: #b4bcc2; --ink-3: #8b959e; --rule: #2c3337; --well: #22282c; --grid: #252b2f;
+  --accent: #3987e5; --scene: #15191c; --slab: #8a6040; --slab-edge: #c09060; --arm: #9aa4ad; --ghost: #87919a; --pick: #e66767;
+  --truth: #e8ecee; --m1: #3987e5; --m2: #d95926; --m3: #199e70; --m4: #c98500; --m5: #d55181;
+  --band-contact: rgba(230, 103, 103, 0.16); --band-slow: rgba(201, 133, 0, 0.16); --band-off: rgba(180, 188, 194, 0.09); --contact-ink: #e88a8a; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 14px/1.45 var(--body); }
+.wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 18px 28px;
+        max-width: 1440px; margin: 0 auto; display: grid; gap: 14px; }
+.wrap > * { min-width: 0; }
+header { display: grid; gap: 4px; }
+h1 { font: 600 1.6rem/1.15 var(--display); margin: 0; text-wrap: balance; }
+h2 { font: 600 1.08rem/1.2 var(--display); margin: 0; letter-spacing: .01em; }
+.lede { color: var(--ink-2); margin: 0; max-width: 100ch; }
+.top { display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 14px; align-items: stretch; }
+.side { display: grid; gap: 12px; min-width: 0; align-content: start; }
+.card { background: var(--panel); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 14px; display: grid; gap: 10px; min-width: 0; }
+.label { font: 500 11px var(--mono); letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); }
+.row { display: flex; align-items: baseline; justify-content: space-between; gap: 6px 12px; flex-wrap: wrap; }
+.muted { color: var(--ink-3); font-size: 12.5px; }
+.seg { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; background: var(--well); border-radius: 6px; padding: 3px; gap: 3px; }
+.seg button { font: 500 12.5px var(--body); color: var(--ink-2); background: transparent; border: 0; border-radius: 4px; padding: 6px 4px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--panel); color: var(--ink); box-shadow: 0 0 0 1px var(--rule); }
+.seg.axes button { font-family: var(--mono); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips button { display: inline-flex; align-items: center; gap: 7px; font: 500 12.5px var(--mono); color: var(--ink-3); background: transparent; border: 1px solid var(--rule);
+  border-radius: 6px; padding: 5px 9px; cursor: pointer; }
+.chips button[aria-pressed="true"] { color: var(--ink); border-color: var(--ink-3); background: var(--well); }
+.chips button[aria-pressed="false"] .sw { opacity: .3; }
+button:focus-visible, input:focus-visible, svg:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; margin: 0; font-size: 13px; }
+dt { color: var(--ink-3); }
+dd { margin: 0; text-align: right; font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; color: var(--ink); }
+.sl { display: grid; grid-template-columns: minmax(0, 1fr) 9ch; align-items: center; gap: 10px; font: 500 13px var(--mono); color: var(--ink-2); }
+.sl input { width: 100%; margin: 0; accent-color: var(--pick); }
+.sl output { text-align: right; font-variant-numeric: tabular-nums; color: var(--ink); font-size: 12.5px; }
+.status { font: 12px var(--mono); color: var(--ink-3); }
+.viewport { position: relative; min-height: 440px; background: var(--scene); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; touch-action: none; }
+.viewport canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.vbar { position: absolute; top: 10px; right: 10px; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.vbar button { font: 500 12px var(--body); color: var(--ink-2); background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 5px 10px; cursor: pointer; }
+.vtag { position: absolute; top: 10px; left: 12px; font: 600 13px var(--display); color: var(--ink); background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 4px 9px; max-width: calc(100% - 24px); }
+.vkey { position: absolute; left: 12px; bottom: 10px; display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--ink-2); background: color-mix(in srgb, var(--panel) 82%, transparent);
+  border-radius: 6px; padding: 4px 8px; pointer-events: none; max-width: calc(100% - 24px); }
+.vkey span { display: inline-flex; align-items: center; gap: 6px; }
+.busy { position: absolute; inset: 0; display: grid; place-items: center; font: 13px var(--mono); color: var(--ink-2); background: color-mix(in srgb, var(--panel) 70%, transparent); }
+.readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }
+.cell { background: var(--panel); padding: 9px 13px; display: grid; gap: 2px; align-content: start; min-width: 0; }
+.cell .l { font-size: 12px; color: var(--ink-3); display: flex; align-items: center; gap: 6px; }
+.cell .v { font: 16px var(--mono); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.cell .n { font: 12px var(--mono); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.cell.contact .v { color: var(--contact-ink); }
+.legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; font-size: 12.5px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { display: inline-block; width: 18px; height: 0; border-top: 2.5px solid; flex: none; }
+.sw.dash { border-top-style: dashed; }
+.sw.box { height: 11px; border: 0; border-radius: 2px; }
+.sw.b-contact { background: var(--band-contact); outline: 1px solid var(--rule); } .sw.b-slow { background: var(--band-slow); outline: 1px solid var(--rule); }
+.sw.b-off { background: var(--band-off); outline: 1px solid var(--rule); }
+.sw.pickmark { width: 0; height: 13px; border-top: 0; border-left: 1.5px dashed var(--pick); }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex: none; }
+.charts { display: grid; gap: 6px; }
+.charts .sub { font-size: 12.5px; color: var(--ink-3); }
+.plot { min-width: 0; }
+.plot-title { font-size: 12.5px; font-weight: 500; color: var(--ink-2); margin: 6px 0 0; }
+.plot svg { display: block; width: 100%; cursor: crosshair; touch-action: none; overflow: visible; }
+.badge { display: inline-block; font: 500 12px var(--body); color: var(--ink-2); background: var(--well); border-radius: 5px; padding: 3px 8px; }
+svg .gridline { stroke: var(--grid); stroke-width: 1; }
+svg .axisline { stroke: var(--ink-3); stroke-width: 1; }
+svg .tick { font: 10.5px var(--mono); fill: var(--ink-3); }
+svg .axtitle { font: 11px var(--body); fill: var(--ink-3); }
+svg .bandtext { font: 10.5px var(--body); fill: var(--contact-ink); }
+svg .pickline { stroke: var(--pick); stroke-width: 1.5; stroke-dasharray: 3 3; }
+svg .picktext { font: 10.5px var(--body); fill: var(--pick); }
+svg .series { fill: none; stroke-width: 1.75; stroke-linejoin: round; stroke-linecap: round; }
+svg .series.truth { stroke: var(--truth); stroke-width: 2.25; }
+svg .series.dash { stroke-dasharray: 6 3; }
+svg .cursorline { stroke: var(--ink); stroke-opacity: .55; stroke-width: 1; }
+svg .cdot { stroke: var(--panel); stroke-width: 2; }
+svg .clipnote { font: 10.5px var(--mono); fill: var(--ink-3); }
+.notes { display: grid; gap: 8px; font-size: 13px; color: var(--ink-2); }
+.notes p { margin: 0; max-width: 104ch; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; font-size: 12.5px; min-width: 560px; }
+th, td { text-align: right; padding: 4px 10px; border-bottom: 1px solid var(--rule); font-variant-numeric: tabular-nums; }
+th:first-child, td:first-child { text-align: left; }
+th { font: 500 11px var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--ink-3); }
+td { font-family: var(--mono); color: var(--ink); }
+@media (max-width: 900px) { .top { grid-template-columns: minmax(0, 1fr); } .viewport { order: -1; height: 52vh; min-height: 320px; } }
+</style>
+<style>
+:root { --cube-a: #3f78b5; --cube-b: #b8673f; --ok: #1a8a5a; --bad: #c9372c; --ok-bg: rgba(26,138,90,.14); --bad-bg: rgba(201,55,44,.10); --table: #c9cfd4; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --cube-a: #5b93d1; --cube-b: #cf8259; --ok: #3fb67f; --bad: #e5675d; --ok-bg: rgba(63,182,127,.34); --bad-bg: rgba(229,103,93,.20); --table: #3a4247; } }
+:root[data-theme="dark"] { --cube-a: #5b93d1; --cube-b: #cf8259; --ok: #3fb67f; --bad: #e5675d; --ok-bg: rgba(63,182,127,.34); --bad-bg: rgba(229,103,93,.20); --table: #3a4247; }
+.grid10 { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 3px; }
+.grid10 button { aspect-ratio: 1; min-width: 0; border-radius: 4px; border: 1px solid var(--rule); background: var(--bad-bg); color: var(--bad); font: 500 10.5px var(--mono); padding: 0; cursor: pointer; display: grid; place-items: center; }
+.grid10 button.ok { background: var(--ok-bg); color: var(--ok); }
+.grid10 button[aria-current="true"] { outline: 2px solid var(--ink); outline-offset: 0; }
+.mark { font-weight: 600; }
+.mark.ok { color: var(--ok); } .mark.bad { color: var(--bad); }
+.bar { position: relative; height: 6px; background: var(--well); border-radius: 3px; overflow: hidden; margin-top: 3px; }
+.bar i { position: absolute; inset: 0 auto 0 0; border-radius: 3px; }
+td .num { display: block; }
+td.cellbar { min-width: 92px; }
+.play { display: grid; grid-template-columns: auto minmax(0, 1fr) 7ch; align-items: center; gap: 10px; }
+.play button { font: 500 12.5px var(--body); color: var(--ink); background: var(--well); border: 1px solid var(--rule); border-radius: 6px; padding: 5px 10px; cursor: pointer; }
+.play input { width: 100%; accent-color: var(--accent); }
+.play output { font: 12px var(--mono); color: var(--ink-2); text-align: right; font-variant-numeric: tabular-nums; }
+.runs { display: grid; gap: 4px; font-size: 13px; }
+.runs div { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+.runs .why { color: var(--ink-3); font-size: 12px; grid-column: 1 / -1; margin-top: -2px; }
+.check { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-2); }
+.check input { accent-color: var(--accent); }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }
+.kpi { background: var(--panel); padding: 10px 14px; display: grid; gap: 2px; }
+.kpi .l { font-size: 12px; color: var(--ink-3); display: flex; align-items: center; gap: 6px; }
+.kpi .v { font: 600 22px var(--display); font-variant-numeric: tabular-nums; }
+.kpi .n { font: 12px var(--mono); color: var(--ink-2); }
+</style>
+<div class="wrap">
+  <header>
+    <h1>Two cubes: ntrl-demo baseline</h1>
+    <p class="lede" id="lede">A table with two 20 cm cubes 72 cm apart (centre to centre), nothing else. ntrl-demo's metric NTFields network was trained on this scene with the baseline recipe, then three planners used its time field on 600 certified start–goal pairs. Pick a group and a pair to see the arm, the planned gripper path and the scorer's verdict.</p>
+  </header>
+
+  <section class="kpis" id="kpis" aria-label="Totals"></section>
+
+  <section class="card notes" aria-labelledby="h-res">
+    <div class="row"><h2 id="h-res">Successes by group</h2><span class="muted" id="res-sub"></span></div>
+    <div class="tablewrap"><table id="results"></table></div>
+  </section>
+
+  <div class="top">
+    <aside class="side">
+      <section class="card" aria-labelledby="l-suite">
+        <span class="label" id="l-suite">Group of pairs</span>
+        <div class="seg" role="group" aria-labelledby="l-suite" id="suites" style="grid-auto-flow:row;grid-template-columns:repeat(2,minmax(0,1fr))"></div>
+        <div class="muted" id="suite-note"></div>
+      </section>
+      <section class="card" aria-labelledby="l-planner">
+        <span class="label" id="l-planner">Planner</span>
+        <div class="seg" role="group" aria-labelledby="l-planner" id="planners"></div>
+        <div class="seg" role="group" aria-label="Planning seed" id="seeds"></div>
+        <div class="muted" id="planner-note"></div>
+      </section>
+      <section class="card" aria-labelledby="l-q">
+        <div class="row"><span class="label" id="l-q">Pairs (green = solved by this planner and seed)</span><span class="muted" id="q-count"></span></div>
+        <div class="grid10" id="qgrid" role="group" aria-labelledby="l-q"></div>
+        <label class="check"><input type="checkbox" id="show-wit" checked> Show the certified witness path</label>
+        <label class="check"><input type="checkbox" id="show-all"> Show every planner's path</label>
+        <div class="status" id="status">Loading…</div>
+      </section>
+    </aside>
+
+    <div style="display:grid;gap:10px;min-width:0;align-content:start">
+      <div class="viewport" id="viewport" style="height:600px">
+        <div class="vtag" id="vtag">Pair</div>
+        <div class="vbar">
+          <button id="v-reset">Reset view</button>
+          <button id="v-front">From the robot</button>
+          <button id="v-top">Top</button>
+        </div>
+        <div class="vkey" id="vkey"></div>
+        <div class="busy" id="busy">Loading the data…</div>
+      </div>
+      <div class="card" style="padding:10px 14px">
+        <div class="play"><button id="play">Play</button><input type="range" id="tt" min="0" max="1000" value="0" aria-label="Position along the planned path"><output id="ott"></output></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="readout" id="readout" aria-live="polite" aria-label="The selected pair"></section>
+
+  <section class="card notes" aria-labelledby="h-runs">
+    <h2 id="h-runs">This pair, every planner</h2>
+    <div class="tablewrap"><table id="runs"></table></div>
+  </section>
+
+  <section class="card notes" aria-labelledby="l-notes">
+    <h2 id="l-notes">How this was made</h2>
+    <p id="n-scene"></p>
+    <p id="n-tests"></p>
+    <p id="n-train"></p>
+    <p id="n-plan"></p>
+    <p id="n-draw"></p>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const CHAIN = {"chain": [{"child": "base_link_inertia", "moving": -1, "origin": [-1.0, -1.2246468525851679e-16, 0.0, 0.0, 1.2246468525851679e-16, -1.0, 0.0, 0.0, -0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]}, {"child": "shoulder_link", "moving": 0, "origin": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, -0.0, 0.0, 1.0, 0.16249999403953552, 0.0, 0.0, 0.0, 1.0]}, {"child": "upper_arm_link", "moving": 1, "origin": [1.0, 0.0, 0.0, 0.0, 0.0, -2.051034342365199e-10, -1.0, 0.0, -0.0, 1.0, -2.051034342365199e-10, 0.0, 0.0, 0.0, 0.0, 1.0]}, {"child": "forearm_link", "moving": 2, "origin": [1.0, 0.0, 0.0, -0.42500001192092896, 0.0, 1.0, 0.0, 0.0, -0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]}, {"child": "wrist_1_link", "moving": 3, "origin": [1.0, 0.0, 0.0, -0.3921999931335449, 0.0, 1.0, 0.0, 0.0, -0.0, 0.0, 1.0, 0.13330000638961792, 0.0, 0.0, 0.0, 1.0]}, {"child": "wrist_2_link", "moving": 4, "origin": [1.0, 0.0, 0.0, 0.0, 0.0, -2.051034342365199e-10, -1.0, -0.09969999641180038, -0.0, 1.0, -2.051034342365199e-10, -2.0448811047235615e-11, 0.0, 0.0, 0.0, 1.0]}, {"child": "wrist_3_link", "moving": 5, "origin": [1.0, -1.2246468525851679e-16, 1.2246468525851679e-16, 0.0, -1.2246468525851679e-16, -2.0510354525882235e-10, 1.0, 0.09960000216960907, -1.2246468525851679e-16, -1.0, -2.0510354525882235e-10, -2.0428301411579142e-11, 0.0, 0.0, 0.0, 1.0]}, {"child": "flange", "moving": -1, "origin": [3.7493993930529855e-33, 1.0, -6.123234262925839e-17, 0.0, -6.123234262925839e-17, 6.123234262925839e-17, 1.0, 0.0, 1.0, 0.0, 6.123234262925839e-17, 0.0, 0.0, 0.0, 0.0, 1.0]}, {"child": "tool0", "moving": -1, "origin": [6.123234262925839e-17, -6.123234262925839e-17, 1.0, 0.0, 1.0, 3.7493993930529855e-33, -6.123234262925839e-17, 0.0, -0.0, 1.0, 6.123234262925839e-17, 0.0, 0.0, 0.0, 0.0, 1.0]}, {"child": "robotiq_arg2f_base_link", "moving": -1, "origin": [0.0007963267271406949, -0.9999997019767761, 0.0, 0.0, 0.9999997019767761, 0.0007963267271406949, 0.0, 0.0, -0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]}, {"child": "grasp_frame", "moving": -1, "origin": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, -0.0, 0.0, 1.0, 0.20000000298023224, 0.0, 0.0, 0.0, 1.0]}], "arm_links": ["base_link", "shoulder_link", "upper_arm_link", "forearm_link", "wrist_1_link", "wrist_2_link", "wrist_3_link", "grasp_frame"]};
+const SUITES = { free_to_free: ['Free to free', 'both ends away from the cubes (in front of, behind or above them)'],
+  free_to_compartment: ['Free to cube', 'start away from the cubes, goal next to a cube'],
+  compartment_to_free: ['Cube to free', 'start next to a cube, goal away from the cubes'],
+  compartment_to_compartment: ['Cube to other cube', 'start next to one cube, goal next to the other'],
+  same_compartment: ['Same cube', 'both ends next to the same cube, often on opposite sides of it'],
+  anywhere: ['Anywhere', 'both ends anywhere in the sampling box'] };
+const PLAN = [ { key: 'rk4', name: 'RK4', long: 'native RK4: follows the field’s time gradient', c: '--m1', seeds: [null] },
+  { key: 'ntrl', name: 'ntrl-demo MPPI', long: 'ntrl-demo’s own MPPI on the field', c: '--m2', seeds: [0, 1, 2] },
+  { key: 'mppi', name: 'Release MPPI', long: 'the original method’s MPPI with this field as its cost', c: '--m5', seeds: [0, 1, 2] } ];
+const REGION = { free: 'free', box: 'anywhere', near_left: 'next to the left cube', near_right: 'next to the right cube' };
+const MARGIN = 0.005, TOL = 0.0005;   // flag below 4.5 mm so paths certified at the 5 mm margin are not marked by rounding
+const $ = id => document.getElementById(id);
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const f2 = v => v == null ? '–' : (+v).toFixed(2), cm = v => (v*100).toFixed(1);
+function dec(b64, T) { const s = atob(b64), u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return new T(u.buffer); }
+let D = null, Q, G, DD, W, PATHS = {}, suite = 'compartment_to_compartment', pk = 'ntrl', seed = 0, qi = 0, tpos = 0, playing = false;
+
+/* ---------- 3D ---------- */
+const viewport = $('viewport'), renderer = new THREE.WebGLRenderer({ antialias: true }); renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); viewport.prepend(renderer.domElement);
+const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(40, 1, .01, 50); camera.up.set(0, 0, 1);
+const controls = new THREE.OrbitControls(camera, renderer.domElement); controls.enableDamping = true;
+const VIEWS = { reset: { pos: [-0.75, -1.25, 1.15], target: [0.5, 0.0, 0.1] }, front: { pos: [-0.55, 0.0, 0.6], target: [0.6, 0.0, 0.1] }, top: { pos: [0.5, 0.0, 2.4], target: [0.5, 0.0, 0.0] } };
+function view(v) { camera.position.set(...VIEWS[v].pos); controls.target.set(...VIEWS[v].target); controls.update(); }
+view('reset'); $('v-reset').onclick = () => view('reset'); $('v-front').onclick = () => view('front'); $('v-top').onclick = () => view('top');
+const grid = new THREE.GridHelper(2, 20); grid.rotation.x = Math.PI/2; grid.position.set(0.4, 0, -0.0351); scene.add(grid);
+const boxGroup = new THREE.Group(); scene.add(boxGroup); const boxMats = [];
+const baseMat = new THREE.MeshBasicMaterial(), base = new THREE.Mesh(new THREE.CylinderGeometry(.06, .07, .02, 32), baseMat); base.rotation.x = Math.PI/2; scene.add(base);
+const armGroup = new THREE.Group(), startGroup = new THREE.Group(), goalGroup = new THREE.Group(); scene.add(armGroup, startGroup, goalGroup);
+const armMat = new THREE.MeshBasicMaterial(), startMat = new THREE.MeshBasicMaterial({ transparent: true, opacity: .28, depthWrite: false }), goalMat = new THREE.MeshBasicMaterial({ transparent: true, opacity: .28, depthWrite: false });
+const pathGroup = new THREE.Group(); scene.add(pathGroup);
+const tipMat = new THREE.MeshBasicMaterial(), tip = new THREE.Mesh(new THREE.SphereGeometry(.013, 18, 12), tipMat); scene.add(tip);
+const sMark = new THREE.Mesh(new THREE.SphereGeometry(.016, 18, 12), new THREE.MeshBasicMaterial()), gMark = new THREE.Mesh(new THREE.SphereGeometry(.016, 18, 12), new THREE.MeshBasicMaterial()); scene.add(sMark, gMark);
+const JOINT_GEO = new THREE.SphereGeometry(.018, 16, 12), LINK_GEO = new THREE.CylinderGeometry(.01, .01, 1, 12), STUB_GEO = new THREE.CylinderGeometry(.006, .006, 1, 10);
+function matMul(A, B) { const C = new Float64Array(16); for (let r = 0; r < 4; r++) for (let c = 0; c < 4; c++) { let s = 0; for (let k = 0; k < 4; k++) s += A[r*4+k]*B[k*4+c]; C[r*4+c] = s; } return C; }
+function forwardKinematics(chain, q) { let T = new Float64Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]); const out = { base_link: T };
+  for (const j of chain) { T = matMul(T, j.origin); if (j.moving >= 0) { const c = Math.cos(q[j.moving]), s = Math.sin(q[j.moving]); T = matMul(T, new Float64Array([c, -s, 0, 0, s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])); } out[j.child] = T; }
+  return out; }
+function armMeshes(q, mat, group) {
+  group.clear(); const T = forwardKinematics(CHAIN.chain, q), up = new THREE.Vector3(0, 1, 0);
+  const pts = CHAIN.arm_links.map(l => new THREE.Vector3(T[l][3], T[l][7], T[l][11]));
+  const rod = (a, b, geo) => { const d = b.clone().sub(a), len = d.length(); if (len < 1e-4) return; const c = new THREE.Mesh(geo, mat);
+    c.position.copy(a.clone().add(b).multiplyScalar(.5)); c.quaternion.setFromUnitVectors(up, d.normalize()); c.scale.set(1, len, 1); group.add(c); };
+  pts.forEach((a, k) => { const j = new THREE.Mesh(JOINT_GEO, mat); j.position.copy(a); group.add(j); if (k+1 < pts.length) rod(a, pts[k+1], LINK_GEO); });
+  const g = T[CHAIN.arm_links[CHAIN.arm_links.length-1]], tp = pts[pts.length-1];
+  rod(tp, tp.clone().add(new THREE.Vector3(g[2], g[6], g[10]).multiplyScalar(-0.07)), STUB_GEO); return tp;
+}
+function buildBoxes() {
+  boxGroup.clear(); boxMats.length = 0;
+  D.cuboids.forEach(c => { const geo = new THREE.BoxGeometry(...c.dims), fill = new THREE.MeshBasicMaterial({ transparent: true, opacity: c.name === 'table' ? .35 : .5, depthWrite: false }), edge = new THREE.LineBasicMaterial();
+    const m = new THREE.Mesh(geo, fill), e = new THREE.LineSegments(new THREE.EdgesGeometry(geo), edge); m.position.set(...c.pose.slice(0, 3)); e.position.copy(m.position);
+    boxGroup.add(m, e); boxMats.push({ name: c.name, fill, edge }); });
+  themeScene();
+}
+function lineMat(color, dashed, opacity) { return dashed ? new THREE.LineDashedMaterial({ color, dashSize: .012, gapSize: .008, transparent: opacity < 1, opacity }) : new THREE.LineBasicMaterial({ color, transparent: opacity < 1, opacity }); }
+function polyline(p, mat) { const pts = []; for (let i = 0; i < p.n; i++) pts.push(new THREE.Vector3(G[(p.o+i)*3], G[(p.o+i)*3+1], G[(p.o+i)*3+2]));
+  const geo = new THREE.BufferGeometry().setFromPoints(pts), l = new THREE.Line(geo, mat); if (mat.isLineDashedMaterial) l.computeLineDistances(); return l; }
+function hitSegments(p, mat) { const pts = []; for (let j = 0; j+1 < p.n; j++) if (DD[p.so+j] < MARGIN-TOL) { const a = p.o+j, b = a+1; pts.push(new THREE.Vector3(G[a*3], G[a*3+1], G[a*3+2]), new THREE.Vector3(G[b*3], G[b*3+1], G[b*3+2])); }
+  return new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(pts), mat); }
+function themeScene() {
+  scene.background = new THREE.Color(css('--scene')); baseMat.color = new THREE.Color(css('--ink-3'));
+  armMat.color = new THREE.Color(css('--arm')); startMat.color = new THREE.Color(css('--ink-2')); goalMat.color = new THREE.Color(css('--accent'));
+  sMark.material.color = new THREE.Color(css('--ink-2')); gMark.material.color = new THREE.Color(css('--accent')); tipMat.color = new THREE.Color(css('--ink'));
+  const gc = new THREE.Color(css('--rule')); grid.material.color = gc;
+  boxMats.forEach(b => { const c = new THREE.Color(css(b.name === 'table' ? '--table' : b.name === 'cube_left' ? '--cube-a' : '--cube-b')); b.fill.color = c; b.edge.color = c.clone().multiplyScalar(.75); });
+  if (D && PATHS[suite]) drawPaths();
+}
+function resize() { const r = viewport.getBoundingClientRect(); renderer.setSize(r.width, r.height, false); camera.aspect = r.width/Math.max(1, r.height); camera.updateProjectionMatrix(); }
+new ResizeObserver(resize).observe(viewport);
+(function loop() { controls.update(); if (playing) step(); renderer.render(scene, camera); requestAnimationFrame(loop); })();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { themeScene(); });
+new MutationObserver(() => { themeScene(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+themeScene(); resize();
+
+/* ---------- state ---------- */
+const query = () => D.suites.find(s => s.task === suite).queries[qi];
+const runKey = (k, s) => k + (s == null ? '' : s);
+const curRun = () => query().runs[runKey(pk, PLAN.find(p => p.key === pk).seeds[0] == null ? null : seed)];
+function qAt(p, t) {   // joint vector at fractional waypoint t of a packed path
+  const i = Math.min(Math.floor(t), p.n-1), j = Math.min(i+1, p.n-1), f = t-i, q = new Float64Array(6);
+  for (let k = 0; k < 6; k++) q[k] = Q[(p.o+i)*6+k]*(1-f)+Q[(p.o+j)*6+k]*f; return q; }
+function drawPaths() {
+  pathGroup.clear(); const q = query(), show = $('show-all').checked ? PLAN.map(p => p.key) : [pk];
+  if ($('show-wit').checked) pathGroup.add(polyline(q.witness, lineMat(new THREE.Color(css('--ink-3')), true, 1)));
+  show.forEach(k => { const P = PLAN.find(p => p.key === k), r = q.runs[runKey(k, P.seeds[0] == null ? null : seed)]; if (!r || !r.path) return;
+    const main = k === pk; pathGroup.add(polyline(r.path, lineMat(new THREE.Color(css(P.c)), false, main ? 1 : .55)));
+    pathGroup.add(hitSegments(r.path, new THREE.LineBasicMaterial({ color: new THREE.Color(css('--bad')) }))); });
+  const s = new Float64Array(q.start), g = new Float64Array(q.goal);
+  sMark.position.copy(armMeshes(s, startMat, startGroup)); gMark.position.copy(armMeshes(g, goalMat, goalGroup));
+  drawArm();
+}
+function drawArm() {
+  const r = curRun(); if (!r || !r.path) { armGroup.clear(); tip.visible = false; $('ott').textContent = '–'; return; }
+  const t = tpos*(r.path.n-1); tip.position.copy(armMeshes(qAt(r.path, t), armMat, armGroup)); tip.visible = true;
+  $('ott').textContent = `${Math.round(tpos*100)} %`;
+}
+function step() { tpos = Math.min(1, tpos+0.004); $('tt').value = Math.round(tpos*1000); drawArm(); if (tpos >= 1) { playing = false; $('play').textContent = 'Play'; } }
+$('play').onclick = () => { if (playing) { playing = false; $('play').textContent = 'Play'; return; } if (tpos >= 1) tpos = 0; playing = true; $('play').textContent = 'Pause'; };
+$('tt').oninput = e => { tpos = +e.target.value/1000; playing = false; $('play').textContent = 'Play'; drawArm(); };
+
+/* ---------- panels ---------- */
+function okCount(k, s, task) { const P = PLAN.find(p => p.key === k); return D.suites.find(x => x.task === task).queries.filter(q => q.runs[runKey(k, P.seeds[0] == null ? null : s)].ok).length; }
+function kpis() {
+  const t = D.totals, all = D.suites.reduce((a, s) => a + s.queries.length, 0), line = D.suites.reduce((a, s) => a + s.queries.filter(q => q.direct).length, 0);
+  const cell = (l, v, n, c) => `<div class="kpi"><span class="l">${c ? `<i class="sw" style="border-color:var(${c})"></i>` : ''}${l}</span><span class="v">${v}</span><span class="n">${n}</span></div>`;
+  $('kpis').innerHTML = cell('Pairs', all, '6 groups of 100, each certified by a collision-free witness path') +
+    cell('Straight line works', `${line}`, `${(100*line/all).toFixed(0)} % of the pairs need no detour`) +
+    PLAN.map(p => { const m = { rk4: 'native_rk4', ntrl: 'ntrl_mppi', mppi: 'matched_mppi' }[p.key], x = t[m]; return cell(p.name, `${(100*x.success/x.n).toFixed(0)} %`, `${x.success} / ${x.n}` + (x.per_seed ? ` (seeds ${x.per_seed.join(', ')})` : ''), p.c); }).join('');
+}
+function results() {
+  const head = `<tr><th>Group</th><th>Straight line works</th>${PLAN.map(p => `<th><span style="display:inline-flex;align-items:center;gap:6px"><i class="sw" style="border-color:var(${p.c})"></i>${p.name}</span></th>`).join('')}</tr>`;
+  const bar = (v, n, c) => `<span class="num">${v} / ${n}</span><div class="bar"><i style="width:${100*v/n}%;background:var(${c})"></i></div>`;
+  const rows = D.suites.map(s => { const n = s.queries.length, line = s.queries.filter(q => q.direct).length;
+    return `<tr><td>${SUITES[s.task][0]}</td><td class="cellbar">${bar(line, n, '--ink-3')}</td>` + PLAN.map(p => { const tot = p.seeds.reduce((a, k) => a + okCount(p.key, k, s.task), 0); return `<td class="cellbar">${bar(tot, n*p.seeds.length, p.c)}</td>`; }).join('') + '</tr>'; }).join('');
+  const split = (want, label) => { const qs = D.suites.flatMap(s => s.queries.filter(q => q.direct === want)), n = qs.length;
+    return `<tr><td><b>${label}</b></td><td class="cellbar">${bar(want ? n : 0, n, '--ink-3')}</td>` + PLAN.map(p => { const tot = p.seeds.reduce((a, k) => a + qs.filter(q => q.runs[runKey(p.key, k)].ok).length, 0); return `<td class="cellbar">${bar(tot, n*p.seeds.length, p.c)}</td>`; }).join('') + '</tr>'; };
+  $('results').innerHTML = head + rows + `<tr><th colspan="${2+PLAN.length}" style="text-align:left;padding-top:14px">All 600 pairs, split by whether the straight line works</th></tr>` + split(true, 'Straight line works') + split(false, 'Needs a detour');
+  $('res-sub').textContent = 'RK4 runs once per pair; the two MPPI planners run with planning seeds 0, 1 and 2 (out of 300).';
+}
+function suitesUI() {
+  $('suites').innerHTML = D.suites.map(s => `<button data-s="${s.task}" aria-pressed="${s.task === suite}">${SUITES[s.task][0]}</button>`).join('');
+  $('suites').querySelectorAll('button').forEach(b => b.onclick = () => { suite = b.dataset.s; qi = 0; tpos = 0; refresh(); });
+  $('suite-note').textContent = SUITES[suite][1] + '.';
+}
+function plannersUI() {
+  $('planners').innerHTML = PLAN.map(p => `<button data-k="${p.key}" aria-pressed="${p.key === pk}">${p.name}</button>`).join('');
+  $('planners').querySelectorAll('button').forEach(b => b.onclick = () => { pk = b.dataset.k; tpos = 0; refresh(); });
+  const P = PLAN.find(p => p.key === pk);
+  $('seeds').innerHTML = [0, 1, 2].map(s => `<button data-s="${s}" aria-pressed="${P.seeds[0] == null ? s === 0 : s === seed}" ${P.seeds[0] == null && s ? 'disabled style="opacity:.4"' : ''}>${P.seeds[0] == null ? (s ? '–' : 'one run') : 'seed ' + s}</button>`).join('');
+  $('seeds').querySelectorAll('button').forEach(b => b.onclick = () => { if (P.seeds[0] == null) return; seed = +b.dataset.s; tpos = 0; refresh(); });
+  $('planner-note').textContent = P.long + '.';
+}
+function gridUI() {
+  const S = D.suites.find(s => s.task === suite), P = PLAN.find(p => p.key === pk);
+  $('qgrid').innerHTML = S.queries.map((q, i) => { const r = q.runs[runKey(pk, P.seeds[0] == null ? null : seed)];
+    return `<button class="${r.ok ? 'ok' : ''}" data-i="${i}" aria-current="${i === qi}" aria-label="Pair ${i}: ${r.ok ? 'solved' : 'failed'}" title="Pair ${i}: ${r.ok ? 'solved' : 'failed'}${q.direct ? '; straight line works' : '; needs a detour'}">${q.direct ? '' : '·'}</button>`; }).join('');
+  $('qgrid').querySelectorAll('button').forEach(b => b.onclick = () => { qi = +b.dataset.i; tpos = 0; refresh(); });
+  const n = S.queries.filter(q => q.runs[runKey(pk, P.seeds[0] == null ? null : seed)].ok).length;
+  $('q-count').textContent = `${n} / ${S.queries.length}`;
+}
+function why(r) { if (r.ok) return 'reached the goal, no collision'; const m = { collision: 'collides (obstacle or itself)', endpoint: 'does not end at the goal', joint_limits: 'leaves the joint limits' };
+  return r.why.length ? r.why.map(w => m[w] || w.replace(/_/g, ' ')).join(', ') : 'failed'; }
+function readout() {
+  const q = query(), r = curRun(), boxes = D.box_names, dq = Math.sqrt(q.start.reduce((a, v, k) => a + (v-q.goal[k])**2, 0));
+  const near = p => p ? `${cm(p.dmin)} cm${p.dmin < MARGIN-TOL ? ' (' + boxes[p.wmin].replace('_', ' ') + ')' : ''}` : '–';
+  const cell = (l, v, n, cls) => `<div class="cell ${cls || ''}"><span class="l">${l}</span><span class="v">${v}</span>${n ? `<span class="n">${n}</span>` : ''}</div>`;
+  $('readout').innerHTML = cell('Pair', `${SUITES[suite][0]} #${qi}`, `${REGION[q.sr] || q.sr} → ${REGION[q.gr] || q.gr}`) +
+    cell('Start to goal', `${dq.toFixed(2)} rad`, 'joint-space distance') +
+    cell('Straight line', q.direct ? 'works' : 'blocked', q.direct ? 'the direct joint-space line is collision-free' : `witness: ${q.src === 'rrtc' ? 'RRT-Connect' : q.src}, ${f2(q.wcs)} rad, gripper ${cm(q.wee)} cm`) +
+    cell(PLAN.find(p => p.key === pk).name + (PLAN.find(p => p.key === pk).seeds[0] == null ? '' : `, seed ${seed}`), r.ok ? '<span class="mark ok">✓ solved</span>' : '<span class="mark bad">✗ failed</span>', why(r)) +
+    cell('Path length', r.cs != null ? `${f2(r.cs)} rad` : '–', r.ee != null ? `gripper ${cm(r.ee)} cm` : '') +
+    cell('Closest approach', r.path ? near(r.path) : '–', 'arm spheres to the cubes or table; below 0.5 cm is a collision, below 0 the arm overlaps the box');
+  $('vtag').textContent = `${SUITES[suite][0]} #${qi}: ${r.ok ? 'solved' : 'failed'}`;
+}
+function runsTable() {
+  const q = query(), rows = [];
+  PLAN.forEach(p => p.seeds.forEach(s => { const r = q.runs[runKey(p.key, s)];
+    rows.push(`<tr><td><span style="display:inline-flex;align-items:center;gap:6px"><i class="sw" style="border-color:var(${p.c})"></i>${p.name}${s == null ? '' : ', seed ' + s}</span></td><td>${r.ok ? '<span class="mark ok">✓</span>' : '<span class="mark bad">✗</span>'}</td><td style="text-align:left;font-family:var(--body)">${why(r)}</td><td>${r.cs != null ? f2(r.cs) : '–'}</td><td>${r.path ? cm(r.path.dmin) : '–'}</td></tr>`); }));
+  $('runs').innerHTML = `<tr><th>Planner</th><th>Result</th><th style="text-align:left">Scorer</th><th>Path (rad)</th><th>Closest (cm)</th></tr>` + rows.join('') +
+    `<tr><td><span style="display:inline-flex;align-items:center;gap:6px"><i class="sw dash" style="border-color:var(--ink-3)"></i>Witness</span></td><td><span class="mark ok">✓</span></td><td style="text-align:left;font-family:var(--body)">${q.src === 'direct' ? 'straight line' : 'RRT-Connect'} (certifies the pair)</td><td>${f2(q.wcs)}</td><td>${cm(q.witness.dmin)}</td></tr>`;
+}
+function vkey() {
+  const P = PLAN.find(p => p.key === pk);
+  $('vkey').innerHTML = `<span><i class="dot" style="background:var(--ink-2);opacity:.6"></i>start</span><span><i class="dot" style="background:var(--accent);opacity:.7"></i>goal</span><span><i class="dot" style="background:var(--arm)"></i>arm on the path</span>` +
+    `<span><i class="sw" style="border-color:var(${P.c})"></i>${P.name} gripper path</span><span><i class="sw" style="border-color:var(--bad)"></i>arm in collision</span>` + ($('show-wit').checked ? `<span><i class="sw dash" style="border-color:var(--ink-3)"></i>witness</span>` : '');
+}
+function refresh() { const S = D.suites.find(s => s.task === suite);
+  if (!PATHS[suite]) { $('status').textContent = 'Loading the paths of this group…'; loadPaths(S).then(refresh); return; }
+  ({ Q, G, DD, W } = PATHS[suite]); $('status').textContent = `${D.suites.length} groups · run ${D.run}`; suitesUI(); plannersUI(); gridUI(); readout(); runsTable(); vkey(); drawPaths(); $('tt').value = Math.round(tpos*1000); }
+$('show-wit').onchange = () => { vkey(); drawPaths(); }; $('show-all').onchange = () => drawPaths();
+
+function notes() {
+  const c = D.cuboids.filter(x => x.name !== 'table');
+  $('n-scene').textContent = `Scene ${D.scene}: the release table plus ${c.map(x => `${x.name.replace('_', ' ')} (${x.dims.map(v => v.toFixed(2)).join(' × ')} m at x ${x.pose[0]}, y ${x.pose[1]})`).join(' and ')}. No cupboard, no orientation rule; speed comes from clearance only. "Next to a cube" means the gripper is within 8 cm of a cube's footprint and at most 5 cm above its top; "free" is the rest of the sampling box (x ${D.sampling.x.join('–')}, y ${D.sampling.y.join('–')}, z ${D.sampling.z.join('–')} m).`;
+  $('n-tests').textContent = 'Pairs: the cabinet task’s certified-suite generator, unchanged. Endpoints are uniform joint samples with at least 5 mm obstacle clearance; pairs are 0.02–4 rad apart; each pair is kept only if the straight line or RRT-Connect gives a path the release scorer accepts. 100 pairs per group, frozen before training.';
+  $('n-train').textContent = `Training: ntrl-demo metric NTFields with the registered baseline recipe (experiments/ntrl_cabinet defaults: 500,000 pairs sampled in the box, ntrl-demo’s loss and network). Registered run ${D.run}.`;
+  $('n-plan').textContent = 'Planners: RK4 integrates the field’s time gradient from start to goal; ntrl-demo MPPI is the planner shipped with ntrl-demo; Release MPPI is the original method’s sampling planner with this field as its cost. The release scorer judges every path (0.001 rad collision checks, 0.5 cm obstacle and 0.2 cm self margins, must end at the goal).';
+  $('n-draw').textContent = `Drawing: each path is checked every ${D.check_step} rad and drawn through at most ${D.keep} evenly spaced points, so the gripper curve between waypoints shows; a segment is red when the arm\u2019s padded collision spheres come closer than 0.45 cm to a cube or the table anywhere on it (the scorer\u2019s margin is 0.5 cm; 0.05 cm is left for rounding). The verdicts and failure reasons are the scorer\u2019s.`;
+}
+
+function loadPaths(S) { return fetch(S.paths).then(r => r.json()).then(p => { PATHS[S.task] = { Q: dec(p.Q, Float32Array), G: dec(p.G, Float32Array), DD: dec(p.D, Float32Array), W: dec(p.W, Int8Array) }; }); }
+fetch('data.json').then(r => r.json()).then(d => {
+  D = d; buildBoxes(); kpis(); results(); notes();
+  loadPaths(D.suites.find(s => s.task === suite)).then(() => { refresh(); $('busy').remove(); }).catch(e => { $('busy').textContent = 'Could not load the paths: ' + e; });
+}).catch(e => { $('busy').textContent = 'Could not load data.json: ' + e; });
+</script>

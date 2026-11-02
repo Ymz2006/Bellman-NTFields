@@ -1,0 +1,23 @@
+<main class="wrap">
+<header class="read">
+  <div class="eyebrow">ntrl-demo · models/metric/model_network_metric.py</div>
+  <h1>The ntrl-demo metric network</h1>
+  <p>One network takes a start and a goal and returns the travel time T between them. It never outputs speed directly. Speed is read off the gradient as S = 1/|∇T|, and the planner moves the start downhill on T towards the goal. This is the field behind every ntrl-demo result in the maze, cabinet and two-cube runs.</p>
+  <dl class="facts">
+    <div><dt>Input</dt><dd>start + goal, d = 3 or 6 each</dd></div>
+    <div><dt>Width</dt><dd>256</dd></div>
+    <div><dt>Weights used</dt><dd>592,130</dd></div>
+    <div><dt>Stored</dt><dd>656,900</dd></div>
+    <div><dt>Output</dt><dd>T, one number per pair</dd></div>
+  </dl>
+</header>
+
+<figure>
+  <div class="legend" aria-hidden="true">
+    <span><i class="sw" style="color:var(--start)"></i>start path</span>
+    <span><i class="sw" style="color:var(--goal)"></i>goal path</span>
+    <span><i class="sw" style="color:var(--mod)"></i>modulation u, v</span>
+    <span><i class="sw" style="color:var(--fixed);border-style:dashed"></i>no trainable weights</span>
+    <span><i class="sw" style="color:var(--line);background:var(--soft)"></i>fixed operation</span>
+  </div>
+  <div class="scroll">

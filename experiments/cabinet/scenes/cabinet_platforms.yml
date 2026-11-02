@@ -1,0 +1,62 @@
+# Unconstrained motion planning around the two raised platforms of experiments/obstacle_scenes/scenes/platforms.yml
+# (cuboids copied verbatim; no cupboard). Named cabinet_* because the cabinet task's launcher, registration
+# and frozen-suite layout take scenes named cabinet<suffix> (tests_platforms/); the task is the cabinet task's:
+# no zones or task axes, clearance-only speed, release scorer with its tilt gate off.
+#   cup_platform   x 0.40-0.90, y +0.15-+0.55, z -0.035-0.115
+#   pour_platform  x 0.40-0.90, y -0.55--0.15, z -0.035-0.115
+# The gap between them (|y| <= 0.15) stays at table height.
+
+cuboids:
+  - name: table
+    pose: [0.65, 0.0, -0.06, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.80, 1.20, 0.05]
+
+  - name: cup_platform
+    pose: [0.65, 0.35, 0.04, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.50, 0.40, 0.15]
+    color: [96, 125, 160]
+
+  - name: pour_platform
+    pose: [0.65, -0.35, 0.04, 1.0, 0.0, 0.0, 0.0]
+    dims: [0.50, 0.40, 0.15]
+    color: [96, 125, 160]
+
+viz_table:
+  name: viz_tabletop
+  pose: [0.75, 0.0, -0.06, 1.0, 0.0, 0.0, 0.0]
+  dims: [1.00, 1.20, 0.05]
+
+# Grasp-point sampling box: x and y of the obstacle scenes; z from the table top to 0.30 m above the
+# platform tops (0.115). The frozen FK sampler reads x and y; z is checked against --height 0.45.
+sampling:
+  x: [0.29, 0.85]
+  y: [-0.55, 0.55]
+  z: [-0.035, 0.415]
+  rule: x, y of the obstacle scenes; z from the table top to 0.30 m above the platform tops
+
+# Regions: the space just above each platform top (0.15 m) and the trench between the platforms below
+# their tops. They take the compartments' place in the test suites and the coverage strata.
+compartments:
+  - name: cup_top
+    x: [0.40, 0.85]
+    y: [0.15, 0.55]
+    z: [0.115, 0.265]
+  - name: pour_top
+    x: [0.40, 0.85]
+    y: [-0.55, -0.15]
+    z: [0.115, 0.265]
+  - name: trench
+    x: [0.40, 0.85]
+    y: [-0.15, 0.15]
+    z: [-0.035, 0.115]
+
+# Focus box = bounding box of the regions. It replaces the cupboard's outer box (coverage strata: half
+# of the perturbed bases inside it; test region free = outside it).
+focus:
+  x: [0.40, 0.85]
+  y: [-0.55, 0.55]
+  z: [-0.035, 0.265]
+
+variant:
+  clearance_scale: null
+  rule: raised platforms of obstacle_scenes/platforms.yml on the table, no cupboard, no orientation rule

@@ -1,0 +1,183 @@
+# Shallow wide cabinet cabinet_shallow: cabinet_w20 with the compartments 0.2 m deep (opening at x 0.66).
+# Written by jeffrey/easy_cabinet/make_shallow.py; do not edit by hand.
+cuboids:
+- name: table
+  pose:
+  - 0.65
+  - 0.0
+  - -0.06
+  - 1.0
+  - 0.0
+  - 0.0
+  - 0.0
+  dims:
+  - 0.8
+  - 1.2
+  - 0.05
+- name: shelf_back
+  pose:
+  - 0.87
+  - 0.15
+  - 0.395
+  - 1.0
+  - 0.0
+  - 0.0
+  - 0.0
+  dims:
+  - 0.02
+  - 0.76
+  - 0.86
+  color:
+  - 150
+  - 105
+  - 60
+- name: shelf_side_inner
+  pose:
+  - 0.76
+  - -0.22
+  - 0.395
+  - 1.0
+  - 0.0
+  - 0.0
+  - 0.0
+  dims:
+  - 0.2
+  - 0.02
+  - 0.86
+  color:
+  - 150
+  - 105
+  - 60
+- name: shelf_side_outer
+  pose:
+  - 0.76
+  - 0.52
+  - 0.395
+  - 1.0
+  - 0.0
+  - 0.0
+  - 0.0
+  dims:
+  - 0.2
+  - 0.02
+  - 0.86
+  color:
+  - 150
+  - 105
+  - 60
+- name: shelf_top
+  pose:
+  - 0.76
+  - 0.15
+  - 0.815
+  - 1.0
+  - 0.0
+  - 0.0
+  - 0.0
+  dims:
+  - 0.2
+  - 0.72
+  - 0.02
+  color:
+  - 150
+  - 105
+  - 60
+- name: shelf_board_low
+  pose:
+  - 0.76
+  - 0.15
+  - 0.25625
+  - 1.0
+  - 0.0
+  - 0.0
+  - 0.0
+  dims:
+  - 0.2
+  - 0.72
+  - 0.02
+  color:
+  - 170
+  - 125
+  - 75
+- name: shelf_board_high
+  pose:
+  - 0.76
+  - 0.15
+  - 0.53875
+  - 1.0
+  - 0.0
+  - 0.0
+  - 0.0
+  dims:
+  - 0.2
+  - 0.72
+  - 0.02
+  color:
+  - 170
+  - 125
+  - 75
+viz_table:
+  name: viz_tabletop
+  pose:
+  - 0.75
+  - 0.0
+  - -0.06
+  - 1.0
+  - 0.0
+  - 0.0
+  - 0.0
+  dims:
+  - 1.0
+  - 1.2
+  - 0.05
+sampling:
+  x:
+  - 0.33
+  - 0.88
+  y:
+  - -0.42
+  - 0.72
+  z:
+  - -0.035
+  - 0.825
+compartments:
+- name: bottom
+  x:
+  - 0.7
+  - 0.86
+  y:
+  - -0.21
+  - 0.51
+  z:
+  - -0.035
+  - 0.24625
+- name: middle
+  x:
+  - 0.7
+  - 0.86
+  y:
+  - -0.21
+  - 0.51
+  z:
+  - 0.26625
+  - 0.52875
+- name: top
+  x:
+  - 0.7
+  - 0.86
+  y:
+  - -0.21
+  - 0.51
+  z:
+  - 0.54875
+  - 0.805
+variant:
+  base: cabinet_w20.yml
+  clearance_scale: 1.25
+  width_scale: 2.0
+  height_scale: 1.25
+  centre_y: 0.15
+  depth: 0.2
+  rule: each compartment opening width_scale x as wide and each compartment height_scale
+    x as tall, cupboard centred on y = centre_y; panels, floor, back face and depth
+    unchanged; compartments 0.2 m deep (opening moved towards the back panel)

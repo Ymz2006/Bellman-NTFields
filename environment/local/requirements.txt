@@ -1,0 +1,24 @@
+# Python packages of the rebuilt local environment (environment/local/Dockerfile and the
+# host virtual environment). torch is installed separately from the cu128 index:
+#   pip install torch==2.7.1 --index-url https://download.pytorch.org/whl/cu128
+# Versions follow the local ntfields:rtx5070 image where one was recorded.
+numpy==2.2.6
+scipy==1.17.1
+PyYAML==6.0.2
+tqdm==4.67.1
+trimesh==5.1.1
+matplotlib==3.11.2
+ConfigArgParse==1.8.0
+pytorch_kinematics==0.10.0
+yourdfpy
+viser
+# cuRobo v0.7.8 install_requires (setup.cfg), installed before its no-build-isolation build
+pybind11
+networkx
+numpy-quaternion
+setuptools_scm>=6.2
+wheel
+importlib_resources
+scikit-image
+warp-lang
+ninja

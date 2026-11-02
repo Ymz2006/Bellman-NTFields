@@ -25,7 +25,8 @@ SOCK=/var/run/docker.sock
 REGISTRY=${NTFIELDS_REGISTRY:-$HOME/.local/share/ntfields-experiments}
 
 # Cached after the first build; picks up Dockerfile/requirements changes.
-docker --context default build -q -t "$IMAGE" \
+# BELLMAN600_BUILD_NETWORK=host for daemons whose default build network has no apt/pip access.
+docker --context default build -q -t "$IMAGE" ${BELLMAN600_BUILD_NETWORK:+--network="$BELLMAN600_BUILD_NETWORK"} \
   -f "$ROOT/environment/host/Dockerfile" "$ROOT/environment" >/dev/null
 
 mkdir -p "$REGISTRY"
