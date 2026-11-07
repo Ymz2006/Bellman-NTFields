@@ -1,0 +1,912 @@
+<title>2026-11-04 Gap Warp Spaces</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;650;750&family=Public+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: the cross-warp study's reading column for text, a full-width linked pair (maze in cells | maze as the encoder sees it) and a row of small multiples, one per method. */
+:root {
+  --bg: #f5f6f8; --surface: #ffffff; --ink: #15181d; --ink2: #4b525c; --muted: #737b86; --rule: #dde1e6; --wash: #eef1f5;
+  --accent: #eb6834;
+  --div-neg: #2a78d6; --div-mid: #f0efec; --div-pos: #e34948; --seq-hi: #6250d6;
+  --wall: #15181d; --gridline: rgba(21, 24, 29, 0.20); --cursor: #15181d; --cursor-ring: #ffffff;
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+    --accent: #d95926;
+    --div-neg: #3987e5; --div-mid: #383835; --div-pos: #e66767; --seq-hi: #9085e9;
+    --wall: #eef0f3; --gridline: rgba(238, 240, 243, 0.16); --cursor: #eef0f3; --cursor-ring: #121418;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+  --accent: #d95926;
+  --div-neg: #3987e5; --div-mid: #383835; --div-pos: #e66767; --seq-hi: #9085e9;
+  --wall: #eef0f3; --gridline: rgba(238, 240, 243, 0.16); --cursor: #eef0f3; --cursor-ring: #121418;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 15.5px/1.6 var(--f-body); margin: 0; }
+.page { max-width: 1180px; margin: 0 auto; padding-block: 36px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 28px; }
+.col { max-width: 72ch; min-width: 0; }
+header { display: grid; gap: 12px; }
+.eyebrow { font: 500 12px/1.4 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 750 clamp(30px, 5vw, 44px)/1.05 var(--f-display); letter-spacing: -0.015em; margin: 0; text-wrap: balance; }
+h2 { font: 650 21px/1.2 var(--f-display); margin: 0 0 8px; text-wrap: balance; }
+p { margin: 0 0 10px; }
+.lede { font-size: 17px; line-height: 1.55; }
+section { display: grid; gap: 14px; min-width: 0; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; }
+.group { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.group .lab { font: 500 12px var(--f-mono); color: var(--muted); margin-right: 2px; letter-spacing: 0.04em; }
+.seg { font: 500 13px var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 999px; padding: 5px 12px; cursor: pointer; }
+.seg[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.seg:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.seg small { font: 400 11px var(--f-mono); opacity: 0.75; margin-left: 4px; }
+select { font: 500 13px var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 5px 8px; }
+label.tog { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; color: var(--ink2); }
+.pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; }
+.panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 10px; display: grid; gap: 6px; min-width: 0; }
+.panel h3 { font: 650 14px var(--f-display); margin: 0; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.panel h3 span { font: 400 12px var(--f-mono); color: var(--muted); }
+.stage { position: relative; width: 100%; aspect-ratio: 1; max-width: 100%; }
+.stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+.under { font: 400 12px var(--f-mono); color: var(--muted); min-height: 1.4em; }
+.readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 12px; display: grid; gap: 4px; align-content: start; min-width: 0; }
+.card .k { font: 500 11.5px var(--f-mono); color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+.card .v { font: 500 14px var(--f-mono); color: var(--ink); font-variant-numeric: tabular-nums; }
+.card .s { font-size: 13px; color: var(--ink2); }
+.legend { display: grid; gap: 4px; max-width: 520px; }
+.legend canvas { width: 100%; height: 14px; display: block; border-radius: 3px; }
+.ticks { position: relative; height: 16px; font: 400 11px var(--f-mono); color: var(--muted); }
+.ticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+.legend .cap { font-size: 12.5px; color: var(--ink2); }
+.multi { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.thumb { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 8px; display: grid; gap: 4px; cursor: pointer; text-align: left; font: inherit; color: inherit; }
+.thumb[aria-pressed="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.thumb canvas { width: 100%; aspect-ratio: 1; display: block; }
+.thumb b { font: 650 13px var(--f-display); }
+.thumb span { font: 400 11.5px var(--f-mono); color: var(--muted); }
+.note { font-size: 14px; color: var(--ink2); }
+ul.tight { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.tablewrap { overflow-x: auto; max-width: 100%; }
+table.tt { border-collapse: collapse; font: 400 13.5px var(--f-body); min-width: 600px; }
+table.tt th, table.tt td { padding: 6px 10px; border-bottom: 1px solid var(--rule); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+table.tt th:first-child, table.tt td:first-child { text-align: left; }
+table.tt thead th { font: 500 11.5px/1.35 var(--f-mono); color: var(--muted); letter-spacing: 0.03em; text-transform: uppercase; vertical-align: bottom; white-space: normal; }
+table.tt td small { font: 400 11.5px var(--f-mono); color: var(--muted); margin-left: 3px; }
+table.tt td.b { font-weight: 600; }
+table.tt tr.sep td { border-top: 2px solid var(--rule); }
+.why { display: grid; gap: 10px; }
+.why p { margin: 0; }
+code { font: 13px var(--f-mono); background: var(--wash); padding: 1px 4px;border-radius: 4px; }
+.status { font: 400 13px var(--f-mono); color: var(--muted); }
+@media (prefers-reduced-motion: no-preference) { .seg, .thumb { transition: background-color 120ms, color 120ms, border-color 120ms; } }
+</style>
+
+<div class="page">
+  <header class="col">
+    <div class="eyebrow">jeffrey/cross_warp · gap study · what the encoder sees</div>
+    <h1>Gap Warp Spaces</h1>
+    <p class="lede">Each warp is a map &phi; from the robot&rsquo;s pose to the input of ntrl-demo&rsquo;s Fourier encoder. ntrl-demo itself sees the maze as a 1&thinsp;&times;&thinsp;1 square. Left: the maze in its own cells. Right: the same maze after &phi;, in the encoder&rsquo;s input units. Colour says how much a step is stretched: grey is ntrl-demo&rsquo;s &times;1, red is magnified, blue is compressed. Hover either side to find the matching point on the other. Further down: why the constructed warp falls off as the band widens although its warped mazes look almost the same, tested by training and planning on the warped maze, with the training pairs drawn on the warped maze too, and with the band shrunk back to its &times;1 width; and every learned travel-time field drawn on the maze and on the warped maze (shown first: trained on the warped maze with its pairs drawn there).</p>
+  </header>
+
+  <section>
+    <div class="controls" role="group" aria-label="View">
+      <div class="group" id="gaps"><span class="lab">GAP</span></div>
+      <div class="group" id="methods"><span class="lab">WARP</span></div>
+      <div class="group">
+        <span class="lab">COLOUR</span>
+        <select id="colour" aria-label="Colour the maze by">
+          <option value="area">stretch of an area (√det J)</option>
+          <option value="x">stretch of a step along x</option>
+          <option value="y">stretch of a step along y</option>
+          <option value="aniso">anisotropy (longest / shortest stretch)</option>
+        </select>
+        <label class="tog"><input type="checkbox" id="grid" checked> cell grid</label>
+      </div>
+    </div>
+    <div class="pair">
+      <div class="panel">
+        <h3>The maze <span id="leftsub">cells</span></h3>
+        <div class="stage" id="stageL"><canvas id="baseL"></canvas><canvas id="overL" aria-label="The maze in cells, coloured by stretch"></canvas></div>
+        <div class="under" id="underL"></div>
+      </div>
+      <div class="panel">
+        <h3>As the encoder sees it <span id="rightsub">input units</span></h3>
+        <div class="stage" id="stageR"><canvas id="baseR"></canvas><canvas id="overR" aria-label="The maze after the warp, in the encoder's input units"></canvas></div>
+        <div class="under" id="underR"></div>
+      </div>
+    </div>
+    <div class="legend">
+      <canvas id="bar" width="520" height="14" aria-hidden="true"></canvas>
+      <div class="ticks" id="ticks"></div>
+      <div class="cap" id="barcap"></div>
+    </div>
+    <div class="readout">
+      <div class="card"><span class="k">pointer</span><span class="v" id="rPos">hover the maze</span><span class="s" id="rReg"></span></div>
+      <div class="card"><span class="k">local stretch</span><span class="v" id="rStr">&ndash;</span><span class="s" id="rStr2"></span></div>
+      <div class="card"><span class="k">this warp</span><span class="v" id="rKind">&ndash;</span><span class="s" id="rKind2"></span></div>
+      <div class="card"><span class="k">planning success at this gap</span><span class="v" id="rSucc">&ndash;</span><span class="s" id="rSucc2"></span></div>
+    </div>
+  </section>
+
+  <section id="whysec">
+    <div class="col why">
+      <div class="eyebrow">2026-11-04 · the constructed warp, trained on the warped maze</div>
+      <h2>Why the constructed warp falls off</h2>
+      <div id="ttwhy" class="why"><p class="note">Loading the results…</p></div>
+    </div>
+    <div class="controls" role="group" aria-label="Success table">
+      <div class="group" id="ttcats"><span class="lab">QUERIES</span></div>
+    </div>
+    <div class="tablewrap"><table class="tt" id="ttsucc" aria-label="Planning success by gap, training and planning space"></table></div>
+    <p class="note col" id="ttsuccnote"></p>
+    <div class="tablewrap"><table class="tt" id="ttctrl" aria-label="The training-pair control at x12"></table></div>
+    <p class="note col" id="ttctrlnote"></p>
+  </section>
+
+  <section id="ttsec">
+    <div class="col">
+      <h2>Travel time on the maze and on the warped maze</h2>
+      <p class="note">One field at a time, drawn twice: on the maze in cells (left) and at the place each pose lands after the constructed warp (right), the coordinates the network is given. The goal is the white ring. Colour bands are equal steps of travel time; small rings mark spurious sinks, poses whose time to the goal is lower than at every neighbour (the minimum over headings at each spot), where MPPI stops. Hover either side to find the matching point and read the values.</p>
+    </div>
+    <div class="controls" role="group" aria-label="Travel-time view">
+      <div class="group" id="ttgaps"><span class="lab">GAP</span></div>
+      <div class="group" id="ttgoals"><span class="lab">GOAL</span></div>
+    </div>
+    <div class="controls" role="group" aria-label="Field and layer">
+      <div class="group" id="ttfields"><span class="lab">FIELD</span></div>
+      <div class="group">
+        <span class="lab">SHOW</span>
+        <select id="ttlayer" aria-label="Layer">
+          <option value="learned">learned travel time</option>
+          <option value="truth">true travel time it was trained to fit</option>
+          <option value="error">learned ÷ that true time</option>
+          <option value="real">learned ÷ the robot’s true travel time</option>
+        </select>
+        <label class="tog"><input type="checkbox" id="ttsinks" checked> sinks</label>
+      </div>
+    </div>
+    <div class="pair">
+      <div class="panel">
+        <h3>On the maze <span id="ttsubL">cells</span></h3>
+        <div class="stage"><canvas id="ttL"></canvas><canvas id="ttLo" aria-label="Travel time on the maze"></canvas></div>
+        <div class="under" id="ttuL"></div>
+      </div>
+      <div class="panel">
+        <h3>On the warped maze <span id="ttsubR">encoder input</span></h3>
+        <div class="stage"><canvas id="ttR"></canvas><canvas id="ttRo" aria-label="Travel time on the warped maze"></canvas></div>
+        <div class="under" id="ttuR"></div>
+      </div>
+    </div>
+    <div class="legend">
+      <canvas id="ttbar" width="520" height="14" aria-hidden="true"></canvas>
+      <div class="ticks" id="ttticks"></div>
+      <div class="cap" id="ttcap"></div>
+    </div>
+    <div class="readout">
+      <div class="card"><span class="k">pointer</span><span class="v" id="ttPos">hover the maze</span><span class="s" id="ttReg"></span></div>
+      <div class="card"><span class="k">learned · true</span><span class="v" id="ttVal">&ndash;</span><span class="s" id="ttVal2"></span></div>
+      <div class="card"><span class="k">this field</span><span class="v" id="ttKind">&ndash;</span><span class="s" id="ttKind2"></span></div>
+      <div class="card"><span class="k">spurious sinks</span><span class="v" id="ttSink">&ndash;</span><span class="s" id="ttSink2"></span></div>
+    </div>
+    <div class="col">
+      <h2 style="font-size:17px">The same field at every gap</h2>
+      <p class="note" id="ttmultinote"></p>
+    </div>
+    <div class="multi" id="ttmulti"></div>
+    <div class="col"><p class="note" id="tterrnote"></p></div>
+    <div class="tablewrap"><table class="tt" id="tterr" aria-label="Median relative error by gap and region"></table></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>All warps at this gap</h2>
+      <p class="note" id="multinote">Each panel is the maze as the encoder sees it, fitted to the panel; the number is its width in input units (ntrl-demo: 1). Select one to view it above.</p>
+    </div>
+    <div class="multi" id="multi"></div>
+  </section>
+
+  <section class="col">
+    <h2>What to look for</h2>
+    <div id="explain"></div>
+  </section>
+
+  <section class="col">
+    <h2>How the views are made</h2>
+    <p class="note">&phi; is read from each trained field&rsquo;s checkpoint (training seed 87358) and sampled at heading 0 on a grid of 0.25 cells up to 28&thinsp;&times;&thinsp;28 and 0.5 cells above (<code>warpspaces.py</code>). Stretches are finite differences of that grid, relative to ntrl-demo&rsquo;s map, whose input moves 1/E per cell (E = n + 0.1). Walls are mapped through the same grid. The heading has its own factor, listed per warp; none of these warps bends it by position. Success is the share of MPPI runs that reach the goal without touching a wall (planning seeds 0/1/2, pooled over the training seeds listed).</p>
+  </section>
+</div>
+
+<script>
+(() => {
+  const GAPS = [[1, '22×22'], [2, '28×28'], [4, '40×40'], [8, '64×64'], [12, '88×88']];
+  const NAMES = ['ntrl-demo', 'constructed', 'learned', 'README warp', 'warp + scaling', 'uniform'];
+  const KIND = {
+    identity: 'identity',
+    separable: 'separable: x and y stretched independently',
+    coupling: 'coupling: each axis bent by the other, box kept',
+    uniform: 'uniform stretch',
+  };
+  const state = { k: 8, method: 'constructed', colour: 'area', grid: true };
+  const cache = {};
+  const $ = id => document.getElementById(id);
+
+  // ---------------------------------------------------------------- colour (OKLab interpolation between theme tokens)
+  const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  function hexRgb(h) { h = h.replace('#', ''); return [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16) / 255); }
+  const lin = c => c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  const gam = c => c <= 0.0031308 ? 12.92 * c : 1.055 * Math.pow(c, 1 / 2.4) - 0.055;
+  function toLab(hex) {
+    const [r, g, b] = hexRgb(hex).map(lin);
+    const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
+    const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
+    const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+    return [0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s, 1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s, 0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s];
+  }
+  function fromLab([L, a, b]) {
+    const l = Math.pow(L + 0.3963377774 * a + 0.2158037573 * b, 3), m = Math.pow(L - 0.1055613458 * a - 0.0638541728 * b, 3), s = Math.pow(L - 0.0894841775 * a - 1.2914855480 * b, 3);
+    const rgb = [4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s, -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s, -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s];
+    return rgb.map(c => Math.round(255 * Math.min(1, Math.max(0, gam(c)))));
+  }
+  let LUT = null;            // 256-entry RGB lookup tables for the current theme: diverging and sequential
+  function buildLUT() {
+    const neg = toLab(css('--div-neg')), mid = toLab(css('--div-mid')), pos = toLab(css('--div-pos')), hi = toLab(css('--seq-hi'));
+    const mix = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
+    const div = [], seq = [];
+    for (let i = 0; i < 256; i++) {
+      const t = i / 255 * 2 - 1;
+      div.push(fromLab(t < 0 ? mix(mid, neg, -t) : mix(mid, pos, t)));
+      seq.push(fromLab(mix(mid, hi, i / 255)));
+    }
+    LUT = { div, seq };
+  }
+  const DIV_MAX = 5;          // log2: x1/32 .. x32
+  function colourOf(val, mode) {
+    if (!isFinite(val) || val <= 0) return null;
+    if (mode === 'aniso') {
+      const t = Math.min(1, Math.max(0, Math.log2(val) / DIV_MAX));
+      return LUT.seq[Math.round(t * 255)];
+    }
+    const t = Math.min(1, Math.max(-1, Math.log2(val) / DIV_MAX));
+    return LUT.div[Math.round((t + 1) / 2 * 255)];
+  }
+
+  // ---------------------------------------------------------------- data
+  function decode(b64) { const bin = atob(b64); const buf = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i); return new Float32Array(buf.buffer); }
+  async function load(k) {
+    if (cache[k]) return cache[k];
+    $('underL').textContent = 'loading the maze…';
+    const r = await fetch(`warpspaces/k${k}.json`);
+    if (!r.ok) throw new Error(`warpspaces/k${k}.json: ${r.status}`);
+    const d = await r.json();
+    for (const m of d.methods) { m.U = decode(m.u); m.V = decode(m.v); delete m.u; delete m.v; prepare(d, m); }
+    cache[k] = d;
+    return d;
+  }
+  // per grid cell: stretch of an x-step and a y-step, area stretch, anisotropy (relative to ntrl-demo: 1/E per cell)
+  function prepare(d, m) {
+    const nx = d.nx, nc = nx - 1, f = d.E / d.h;
+    m.sx = new Float32Array(nc * nc); m.sy = new Float32Array(nc * nc); m.sa = new Float32Array(nc * nc); m.an = new Float32Array(nc * nc);
+    let umin = Infinity, umax = -Infinity, vmin = Infinity, vmax = -Infinity;
+    for (let i = 0; i < nx * nx; i++) { umin = Math.min(umin, m.U[i]); umax = Math.max(umax, m.U[i]); vmin = Math.min(vmin, m.V[i]); vmax = Math.max(vmax, m.V[i]); }
+    m.box = [umin, umax, vmin, vmax];
+    for (let i = 0; i < nc; i++) for (let j = 0; j < nc; j++) {
+      const a = i * nx + j, b = (i + 1) * nx + j, c = i * nx + j + 1, e = (i + 1) * nx + j + 1;
+      const ax = ((m.U[b] - m.U[a]) + (m.U[e] - m.U[c])) / 2 * f, ay = ((m.V[b] - m.V[a]) + (m.V[e] - m.V[c])) / 2 * f;
+      const bx = ((m.U[c] - m.U[a]) + (m.U[e] - m.U[b])) / 2 * f, by = ((m.V[c] - m.V[a]) + (m.V[e] - m.V[b])) / 2 * f;
+      const q = i * nc + j;
+      m.sx[q] = Math.hypot(ax, ay); m.sy[q] = Math.hypot(bx, by);
+      const det = Math.abs(ax * by - ay * bx), T = ax * ax + ay * ay + bx * bx + by * by;
+      m.sa[q] = Math.sqrt(det);
+      const disc = Math.sqrt(Math.max(0, T * T - 4 * det * det));
+      const s1 = Math.sqrt((T + disc) / 2), s2 = Math.sqrt(Math.max(1e-12, (T - disc) / 2));
+      m.an[q] = s1 / s2;
+    }
+    // region medians (quadrants / centre square / arms) for the explanation
+    const G = d.band, inb = z => z >= 8 && z < 8 + G, med = arr => { if (!arr.length) return NaN; arr.sort((p, q) => p - q); return arr[arr.length >> 1]; };
+    const R = { quad: [[], []], centre: [[], []], armx: [[], []], army: [[], []] };
+    for (let i = 0; i < nc; i++) for (let j = 0; j < nc; j++) {
+      const x = (i + 0.5) * d.h, y = (j + 0.5) * d.h, bx = inb(x), by = inb(y), q = i * nc + j;
+      const key = bx && by ? 'centre' : bx ? 'armx' : by ? 'army' : 'quad';
+      R[key][0].push(m.sx[q]); R[key][1].push(m.sy[q]);
+    }
+    m.reg = {}; for (const key in R) m.reg[key] = [med(R[key][0]), med(R[key][1])];
+  }
+  function valueGrid(m, mode) { return mode === 'x' ? m.sx : mode === 'y' ? m.sy : mode === 'aniso' ? m.an : m.sa; }
+
+  // bilinear map from cells to input units
+  function phi(d, m, x, y) {
+    const nx = d.nx, fi = Math.min(nx - 1.000001, Math.max(0, x / d.h)), fj = Math.min(nx - 1.000001, Math.max(0, y / d.h));
+    const i = Math.floor(fi), j = Math.floor(fj), s = fi - i, t = fj - j;
+    const a = i * nx + j, b = (i + 1) * nx + j, c = i * nx + j + 1, e = (i + 1) * nx + j + 1;
+    return [(1 - s) * (1 - t) * m.U[a] + s * (1 - t) * m.U[b] + (1 - s) * t * m.U[c] + s * t * m.U[e],
+            (1 - s) * (1 - t) * m.V[a] + s * (1 - t) * m.V[b] + (1 - s) * t * m.V[c] + s * t * m.V[e]];
+  }
+  function phiInv(d, m, u, v) {      // nearest grid vertex (accurate to half a grid step)
+    let best = Infinity, bi = 0;
+    for (let i = 0; i < m.U.length; i++) { const du = m.U[i] - u, dv = m.V[i] - v, q = du * du + dv * dv; if (q < best) { best = q; bi = i; } }
+    const nx = d.nx; return { x: Math.floor(bi / nx) * d.h, y: (bi % nx) * d.h, dist: Math.sqrt(best) };
+  }
+
+  // ---------------------------------------------------------------- drawing
+  function setup(canvas) {
+    const r = canvas.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
+    canvas.width = Math.max(1, Math.round(r.width * dpr)); canvas.height = Math.max(1, Math.round(r.height * dpr));
+    const g = canvas.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); return { g, w: r.width, h: r.height };
+  }
+  const rgb = c => `rgb(${c[0]},${c[1]},${c[2]})`;
+  function cellView(d, w, h) {       // cells -> canvas, y up, square fit
+    const pad = 6, sc = Math.min(w, h - 0) - 2 * pad, s = sc / d.n;
+    return { tx: x => pad + x * s, ty: y => pad + sc - y * s, s, pad, sc };
+  }
+  function encView(m, w, h, pad = 8) {
+    const [u0, u1, v0, v1] = m.box, span = Math.max(u1 - u0, v1 - v0), sc = Math.min(w, h) - 2 * pad, s = sc / span;
+    const ox = pad + (sc - (u1 - u0) * s) / 2, oy = pad + (sc - (v1 - v0) * s) / 2;
+    return { tx: u => ox + (u - u0) * s, ty: v => pad + sc - (oy - pad) - (v - v0) * s, s, span };
+  }
+  function drawLeft(d, m) {
+    const { g, w, h } = setup($('baseL')); g.clearRect(0, 0, w, h);
+    const V = cellView(d, w, h), vals = valueGrid(m, state.colour), nc = d.nx - 1;
+    for (let i = 0; i < nc; i++) for (let j = 0; j < nc; j++) {
+      const c = colourOf(vals[i * nc + j], state.colour); if (!c) continue;
+      g.fillStyle = rgb(c);
+      const x0 = V.tx(i * d.h), y1 = V.ty((j + 1) * d.h);
+      g.fillRect(x0, y1, V.s * d.h + 0.6, V.s * d.h + 0.6);
+    }
+    if (state.grid) {
+      g.strokeStyle = css('--gridline'); g.lineWidth = 0.6; g.beginPath();
+      const step = d.n > 40 ? 2 : 1;
+      for (let x = 0; x <= d.n; x += step) { g.moveTo(V.tx(x), V.ty(0)); g.lineTo(V.tx(x), V.ty(d.n)); g.moveTo(V.tx(0), V.ty(x)); g.lineTo(V.tx(d.n), V.ty(x)); }
+      g.stroke();
+    }
+    g.fillStyle = css('--wall');
+    for (const [x0, y0, x1, y1] of d.boxes) g.fillRect(V.tx(x0), V.ty(y1), Math.max(0.8, (x1 - x0) * V.s), Math.max(0.8, (y1 - y0) * V.s));
+    $('leftsub').textContent = `${d.n} × ${d.n} cells, band ${d.band} cells`;
+  }
+  function drawWarped(g, d, m, V, opts = {}) {
+    const vals = valueGrid(m, state.colour), nx = d.nx, nc = nx - 1, st = opts.stride || 1;
+    for (let i = 0; i < nc; i += st) for (let j = 0; j < nc; j += st) {
+      const c = colourOf(vals[Math.min(nc - 1, i + (st >> 1)) * nc + Math.min(nc - 1, j + (st >> 1))], state.colour); if (!c) continue;
+      const i1 = Math.min(nc, i + st), j1 = Math.min(nc, j + st);
+      const p = [[i, j], [i1, j], [i1, j1], [i, j1]].map(([a, b]) => [V.tx(m.U[a * nx + b]), V.ty(m.V[a * nx + b])]);
+      g.beginPath(); g.moveTo(p[0][0], p[0][1]); for (let q = 1; q < 4; q++) g.lineTo(p[q][0], p[q][1]); g.closePath();
+      g.fillStyle = g.strokeStyle = rgb(c); g.lineWidth = 0.8; g.fill(); g.stroke();
+    }
+    if (opts.grid) {
+      g.strokeStyle = css('--gridline'); g.lineWidth = 0.6; g.beginPath();
+      const step = d.n > 40 ? 2 : 1, ds = d.h;
+      for (let x = 0; x <= d.n; x += step) {
+        for (let y = 0; y <= d.n + 1e-9; y += ds) { const [u, v] = phi(d, m, x, y); y === 0 ? g.moveTo(V.tx(u), V.ty(v)) : g.lineTo(V.tx(u), V.ty(v)); }
+        for (let y = 0; y <= d.n + 1e-9; y += ds) { const [u, v] = phi(d, m, y, x); y === 0 ? g.moveTo(V.tx(u), V.ty(v)) : g.lineTo(V.tx(u), V.ty(v)); }
+      }
+      g.stroke();
+    }
+    g.fillStyle = css('--wall');
+    for (const [x0, y0, x1, y1] of d.boxes) {
+      const pts = [], seg = (ax, ay, bx, by) => { const L = Math.max(Math.abs(bx - ax), Math.abs(by - ay)), nseg = Math.max(1, Math.ceil(L / d.h)); for (let s = 0; s < nseg; s++) pts.push(phi(d, m, ax + (bx - ax) * s / nseg, ay + (by - ay) * s / nseg)); };
+      seg(x0, y0, x1, y0); seg(x1, y0, x1, y1); seg(x1, y1, x0, y1); seg(x0, y1, x0, y0);
+      g.beginPath(); pts.forEach(([u, v], q) => q ? g.lineTo(V.tx(u), V.ty(v)) : g.moveTo(V.tx(u), V.ty(v))); g.closePath();
+      g.fill();
+      if (opts.thinWalls) { g.strokeStyle = css('--wall'); g.lineWidth = 0.7; g.stroke(); }
+    }
+  }
+  function drawRight(d, m) {
+    const { g, w, h } = setup($('baseR')); g.clearRect(0, 0, w, h);
+    const V = encView(m, w, h);
+    drawWarped(g, d, m, V, { grid: state.grid, thinWalls: true });
+    $('rightsub').textContent = `${m.extent[0].toFixed(2)} × ${m.extent[1].toFixed(2)} units`;
+  }
+  function drawThumbs(d) {
+    const box = $('multi'); box.textContent = '';
+    for (const m of d.methods) {
+      const b = document.createElement('button'); b.className = 'thumb'; b.type = 'button'; b.id = `thumb-${NAMES.indexOf(m.name)}`;
+      b.setAttribute('aria-pressed', String(m.name === state.method));
+      const c = document.createElement('canvas'); b.appendChild(c);
+      const t = document.createElement('b'); t.textContent = m.name; b.appendChild(t);
+      const s = document.createElement('span'); s.textContent = `${m.extent[0].toFixed(1)} units wide · heading ×${m.heading.toFixed(1)}`; b.appendChild(s);
+      b.addEventListener('click', () => { state.method = m.name; render(); });
+      box.appendChild(b);
+      requestAnimationFrame(() => {
+        const { g, w, h } = setup(c); g.clearRect(0, 0, w, h);
+        drawWarped(g, d, m, encView(m, w, h, 4), { stride: Math.max(1, Math.round((d.nx - 1) / 70)) });
+      });
+    }
+  }
+  function drawLegend() {
+    const c = $('bar'), g = c.getContext('2d'), W = c.width, aniso = state.colour === 'aniso';
+    for (let x = 0; x < W; x++) {
+      const t = x / (W - 1);
+      const col = aniso ? LUT.seq[Math.round(t * 255)] : LUT.div[Math.round(t * 255)];
+      g.fillStyle = rgb(col); g.fillRect(x, 0, 1, c.height);
+    }
+    const ticks = $('ticks'); ticks.textContent = '';
+    const marks = aniso ? [[1, '1'], [2, '2'], [4, '4'], [8, '8'], [16, '16'], [32, '32']] : [[1 / 32, '×1/32'], [1 / 8, '×1/8'], [1 / 2, '×1/2'], [1, '×1'], [2, '×2'], [8, '×8'], [32, '×32']];
+    for (const [v, lab] of marks) {
+      const t = aniso ? Math.log2(v) / DIV_MAX : (Math.log2(v) / DIV_MAX + 1) / 2;
+      const s = document.createElement('span'); s.style.left = `${(t * 100).toFixed(2)}%`; s.textContent = lab;
+      if (t <= 0.001) s.style.transform = 'none'; else if (t >= 0.999) s.style.transform = 'translateX(-100%)';
+      ticks.appendChild(s);
+    }
+    $('barcap').textContent = aniso ? 'Longest over shortest stretch at each point: 1 = the warp keeps shapes, large = it stretches one direction far more than the other.'
+      : { area: 'How much the warp magnifies a small patch of the maze (geometric mean of its two stretches), relative to ntrl-demo.',
+          x: 'How long a one-cell step along x becomes, relative to ntrl-demo.', y: 'How long a one-cell step along y becomes, relative to ntrl-demo.' }[state.colour];
+  }
+
+  // ---------------------------------------------------------------- readout and explanation
+  const pct = (a) => `${(100 * a[0] / a[1]).toFixed(0)} %`;
+  const fx = v => !isFinite(v) ? '–' : v >= 10 ? `×${v.toFixed(1)}` : `×${v.toFixed(2)}`;
+  function regionOf(d, x, y) {
+    const G = d.band, inb = z => z >= 8 && z < 8 + G;
+    if (inb(x) && inb(y)) return 'open band, centre square';
+    if (inb(x) || inb(y)) return 'open band, arm between two quadrants';
+    return `quadrant (${y < 8 ? 'bottom' : 'top'}-${x < 8 ? 'left' : 'right'})`;
+  }
+  function describe(d, m) {
+    $('rKind').textContent = m.name === 'ntrl-demo' ? 'no warp' : KIND[m.kind] || m.kind;
+    const learned = m.kind === 'identity' ? '' : m.learned ? 'learned from the field’s loss' : 'designed, fixed';
+    $('rKind2').textContent = `${learned ? learned + '; ' : ''}heading ×${m.heading.toFixed(1)}; ${m.extent[0].toFixed(2)} × ${m.extent[1].toFixed(2)} input units`;
+    const cats = m.by_category || {};
+    $('rSucc').textContent = `${pct(m.success)} of all queries`;
+    $('rSucc2').textContent = `same quadrant ${cats['same quadrant'] ? pct(cats['same quadrant']) : '–'}, open–open ${cats['open - open'] ? pct(cats['open - open']) : '–'}; ${m.seeds} training seed${m.seeds > 1 ? 's' : ''}`;
+  }
+  function explain(d) {
+    const by = {}; d.methods.forEach(m => { by[m.name] = m; });
+    const r = (name, key) => by[name] ? by[name].reg[key] : [NaN, NaN];
+    const items = [];
+    if (by.constructed) {
+      const q = r('constructed', 'quad'), c = r('constructed', 'centre'), a = r('constructed', 'armx');
+      items.push(`<li><b>Constructed</b> (designed, separable): the quadrants ${fx(q[0])} in both directions, the centre square of the band ${fx(c[0])}. It stretches whole columns and rows, so an arm of the band that runs between two quadrants inherits the quadrants&rsquo; stretch along one axis and keeps ×1 along the other (${fx(a[0])} along x, ${fx(a[1])} along y in the arms between the left and right quadrants). Its heading is magnified ×${by.constructed.heading.toFixed(1)} everywhere.</li>`);
+    }
+    if (by.learned) {
+      const q = r('learned', 'quad'), c = r('learned', 'centre');
+      const stuck = c[0] > 4 && c[1] > 4;
+      items.push(`<li><b>Learned</b> (separable, learned between ×1 and the constructed warp&rsquo;s factor, started at the top): the quadrants ${fx(q[0])} / ${fx(q[1])}, the centre square ${fx(c[0])} / ${fx(c[1])}. ` +
+        (stuck ? 'At this gap it never moved away from its start: it is a near-uniform stretch, and like the uniform stretch its field never trained (the open band is lost).' : 'It found the constructed warp&rsquo;s shape on its own, including the one-axis stretch of the arms.') + '</li>');
+    }
+    if (by['README warp']) {
+      const q = r('README warp', 'quad'), c = r('README warp', 'centre'), a = r('README warp', 'armx');
+      items.push(`<li><b>README warp</b> (learned coupling warp, keeps the box): it can only move resolution around, so it squeezes the open band (centre square ${fx(c[0])} / ${fx(c[1])}, arms ${fx(a[0])} / ${fx(a[1])}) to give the quadrants ${fx(q[0])} / ${fx(q[1])}. The wider the band, the more it has to give: compare the quadrant factor across gaps. The grid lines bend because each axis is warped depending on the other.</li>`);
+    }
+    if (by['warp + scaling']) {
+      const q = r('warp + scaling', 'quad'), c = r('warp + scaling', 'centre');
+      items.push(`<li><b>Warp + scaling</b>: the same kind of learned warp trained under a uniform ×4, heading ×${by['warp + scaling'].heading.toFixed(1)}: the quadrants ${fx(q[0])} / ${fx(q[1])}, the centre square ${fx(c[0])} / ${fx(c[1])}. It magnifies the band too, but evenly in both directions, unlike the constructed warp&rsquo;s arms.</li>`);
+    }
+    if (by.uniform) items.push(`<li><b>Uniform</b>: everything ×${by.uniform.heading.toFixed(1)}, the open band included; ntrl-demo sees everything ×1.</li>`);
+    $('explain').innerHTML = `<ul class="tight">${items.join('')}</ul><p class="note" style="margin-top:10px">Values are medians over each region at this gap (along x / along y). Switch the gap to see how each warp changes as the band widens.</p>`;
+  }
+
+  // ---------------------------------------------------------------- hover (linked cursors)
+  let current = null;
+  function cursor(canvasId, x, y) {
+    const { g, w, h } = setup($(canvasId)); g.clearRect(0, 0, w, h);
+    if (x == null) return;
+    g.lineWidth = 3; g.strokeStyle = css('--cursor-ring'); g.beginPath(); g.arc(x, y, 6, 0, 2 * Math.PI); g.stroke();
+    g.lineWidth = 1.6; g.strokeStyle = css('--cursor'); g.beginPath(); g.arc(x, y, 6, 0, 2 * Math.PI); g.stroke();
+  }
+  function showAt(xc, yc) {
+    if (!current) return;
+    const { d, m } = current;
+    if (xc < 0 || yc < 0 || xc > d.n || yc > d.n) { clearHover(); return; }
+    const L = $('overL').getBoundingClientRect(), R = $('overR').getBoundingClientRect();
+    const VL = cellView(d, L.width, L.height), VR = encView(m, R.width, R.height);
+    const [u, v] = phi(d, m, xc, yc);
+    cursor('overL', VL.tx(xc), VL.ty(yc)); cursor('overR', VR.tx(u), VR.ty(v));
+    const nc = d.nx - 1, i = Math.min(nc - 1, Math.floor(xc / d.h)), j = Math.min(nc - 1, Math.floor(yc / d.h)), q = i * nc + j;
+    $('rPos').textContent = `cell (${xc.toFixed(1)}, ${yc.toFixed(1)}) → (${u.toFixed(3)}, ${v.toFixed(3)})`;
+    $('rReg').textContent = regionOf(d, xc, yc);
+    $('rStr').textContent = `x ${fx(m.sx[q])}, y ${fx(m.sy[q])}`;
+    $('rStr2').textContent = `area ${fx(m.sa[q])} per axis; anisotropy ${m.an[q].toFixed(1)}`;
+    $('underL').textContent = `cell (${xc.toFixed(2)}, ${yc.toFixed(2)})`;
+    $('underR').textContent = `input (${u.toFixed(3)}, ${v.toFixed(3)})`;
+  }
+  function clearHover() { cursor('overL'); cursor('overR'); $('underL').textContent = 'hover to link the two views'; $('underR').textContent = current ? `1 input unit = all of ntrl-demo’s view; this maze is ${current.m.extent[0].toFixed(2)} units wide` : ''; $('rPos').textContent = 'hover the maze'; $('rReg').textContent = ''; $('rStr').textContent = '–'; $('rStr2').textContent = ''; }
+  $('overL').addEventListener('pointermove', ev => {
+    if (!current) return;
+    const r = ev.currentTarget.getBoundingClientRect(), V = cellView(current.d, r.width, r.height);
+    showAt((ev.clientX - r.left - V.pad) / V.s, (V.pad + V.sc - (ev.clientY - r.top)) / V.s);
+  });
+  $('overR').addEventListener('pointermove', ev => {
+    if (!current) return;
+    const { d, m } = current, r = ev.currentTarget.getBoundingClientRect(), V = encView(m, r.width, r.height);
+    const [u0, , v0] = m.box, px = ev.clientX - r.left, py = ev.clientY - r.top;
+    const u = u0 + (px - V.tx(u0)) / V.s, v = v0 + (V.ty(v0) - py) / V.s;
+    const p = phiInv(d, m, u, v);
+    if (p.dist * V.s > 12) { clearHover(); return; }
+    showAt(p.x, p.y);
+  });
+  ['overL', 'overR'].forEach(id => $(id).addEventListener('pointerleave', clearHover));
+
+  // ---------------------------------------------------------------- controls
+  function buttons() {
+    const gb = $('gaps'); gb.querySelectorAll('.seg').forEach(b => b.remove());
+    for (const [k, lab] of GAPS) {
+      const b = document.createElement('button'); b.className = 'seg'; b.type = 'button'; b.id = `gap-${k}`;
+      b.innerHTML = `×${k}<small>${lab}</small>`; b.setAttribute('aria-pressed', String(k === state.k));
+      b.addEventListener('click', () => { state.k = k; render(); }); gb.appendChild(b);
+    }
+    const mb = $('methods'); mb.querySelectorAll('.seg').forEach(b => b.remove());
+    for (const name of NAMES) {
+      const b = document.createElement('button'); b.className = 'seg'; b.type = 'button'; b.id = `method-${NAMES.indexOf(name)}`;
+      b.textContent = name; b.setAttribute('aria-pressed', String(name === state.method));
+      b.addEventListener('click', () => { state.method = name; render(); }); mb.appendChild(b);
+    }
+  }
+  $('colour').addEventListener('change', e => { state.colour = e.target.value; render(); });
+  $('grid').addEventListener('change', e => { state.grid = e.target.checked; render(); });
+
+  let token = 0;
+  async function render() {
+    const my = ++token;
+    buttons();
+    let d;
+    try { d = await load(state.k); } catch (err) { $('underL').textContent = `Could not load the maze data (${err.message}). Reload the page to try again.`; return; }
+    if (my !== token) return;
+    const m = d.methods.find(x => x.name === state.method) || d.methods[0];
+    current = { d, m };
+    buildLUT(); drawLegend();
+    drawLeft(d, m); drawRight(d, m); describe(d, m); explain(d); drawThumbs(d); clearHover();
+  }
+  let rt = null;
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(render, 150); });
+  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+  (mq.addEventListener ? mq.addEventListener('change', render) : mq.addListener(render));
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  render();
+})();
+</script>
+<script>
+(() => {
+  // ---------------------------------------------------------------- travel time on the maze and on the warped maze (fieldspaces/k<k>.json, fieldspaces/summary.json)
+  const $ = id => document.getElementById(id);
+  const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  function hexRgb(h) { h = h.replace('#', ''); return [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16) / 255); }
+  const lin = c => c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  const gam = c => c <= 0.0031308 ? 12.92 * c : 1.055 * Math.pow(c, 1 / 2.4) - 0.055;
+  function toLab(hex) {
+    const [r, g, b] = hexRgb(hex).map(lin);
+    const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b), m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b), s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+    return [0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s, 1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s, 0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s];
+  }
+  function fromLab([L, a, b]) {
+    const l = Math.pow(L + 0.3963377774 * a + 0.2158037573 * b, 3), m = Math.pow(L - 0.1055613458 * a - 0.0638541728 * b, 3), s = Math.pow(L - 0.0894841775 * a - 1.2914855480 * b, 3);
+    const rgb = [4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s, -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s, -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s];
+    return rgb.map(c => Math.round(255 * Math.min(1, Math.max(0, gam(c)))));
+  }
+  let LUT = null;
+  function buildLUT() {
+    const neg = toLab(css('--div-neg')), mid = toLab(css('--div-mid')), pos = toLab(css('--div-pos')), hi = toLab(css('--seq-hi'));
+    const mix = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
+    const div = [], seq = [];
+    for (let i = 0; i < 256; i++) {
+      const t = i / 255 * 2 - 1;
+      div.push(fromLab(t < 0 ? mix(mid, neg, -t) : mix(mid, pos, t)));
+      seq.push(fromLab(mix(mid, hi, i / 255)));
+    }
+    LUT = { div, seq };
+  }
+  const rgb = c => `rgb(${c[0]},${c[1]},${c[2]})`;
+  const BANDS = 14, DIV = 3;                               // colour bands of travel time; ratio layers: log2 range ±3 (×1/8 .. ×8)
+  function colourFn(kind, vmax) {
+    if (kind === 'seq') return v => {
+      if (!isFinite(v)) return null;
+      const t = Math.min(1, Math.max(0, v / vmax)), c = LUT.seq[Math.round(t * 255)], band = Math.min(BANDS - 1, Math.floor(t * BANDS));
+      return band % 2 ? c.map(x => Math.round(x * 0.9)) : c;
+    };
+    return v => isFinite(v) ? LUT.div[Math.round((Math.min(1, Math.max(-1, v / DIV)) + 1) / 2 * 255)] : null;
+  }
+
+  const GAPS = [[1, '22×22'], [2, '28×28'], [4, '40×40'], [8, '64×64'], [12, '88×88']];
+  const FIELDS = {
+    z_trained_zdraw: { label: 'trained on the warped maze, pairs drawn on the warped maze', truth: 'true_z', unit: 'quadrant cells', short: 'warped, warped-maze pairs' },
+    z_trained: { label: 'trained on the warped maze', truth: 'true_z', unit: 'quadrant cells', short: 'warped' },
+    z_trained_k1data: { label: 'trained on the warped maze, 22×22 pairs', truth: 'true_z', unit: 'quadrant cells', short: 'warped, 22×22 pairs' },
+    x_trained: { label: 'trained on the maze', truth: 'true_x', unit: 'cells', short: 'maze' },
+    x_trained_k1data: { label: 'trained on the maze, 22×22 pairs', truth: 'true_x', unit: 'cells', short: 'maze, 22×22 pairs' },
+    x_trained_zdraw: { label: 'trained on the maze, pairs drawn on the warped maze', truth: 'true_x', unit: 'cells', short: 'maze, warped-maze pairs' },
+    ntrl: { label: 'ntrl-demo', truth: 'true_x', unit: 'cells', short: 'ntrl' },
+  };
+  const ZF = f => f.startsWith('z_');
+  const st = { k: 12, goal: 0, field: 'z_trained_zdraw', layer: 'learned', sinks: true, cat: 'all' };
+  const cache = {};
+  let summary = null;
+
+  function bytes(s) { const b = atob(s), u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
+  function dq(o) { const c = new Uint16Array(bytes(o.b64).buffer), out = new Float32Array(c.length), sc = (o.hi - o.lo) / 65534; for (let i = 0; i < c.length; i++) out[i] = c[i] === 65535 ? NaN : o.lo + c[i] * sc; return out; }
+  async function load(k) {
+    if (cache[k]) return cache[k];
+    const r = await fetch(`fieldspaces/k${k}.json`);
+    if (!r.ok) throw new Error(`fieldspaces/k${k}.json: ${r.status}`);
+    const d = await r.json();
+    d.U = dq(d.u); d.V = dq(d.v); delete d.u; delete d.v;
+    const wb = bytes(d.wall), N = d.nd * d.nd; d.W = new Uint8Array(N);
+    for (let i = 0; i < N; i++) d.W[i] = (wb[i >> 3] >> (7 - (i & 7))) & 1;
+    d.dx = d.x[1] - d.x[0];
+    let u0 = Infinity, u1 = -Infinity, v0 = Infinity, v1 = -Infinity;
+    for (let i = 0; i < N; i++) { u0 = Math.min(u0, d.U[i]); u1 = Math.max(u1, d.U[i]); v0 = Math.min(v0, d.V[i]); v1 = Math.max(v1, d.V[i]); }
+    d.box = [u0, u1, v0, v1];
+    for (const g of d.goals) for (const key in g.fields) g.fields[key] = dq(g.fields[key]);
+    cache[k] = d;
+    return d;
+  }
+
+  // values of a layer, its colour kind and scale
+  function layer(d, g, field, lay) {
+    const F = g.fields[field], T = g.fields[FIELDS[field].truth], X = g.fields.true_x;
+    if (!F) return null;
+    if (lay === 'learned' || lay === 'truth') {
+      const ref = T, vals = [];
+      for (let i = 0; i < ref.length; i++) if (!d.W[i] && isFinite(ref[i])) vals.push(ref[i]);
+      vals.sort((a, b) => a - b);
+      return { v: lay === 'learned' ? F : T, kind: 'seq', vmax: vals[Math.floor(vals.length * 0.98)] || 1, unit: FIELDS[field].unit };
+    }
+    const ref = lay === 'error' ? T : X, out = new Float32Array(F.length);
+    for (let i = 0; i < F.length; i++) out[i] = d.W[i] ? NaN : Math.log2(Math.max(F[i], 1e-6) / Math.max(ref[i], 1e-6));
+    return { v: out, kind: 'div', unit: 'ratio' };
+  }
+  // spurious sinks: non-wall nodes lower than all their non-wall 8-neighbours, farther than 1.5 cells from the goal
+  function sinks(d, g, vals) {
+    const nd = d.nd, out = [];
+    for (let i = 1; i < nd - 1; i++) for (let j = 1; j < nd - 1; j++) {
+      const q = i * nd + j; if (d.W[q] || !isFinite(vals[q])) continue;
+      if (Math.hypot(d.x[i] - g.cell[0], d.x[j] - g.cell[1]) < 1.5) continue;
+      let low = true, nb = 0;
+      for (let a = -1; a <= 1 && low; a++) for (let b = -1; b <= 1; b++) {
+        if (!a && !b) continue; const r = (i + a) * nd + j + b; if (d.W[r] || !isFinite(vals[r])) continue;
+        nb++; if (vals[r] <= vals[q]) { low = false; break; }
+      }
+      if (low && nb >= 3) out.push(q);
+    }
+    return out;
+  }
+
+  // ---------------------------------------------------------------- geometry
+  function setup(canvas) {
+    const r = canvas.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
+    canvas.width = Math.max(1, Math.round(r.width * dpr)); canvas.height = Math.max(1, Math.round(r.height * dpr));
+    const g = canvas.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); return { g, w: r.width, h: r.height };
+  }
+  function cellView(d, w, h, pad = 6) { const sc = Math.min(w, h) - 2 * pad, s = sc / d.n; return { tx: x => pad + x * s, ty: y => pad + sc - y * s, s, pad, sc }; }
+  function encView(d, w, h, pad = 8) {
+    const [u0, u1, v0, v1] = d.box, span = Math.max(u1 - u0, v1 - v0), sc = Math.min(w, h) - 2 * pad, s = sc / span;
+    const ox = pad + (sc - (u1 - u0) * s) / 2, oy = (sc - (v1 - v0) * s) / 2;
+    return { tx: u => ox + (u - u0) * s, ty: v => pad + sc - oy - (v - v0) * s, s, span, u0, v0, ox, oy, pad, sc };
+  }
+  function phi(d, x, y) {           // bilinear on the node grid: cells -> encoder input
+    const nd = d.nd, fi = Math.min(nd - 1.000001, Math.max(0, (x - d.x[0]) / d.dx)), fj = Math.min(nd - 1.000001, Math.max(0, (y - d.x[0]) / d.dx));
+    const i = Math.floor(fi), j = Math.floor(fj), s = fi - i, t = fj - j, a = i * nd + j, b = (i + 1) * nd + j, c = i * nd + j + 1, e = (i + 1) * nd + j + 1;
+    return [(1 - s) * (1 - t) * d.U[a] + s * (1 - t) * d.U[b] + (1 - s) * t * d.U[c] + s * t * d.U[e], (1 - s) * (1 - t) * d.V[a] + s * (1 - t) * d.V[b] + (1 - s) * t * d.V[c] + s * t * d.V[e]];
+  }
+  function drawWalls(g, d, toXY, warped) {
+    g.fillStyle = css('--wall');
+    for (const [x0, y0, x1, y1] of d.boxes) {
+      if (!warped) { const [a, b] = toXY(x0, y1), [c, e] = toXY(x1, y0); g.fillRect(a, b, Math.max(0.8, c - a), Math.max(0.8, e - b)); continue; }
+      const pts = [], seg = (ax, ay, bx, by) => { const L = Math.max(Math.abs(bx - ax), Math.abs(by - ay)), ns = Math.max(1, Math.ceil(L / d.dx)); for (let s = 0; s < ns; s++) pts.push(toXY(ax + (bx - ax) * s / ns, ay + (by - ay) * s / ns)); };
+      seg(x0, y0, x1, y0); seg(x1, y0, x1, y1); seg(x1, y1, x0, y1); seg(x0, y1, x0, y0);
+      g.beginPath(); pts.forEach(([u, v], q) => q ? g.lineTo(u, v) : g.moveTo(u, v)); g.closePath(); g.fill();
+      g.strokeStyle = css('--wall'); g.lineWidth = 0.7; g.stroke();
+    }
+  }
+  function marks(g, d, gl, sk, toXY, r = 4) {
+    if (sk) {
+      g.lineWidth = 1.3;
+      for (const q of sk) {
+        const i = Math.floor(q / d.nd), j = q % d.nd, [px, py] = toXY(d.x[i], d.x[j]);
+        g.strokeStyle = css('--cursor-ring'); g.lineWidth = 2.6; g.beginPath(); g.arc(px, py, r, 0, 2 * Math.PI); g.stroke();
+        g.strokeStyle = css('--accent'); g.lineWidth = 1.4; g.beginPath(); g.arc(px, py, r, 0, 2 * Math.PI); g.stroke();
+      }
+    }
+    const [gx, gy] = toXY(gl.cell[0], gl.cell[1]);
+    g.lineWidth = 3.2; g.strokeStyle = css('--cursor'); g.beginPath(); g.arc(gx, gy, r + 3, 0, 2 * Math.PI); g.stroke();
+    g.lineWidth = 1.6; g.strokeStyle = css('--cursor-ring'); g.beginPath(); g.arc(gx, gy, r + 3, 0, 2 * Math.PI); g.stroke();
+  }
+  function drawMaze(canvas, d, gl, L, sk) {
+    const { g, w, h } = setup(canvas); g.clearRect(0, 0, w, h);
+    const V = cellView(d, w, h), col = colourFn(L.kind, L.vmax), nd = d.nd, dx = d.dx;
+    for (let i = 0; i < nd; i++) for (let j = 0; j < nd; j++) {
+      const q = i * nd + j; if (d.W[q]) continue; const c = col(L.v[q]); if (!c) continue;
+      g.fillStyle = rgb(c); g.fillRect(V.tx(d.x[i] - dx / 2), V.ty(d.x[j] + dx / 2), dx * V.s + 0.7, dx * V.s + 0.7);
+    }
+    const toXY = (x, y) => [V.tx(x), V.ty(y)];
+    drawWalls(g, d, toXY, false);
+    marks(g, d, gl, sk, toXY);
+    return V;
+  }
+  function drawWarped(canvas, d, gl, L, sk, opts = {}) {
+    const { g, w, h } = setup(canvas); g.clearRect(0, 0, w, h);
+    const V = encView(d, w, h, opts.pad || 8), col = colourFn(L.kind, L.vmax), nd = d.nd, s = opts.stride || 1;
+    for (let i = 0; i < nd - 1; i += s) for (let j = 0; j < nd - 1; j += s) {
+      const i1 = Math.min(nd - 1, i + s), j1 = Math.min(nd - 1, j + s), cs = [i * nd + j, i1 * nd + j, i1 * nd + j1, i * nd + j1];
+      let sum = 0, cnt = 0; for (const q of cs) if (!d.W[q] && isFinite(L.v[q])) { sum += L.v[q]; cnt++; }
+      if (!cnt) continue; const c = col(sum / cnt); if (!c) continue;
+      g.beginPath(); cs.forEach((q, t) => { const px = V.tx(d.U[q]), py = V.ty(d.V[q]); t ? g.lineTo(px, py) : g.moveTo(px, py); }); g.closePath();
+      g.fillStyle = g.strokeStyle = rgb(c); g.lineWidth = 0.8; g.fill(); g.stroke();
+    }
+    const toXY = (x, y) => { const [u, v] = phi(d, x, y); return [V.tx(u), V.ty(v)]; };
+    drawWalls(g, d, toXY, true);
+    marks(g, d, gl, opts.noSinks ? null : sk, toXY, opts.r || 4);
+    return V;
+  }
+
+  // ---------------------------------------------------------------- legend, readout, tables
+  function legend(L, field) {
+    const c = $('ttbar'), g = c.getContext('2d'), W = c.width, col = colourFn(L.kind, L.vmax || 1);
+    for (let x = 0; x < W; x++) { const t = x / (W - 1), v = L.kind === 'seq' ? t * L.vmax : (2 * t - 1) * DIV; g.fillStyle = rgb(col(v)); g.fillRect(x, 0, 1, c.height); }
+    const ticks = $('ttticks'); ticks.textContent = '';
+    const marksL = L.kind === 'seq' ? [0, 0.25, 0.5, 0.75, 1].map(t => [t, `${(t * L.vmax).toFixed(L.vmax < 10 ? 1 : 0)}`]) : [[-3, '×1/8'], [-2, '×1/4'], [-1, '×1/2'], [0, '×1'], [1, '×2'], [2, '×4'], [3, '×8']].map(([v, s]) => [(v / DIV + 1) / 2, s]);
+    for (const [t, lab] of marksL) { const s = document.createElement('span'); s.style.left = `${(t * 100).toFixed(2)}%`; s.textContent = lab; if (t <= 0.001) s.style.transform = 'none'; else if (t >= 0.999) s.style.transform = 'translateX(-100%)'; ticks.appendChild(s); }
+    const F = FIELDS[field];
+    $('ttcap').textContent = L.kind === 'seq'
+      ? `Travel time to the goal in ${F.unit}, from the best heading at each spot (bands are equal steps; the scale ends at the true field's 98th percentile).` + (ZF(field) ? ' A quadrant cell counts 1 here, a band cell 1/m: the warped maze’s own distances.' : '')
+      : (st.layer === 'error' ? 'Learned over the true time this field was trained to fit: blue = too short, red = too long.' : 'Learned over the robot’s true travel time on the maze: blue = shorter than the real trip, red = longer.');
+  }
+  const pct = a => a && a[1] ? `${(100 * a[0] / a[1]).toFixed(1)}` : '–';
+  const CATS = [['all', 'all'], ['same quadrant', 'same quadrant'], ['adjacent quadrants', 'adjacent'], ['diagonal quadrants', 'diagonal'], ['quadrant - open', 'quadrant–open'], ['open - open', 'open–open']];
+  function cell(e) { if (!e) return '–'; const a = st.cat === 'all' ? e.success_total : e.by_category && e.by_category[st.cat]; return pct(a); }
+  function succTable() {
+    const t = $('ttsucc');
+    if (!summary) { t.innerHTML = ''; return; }
+    const head = `<thead><tr><th>gap</th><th>ntrl-demo<br>MPPI on the maze</th><th>constructed warp, trained on the maze<br>MPPI on the maze</th><th><br>MPPI on the warped maze</th><th>constructed warp, trained on the warped maze<br>MPPI on the maze</th><th><br>MPPI on the warped maze</th><th>&hellip; pairs drawn on the warped maze<br>MPPI on the maze</th><th><br>MPPI on the warped maze</th></tr></thead>`;
+    const rows = GAPS.map(([k, lab]) => {
+      const s = summary.gaps[k] || {}, f = (m, p) => s[m] && s[m][p];
+      const seeds = m => s[m] ? `<small>${s[m].seeds.length}</small>` : '';
+      return `<tr><td>×${k} <small>${lab}</small></td><td>${cell(f('ntrl', 'x'))}${seeds('ntrl')}</td><td>${cell(f('x_trained', 'x'))}${seeds('x_trained')}</td><td>${cell(f('x_trained', 'z'))}</td>` +
+             `<td>${cell(f('z_trained', 'x'))}${seeds('z_trained')}</td><td class="b">${cell(f('z_trained', 'z'))}</td>` +
+             `<td>${cell(f('z_trained_zdraw', 'x'))}${seeds('z_trained_zdraw')}</td><td class="b">${cell(f('z_trained_zdraw', 'z'))}</td></tr>`;
+    }).join('');
+    t.innerHTML = head + `<tbody>${rows}</tbody>`;
+    $('ttsuccnote').textContent = `Share of MPPI runs (%) that reach the goal without touching a wall, ${st.cat === 'all' ? 'all 300 queries per maze' : `the 60 ${st.cat} queries per maze`}, planning seeds 0/1/2, pooled over the training seeds counted in small type. Same queries, same planner code (maze_scale plan.mppi); "on the warped maze" runs it on z = φ(x) with its step and tolerance scaled by the quadrant stretch, and scores the path mapped back exactly. ${summary.note || ''}`;
+    const c12 = summary.gaps['12'] || {}, ctl = $('ttctrl');
+    if (c12.z_trained_k1data || c12.x_trained_k1data) {
+      const f = (m, p) => c12[m] && c12[m][p] && c12[m][p].per_seed && c12[m][p].per_seed['87358'];
+      const row = (lab, m, note) => `<tr><td>${lab}</td><td>${note}</td><td>${cell(f(m, 'x'))}</td><td class="b">${cell(f(m, 'z'))}</td></tr>`;
+      ctl.innerHTML = `<thead><tr><th>×12, training seed 87358</th><th>training pairs</th><th>MPPI on the maze</th><th>MPPI on the warped maze</th></tr></thead><tbody>` +
+        row('trained on the maze', 'x_trained', 'ntrl-demo’s recipe on the 88 × 88 maze') + row('trained on the maze', 'x_trained_k1data', 'the 22 × 22 pairs, mapped') +
+        row('trained on the maze', 'x_trained_zdraw', 'ntrl-demo’s recipe on the warped 88 × 88 maze') +
+        row('trained on the warped maze', 'z_trained', 'ntrl-demo’s recipe on the 88 × 88 maze') + row('trained on the warped maze', 'z_trained_k1data', 'the 22 × 22 pairs, mapped') +
+        row('trained on the warped maze', 'z_trained_zdraw', 'ntrl-demo’s recipe on the warped 88 × 88 maze') +
+        `<tr class="sep"><td>reference: ×1 (22 × 22), trained on the warped maze</td><td>its own pairs</td><td>${cell(((summary.gaps['1'].z_trained || {}).x || {}).per_seed?.['87358'])}</td><td class="b">${cell(((summary.gaps['1'].z_trained || {}).z || {}).per_seed?.['87358'])}</td></tr></tbody>`;
+      $('ttctrlnote').textContent = 'The constructed warp at ×12 with each training choice, and the same warp trained on the warped 22 × 22 maze for reference; every row is training seed 87358, planning seeds 0/1/2, all queries (or the category picked above). Mapped pairs: every 22 × 22 training pair moved into the 88 × 88 maze with the quadrants and the band’s edge cells unchanged and the band’s interior stretched, so inside the quadrants the network sees exactly the 22 × 22 pairs. Pairs drawn on the warped maze: ntrl-demo’s recipe run in the warped coordinates (uniform over the warped maze), each pair mapped back exactly.';
+    } else { ctl.innerHTML = ''; $('ttctrlnote').textContent = ''; }
+    const cb = $('ttcats'); cb.querySelectorAll('.seg').forEach(b => b.remove());
+    for (const [key, lab] of CATS) {
+      const b = document.createElement('button'); b.className = 'seg'; b.type = 'button'; b.textContent = lab; b.setAttribute('aria-pressed', String(key === st.cat));
+      b.addEventListener('click', () => { st.cat = key; succTable(); }); cb.appendChild(b);
+    }
+  }
+  function errTable(all) {
+    const t = $('tterr'), fp = v => v == null || !isFinite(v) ? '–' : `${(100 * v).toFixed(0)} %`;
+    const ctrl = GAPS.some(([k]) => all[k] && all[k].goals[st.goal].errors['z_trained_k1data|true_z']);
+    const zd = GAPS.some(([k]) => all[k] && all[k].goals[st.goal].errors['z_trained_zdraw|true_z']);
+    const head = `<thead><tr><th>gap</th><th>ntrl-demo<br>quadrants · band</th><th>trained on the maze<br>quadrants · band</th><th>trained on the warped maze, vs its truth<br>quadrants · band</th><th>trained on the warped maze, vs the robot’s time<br>quadrants · band</th>` +
+      (zd ? `<th>trained on the warped maze, pairs drawn on the warped maze, vs its truth<br>quadrants · band</th>` : '') +
+      (ctrl ? `<th>trained on the warped maze, 22×22 pairs, vs its truth<br>quadrants · band</th><th>trained on the maze, 22×22 pairs<br>quadrants · band</th>` : '') + `</tr></thead>`;
+    const rows = GAPS.map(([k, lab]) => {
+      const d = all[k]; if (!d) return `<tr><td>×${k} <small>${lab}</small></td><td colspan="${(ctrl ? 6 : 4) + (zd ? 1 : 0)}" style="text-align:left">not computed yet</td></tr>`;
+      const e = d.goals[st.goal].errors, c = key => e[key] ? `${fp(e[key].quadrants)} · ${fp(e[key].band)}` : '–';
+      return `<tr><td>×${k} <small>${lab}</small></td><td>${c('ntrl|true_x')}</td><td>${c('x_trained|true_x')}</td><td class="b">${c('z_trained|true_z')}</td><td>${c('z_trained|true_x')}</td>` +
+        (zd ? `<td class="b">${c('z_trained_zdraw|true_z')}</td>` : '') +
+        (ctrl ? `<td>${c('z_trained_k1data|true_z')}</td><td>${c('x_trained_k1data|true_x')}</td>` : '') + `</tr>`;
+    }).join('');
+    t.innerHTML = head + `<tbody>${rows}</tbody>`;
+    $('tterrnote').textContent = `Median relative error |T − T*| / T* over the display grid for the goal “${all[st.k] ? all[st.k].goals[st.goal].name : ''}” (training seed 87358; spots inside walls and within a cell of the goal left out). Quadrants = the four quadrant mazes, band = the open band. Each field is compared with the travel time it was trained on; the last column compares the warped-maze field with the robot’s real travel time instead.`;
+  }
+
+  // ---------------------------------------------------------------- hover
+  let cur = null;
+  function ring(id, x, y) {
+    const { g, w, h } = setup($(id)); g.clearRect(0, 0, w, h); if (x == null) return;
+    g.lineWidth = 3; g.strokeStyle = css('--cursor-ring'); g.beginPath(); g.arc(x, y, 6, 0, 2 * Math.PI); g.stroke();
+    g.lineWidth = 1.6; g.strokeStyle = css('--cursor'); g.beginPath(); g.arc(x, y, 6, 0, 2 * Math.PI); g.stroke();
+  }
+  function regionOf(d, x, y) { const G = d.band, inb = z => z >= 8 && z < 8 + G; if (inb(x) && inb(y)) return 'open band, centre square'; if (inb(x) || inb(y)) return 'open band, arm between two quadrants'; return `quadrant (${y < 8 ? 'bottom' : 'top'}-${x < 8 ? 'left' : 'right'})`; }
+  function showNode(q) {
+    if (!cur) return;
+    const { d, gl, L, VL, VR } = cur, i = Math.floor(q / d.nd), j = q % d.nd, x = d.x[i], y = d.x[j];
+    ring('ttLo', VL.tx(x), VL.ty(y)); ring('ttRo', VR.tx(d.U[q]), VR.ty(d.V[q]));
+    $('ttPos').textContent = `cell (${x.toFixed(1)}, ${y.toFixed(1)}) → (${d.U[q].toFixed(3)}, ${d.V[q].toFixed(3)})`;
+    $('ttReg').textContent = d.W[q] ? 'inside a wall' : regionOf(d, x, y);
+    const F = gl.fields[st.field], T = gl.fields[FIELDS[st.field].truth], X = gl.fields.true_x, u = FIELDS[st.field].unit;
+    $('ttVal').textContent = F ? `${F[q].toFixed(2)} · ${T[q].toFixed(2)} ${u}` : '–';
+    $('ttVal2').textContent = F ? `learned ÷ true ${(F[q] / T[q]).toFixed(2)}` + (ZF(st.field) ? `; the robot’s real time here is ${X[q].toFixed(1)} cells` : '') : '';
+    $('ttuL').textContent = `cell (${x.toFixed(2)}, ${y.toFixed(2)})`; $('ttuR').textContent = `input (${d.U[q].toFixed(3)}, ${d.V[q].toFixed(3)})`;
+  }
+  function clearHover() { ring('ttLo'); ring('ttRo'); $('ttPos').textContent = 'hover the maze'; $('ttReg').textContent = ''; $('ttVal').textContent = '–'; $('ttVal2').textContent = ''; $('ttuL').textContent = 'hover to link the two views'; $('ttuR').textContent = cur ? `warped maze ${(cur.d.box[1] - cur.d.box[0]).toFixed(2)} units wide` : ''; }
+  $('ttLo').addEventListener('pointermove', ev => {
+    if (!cur) return; const { d, VL } = cur, r = ev.currentTarget.getBoundingClientRect();
+    const x = (ev.clientX - r.left - VL.pad) / VL.s, y = (VL.pad + VL.sc - (ev.clientY - r.top)) / VL.s;
+    if (x < 0 || y < 0 || x > d.n || y > d.n) { clearHover(); return; }
+    const i = Math.min(d.nd - 1, Math.max(0, Math.round((x - d.x[0]) / d.dx))), j = Math.min(d.nd - 1, Math.max(0, Math.round((y - d.x[0]) / d.dx)));
+    showNode(i * d.nd + j);
+  });
+  $('ttRo').addEventListener('pointermove', ev => {
+    if (!cur) return; const { d, VR } = cur, r = ev.currentTarget.getBoundingClientRect(), px = ev.clientX - r.left, py = ev.clientY - r.top;
+    let best = Infinity, bq = -1;
+    for (let q = 0; q < d.U.length; q++) { const a = VR.tx(d.U[q]) - px, b = VR.ty(d.V[q]) - py, s = a * a + b * b; if (s < best) { best = s; bq = q; } }
+    if (best > 144) { clearHover(); return; }
+    showNode(bq);
+  });
+  ['ttLo', 'ttRo'].forEach(id => $(id).addEventListener('pointerleave', clearHover));
+
+  // ---------------------------------------------------------------- controls and render
+  function seg(box, items, active, onPick) {
+    const el = $(box); el.querySelectorAll('.seg').forEach(b => b.remove());
+    for (const [key, lab, sub] of items) {
+      const b = document.createElement('button'); b.className = 'seg'; b.type = 'button';
+      b.innerHTML = sub ? `${lab}<small>${sub}</small>` : lab; b.setAttribute('aria-pressed', String(key === active));
+      b.addEventListener('click', () => onPick(key)); el.appendChild(b);
+    }
+  }
+  $('ttlayer').addEventListener('change', e => { st.layer = e.target.value; render(); });
+  $('ttsinks').addEventListener('change', e => { st.sinks = e.target.checked; render(); });
+  let token = 0;
+  async function render() {
+    const my = ++token;
+    buildLUT();
+    seg('ttgaps', GAPS.map(([k, lab]) => [k, `×${k}`, lab]), st.k, k => { st.k = k; render(); });
+    let d;
+    try { d = await load(st.k); } catch (err) { $('ttuL').textContent = `Could not load the field data (${err.message}). Reload the page to try again.`; return; }
+    if (my !== token) return;
+    seg('ttgoals', d.goals.map((g, i) => [i, g.name]), st.goal, i => { st.goal = i; render(); });
+    const avail = Object.keys(FIELDS).filter(f => d.goals[0].fields[f]);
+    if (!avail.includes(st.field)) st.field = avail[0];
+    seg('ttfields', avail.map(f => [f, FIELDS[f].label]), st.field, f => { st.field = f; render(); });
+    const gl = d.goals[st.goal], L = layer(d, gl, st.field, st.layer);
+    const learnedL = layer(d, gl, st.field, 'learned'), sk = st.sinks ? sinks(d, gl, learnedL.v) : null, skT = sinks(d, gl, gl.fields[FIELDS[st.field].truth]);
+    const VL = drawMaze($('ttL'), d, gl, L, sk), VR = drawWarped($('ttR'), d, gl, L, sk);
+    cur = { d, gl, L, VL, VR };
+    legend(L, st.field);
+    $('ttsubL').textContent = `${d.n} × ${d.n} cells, band ${d.band} cells`;
+    $('ttsubR').textContent = `${(d.box[1] - d.box[0]).toFixed(2)} × ${(d.box[3] - d.box[2]).toFixed(2)} units`;
+    $('ttKind').textContent = FIELDS[st.field].label;
+    const pairsNote = st.field.endsWith('k1data') ? ' Trained on the 22 × 22 maze’s pairs mapped into this maze (identical in the warped space inside the quadrants).' : '';
+    $('ttKind2').textContent = (ZF(st.field) ? `the network is given z = φ(x) only; its loss is taken in z (quadrant stretch m = ${d.m.toFixed(2)})`
+      : st.field === 'ntrl' ? 'no warp' : 'the loss is taken on the maze, through φ (the gap study’s training)') + `; run ${d.runs[st.field]}.` + pairsNote;
+    const sk2 = sk || sinks(d, gl, learnedL.v);
+    $('ttSink').textContent = `${sk2.length} learned · ${skT.length} true`;
+    $('ttSink2').textContent = 'local minima of the best-heading field away from the goal (display grid)';
+    clearHover();
+    // small multiples: the same field and layer at every gap, on the warped maze
+    const all = {}; all[st.k] = d;
+    const box = $('ttmulti'); box.textContent = '';
+    for (const [k, lab] of GAPS) {
+      const b = document.createElement('button'); b.className = 'thumb'; b.type = 'button'; b.setAttribute('aria-pressed', String(k === st.k));
+      const c = document.createElement('canvas'); b.appendChild(c);
+      const t = document.createElement('b'); t.textContent = `×${k} · ${lab}`; b.appendChild(t);
+      const s = document.createElement('span'); s.textContent = 'loading…'; b.appendChild(s);
+      b.addEventListener('click', () => { st.k = k; render(); });
+      box.appendChild(b);
+      load(k).then(dk => {
+        if (my !== token) return;
+        all[k] = dk; errTable(all);
+        const gk = dk.goals[st.goal], Lk = layer(dk, gk, st.field, st.layer);
+        if (!Lk) { s.textContent = st.field.endsWith('k1data') ? 'control run at ×12 only' : 'not trained yet'; return; }
+        const skk = sinks(dk, gk, layer(dk, gk, st.field, 'learned').v);
+        requestAnimationFrame(() => drawWarped(c, dk, gk, Lk, st.sinks ? skk : null, { pad: 4, r: 2.5, stride: Math.max(1, Math.round(dk.nd / 90)) }));
+        s.textContent = `${skk.length} sinks · ${(dk.box[1] - dk.box[0]).toFixed(2)} units wide`;
+      }).catch(() => { s.textContent = 'not computed yet'; all[k] = null; errTable(all); });
+    }
+    $('ttmultinote').textContent = `${FIELDS[st.field].label}, goal “${gl.name}”, ${$('ttlayer').selectedOptions[0].textContent}, each drawn on its own warped maze (each panel's colour scale ends at its own true field's 98th percentile). Select one to view it above.`;
+    errTable(all);
+    succTable();
+  }
+  async function start() {
+    try { const r = await fetch('fieldspaces/summary.json'); if (r.ok) summary = await r.json(); } catch (e) { summary = null; }
+    if (summary && summary.why) $('ttwhy').innerHTML = summary.why;
+    render();
+  }
+  let rt = null;
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(render, 150); });
+  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+  (mq.addEventListener ? mq.addEventListener('change', render) : mq.addListener(render));
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  start();
+})();
+</script>

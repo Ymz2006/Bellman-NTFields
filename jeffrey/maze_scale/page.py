@@ -98,7 +98,7 @@ def main():
     html = (HERE / 'page_template.html').read_text().replace('/*DATA*/null', json.dumps(data, default=float))
     seeds = R.OUT / 'seeds.md'
     html = html.replace('<!--SEEDS-->', seeds.read_text().strip() if seeds.exists() else '')
-    for key in ('LEVELS_TEXT', 'CANDIDATES_TEXT', 'FOURIER_TEXT', 'SCALEDDP_TEXT', 'UTURN_TEXT', 'UTURN_FIG'):     # prose for the follow-up sections
+    for key in ('LEVELS_TEXT', 'CANDIDATES_TEXT', 'FOURIER_TEXT', 'SCALEDDP_TEXT', 'PLUS_TEXT', 'PLUS_FIG', 'UTURN_TEXT', 'UTURN_FIG', 'EXPLORER'):     # prose for the follow-up sections
         f = HERE / 'page_text' / f'{key.lower()}.html'
         html = html.replace(f'<!--{key}-->', f.read_text().strip() if f.exists() else '')
     (R.OUT / 'maze_scale.html').write_text(html)

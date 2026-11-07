@@ -181,10 +181,53 @@ def uturn(ntrl, seg):
     return mazes
 
 
+def plus_maze(prep, ntrl):
+    """ntrl-demo on the plus variant of 22 x 22 (plus.py) against the unmodified maze; success also by whether the query's
+    start / goal lie inside the + (cell coordinates of the poses)."""
+    pp = R.runs('plus-prepare')
+    if not pp:
+        return None
+    p = pp[-1]
+    n, info = p['maze']['n'], p['maze']
+    import plus as PL
+    cells = PL.plus_cells(n, info['plus_width'])
+    q = np.load(p['_dir'] / 'queries.npz')
+    E = n + 0.1
+    def inside(x):
+        c = np.clip(np.floor(x[:, 0] * E + n / 2).astype(int), 0, n - 1)
+        r = np.clip(np.floor(x[:, 1] * E + n / 2).astype(int), 0, n - 1)
+        return cells[c, r]
+    where = inside(q['start']).astype(int) + inside(q['goal']).astype(int)      # 0 none, 1 one end, 2 both in the +
+    labs = [l for l in bin_labels() if p['queries']['per_bin'].get(l)]
+    runs = {d['seed']: d for d in R.runs('plus-ntrl')}
+    o = p['oracle']
+    out = dict(n=n, id=p['_id'], width=info['plus_width'], cells=info['plus_cells'], area=info['plus_area_fraction'], walls=info['walls'],
+               walls_removed=info['plus_walls_removed'], bins=labs,
+               oracle=[100 * sum(o[k]['by_bin'][l][0] for k in o) / sum(o[k]['by_bin'][l][1] for k in o) for l in labs],
+               straight=[100 * p['straight']['by_bin'][l][0] / p['straight']['by_bin'][l][1] for l in labs],
+               where_counts=[int((where == k).sum()) for k in range(3)], rows=[])
+    for name, by in (('ntrl-demo, original 22 × 22', ntrl.get(n, {})), ('ntrl-demo, plus maze', runs)):
+        if not by:
+            continue
+        seeds = seed_order(by)
+        per_bin = []
+        for l in labs:
+            v = [by[k]['success_by_bin'][l] for k in seeds if l in by[k]['success_by_bin']]
+            per_bin.append([sum(x[0] for x in v), sum(x[1] for x in v)] if v else None)
+        tot = [by[k]['success_total'] for k in seeds]
+        row = dict(name=name, seeds=seeds, per_seed=[t[0] for t in tot], per_seed_of=tot[0][1], total=[sum(t[0] for t in tot), sum(t[1] for t in tot)],
+                   per_bin=per_bin, speed_fit=float(np.mean([by[k]['speed_fit']['log_speed_corr'] for k in seeds])), ids=[by[k]['_id'] for k in seeds])
+        if name.endswith('plus maze'):
+            ok = np.concatenate([np.load(by[k]['_dir'] / 'rows.npz')['success'] for k in seeds])     # (seeds x planning seeds, queries)
+            row['by_where'] = [[int(ok[:, where == k].sum()), int(ok[:, where == k].size)] for k in range(3)]
+        out['rows'].append(row)
+    return out
+
+
 def collect():
     prep, ntrl, seg = R.collect()
     return dict(levels=levels(prep, ntrl, seg) if 13 in prep else None, candidates=candidates(prep, ntrl, seg) if 13 in prep else None,
-                fourier=fourier(prep, ntrl), scaled_dp=scaled_dp(prep, ntrl, seg), uturn=uturn(ntrl, seg))
+                fourier=fourier(prep, ntrl), scaled_dp=scaled_dp(prep, ntrl, seg), plus=plus_maze(prep, ntrl), uturn=uturn(ntrl, seg))
 
 
 def markdown(x):
@@ -199,6 +242,37 @@ def markdown(x):
                       f'{100 * r["total"][0] / r["total"][1]:.0f} % ({r["total"][0]}/{r["total"][1]}) | '
                       + ' | '.join(f'{100 * a / b:.0f}' for a, b in r['per_bin'])
                       + f' | {r["t_over_tstar_16_32"]:.2f} | ' + (' / '.join(f'{m:.0f}' for m in r['minutes']) if r['minutes'] else '–') + ' |')
+        md.append('')
+    cd = x.get('candidates')
+    if cd and cd['rows']:
+        md += ['**Split candidates per DP pair (13 × 13, segment DP + wall term weight 0.3, 13 networks)**', '',
+               '| candidates | runs solved per seed (87358 / 1 / 2, of 600) | all | ' + ' | '.join(f'{b} cells' for b in cd['bins']) + ' | top-level target / T* | target minutes | minutes per run |',
+               '|' + '---|' * (6 + len(cd['bins']))]
+        for r in cd['rows']:
+            md.append(f'| {r["candidates"]} | {" / ".join(map(str, r["per_seed"]))} | {100 * r["total"][0] / r["total"][1]:.0f} % ({r["total"][0]}/{r["total"][1]}) | '
+                      + ' | '.join(f'{100 * a / b:.0f}' for a, b in r['per_bin'])
+                      + f' | {r["top_target_over_truth"]:.3f} | {r["target_seconds"] / 60:.0f} | ' + ' / '.join(f'{m:.0f}' for m in r['minutes']) + ' |')
+        md.append('')
+    for m in x.get('scaled_dp') or []:
+        md += [f'**Segment DP + wall term (weight 0.3) on the B × {m["scale"]:g} base, {m["n"]} × {m["n"]}**', '',
+               '| field | runs solved per seed (87358 / 1 / 2) | all | ' + ' | '.join(f'{b} cells' for b in m['bins']) + ' |', '|' + '---|' * (3 + len(m['bins']))]
+        for r in m['rows']:
+            md.append(f'| {r["name"]} | {" / ".join(map(str, r["per_seed"]))} (of {r["per_seed_of"]}) | {100 * r["total"][0] / r["total"][1]:.0f} % ({r["total"][0]}/{r["total"][1]}) | '
+                      + ' | '.join(f'{100 * a / b:.0f}' for a, b in r['per_bin']) + ' |')
+        md.append('')
+    pl = x.get('plus')
+    if pl:
+        md += [f'**Plus maze: {pl["n"]} × {pl["n"]} with a {pl["width"]}-cell + opened ({pl["cells"]} of {pl["n"] ** 2} cells, {pl["walls_removed"]} walls removed; prepare run {pl["id"]})**', '',
+               '| field | runs solved per seed (87358 / 1 / 2) | all | ' + ' | '.join(f'{b} cells' for b in pl['bins']) + ' | speed fit |', '|' + '---|' * (4 + len(pl['bins']))]
+        md.append('| oracle on the plus maze | – | – | ' + ' | '.join(f'{v:.0f}' for v in pl['oracle']) + ' | – |')
+        md.append('| straight line on the plus maze | – | – | ' + ' | '.join(f'{v:.0f}' for v in pl['straight']) + ' | – |')
+        for r in pl['rows']:
+            md.append(f'| {r["name"]} | {" / ".join(map(str, r["per_seed"]))} (of {r["per_seed_of"]}) | {100 * r["total"][0] / r["total"][1]:.0f} % ({r["total"][0]}/{r["total"][1]}) | '
+                      + ' | '.join('–' if v is None else f'{100 * v[0] / v[1]:.0f}' for v in r['per_bin']) + f' | {r["speed_fit"]:.2f} |')
+        p = next((r for r in pl['rows'] if r.get('by_where')), None)
+        if p:
+            md += ['', 'Plus maze by where the query ends lie (runs solved): ' + ', '.join(
+                f'{lab} {a}/{b} ({100 * a / b:.0f} %, {c} queries)' for lab, (a, b), c in zip(('neither in the +', 'one end', 'both ends'), p['by_where'], pl['where_counts']))]
         md.append('')
     if x['fourier']:
         md += ['**Fourier scale (ntrl-demo with B × s, same seed draw; s = 1 is plain ntrl-demo)**', '',

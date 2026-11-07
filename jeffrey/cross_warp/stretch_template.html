@@ -1,0 +1,312 @@
+<title>2026-11-05 Stretched Field View</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;650;750&family=Public+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* The cross-warp study's page style: reading column for text, a full-width linked pair (stretched field | ground truth), then the planning charts. */
+:root {
+  --bg: #f5f6f8; --surface: #ffffff; --ink: #15181d; --ink2: #4b525c; --muted: #737b86; --rule: #dde1e6; --wash: #eef1f5;
+  --accent: #eb6834; --wall: #15181d; --iso: rgba(21, 24, 29, 0.38); --seam: rgba(21, 24, 29, 0.45);
+  --ramp-lo: #ece9fb; --ramp-mid: #9a8de6; --ramp-hi: #33268f;
+  --s-ntrl: #2a78d6; --s-pm: #eb6834; --s-id: #8b929b;
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+    --accent: #f08a5d; --wall: #eef0f3; --iso: rgba(238, 240, 243, 0.34); --seam: rgba(238, 240, 243, 0.45);
+    --ramp-lo: #231f4d; --ramp-mid: #6250d6; --ramp-hi: #d5cffa;
+    --s-ntrl: #3987e5; --s-pm: #d95926; --s-id: #7d858f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+  --accent: #f08a5d; --wall: #eef0f3; --iso: rgba(238, 240, 243, 0.34); --seam: rgba(238, 240, 243, 0.45);
+  --ramp-lo: #231f4d; --ramp-mid: #6250d6; --ramp-hi: #d5cffa;
+  --s-ntrl: #3987e5; --s-pm: #d95926; --s-id: #7d858f;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 15.5px/1.6 var(--f-body); margin: 0; }
+.page { max-width: 1180px; margin: 0 auto; padding-block: 36px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 30px; }
+.col { max-width: 72ch; min-width: 0; }
+header { display: grid; gap: 12px; }
+.eyebrow { font: 500 12px/1.4 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 750 clamp(30px, 5vw, 44px)/1.05 var(--f-display); letter-spacing: -0.015em; margin: 0; text-wrap: balance; }
+h2 { font: 650 21px/1.2 var(--f-display); margin: 0 0 8px; text-wrap: balance; }
+p { margin: 0 0 10px; }
+.lede { font-size: 17px; line-height: 1.55; }
+section { display: grid; gap: 14px; min-width: 0; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; }
+.group { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; min-width: 0; }
+.lab { font: 500 12px var(--f-mono); color: var(--muted); margin-right: 2px; letter-spacing: 0.04em; }
+.seg { font: 500 13px var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 999px; padding: 5px 12px; cursor: pointer; }
+.seg[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.seg:focus-visible, select:focus-visible, .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+select { font: 500 13px var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 5px 8px; max-width: 100%; }
+.pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 14px; }
+.panel { position: relative; background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 10px; display: grid; gap: 6px; min-width: 0; }
+.panel h3 { font: 650 14.5px/1.3 var(--f-display); margin: 0; }
+.panel h3 span { display: block; font: 400 12px/1.4 var(--f-mono); color: var(--muted); }
+.stage { position: relative; width: 100%; aspect-ratio: 1; }
+.stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: crosshair; }
+.under { font: 400 12px/1.4 var(--f-mono); color: var(--muted); min-height: 1.4em; }
+.bar { display: flex; align-items: center; gap: 8px; font: 400 12px var(--f-mono); color: var(--muted); flex-wrap: wrap; }
+.bar i { display: block; width: min(260px, 50vw); height: 10px; border-radius: 2px; background: linear-gradient(90deg, var(--ramp-lo), var(--ramp-mid), var(--ramp-hi)); }
+.readout { font: 500 13px/1.5 var(--f-mono); color: var(--ink2); min-height: 1.5em; font-variant-numeric: tabular-nums; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+th, td { padding: 5px 12px; text-align: right; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+th { font: 500 12px var(--f-mono); color: var(--muted); }
+.chip { display: inline-flex; align-items: center; gap: 7px; font: 500 13px var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 999px; padding: 4px 11px; cursor: pointer; }
+.chip[aria-pressed="false"] { color: var(--muted); background: transparent; }
+.chip[aria-pressed="false"] .key { opacity: 0.35; }
+.key { display: inline-block; width: 18px; height: 0; border-top: 2.5px solid currentColor; }
+.key.dash { border-top-style: dashed; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 12px; }
+.panel h4 { font: 650 14px/1.3 var(--f-display); margin: 0; }
+.panel h4 span { display: block; font: 400 12px var(--f-mono); color: var(--muted); }
+svg { width: 100%; height: auto; display: block; }
+.axis text { font: 400 11px var(--f-mono); fill: var(--muted); }
+.gridline { stroke: var(--rule); stroke-width: 1; }
+.tip { position: absolute; z-index: 5; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--rule); border-radius: 6px; padding: 8px 10px; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16); max-width: min(330px, 86vw); font-size: 12.5px; }
+.tip .h { font: 500 11.5px var(--f-mono); color: var(--muted); margin-bottom: 4px; }
+.tip .r { display: grid; grid-template-columns: 18px 1fr auto; gap: 6px; align-items: center; }
+.tip .r b { font: 500 12.5px var(--f-mono); font-variant-numeric: tabular-nums; text-align: right; }
+.tip .r i { font-style: normal; color: var(--ink2); }
+details summary { cursor: pointer; font-weight: 600; }
+details > summary + * { margin-top: 10px; }
+code { font: 400 0.92em var(--f-mono); }
+</style>
+<div class="page">
+  <header class="col">
+    <div class="eyebrow">Cross warp · gap study · 2026-11-05</div>
+    <h1>The ×1 field, stretched over the wider plus</h1>
+    <!--LEDE-->
+  </header>
+
+  <section>
+    <div class="controls">
+      <div class="group" role="group" aria-label="Maze"><span class="lab">maze</span><span id="c-base" class="group"></span></div>
+      <div class="group" role="group" aria-label="Gap"><span class="lab">gap</span><span id="c-k" class="group"></span></div>
+      <div class="group" role="group" aria-label="Goal"><span class="lab">goal</span><span id="c-goal" class="group"></span></div>
+    </div>
+    <div class="controls">
+      <label class="group"><span class="lab">left</span>
+        <select id="c-field">
+          <optgroup label="Trained on ×1, stretched">
+            <option value="ntrl1">ntrl-demo ×1, stretched</option>
+            <option value="warp1">warped-maze field ×1, stretched</option>
+            <option value="truth1">true ×1 time, stretched (no fitting error)</option>
+          </optgroup>
+          <optgroup label="Trained on this gap (controls)">
+            <option value="ntrlk">ntrl-demo trained on this gap</option>
+            <option value="warpk">warped-maze field trained on this gap</option>
+          </optgroup>
+        </select>
+      </label>
+      <div class="group" role="group" aria-label="View"><span class="lab">view</span><span id="c-view" class="group"></span></div>
+      <div class="group" role="group" aria-label="Colour scale"><span class="lab">colour</span><span id="c-scale" class="group"></span></div>
+    </div>
+    <div class="pair">
+      <div class="panel"><h3 id="t-left"></h3><div class="stage"><canvas id="cv-left"></canvas><canvas id="ov-left"></canvas></div><div class="under" id="u-left"></div></div>
+      <div class="panel"><h3 id="t-right"></h3><div class="stage"><canvas id="cv-right"></canvas><canvas id="ov-right"></canvas></div><div class="under" id="u-right"></div></div>
+    </div>
+    <div class="bar"><span>short</span><i></i><span>long time to the goal</span><span id="b-note"></span></div>
+    <div class="readout" id="readout" aria-live="polite">Hover over either map to read both times at that point.</div>
+    <div class="tablewrap"><table id="stats"></table></div>
+    <div class="col" id="note"></div>
+  </section>
+
+  <section>
+    <div class="col"><h2>Planning on the wider gaps</h2><!--TEXT--></div>
+    <div class="controls" id="legend" role="group" aria-label="Fields shown in the charts"><span class="lab">show</span></div>
+    <div class="grid2" id="panels"></div>
+    <div class="col"><!--TEXT2--></div>
+    <details><summary>Table: every field, planner and gap</summary><div class="tablewrap"><!--TABLE--></div></details>
+  </section>
+</div>
+<script>
+const R = /*RESULTS*/null;
+(() => {
+  const $ = id => document.getElementById(id);
+  const h = (tag, cls, text, parent) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; if (parent) parent.append(e); return e; };
+  const BASES = [['c22', '22×22 cross'], ['m10', '10×10 maze']], KS = [1, 2, 4, 8, 12];
+  const FIELD = {
+    ntrl1: ['ntrl-demo trained on ×1, stretched', 'cells of the ×1 maze'],
+    warp1: ['Warped-maze field trained on ×1, stretched', 'quadrant cells: a band cell of ×1 counts about 1/m'],
+    truth1: ['True ×1 travel time, stretched', 'cells of the ×1 maze, no fitting error'],
+    ntrlk: ['ntrl-demo trained on this gap', 'cells'],
+    warpk: ['Warped-maze field trained on this gap', 'quadrant cells: a band cell counts about 1/m'],
+  };
+  const S = {base: 'c22', k: 12, goal: 2, field: 'ntrl1', scale: 'shared', view: 'whole', cur: null};
+  const cache = {}, decoded = new Map();
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const rgb = c => { const m = c.match(/^#([0-9a-f]{6})$/i); const v = parseInt(m[1], 16); return [v >> 16, (v >> 8) & 255, v & 255]; };
+
+  const load = async (b, k) => {
+    const key = `${b}_k${k}`;
+    if (!cache[key]) cache[key] = fetch(`stretchview/${key}.json`).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+    return cache[key];
+  };
+  const decode = q => {
+    if (decoded.has(q)) return decoded.get(q);
+    const bin = atob(q.b64), n = bin.length / 2, out = new Float32Array(n), s = (q.hi - q.lo) / 65534;
+    for (let i = 0; i < n; i++) { const c = bin.charCodeAt(2 * i) | (bin.charCodeAt(2 * i + 1) << 8); out[i] = c === 65535 ? NaN : q.lo + c * s; }
+    decoded.set(q, out); return out;
+  };
+  const sample = (a, nd, x0, dx, cx, cy) => {         // bilinear, nearest where a corner is inside a wall; a[ix * nd + iy]
+    const fx = (cx - x0) / dx, fy = (cy - x0) / dx;
+    const i = Math.min(nd - 2, Math.max(0, Math.floor(fx))), j = Math.min(nd - 2, Math.max(0, Math.floor(fy)));
+    const u = Math.min(1, Math.max(0, fx - i)), v = Math.min(1, Math.max(0, fy - j));
+    const a00 = a[i * nd + j], a10 = a[(i + 1) * nd + j], a01 = a[i * nd + j + 1], a11 = a[(i + 1) * nd + j + 1];
+    if (a00 === a00 && a10 === a10 && a01 === a01 && a11 === a11) return (1 - u) * ((1 - v) * a00 + v * a01) + u * ((1 - v) * a10 + v * a11);
+    return a[(u < 0.5 ? i : i + 1) * nd + (v < 0.5 ? j : j + 1)];
+  };
+  const nice = t => { const p = Math.pow(10, Math.floor(Math.log10(t))), m = t / p; return (m < 1.5 ? 1 : m < 3.5 ? 2 : m < 7.5 ? 5 : 10) * p; };
+
+  const paint = (cv, a, d, V, tmin, tmax, step, seams) => {
+    const box = cv.parentElement.getBoundingClientRect();
+    const W = Math.max(120, Math.min(760, Math.round(box.width * Math.min(devicePixelRatio || 1, 2))));
+    cv.width = cv.height = W;
+    const ctx = cv.getContext('2d'), img = ctx.createImageData(W, W), px = img.data;
+    const lo = rgb(css('--ramp-lo')), mid = rgb(css('--ramp-mid')), hi = rgb(css('--ramp-hi'));
+    const surf = rgb(css('--surface')), iso = css('--iso').match(/[\d.]+/g).map(Number);
+    const x0 = V.x[0], dx = V.x[1] - V.x[0], nd = V.nd, [c0, c1] = V.win, span = c1 - c0, T = new Float32Array(W * W);
+    for (let r = 0; r < W; r++) { const cy = c0 + span * (1 - (r + 0.5) / W);
+      for (let c = 0; c < W; c++) T[r * W + c] = sample(a, nd, x0, dx, c0 + span * (c + 0.5) / W, cy); }
+    for (let r = 0; r < W; r++) for (let c = 0; c < W; c++) {
+      const i = r * W + c, t = T[i], o = 4 * i;
+      if (t !== t) { px[o] = surf[0]; px[o + 1] = surf[1]; px[o + 2] = surf[2]; px[o + 3] = 255; continue; }
+      const f = Math.min(1, Math.max(0, (t - tmin) / (tmax - tmin))), g = f < 0.5 ? f * 2 : f * 2 - 1, A = f < 0.5 ? lo : mid, B = f < 0.5 ? mid : hi;
+      let R0 = A[0] + (B[0] - A[0]) * g, G0 = A[1] + (B[1] - A[1]) * g, B0 = A[2] + (B[2] - A[2]) * g;
+      const l = Math.floor(t / step);
+      const e = (c + 1 < W && T[i + 1] === T[i + 1] && Math.floor(T[i + 1] / step) !== l) || (r + 1 < W && T[i + W] === T[i + W] && Math.floor(T[i + W] / step) !== l);
+      if (e) { const al = iso[3]; R0 = R0 * (1 - al) + iso[0] * al; G0 = G0 * (1 - al) + iso[1] * al; B0 = B0 * (1 - al) + iso[2] * al; }
+      px[o] = R0; px[o + 1] = G0; px[o + 2] = B0; px[o + 3] = 255;
+    }
+    ctx.putImageData(img, 0, 0);
+    const X = c => (c - c0) / span * W, Y = c => (1 - (c - c0) / span) * W;
+    if (seams && d.k > 1) {                            // where the band's interior starts and ends: the stretched part lies between
+      ctx.strokeStyle = css('--seam'); ctx.setLineDash([5, 5]); ctx.lineWidth = 1;
+      d.rigid.forEach(c => { ctx.beginPath(); ctx.moveTo(X(c), 0); ctx.lineTo(X(c), W); ctx.moveTo(0, Y(c)); ctx.lineTo(W, Y(c)); ctx.stroke(); });
+      ctx.setLineDash([]);
+    }
+    ctx.fillStyle = css('--wall');
+    const lw = Math.max(1.2, W / span * 0.1);
+    d.boxes.forEach(b => { const w = Math.max(lw, X(b[2]) - X(b[0])), hh = Math.max(lw, Y(b[1]) - Y(b[3])); ctx.fillRect(X(b[0]), Y(b[3]), w, hh); });
+    const g = d.goals[S.goal].cell;
+    ctx.beginPath(); ctx.arc(X(g[0]), Y(g[1]), Math.max(5, W * 0.012), 0, 7); ctx.fillStyle = css('--accent'); ctx.fill();
+    ctx.lineWidth = 2; ctx.strokeStyle = css('--surface'); ctx.stroke();
+  };
+
+  let D = null, V = null, LA = null, RA = null, seq = 0;
+  const f1 = (v, n = 1) => v == null || v !== v ? '–' : v.toFixed(n);
+  const draw = async () => {
+    const my = ++seq, d = await load(S.base, S.k);
+    if (my !== seq) return;
+    D = d;
+    const g = d.goals[S.goal], zoomed = S.view !== 'whole';
+    V = zoomed ? d.zoom[S.view] : {win: [0, d.n], x: d.x, nd: d.nd};
+    const src = zoomed ? g.zoom[S.view] : g.fields;
+    const ql = src[S.field], qr = src.truth;
+    LA = decode(ql); RA = decode(qr);
+    const shared = S.scale === 'shared', z0 = q => (zoomed ? q.lo : 0);
+    const lo = shared ? Math.min(z0(ql), z0(qr)) : z0(ql), hi = shared ? Math.max(ql.hi, qr.hi) : ql.hi;
+    const lor = shared ? lo : z0(qr), hir = shared ? hi : qr.hi;
+    const sl = nice((hi - lo) / 12), sr = nice((hir - lor) / 12);
+    paint($('cv-left'), LA, d, V, lo, hi, sl, !zoomed);
+    paint($('cv-right'), RA, d, V, lor, hir, sr, false);
+    const stretched = S.field.endsWith('1') && S.k > 1;
+    $('t-left').innerHTML = ''; $('t-left').append(FIELD[S.field][0]); h('span', null, `${FIELD[S.field][1]}${stretched ? ` · band interior ×${f1(d.stretch)}` : ''}`, $('t-left'));
+    $('t-right').innerHTML = ''; $('t-right').append(`Ground truth, gap ×${S.k}`); h('span', null, `T* of this maze (exact grid solver), cells`, $('t-right'));
+    $('u-left').textContent = `${f1(ql.lo)}\u2013${f1(ql.hi)} \u00b7 lines every ${sl}`;
+    $('u-right').textContent = `${f1(qr.lo)}\u2013${f1(qr.hi)} \u00b7 lines every ${sr}`;
+    $('b-note').textContent = shared ? 'both maps on one scale' : 'each map on its own scale';
+    const st = g.stats[S.field], t = $('stats'); t.textContent = '';
+    if (st) {
+      const hr = h('tr', null, null, h('thead', null, null, t));
+      ['left against the truth', 'median |T − T*| / T*', 'rank correlation', 'descent direction off by (median)'].forEach(c => h('th', null, c, hr));
+      const tb = h('tbody', null, null, t);
+      [['in the quadrants', 'quadrants'], ['in the band', 'band'], ['everywhere', 'all']].forEach(([lab, key]) => { const r = h('tr', null, null, tb), s = st[key];
+        h('td', null, lab, r); h('td', null, `${f1(100 * s.rel, 0)} %`, r); h('td', null, f1(s.rank, 3), r); h('td', null, s.angle == null ? '–' : `${f1(s.angle, 0)}°`, r); });
+    }
+    readout();
+  };
+  const readout = () => {
+    ['left', 'right'].forEach(s => { const o = $('ov-' + s), c = $('cv-' + s); o.width = c.width; o.height = c.height; });
+    if (!S.cur || !D) { $('readout').textContent = 'Hover over either map to read both times at that point.'; return; }
+    const x0 = V.x[0], dx = V.x[1] - V.x[0], [cx, cy] = S.cur, [c0, c1] = V.win;
+    const a = sample(LA, V.nd, x0, dx, cx, cy), b = sample(RA, V.nd, x0, dx, cx, cy);
+    ['left', 'right'].forEach(s => { const o = $('ov-' + s), ctx = o.getContext('2d'), W = o.width, px = (cx - c0) / (c1 - c0) * W, py = (1 - (cy - c0) / (c1 - c0)) * W;
+      ctx.strokeStyle = css('--accent'); ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(px - 8, py); ctx.lineTo(px + 8, py); ctx.moveTo(px, py - 8); ctx.lineTo(px, py + 8); ctx.stroke(); });
+    $('readout').textContent = a !== a ? `cell (${f1(cx)}, ${f1(cy)}): inside a wall` : `cell (${f1(cx)}, ${f1(cy)})   left ${f1(a)}   truth ${f1(b)}   left / truth ${f1(a / b, 2)}`;
+  };
+  ['left', 'right'].forEach(s => { const o = $('ov-' + s);
+    const mv = ev => { if (!D) return; const r = o.getBoundingClientRect(), [c0, c1] = V.win; S.cur = [c0 + (ev.clientX - r.left) / r.width * (c1 - c0), c0 + (1 - (ev.clientY - r.top) / r.height) * (c1 - c0)]; readout(); };
+    o.addEventListener('pointermove', mv); o.addEventListener('pointerdown', mv);
+    o.addEventListener('pointerleave', () => { S.cur = null; readout(); }); });
+
+  const segs = (id, items, key, conv = v => v) => {
+    const box = $(id); box.textContent = '';
+    items.forEach(([v, label]) => { const b = h('button', 'seg', label, box); b.type = 'button'; b.setAttribute('aria-pressed', String(S[key] === v));
+      b.addEventListener('click', () => { S[key] = conv(v); S.cur = null; segs(id, items, key, conv); draw(); }); });
+  };
+  const goalSegs = async () => { const d = await load(S.base, S.k); segs('c-goal', d.goals.map((g, i) => [i, g.name]), 'goal'); };
+  segs('c-base', BASES, 'base'); segs('c-k', KS.map(k => [k, `×${k}`]), 'k');
+  segs('c-scale', [['shared', 'one scale'], ['own', 'each its own']], 'scale');
+  segs('c-view', [['whole', 'whole maze'], ['q0', 'bottom-left quadrant'], ['q3', 'top-right quadrant']], 'view');
+  $('c-field').addEventListener('change', e => { S.field = e.target.value; draw(); });
+  goalSegs(); draw();
+  addEventListener('resize', () => { clearTimeout(window._rs); window._rs = setTimeout(draw, 150); });
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
+  new MutationObserver(draw).observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
+
+  // ---- planning charts
+  if (!R) return;
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (t, at, p) => { const e = document.createElementNS(NS, t); for (const k in at) e.setAttribute(k, at[k]); if (p) p.append(e); return e; };
+  const ON = {}; R.fields.forEach(f => { ON[f] = true; });
+  const leg = $('legend'), box = $('panels');
+  const keyCls = f => 'key' + (R.dash[f] ? ' dash' : '');
+  const legend = () => { leg.querySelectorAll('.chip').forEach(c => c.remove());
+    R.fields.forEach(f => { const b = h('button', 'chip', null, leg); b.type = 'button'; const k = h('span', keyCls(f), null, b); k.style.color = `var(${R.css[f]})`;
+      b.append(R.label[f]); b.setAttribute('aria-pressed', String(ON[f])); b.addEventListener('click', () => { ON[f] = !ON[f]; legend(); all(); }); }); };
+  const panel = P => {
+    const p = h('div', 'panel', null, box), h4 = h('h4', null, P.title, p); h('span', null, P.sub, h4);
+    const W = 420, H = 250, L = 38, Rr = 12, T = 12, B = 40, ks = R.ks;
+    const svg = mk('svg', {viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': `Queries solved against the gap, ${P.title}, ${P.sub}`}, p);
+    const X = i => L + (i + 0.5) / ks.length * (W - L - Rr), Y = v => T + (1 - v / 100) * (H - T - B);
+    const ax = mk('g', {class: 'axis'}, svg);
+    [0, 25, 50, 75, 100].forEach(v => { mk('line', {x1: L, x2: W - Rr, y1: Y(v), y2: Y(v), class: 'gridline'}, svg); mk('text', {x: L - 6, y: Y(v) + 3, 'text-anchor': 'end'}, ax).textContent = v; });
+    ks.forEach((k, i) => { mk('text', {x: X(i), y: H - B + 14, 'text-anchor': 'middle'}, ax).textContent = `×${k}`; });
+    mk('text', {x: (L + W - Rr) / 2, y: H - 6, 'text-anchor': 'middle'}, ax).textContent = R.xlabel;
+    const series = R.fields.filter(f => ON[f] && P.series[f]);
+    series.forEach(f => { const c = `var(${R.css[f]})`, vals = P.series[f]; let d = '', pen = false;
+      vals.forEach((v, i) => { if (v) { d += `${pen ? 'L' : 'M'}${X(i).toFixed(1)},${Y(v[0]).toFixed(1)}`; pen = true; } else pen = false; });
+      mk('path', {d, fill: 'none', stroke: c, 'stroke-width': 2, 'stroke-dasharray': R.dash[f] || '', 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
+      vals.forEach((v, i) => { if (v) mk('circle', {cx: X(i), cy: Y(v[0]), r: 4, fill: R.dash[f] ? 'var(--surface)' : c, stroke: R.dash[f] ? c : 'var(--surface)', 'stroke-width': 2}, svg); }); });
+    const tip = h('div', 'tip', null, p); tip.hidden = true;
+    const cross = mk('line', {y1: T, y2: H - B, stroke: 'var(--muted)', 'stroke-width': 1, visibility: 'hidden'}, svg);
+    const hit = mk('rect', {x: L, y: T, width: W - L - Rr, height: H - T - B, fill: 'transparent', style: 'touch-action: pan-y'}, svg);
+    const show = ev => { const rc = svg.getBoundingClientRect(), sx = (ev.clientX - rc.left) * W / rc.width;
+      const i = Math.max(0, Math.min(ks.length - 1, Math.floor((sx - L) / (W - L - Rr) * ks.length)));
+      cross.setAttribute('x1', X(i)); cross.setAttribute('x2', X(i)); cross.setAttribute('visibility', 'visible');
+      tip.textContent = ''; h('div', 'h', `${P.title} · gap ×${ks[i]}`, tip);
+      series.forEach(f => { const v = P.series[f][i]; if (!v) return; const row = h('div', 'r', null, tip); const kk = h('span', keyCls(f), null, row); kk.style.color = `var(${R.css[f]})`;
+        h('i', null, R.label[f], row); h('b', null, `${v[0].toFixed(1)} %`, row); });
+      tip.hidden = false; const pr = p.getBoundingClientRect(); let left = ev.clientX - pr.left + 14;
+      if (left + tip.offsetWidth > pr.width - 4) left = ev.clientX - pr.left - tip.offsetWidth - 14;
+      tip.style.left = `${Math.max(4, left)}px`; tip.style.top = `${Math.max(4, ev.clientY - pr.top - 20)}px`; };
+    hit.addEventListener('pointermove', show); hit.addEventListener('pointerdown', show);
+    hit.addEventListener('pointerleave', () => { tip.hidden = true; cross.setAttribute('visibility', 'hidden'); });
+  };
+  const all = () => { box.textContent = ''; R.panels.forEach(panel); };
+  legend(); all();
+})();
+</script>

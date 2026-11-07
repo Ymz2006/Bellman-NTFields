@@ -1,0 +1,227 @@
+{
+ "20261102T083915Z-5d3a219a": {
+  "success": 90,
+  "total": 120,
+  "collision": 30
+ },
+ "20261102T032216Z-e76476bf": {
+  "success": 87,
+  "total": 120,
+  "collision": 33
+ },
+ "20261102T033305Z-5d802f80": {
+  "success": 117,
+  "total": 120,
+  "collision": 3
+ },
+ "20261102T032238Z-09a41392": {
+  "success": 95,
+  "total": 120,
+  "collision": 25
+ },
+ "20261102T040322Z-06099883": {
+  "success": 113,
+  "total": 120,
+  "collision": 7
+ },
+ "20261102T050643Z-d64a530a": {
+  "success": 115,
+  "total": 120,
+  "collision": 5
+ },
+ "20261102T051954Z-3166a3d5": {
+  "success": 119,
+  "total": 120,
+  "collision": 1
+ },
+ "20261102T081615Z-0adefad6": {
+  "success": 109,
+  "total": 120,
+  "collision": 11
+ },
+ "20261102T084255Z-3b6d92ec": {
+  "success": 109,
+  "total": 120,
+  "collision": 11
+ },
+ "20261102T080221Z-7d781455": {
+  "success": 47,
+  "total": 120,
+  "collision": 73
+ },
+ "20261101T203437Z-ebc95225": {
+  "success": 24,
+  "total": 120,
+  "collision": 96
+ },
+ "20261101T204630Z-58badec5": {
+  "success": 39,
+  "total": 120,
+  "collision": 81
+ },
+ "20261101T205900Z-c57aa0f1": {
+  "success": 45,
+  "total": 120,
+  "collision": 75
+ },
+ "20261102T014741Z-dbca8e69": {
+  "success": 93,
+  "total": 120,
+  "collision": 27
+ },
+ "20261102T023943Z-95b7bd4e": {
+  "success": 112,
+  "total": 120,
+  "collision": 8
+ },
+ "20261102T025340Z-27b1eeb6": {
+  "success": 85,
+  "total": 120,
+  "collision": 35
+ },
+ "20261102T081356Z-c2f195aa": {
+  "success": 58,
+  "total": 120,
+  "collision": 59
+ },
+ "20261101T193703Z-dd44f02b": {
+  "success": 4,
+  "total": 120,
+  "collision": 116
+ },
+ "20261101T194908Z-fa2678e3": {
+  "success": 3,
+  "total": 120,
+  "collision": 117
+ },
+ "20261101T200614Z-92e8b351": {
+  "success": 3,
+  "total": 120,
+  "collision": 117
+ },
+ "20261102T032133Z-9d61cff5": {
+  "success": 32,
+  "total": 120,
+  "collision": 88
+ },
+ "20261102T050535Z-7879ad1e": {
+  "success": 12,
+  "total": 120,
+  "collision": 108
+ },
+ "20261102T051820Z-834b2691": {
+  "success": 48,
+  "total": 120,
+  "collision": 72
+ },
+ "20261102T090055Z-d3a92016": {
+  "success": 105,
+  "total": 120,
+  "collision": 15
+ },
+ "20261102T091915Z-0b9c310f": {
+  "success": 117,
+  "total": 120,
+  "collision": 3
+ },
+ "20261102T085716Z-07ad2d13": {
+  "success": 69,
+  "total": 120,
+  "collision": 51
+ },
+ "20261102T093556Z-28941586": {
+  "success": 53,
+  "total": 120,
+  "collision": 67
+ },
+ "20261102T093735Z-bd83ffe6": {
+  "success": 1,
+  "total": 120,
+  "collision": 119
+ },
+ "20261102T084156Z-6809fed7": {
+  "success": 21,
+  "total": 120,
+  "collision": 99
+ },
+ "20261102T093836Z-c443b3c4": {
+  "success": 48,
+  "total": 120,
+  "collision": 72
+ },
+ "20261102T105335Z-b9413eac": {
+  "success": 109,
+  "total": 120,
+  "collision": 11
+ },
+ "20261102T105715Z-8dd3a22c": {
+  "success": 96,
+  "total": 120,
+  "collision": 24
+ },
+ "20261102T104535Z-57774684": {
+  "success": 40,
+  "total": 120,
+  "collision": 80
+ },
+ "20261102T104935Z-e1bd90d4": {
+  "success": 35,
+  "total": 120,
+  "collision": 85
+ },
+ "20261102T103336Z-d6a17863": {
+  "success": 100,
+  "total": 120,
+  "collision": 20
+ },
+ "20261102T120536Z-9e2dcf27": {
+  "success": 103,
+  "total": 120,
+  "collision": 17
+ },
+ "20261102T122656Z-2f8dbd8b": {
+  "success": 96,
+  "total": 120,
+  "collision": 24
+ },
+ "20261102T101756Z-b7373abb": {
+  "success": 26,
+  "total": 120,
+  "collision": 94
+ },
+ "20261102T111536Z-214c8f06": {
+  "success": 21,
+  "total": 120,
+  "collision": 99
+ },
+ "20261102T110956Z-1a18d0c6": {
+  "success": 51,
+  "total": 120,
+  "collision": 69
+ },
+ "20261102T115656Z-35fbb1f6": {
+  "success": 62,
+  "total": 120,
+  "collision": 58
+ },
+ "20261102T130036Z-37851b08": {
+  "success": 120,
+  "total": 120,
+  "collision": 0
+ },
+ "20261102T130956Z-270d27c2": {
+  "success": 113,
+  "total": 120,
+  "collision": 7
+ },
+ "20261102T124856Z-11d64245": {
+  "success": 0,
+  "total": 120,
+  "collision": 120
+ },
+ "20261102T125156Z-01aa0526": {
+  "success": 6,
+  "total": 120,
+  "collision": 114
+ }
+}

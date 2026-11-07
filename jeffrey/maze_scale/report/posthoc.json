@@ -296,6 +296,207 @@
    ]
   }
  },
+ "ntrl|10|1": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 2,
+    "collisions": 2,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": 1.305051326751709,
+    "contact_over_path_median": 0.3574169234143493,
+    "contact_within_1_cell": 1
+   },
+   "4-8": {
+    "failures": 3,
+    "collisions": 3,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": 2.8485193252563477,
+    "contact_over_path_median": 0.41531052498132803,
+    "contact_within_1_cell": 0
+   },
+   "8-16": {
+    "failures": 5,
+    "collisions": 5,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": 2.0456552505493164,
+    "contact_over_path_median": 0.19864366390587604,
+    "contact_within_1_cell": 2
+   },
+   "16-32": {
+    "failures": 19,
+    "collisions": 17,
+    "stalls_no_contact": 2,
+    "stalled": 2,
+    "contact_cells_median": 5.080479621887207,
+    "contact_over_path_median": 0.26597516407234983,
+    "contact_within_1_cell": 2
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    153,
+    156
+   ],
+   "2-4": [
+    155,
+    168
+   ],
+   "4-8": [
+    195,
+    240
+   ],
+   "8-16": [
+    20,
+    36
+   ]
+  }
+ },
+ "ntrl|10|2": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 3,
+    "collisions": 3,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": 1.6665579080581665,
+    "contact_over_path_median": 0.47191303927489836,
+    "contact_within_1_cell": 1
+   },
+   "4-8": {
+    "failures": 2,
+    "collisions": 2,
+    "stalls_no_contact": 0,
+    "stalled": 1,
+    "contact_cells_median": 2.3878680169582367,
+    "contact_over_path_median": 0.432824362844477,
+    "contact_within_1_cell": 1
+   },
+   "8-16": {
+    "failures": 5,
+    "collisions": 5,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": 2.9855504035949707,
+    "contact_over_path_median": 0.3216145921619801,
+    "contact_within_1_cell": 2
+   },
+   "16-32": {
+    "failures": 3,
+    "collisions": 3,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": 15.956576347351074,
+    "contact_over_path_median": 0.9159352877159868,
+    "contact_within_1_cell": 0
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    153,
+    156
+   ],
+   "2-4": [
+    158,
+    168
+   ],
+   "4-8": [
+    216,
+    240
+   ],
+   "8-16": [
+    33,
+    36
+   ]
+  }
+ },
+ "ntrl|10|87358": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 1,
+    "collisions": 1,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": 0.6796001195907593,
+    "contact_over_path_median": 0.4173455270762557,
+    "contact_within_1_cell": 1
+   },
+   "2-4": {
+    "failures": 5,
+    "collisions": 4,
+    "stalls_no_contact": 1,
+    "stalled": 1,
+    "contact_cells_median": 1.2636253833770752,
+    "contact_over_path_median": 0.39506857985211963,
+    "contact_within_1_cell": 1
+   },
+   "4-8": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "8-16": {
+    "failures": 6,
+    "collisions": 6,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": 7.4624104499816895,
+    "contact_over_path_median": 0.5929763933900443,
+    "contact_within_1_cell": 1
+   },
+   "16-32": {
+    "failures": 19,
+    "collisions": 17,
+    "stalls_no_contact": 2,
+    "stalled": 2,
+    "contact_cells_median": 10.099159240722656,
+    "contact_over_path_median": 0.5780556670754712,
+    "contact_within_1_cell": 1
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    145,
+    156
+   ],
+   "2-4": [
+    144,
+    168
+   ],
+   "4-8": [
+    182,
+    240
+   ],
+   "8-16": [
+    29,
+    36
+   ]
+  }
+ },
  "ntrl|13|1": {
   "by_bin": {
    "0.5-2": {
@@ -737,525 +938,6 @@
    ]
   }
  },
- "ntrl|40|1": {
-  "by_bin": {
-   "0.5-2": {
-    "failures": 13,
-    "collisions": 13,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.4563363790512085,
-    "contact_over_path_median": 0.33596076890019744,
-    "contact_within_1_cell": 11
-   },
-   "2-4": {
-    "failures": 38,
-    "collisions": 38,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.5691445767879486,
-    "contact_over_path_median": 0.20060350571716892,
-    "contact_within_1_cell": 26
-   },
-   "4-8": {
-    "failures": 40,
-    "collisions": 40,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.8016880750656128,
-    "contact_over_path_median": 0.11770397692056411,
-    "contact_within_1_cell": 24
-   },
-   "8-16": {
-    "failures": 40,
-    "collisions": 40,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.8115056157112122,
-    "contact_over_path_median": 0.05985062892584933,
-    "contact_within_1_cell": 22
-   },
-   "16-32": {
-    "failures": 40,
-    "collisions": 40,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.7125231921672821,
-    "contact_over_path_median": 0.033123469119339784,
-    "contact_within_1_cell": 24
-   },
-   "32-64": {
-    "failures": 40,
-    "collisions": 40,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.5043186247348785,
-    "contact_over_path_median": 0.013523173113231075,
-    "contact_within_1_cell": 31
-   },
-   "64-128": {
-    "failures": 40,
-    "collisions": 40,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.33878786861896515,
-    "contact_over_path_median": 0.005154962263588692,
-    "contact_within_1_cell": 34
-   }
-  },
-  "by_euclid": {
-   "0-2": [
-    80,
-    138
-   ],
-   "2-4": [
-    6,
-    135
-   ],
-   "4-8": [
-    0,
-    117
-   ],
-   "8-16": [
-    0,
-    153
-   ],
-   "16-32": [
-    0,
-    147
-   ],
-   "32-64": [
-    0,
-    150
-   ]
-  }
- },
- "ntrl|40|2": {
-  "by_bin": {
-   "0.5-2": {
-    "failures": 13,
-    "collisions": 13,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.4161491394042969,
-    "contact_over_path_median": 0.3455050401767479,
-    "contact_within_1_cell": 12
-   },
-   "2-4": {
-    "failures": 35,
-    "collisions": 35,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.7643535733222961,
-    "contact_over_path_median": 0.2530288982884336,
-    "contact_within_1_cell": 21
-   },
-   "4-8": {
-    "failures": 40,
-    "collisions": 40,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.8180563747882843,
-    "contact_over_path_median": 0.12692533350948637,
-    "contact_within_1_cell": 23
-   },
-   "8-16": {
-    "failures": 40,
-    "collisions": 40,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.7141806185245514,
-    "contact_over_path_median": 0.05891896515357681,
-    "contact_within_1_cell": 25
-   },
-   "16-32": {
-    "failures": 40,
-    "collisions": 40,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.8415099382400513,
-    "contact_over_path_median": 0.03411972255525249,
-    "contact_within_1_cell": 24
-   },
-   "32-64": {
-    "failures": 40,
-    "collisions": 40,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.6452520787715912,
-    "contact_over_path_median": 0.017866344525916823,
-    "contact_within_1_cell": 24
-   },
-   "64-128": {
-    "failures": 40,
-    "collisions": 40,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.317057341337204,
-    "contact_over_path_median": 0.004968080527858283,
-    "contact_within_1_cell": 34
-   }
-  },
-  "by_euclid": {
-   "0-2": [
-    81,
-    138
-   ],
-   "2-4": [
-    12,
-    135
-   ],
-   "4-8": [
-    0,
-    117
-   ],
-   "8-16": [
-    0,
-    153
-   ],
-   "16-32": [
-    0,
-    147
-   ],
-   "32-64": [
-    0,
-    150
-   ]
-  }
- },
- "ntrl|40|87358": {
-  "by_bin": {
-   "0.5-2": {
-    "failures": 14,
-    "collisions": 14,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.4384218901395798,
-    "contact_over_path_median": 0.3521056012641488,
-    "contact_within_1_cell": 12
-   },
-   "2-4": {
-    "failures": 36,
-    "collisions": 36,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.5622864663600922,
-    "contact_over_path_median": 0.21556636511180854,
-    "contact_within_1_cell": 27
-   },
-   "4-8": {
-    "failures": 40,
-    "collisions": 40,
-    "stalls_no_contact": 0,
-    "stalled": 3,
-    "contact_cells_median": 0.6086688041687012,
-    "contact_over_path_median": 0.12991503400699506,
-    "contact_within_1_cell": 27
-   },
-   "8-16": {
-    "failures": 40,
-    "collisions": 40,
-    "stalls_no_contact": 0,
-    "stalled": 1,
-    "contact_cells_median": 0.7255806624889374,
-    "contact_over_path_median": 0.055542402958703704,
-    "contact_within_1_cell": 24
-   },
-   "16-32": {
-    "failures": 40,
-    "collisions": 40,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.8161135017871857,
-    "contact_over_path_median": 0.031839612814214394,
-    "contact_within_1_cell": 22
-   },
-   "32-64": {
-    "failures": 40,
-    "collisions": 40,
-    "stalls_no_contact": 0,
-    "stalled": 1,
-    "contact_cells_median": 0.6016362011432648,
-    "contact_over_path_median": 0.014709878201887523,
-    "contact_within_1_cell": 31
-   },
-   "64-128": {
-    "failures": 40,
-    "collisions": 40,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.4111352413892746,
-    "contact_over_path_median": 0.0060947508426608486,
-    "contact_within_1_cell": 32
-   }
-  },
-  "by_euclid": {
-   "0-2": [
-    78,
-    138
-   ],
-   "2-4": [
-    11,
-    135
-   ],
-   "4-8": [
-    0,
-    117
-   ],
-   "8-16": [
-    0,
-    153
-   ],
-   "16-32": [
-    0,
-    147
-   ],
-   "32-64": [
-    0,
-    150
-   ]
-  }
- },
- "zoom|13|87358": {
-  "by_bin": {
-   "0.5-2": {
-    "failures": 1,
-    "collisions": 1,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.9415543079376221,
-    "contact_over_path_median": 0.5463016996272674,
-    "contact_within_1_cell": 1
-   },
-   "2-4": {
-    "failures": 5,
-    "collisions": 5,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.7083816528320312,
-    "contact_over_path_median": 0.26404958057060457,
-    "contact_within_1_cell": 3
-   },
-   "4-8": {
-    "failures": 8,
-    "collisions": 8,
-    "stalls_no_contact": 0,
-    "stalled": 2,
-    "contact_cells_median": 2.001297652721405,
-    "contact_over_path_median": 0.39975994644248364,
-    "contact_within_1_cell": 3
-   },
-   "8-16": {
-    "failures": 16,
-    "collisions": 16,
-    "stalls_no_contact": 0,
-    "stalled": 3,
-    "contact_cells_median": 4.11485481262207,
-    "contact_over_path_median": 0.3534347200682748,
-    "contact_within_1_cell": 1
-   },
-   "16-32": {
-    "failures": 22,
-    "collisions": 21,
-    "stalls_no_contact": 1,
-    "stalled": 7,
-    "contact_cells_median": 5.254392623901367,
-    "contact_over_path_median": 0.31692888972641964,
-    "contact_within_1_cell": 1
-   }
-  },
-  "by_euclid": {
-   "0-2": [
-    141,
-    162
-   ],
-   "2-4": [
-    129,
-    150
-   ],
-   "4-8": [
-    121,
-    174
-   ],
-   "8-16": [
-    53,
-    114
-   ]
-  }
- },
- "zoom|22|87358": {
-  "by_bin": {
-   "0.5-2": {
-    "failures": 9,
-    "collisions": 9,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.46571245789527893,
-    "contact_over_path_median": 0.29905779109890523,
-    "contact_within_1_cell": 8
-   },
-   "2-4": {
-    "failures": 16,
-    "collisions": 16,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 1.0508955121040344,
-    "contact_over_path_median": 0.3143336497655159,
-    "contact_within_1_cell": 7
-   },
-   "4-8": {
-    "failures": 28,
-    "collisions": 27,
-    "stalls_no_contact": 1,
-    "stalled": 1,
-    "contact_cells_median": 3.3762292861938477,
-    "contact_over_path_median": 0.5020927818383939,
-    "contact_within_1_cell": 2
-   },
-   "8-16": {
-    "failures": 37,
-    "collisions": 34,
-    "stalls_no_contact": 3,
-    "stalled": 4,
-    "contact_cells_median": 2.717352867126465,
-    "contact_over_path_median": 0.1933660723644082,
-    "contact_within_1_cell": 9
-   },
-   "16-32": {
-    "failures": 40,
-    "collisions": 34,
-    "stalls_no_contact": 6,
-    "stalled": 22,
-    "contact_cells_median": 2.4759737253189087,
-    "contact_over_path_median": 0.14329815747212413,
-    "contact_within_1_cell": 9
-   },
-   "32-64": {
-    "failures": 40,
-    "collisions": 31,
-    "stalls_no_contact": 9,
-    "stalled": 31,
-    "contact_cells_median": 1.0379167795181274,
-    "contact_over_path_median": 0.02896547473770052,
-    "contact_within_1_cell": 15
-   }
-  },
-  "by_euclid": {
-   "0-2": [
-    99,
-    132
-   ],
-   "2-4": [
-    75,
-    156
-   ],
-   "4-8": [
-    35,
-    129
-   ],
-   "8-16": [
-    4,
-    192
-   ],
-   "16-32": [
-    0,
-    111
-   ]
-  }
- },
- "zoom|40|87358": {
-  "by_bin": {
-   "0.5-2": {
-    "failures": 13,
-    "collisions": 13,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.37464088201522827,
-    "contact_over_path_median": 0.27127191552342783,
-    "contact_within_1_cell": 12
-   },
-   "2-4": {
-    "failures": 32,
-    "collisions": 32,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.5345294624567032,
-    "contact_over_path_median": 0.20697114205419676,
-    "contact_within_1_cell": 21
-   },
-   "4-8": {
-    "failures": 39,
-    "collisions": 38,
-    "stalls_no_contact": 1,
-    "stalled": 2,
-    "contact_cells_median": 0.7520244717597961,
-    "contact_over_path_median": 0.16374572410528865,
-    "contact_within_1_cell": 21
-   },
-   "8-16": {
-    "failures": 40,
-    "collisions": 38,
-    "stalls_no_contact": 2,
-    "stalled": 14,
-    "contact_cells_median": 1.4078986644744873,
-    "contact_over_path_median": 0.1003494679745956,
-    "contact_within_1_cell": 17
-   },
-   "16-32": {
-    "failures": 40,
-    "collisions": 33,
-    "stalls_no_contact": 7,
-    "stalled": 32,
-    "contact_cells_median": 1.092976689338684,
-    "contact_over_path_median": 0.054149975792347475,
-    "contact_within_1_cell": 16
-   },
-   "32-64": {
-    "failures": 40,
-    "collisions": 37,
-    "stalls_no_contact": 3,
-    "stalled": 37,
-    "contact_cells_median": 0.6622862815856934,
-    "contact_over_path_median": 0.01558117786718516,
-    "contact_within_1_cell": 27
-   },
-   "64-128": {
-    "failures": 40,
-    "collisions": 38,
-    "stalls_no_contact": 2,
-    "stalled": 40,
-    "contact_cells_median": 0.570934921503067,
-    "contact_over_path_median": 0.00866970306773452,
-    "contact_within_1_cell": 28
-   }
-  },
-  "by_euclid": {
-   "0-2": [
-    81,
-    138
-   ],
-   "2-4": [
-    24,
-    135
-   ],
-   "4-8": [
-    3,
-    117
-   ],
-   "8-16": [
-    0,
-    153
-   ],
-   "16-32": [
-    0,
-    147
-   ],
-   "32-64": [
-    0,
-    150
-   ]
-  }
- },
  "segdp segment DP|4|87358": {
   "by_bin": {
    "0.5-2": {
@@ -1352,6 +1034,73 @@
    "4-8": [
     135,
     144
+   ]
+  }
+ },
+ "segdp segment DP|10|87358": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 2,
+    "collisions": 2,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": 0.431269608438015,
+    "contact_over_path_median": 0.2815704567611974,
+    "contact_within_1_cell": 2
+   },
+   "2-4": {
+    "failures": 6,
+    "collisions": 6,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": 1.1374135613441467,
+    "contact_over_path_median": 0.37321494621411655,
+    "contact_within_1_cell": 2
+   },
+   "4-8": {
+    "failures": 5,
+    "collisions": 5,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": 2.7489593029022217,
+    "contact_over_path_median": 0.4338156989755452,
+    "contact_within_1_cell": 2
+   },
+   "8-16": {
+    "failures": 14,
+    "collisions": 12,
+    "stalls_no_contact": 2,
+    "stalled": 2,
+    "contact_cells_median": 2.4345343112945557,
+    "contact_over_path_median": 0.17806083768828773,
+    "contact_within_1_cell": 3
+   },
+   "16-32": {
+    "failures": 33,
+    "collisions": 27,
+    "stalls_no_contact": 6,
+    "stalled": 10,
+    "contact_cells_median": 1.1891075372695923,
+    "contact_over_path_median": 0.06296110549075828,
+    "contact_within_1_cell": 13
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    134,
+    156
+   ],
+   "2-4": [
+    129,
+    168
+   ],
+   "4-8": [
+    138,
+    240
+   ],
+   "8-16": [
+    20,
+    36
    ]
   }
  },
@@ -1632,179 +1381,6 @@
    ],
    "16-32": [
     3,
-    111
-   ]
-  }
- },
- "segdp segment DP|40|87358": {
-  "by_bin": {
-   "0.5-2": {
-    "failures": 16,
-    "collisions": 16,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.5169613659381866,
-    "contact_over_path_median": 0.39911788189107955,
-    "contact_within_1_cell": 13
-   },
-   "2-4": {
-    "failures": 36,
-    "collisions": 36,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.5077895373106003,
-    "contact_over_path_median": 0.2045810669253576,
-    "contact_within_1_cell": 27
-   },
-   "4-8": {
-    "failures": 40,
-    "collisions": 40,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.6392548978328705,
-    "contact_over_path_median": 0.099868055773306,
-    "contact_within_1_cell": 28
-   },
-   "8-16": {
-    "failures": 40,
-    "collisions": 40,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.6345374882221222,
-    "contact_over_path_median": 0.05071492086498542,
-    "contact_within_1_cell": 29
-   },
-   "16-32": {
-    "failures": 40,
-    "collisions": 40,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.5843547880649567,
-    "contact_over_path_median": 0.02648570939864506,
-    "contact_within_1_cell": 28
-   },
-   "32-64": {
-    "failures": 40,
-    "collisions": 40,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.6047182977199554,
-    "contact_over_path_median": 0.014247077372916844,
-    "contact_within_1_cell": 29
-   },
-   "64-128": {
-    "failures": 40,
-    "collisions": 40,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.4288519024848938,
-    "contact_over_path_median": 0.006549353536162426,
-    "contact_within_1_cell": 33
-   }
-  },
-  "by_euclid": {
-   "0-2": [
-    74,
-    138
-   ],
-   "2-4": [
-    11,
-    135
-   ],
-   "4-8": [
-    0,
-    117
-   ],
-   "8-16": [
-    0,
-    153
-   ],
-   "16-32": [
-    0,
-    147
-   ],
-   "32-64": [
-    0,
-    150
-   ]
-  }
- },
- "segdp segment DP, zoomed base|22|87358": {
-  "by_bin": {
-   "0.5-2": {
-    "failures": 9,
-    "collisions": 9,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 0.5024248957633972,
-    "contact_over_path_median": 0.29751453145666584,
-    "contact_within_1_cell": 8
-   },
-   "2-4": {
-    "failures": 22,
-    "collisions": 22,
-    "stalls_no_contact": 0,
-    "stalled": 0,
-    "contact_cells_median": 1.078585922718048,
-    "contact_over_path_median": 0.3142355977841188,
-    "contact_within_1_cell": 10
-   },
-   "4-8": {
-    "failures": 34,
-    "collisions": 32,
-    "stalls_no_contact": 2,
-    "stalled": 3,
-    "contact_cells_median": 1.4088000059127808,
-    "contact_over_path_median": 0.22887433207321595,
-    "contact_within_1_cell": 14
-   },
-   "8-16": {
-    "failures": 38,
-    "collisions": 37,
-    "stalls_no_contact": 1,
-    "stalled": 7,
-    "contact_cells_median": 2.284539222717285,
-    "contact_over_path_median": 0.15149749830080989,
-    "contact_within_1_cell": 11
-   },
-   "16-32": {
-    "failures": 40,
-    "collisions": 38,
-    "stalls_no_contact": 2,
-    "stalled": 13,
-    "contact_cells_median": 1.2580720782279968,
-    "contact_over_path_median": 0.0560326901011169,
-    "contact_within_1_cell": 18
-   },
-   "32-64": {
-    "failures": 40,
-    "collisions": 40,
-    "stalls_no_contact": 0,
-    "stalled": 14,
-    "contact_cells_median": 1.2890166640281677,
-    "contact_over_path_median": 0.03945558515242463,
-    "contact_within_1_cell": 18
-   }
-  },
-  "by_euclid": {
-   "0-2": [
-    98,
-    132
-   ],
-   "2-4": [
-    53,
-    156
-   ],
-   "4-8": [
-    13,
-    129
-   ],
-   "8-16": [
-    5,
-    192
-   ],
-   "16-32": [
-    0,
     111
    ]
   }
@@ -2278,6 +1854,207 @@
    ]
   }
  },
+ "segdp segment DP + wall term (weight 0.3)|10|1": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 5,
+    "collisions": 1,
+    "stalls_no_contact": 4,
+    "stalled": 4,
+    "contact_cells_median": 0.1712104082107544,
+    "contact_over_path_median": 0.024962261581243397,
+    "contact_within_1_cell": 1
+   },
+   "8-16": {
+    "failures": 10,
+    "collisions": 0,
+    "stalls_no_contact": 10,
+    "stalled": 10,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "16-32": {
+    "failures": 26,
+    "collisions": 4,
+    "stalls_no_contact": 22,
+    "stalled": 25,
+    "contact_cells_median": 1.6754959225654602,
+    "contact_over_path_median": 0.08082730803360402,
+    "contact_within_1_cell": 1
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    153,
+    156
+   ],
+   "2-4": [
+    141,
+    168
+   ],
+   "4-8": [
+    163,
+    240
+   ],
+   "8-16": [
+    19,
+    36
+   ]
+  }
+ },
+ "segdp segment DP + wall term (weight 0.3)|10|2": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 5,
+    "collisions": 0,
+    "stalls_no_contact": 5,
+    "stalled": 5,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "8-16": {
+    "failures": 12,
+    "collisions": 8,
+    "stalls_no_contact": 4,
+    "stalled": 12,
+    "contact_cells_median": 0.3724486827850342,
+    "contact_over_path_median": 0.03960982293140757,
+    "contact_within_1_cell": 5
+   },
+   "16-32": {
+    "failures": 30,
+    "collisions": 17,
+    "stalls_no_contact": 13,
+    "stalled": 29,
+    "contact_cells_median": 0.43242064118385315,
+    "contact_over_path_median": 0.023730665440704672,
+    "contact_within_1_cell": 12
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    153,
+    156
+   ],
+   "2-4": [
+    137,
+    168
+   ],
+   "4-8": [
+    153,
+    240
+   ],
+   "8-16": [
+    24,
+    36
+   ]
+  }
+ },
+ "segdp segment DP + wall term (weight 0.3)|10|87358": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 2,
+    "collisions": 1,
+    "stalls_no_contact": 1,
+    "stalled": 1,
+    "contact_cells_median": 0.19348479807376862,
+    "contact_over_path_median": 0.028209839530118536,
+    "contact_within_1_cell": 1
+   },
+   "8-16": {
+    "failures": 5,
+    "collisions": 1,
+    "stalls_no_contact": 4,
+    "stalled": 5,
+    "contact_cells_median": 5.6035637855529785,
+    "contact_over_path_median": 0.43309837509309485,
+    "contact_within_1_cell": 0
+   },
+   "16-32": {
+    "failures": 23,
+    "collisions": 5,
+    "stalls_no_contact": 18,
+    "stalled": 23,
+    "contact_cells_median": 0.41641339659690857,
+    "contact_over_path_median": 0.02144258444911691,
+    "contact_within_1_cell": 4
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    153,
+    156
+   ],
+   "2-4": [
+    144,
+    168
+   ],
+   "4-8": [
+    177,
+    240
+   ],
+   "8-16": [
+    30,
+    36
+   ]
+  }
+ },
  "segdp segment DP + wall term (weight 0.3)|13|1": {
   "by_bin": {
    "0.5-2": {
@@ -2559,96 +2336,1516 @@
    ]
   }
  },
- "segdp segment DP + wall term (weight 0.3)|40|87358": {
+ "segdp segment DP + wall term (weight 0.3), 5 levels (ratio 2.000)|13|1": {
   "by_bin": {
    "0.5-2": {
-    "failures": 10,
-    "collisions": 10,
+    "failures": 0,
+    "collisions": 0,
     "stalls_no_contact": 0,
     "stalled": 0,
-    "contact_cells_median": 0.46992816030979156,
-    "contact_over_path_median": 0.3810168578894005,
-    "contact_within_1_cell": 9
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
    },
    "2-4": {
-    "failures": 20,
-    "collisions": 11,
-    "stalls_no_contact": 9,
-    "stalled": 10,
-    "contact_cells_median": 1.6818695068359375,
-    "contact_over_path_median": 0.5147683339925189,
-    "contact_within_1_cell": 1
+    "failures": 2,
+    "collisions": 1,
+    "stalls_no_contact": 1,
+    "stalled": 1,
+    "contact_cells_median": 1.6145366430282593,
+    "contact_over_path_median": 0.6651375808873232,
+    "contact_within_1_cell": 0
    },
    "4-8": {
-    "failures": 37,
-    "collisions": 16,
-    "stalls_no_contact": 21,
-    "stalled": 26,
-    "contact_cells_median": 3.3046544790267944,
-    "contact_over_path_median": 0.6247716330135675,
-    "contact_within_1_cell": 3
+    "failures": 9,
+    "collisions": 4,
+    "stalls_no_contact": 5,
+    "stalled": 6,
+    "contact_cells_median": 2.160715937614441,
+    "contact_over_path_median": 0.3447550352229084,
+    "contact_within_1_cell": 1
    },
    "8-16": {
-    "failures": 40,
-    "collisions": 11,
+    "failures": 32,
+    "collisions": 3,
     "stalls_no_contact": 29,
-    "stalled": 38,
-    "contact_cells_median": 2.4966821670532227,
-    "contact_over_path_median": 0.18307391858735952,
-    "contact_within_1_cell": 5
+    "stalled": 30,
+    "contact_cells_median": 1.8148906230926514,
+    "contact_over_path_median": 0.1730552244233609,
+    "contact_within_1_cell": 1
    },
    "16-32": {
     "failures": 40,
-    "collisions": 10,
-    "stalls_no_contact": 30,
-    "stalled": 40,
-    "contact_cells_median": 2.5279946327209473,
-    "contact_over_path_median": 0.1145188180811986,
-    "contact_within_1_cell": 1
-   },
-   "32-64": {
-    "failures": 40,
-    "collisions": 4,
-    "stalls_no_contact": 36,
-    "stalled": 40,
-    "contact_cells_median": 1.4489505290985107,
-    "contact_over_path_median": 0.04015860887539263,
-    "contact_within_1_cell": 1
-   },
-   "64-128": {
-    "failures": 40,
-    "collisions": 4,
-    "stalls_no_contact": 36,
-    "stalled": 40,
-    "contact_cells_median": 1.172443151473999,
-    "contact_over_path_median": 0.018169316520141268,
+    "collisions": 3,
+    "stalls_no_contact": 37,
+    "stalled": 39,
+    "contact_cells_median": 1.8717634677886963,
+    "contact_over_path_median": 0.1112249181150602,
     "contact_within_1_cell": 1
    }
   },
   "by_euclid": {
    "0-2": [
-    95,
-    138
+    154,
+    162
    ],
    "2-4": [
-    51,
-    135
+    121,
+    150
    ],
    "4-8": [
+    70,
+    174
+   ],
+   "8-16": [
     9,
-    117
+    114
+   ]
+  }
+ },
+ "segdp segment DP + wall term (weight 0.3), 5 levels (ratio 2.000)|13|2": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 2,
+    "collisions": 0,
+    "stalls_no_contact": 2,
+    "stalled": 2,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 11,
+    "collisions": 3,
+    "stalls_no_contact": 8,
+    "stalled": 8,
+    "contact_cells_median": 2.3912408351898193,
+    "contact_over_path_median": 0.3584563802649357,
+    "contact_within_1_cell": 0
+   },
+   "8-16": {
+    "failures": 35,
+    "collisions": 1,
+    "stalls_no_contact": 34,
+    "stalled": 35,
+    "contact_cells_median": 1.1586450338363647,
+    "contact_over_path_median": 0.11886890842369133,
+    "contact_within_1_cell": 0
+   },
+   "16-32": {
+    "failures": 40,
+    "collisions": 7,
+    "stalls_no_contact": 33,
+    "stalled": 39,
+    "contact_cells_median": 2.1995608806610107,
+    "contact_over_path_median": 0.11028087640334683,
+    "contact_within_1_cell": 1
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    148,
+    162
+   ],
+   "2-4": [
+    124,
+    150
+   ],
+   "4-8": [
+    60,
+    174
+   ],
+   "8-16": [
+    6,
+    114
+   ]
+  }
+ },
+ "segdp segment DP + wall term (weight 0.3), 5 levels (ratio 2.000)|13|87358": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 2,
+    "collisions": 0,
+    "stalls_no_contact": 2,
+    "stalled": 2,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 9,
+    "collisions": 1,
+    "stalls_no_contact": 8,
+    "stalled": 8,
+    "contact_cells_median": 4.61004114151001,
+    "contact_over_path_median": 0.926553179050873,
+    "contact_within_1_cell": 0
+   },
+   "8-16": {
+    "failures": 33,
+    "collisions": 3,
+    "stalls_no_contact": 30,
+    "stalled": 32,
+    "contact_cells_median": 4.213128089904785,
+    "contact_over_path_median": 0.43223759000455253,
+    "contact_within_1_cell": 1
+   },
+   "16-32": {
+    "failures": 39,
+    "collisions": 4,
+    "stalls_no_contact": 35,
+    "stalled": 38,
+    "contact_cells_median": 4.354629218578339,
+    "contact_over_path_median": 0.1903368938475782,
+    "contact_within_1_cell": 1
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    152,
+    162
+   ],
+   "2-4": [
+    116,
+    150
+   ],
+   "4-8": [
+    70,
+    174
+   ],
+   "8-16": [
+    8,
+    114
+   ]
+  }
+ },
+ "segdp segment DP + wall term (weight 0.3), 7 levels (ratio 1.641)|13|1": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 1,
+    "collisions": 1,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": 1.8778403997421265,
+    "contact_over_path_median": 0.7736103272541832,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 17,
+    "collisions": 6,
+    "stalls_no_contact": 11,
+    "stalled": 13,
+    "contact_cells_median": 0.631781667470932,
+    "contact_over_path_median": 0.10014355938498529,
+    "contact_within_1_cell": 5
+   },
+   "8-16": {
+    "failures": 39,
+    "collisions": 7,
+    "stalls_no_contact": 32,
+    "stalled": 39,
+    "contact_cells_median": 0.7485380172729492,
+    "contact_over_path_median": 0.06552907469222001,
+    "contact_within_1_cell": 4
+   },
+   "16-32": {
+    "failures": 40,
+    "collisions": 5,
+    "stalls_no_contact": 35,
+    "stalled": 38,
+    "contact_cells_median": 1.3267314434051514,
+    "contact_over_path_median": 0.06153116349812308,
+    "contact_within_1_cell": 2
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    159,
+    162
+   ],
+   "2-4": [
+    126,
+    150
+   ],
+   "4-8": [
+    24,
+    174
    ],
    "8-16": [
     0,
-    153
+    114
+   ]
+  }
+ },
+ "segdp segment DP + wall term (weight 0.3), 7 levels (ratio 1.641)|13|2": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 2,
+    "collisions": 0,
+    "stalls_no_contact": 2,
+    "stalled": 2,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 5,
+    "collisions": 1,
+    "stalls_no_contact": 4,
+    "stalled": 4,
+    "contact_cells_median": 2.5305874347686768,
+    "contact_over_path_median": 0.4036739930810608,
+    "contact_within_1_cell": 0
+   },
+   "8-16": {
+    "failures": 29,
+    "collisions": 3,
+    "stalls_no_contact": 26,
+    "stalled": 27,
+    "contact_cells_median": 3.157289981842041,
+    "contact_over_path_median": 0.3056276083959053,
+    "contact_within_1_cell": 1
+   },
+   "16-32": {
+    "failures": 40,
+    "collisions": 4,
+    "stalls_no_contact": 36,
+    "stalled": 40,
+    "contact_cells_median": 5.783135771751404,
+    "contact_over_path_median": 0.3452512899750869,
+    "contact_within_1_cell": 0
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    152,
+    162
+   ],
+   "2-4": [
+    123,
+    150
+   ],
+   "4-8": [
+    81,
+    174
+   ],
+   "8-16": [
+    10,
+    114
+   ]
+  }
+ },
+ "segdp segment DP + wall term (weight 0.3), 7 levels (ratio 1.641)|13|87358": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 2,
+    "collisions": 1,
+    "stalls_no_contact": 1,
+    "stalled": 1,
+    "contact_cells_median": 1.6614470481872559,
+    "contact_over_path_median": 0.6844631710129064,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 5,
+    "collisions": 3,
+    "stalls_no_contact": 2,
+    "stalled": 2,
+    "contact_cells_median": 3.2024431228637695,
+    "contact_over_path_median": 0.5108470014748061,
+    "contact_within_1_cell": 0
+   },
+   "8-16": {
+    "failures": 26,
+    "collisions": 4,
+    "stalls_no_contact": 22,
+    "stalled": 25,
+    "contact_cells_median": 1.4691509306430817,
+    "contact_over_path_median": 0.11423028114098784,
+    "contact_within_1_cell": 2
+   },
+   "16-32": {
+    "failures": 35,
+    "collisions": 5,
+    "stalls_no_contact": 30,
+    "stalled": 34,
+    "contact_cells_median": 3.137082099914551,
+    "contact_over_path_median": 0.15995185109725718,
+    "contact_within_1_cell": 1
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    150,
+    162
+   ],
+   "2-4": [
+    132,
+    150
+   ],
+   "4-8": [
+    92,
+    174
+   ],
+   "8-16": [
+    25,
+    114
+   ]
+  }
+ },
+ "segdp segment DP + wall term (weight 0.3), 9 levels (ratio 1.470)|13|1": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 1,
+    "collisions": 1,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": 1.8138068914413452,
+    "contact_over_path_median": 0.7472305649918506,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 5,
+    "collisions": 3,
+    "stalls_no_contact": 2,
+    "stalled": 2,
+    "contact_cells_median": 5.113638877868652,
+    "contact_over_path_median": 0.9690897016335758,
+    "contact_within_1_cell": 0
+   },
+   "8-16": {
+    "failures": 23,
+    "collisions": 2,
+    "stalls_no_contact": 21,
+    "stalled": 23,
+    "contact_cells_median": 0.38161589950323105,
+    "contact_over_path_median": 0.03408113932264767,
+    "contact_within_1_cell": 2
+   },
+   "16-32": {
+    "failures": 32,
+    "collisions": 4,
+    "stalls_no_contact": 28,
+    "stalled": 30,
+    "contact_cells_median": 2.892618238925934,
+    "contact_over_path_median": 0.15121879467533003,
+    "contact_within_1_cell": 1
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    153,
+    162
+   ],
+   "2-4": [
+    127,
+    150
+   ],
+   "4-8": [
+    103,
+    174
+   ],
+   "8-16": [
+    35,
+    114
+   ]
+  }
+ },
+ "segdp segment DP + wall term (weight 0.3), 9 levels (ratio 1.470)|13|2": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 2,
+    "collisions": 0,
+    "stalls_no_contact": 2,
+    "stalled": 2,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 6,
+    "collisions": 2,
+    "stalls_no_contact": 4,
+    "stalled": 4,
+    "contact_cells_median": 2.404099404811859,
+    "contact_over_path_median": 0.48063757738700724,
+    "contact_within_1_cell": 1
+   },
+   "8-16": {
+    "failures": 25,
+    "collisions": 0,
+    "stalls_no_contact": 25,
+    "stalled": 25,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "16-32": {
+    "failures": 35,
+    "collisions": 4,
+    "stalls_no_contact": 31,
+    "stalled": 32,
+    "contact_cells_median": 1.956625759601593,
+    "contact_over_path_median": 0.11290221713349746,
+    "contact_within_1_cell": 2
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    153,
+    162
+   ],
+   "2-4": [
+    126,
+    150
+   ],
+   "4-8": [
+    97,
+    174
+   ],
+   "8-16": [
+    23,
+    114
+   ]
+  }
+ },
+ "segdp segment DP + wall term (weight 0.3), 9 levels (ratio 1.470)|13|87358": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 1,
+    "collisions": 1,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": 3.001049518585205,
+    "contact_over_path_median": 0.843005565693724,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 8,
+    "collisions": 2,
+    "stalls_no_contact": 6,
+    "stalled": 6,
+    "contact_cells_median": 3.55578875541687,
+    "contact_over_path_median": 0.660653405030022,
+    "contact_within_1_cell": 0
+   },
+   "8-16": {
+    "failures": 20,
+    "collisions": 2,
+    "stalls_no_contact": 18,
+    "stalled": 20,
+    "contact_cells_median": 3.9398269057273865,
+    "contact_over_path_median": 0.3011050054815374,
+    "contact_within_1_cell": 0
+   },
+   "16-32": {
+    "failures": 30,
+    "collisions": 2,
+    "stalls_no_contact": 28,
+    "stalled": 29,
+    "contact_cells_median": 9.47954785823822,
+    "contact_over_path_median": 0.4210865845628725,
+    "contact_within_1_cell": 0
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    151,
+    162
+   ],
+   "2-4": [
+    125,
+    150
+   ],
+   "4-8": [
+    98,
+    174
+   ],
+   "8-16": [
+    46,
+    114
+   ]
+  }
+ },
+ "segdp segment DP + wall term (weight 0.3), 32 split candidates|13|1": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 1,
+    "collisions": 0,
+    "stalls_no_contact": 1,
+    "stalled": 1,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 5,
+    "collisions": 1,
+    "stalls_no_contact": 4,
+    "stalled": 5,
+    "contact_cells_median": 0.4147789776325226,
+    "contact_over_path_median": 0.06616467143025462,
+    "contact_within_1_cell": 1
+   },
+   "8-16": {
+    "failures": 25,
+    "collisions": 3,
+    "stalls_no_contact": 22,
+    "stalled": 22,
+    "contact_cells_median": 8.909893989562988,
+    "contact_over_path_median": 0.7734520219633296,
+    "contact_within_1_cell": 0
+   },
+   "16-32": {
+    "failures": 36,
+    "collisions": 2,
+    "stalls_no_contact": 34,
+    "stalled": 34,
+    "contact_cells_median": 1.360047161579132,
+    "contact_over_path_median": 0.07590694028680793,
+    "contact_within_1_cell": 1
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    155,
+    162
+   ],
+   "2-4": [
+    122,
+    150
+   ],
+   "4-8": [
+    99,
+    174
+   ],
+   "8-16": [
+    24,
+    114
+   ]
+  }
+ },
+ "segdp segment DP + wall term (weight 0.3), 32 split candidates|13|2": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 2,
+    "collisions": 1,
+    "stalls_no_contact": 1,
+    "stalled": 1,
+    "contact_cells_median": 2.947521924972534,
+    "contact_over_path_median": 0.8279694728021457,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 8,
+    "collisions": 2,
+    "stalls_no_contact": 6,
+    "stalled": 6,
+    "contact_cells_median": 3.9075071811676025,
+    "contact_over_path_median": 0.8301942441786325,
+    "contact_within_1_cell": 0
+   },
+   "8-16": {
+    "failures": 23,
+    "collisions": 0,
+    "stalls_no_contact": 23,
+    "stalled": 23,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "16-32": {
+    "failures": 31,
+    "collisions": 3,
+    "stalls_no_contact": 28,
+    "stalled": 30,
+    "contact_cells_median": 5.399069309234619,
+    "contact_over_path_median": 0.3208263502047081,
+    "contact_within_1_cell": 1
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    149,
+    162
+   ],
+   "2-4": [
+    120,
+    150
+   ],
+   "4-8": [
+    92,
+    174
+   ],
+   "8-16": [
+    36,
+    114
+   ]
+  }
+ },
+ "segdp segment DP + wall term (weight 0.3), 32 split candidates|13|87358": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 4,
+    "collisions": 1,
+    "stalls_no_contact": 3,
+    "stalled": 3,
+    "contact_cells_median": 4.717037200927734,
+    "contact_over_path_median": 0.9480578762881163,
+    "contact_within_1_cell": 0
+   },
+   "8-16": {
+    "failures": 19,
+    "collisions": 0,
+    "stalls_no_contact": 19,
+    "stalled": 19,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "16-32": {
+    "failures": 29,
+    "collisions": 2,
+    "stalls_no_contact": 27,
+    "stalled": 27,
+    "contact_cells_median": 15.891281127929688,
+    "contact_over_path_median": 0.7856380277825219,
+    "contact_within_1_cell": 0
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    154,
+    162
+   ],
+   "2-4": [
+    131,
+    150
+   ],
+   "4-8": [
+    104,
+    174
+   ],
+   "8-16": [
+    51,
+    114
+   ]
+  }
+ },
+ "segdp segment DP + wall term (weight 0.3), 512 split candidates|13|1": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 1,
+    "collisions": 1,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": 1.8166234493255615,
+    "contact_over_path_median": 0.7483908969704566,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 6,
+    "collisions": 2,
+    "stalls_no_contact": 4,
+    "stalled": 4,
+    "contact_cells_median": 5.069457769393921,
+    "contact_over_path_median": 0.9368800525265293,
+    "contact_within_1_cell": 0
+   },
+   "8-16": {
+    "failures": 17,
+    "collisions": 0,
+    "stalls_no_contact": 17,
+    "stalled": 17,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "16-32": {
+    "failures": 20,
+    "collisions": 0,
+    "stalls_no_contact": 20,
+    "stalled": 20,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    153,
+    162
+   ],
+   "2-4": [
+    129,
+    150
+   ],
+   "4-8": [
+    112,
+    174
+   ],
+   "8-16": [
+    67,
+    114
+   ]
+  }
+ },
+ "segdp segment DP + wall term (weight 0.3), 512 split candidates|13|2": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 2,
+    "collisions": 0,
+    "stalls_no_contact": 2,
+    "stalled": 2,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 3,
+    "collisions": 0,
+    "stalls_no_contact": 3,
+    "stalled": 3,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "8-16": {
+    "failures": 18,
+    "collisions": 1,
+    "stalls_no_contact": 17,
+    "stalled": 18,
+    "contact_cells_median": 4.329984188079834,
+    "contact_over_path_median": 0.3237551877427727,
+    "contact_within_1_cell": 0
+   },
+   "16-32": {
+    "failures": 30,
+    "collisions": 3,
+    "stalls_no_contact": 27,
+    "stalled": 28,
+    "contact_cells_median": 1.967024803161621,
+    "contact_over_path_median": 0.11864491893783612,
+    "contact_within_1_cell": 1
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    150,
+    162
+   ],
+   "2-4": [
+    133,
+    150
+   ],
+   "4-8": [
+    113,
+    174
+   ],
+   "8-16": [
+    46,
+    114
+   ]
+  }
+ },
+ "segdp segment DP + wall term (weight 0.3), 512 split candidates|13|87358": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 5,
+    "collisions": 2,
+    "stalls_no_contact": 3,
+    "stalled": 3,
+    "contact_cells_median": 5.559016704559326,
+    "contact_over_path_median": 1.028070804006445,
+    "contact_within_1_cell": 0
+   },
+   "8-16": {
+    "failures": 16,
+    "collisions": 0,
+    "stalls_no_contact": 16,
+    "stalled": 16,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "16-32": {
+    "failures": 26,
+    "collisions": 4,
+    "stalls_no_contact": 22,
+    "stalled": 25,
+    "contact_cells_median": 2.238162100315094,
+    "contact_over_path_median": 0.10899653413450795,
+    "contact_within_1_cell": 1
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    156,
+    162
+   ],
+   "2-4": [
+    135,
+    150
+   ],
+   "4-8": [
+    110,
+    174
+   ],
+   "8-16": [
+    64,
+    114
+   ]
+  }
+ },
+ "segdp segment DP + wall term (weight 0.3), B \u00d7 6 base|22|1": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 1,
+    "collisions": 0,
+    "stalls_no_contact": 1,
+    "stalled": 1,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 10,
+    "collisions": 2,
+    "stalls_no_contact": 8,
+    "stalled": 10,
+    "contact_cells_median": 4.52496337890625,
+    "contact_over_path_median": 1.318682207887304,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 27,
+    "collisions": 1,
+    "stalls_no_contact": 26,
+    "stalled": 26,
+    "contact_cells_median": 1.4531733989715576,
+    "contact_over_path_median": 0.2123443462771836,
+    "contact_within_1_cell": 0
+   },
+   "8-16": {
+    "failures": 39,
+    "collisions": 0,
+    "stalls_no_contact": 39,
+    "stalled": 39,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "16-32": {
+    "failures": 39,
+    "collisions": 3,
+    "stalls_no_contact": 36,
+    "stalled": 39,
+    "contact_cells_median": 1.9601092338562012,
+    "contact_over_path_median": 0.0887086791600045,
+    "contact_within_1_cell": 1
+   },
+   "32-64": {
+    "failures": 40,
+    "collisions": 7,
+    "stalls_no_contact": 33,
+    "stalled": 40,
+    "contact_cells_median": 1.229986310005188,
+    "contact_over_path_median": 0.03884935119052926,
+    "contact_within_1_cell": 3
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    125,
+    132
+   ],
+   "2-4": [
+    99,
+    156
+   ],
+   "4-8": [
+    25,
+    129
+   ],
+   "8-16": [
+    7,
+    192
    ],
    "16-32": [
     0,
-    147
+    111
+   ]
+  }
+ },
+ "segdp segment DP + wall term (weight 0.3), B \u00d7 6 base|22|2": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 7,
+    "collisions": 1,
+    "stalls_no_contact": 6,
+    "stalled": 6,
+    "contact_cells_median": 1.3933912515640259,
+    "contact_over_path_median": 0.42721160872772984,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 23,
+    "collisions": 3,
+    "stalls_no_contact": 20,
+    "stalled": 22,
+    "contact_cells_median": 1.4481096267700195,
+    "contact_over_path_median": 0.21160440471302258,
+    "contact_within_1_cell": 0
+   },
+   "8-16": {
+    "failures": 38,
+    "collisions": 5,
+    "stalls_no_contact": 33,
+    "stalled": 38,
+    "contact_cells_median": 1.083719253540039,
+    "contact_over_path_median": 0.0790520999559717,
+    "contact_within_1_cell": 2
+   },
+   "16-32": {
+    "failures": 39,
+    "collisions": 2,
+    "stalls_no_contact": 37,
+    "stalled": 39,
+    "contact_cells_median": 0.5184296518564224,
+    "contact_over_path_median": 0.022575192671483522,
+    "contact_within_1_cell": 2
+   },
+   "32-64": {
+    "failures": 40,
+    "collisions": 1,
+    "stalls_no_contact": 39,
+    "stalled": 40,
+    "contact_cells_median": 1.6134099960327148,
+    "contact_over_path_median": 0.04944311494637306,
+    "contact_within_1_cell": 0
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    129,
+    132
    ],
-   "32-64": [
+   "2-4": [
+    106,
+    156
+   ],
+   "4-8": [
+    42,
+    129
+   ],
+   "8-16": [
+    5,
+    192
+   ],
+   "16-32": [
     0,
+    111
+   ]
+  }
+ },
+ "segdp segment DP + wall term (weight 0.3), B \u00d7 6 base|22|87358": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 1,
+    "collisions": 1,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": 1.078957200050354,
+    "contact_over_path_median": 0.6928536084166227,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 6,
+    "collisions": 1,
+    "stalls_no_contact": 5,
+    "stalled": 5,
+    "contact_cells_median": 2.6362438201904297,
+    "contact_over_path_median": 0.8490088735383724,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 28,
+    "collisions": 2,
+    "stalls_no_contact": 26,
+    "stalled": 26,
+    "contact_cells_median": 3.3899929523468018,
+    "contact_over_path_median": 0.575479217053212,
+    "contact_within_1_cell": 0
+   },
+   "8-16": {
+    "failures": 37,
+    "collisions": 3,
+    "stalls_no_contact": 34,
+    "stalled": 36,
+    "contact_cells_median": 2.4751882553100586,
+    "contact_over_path_median": 0.2460279129341531,
+    "contact_within_1_cell": 0
+   },
+   "16-32": {
+    "failures": 40,
+    "collisions": 2,
+    "stalls_no_contact": 38,
+    "stalled": 40,
+    "contact_cells_median": 0.5679541677236557,
+    "contact_over_path_median": 0.022732197359660176,
+    "contact_within_1_cell": 2
+   },
+   "32-64": {
+    "failures": 40,
+    "collisions": 8,
+    "stalls_no_contact": 32,
+    "stalled": 40,
+    "contact_cells_median": 0.4247508943080902,
+    "contact_over_path_median": 0.012231953806444996,
+    "contact_within_1_cell": 8
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    126,
+    132
+   ],
+   "2-4": [
+    105,
+    156
+   ],
+   "4-8": [
+    28,
+    129
+   ],
+   "8-16": [
+    4,
+    192
+   ],
+   "16-32": [
+    0,
+    111
+   ]
+  }
+ },
+ "segdp segment DP + wall term (weight 0.3), B \u00d7 3 base|13|1": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 1,
+    "collisions": 0,
+    "stalls_no_contact": 1,
+    "stalled": 1,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 9,
+    "collisions": 1,
+    "stalls_no_contact": 8,
+    "stalled": 8,
+    "contact_cells_median": 0.8943266272544861,
+    "contact_over_path_median": 0.11997937043705618,
+    "contact_within_1_cell": 1
+   },
+   "8-16": {
+    "failures": 30,
+    "collisions": 6,
+    "stalls_no_contact": 24,
+    "stalled": 30,
+    "contact_cells_median": 0.6148077249526978,
+    "contact_over_path_median": 0.04703035185089179,
+    "contact_within_1_cell": 5
+   },
+   "16-32": {
+    "failures": 35,
+    "collisions": 4,
+    "stalls_no_contact": 31,
+    "stalled": 35,
+    "contact_cells_median": 2.196414589881897,
+    "contact_over_path_median": 0.11361002532650002,
+    "contact_within_1_cell": 2
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    150,
+    162
+   ],
+   "2-4": [
+    126,
     150
+   ],
+   "4-8": [
+    81,
+    174
+   ],
+   "8-16": [
+    21,
+    114
+   ]
+  }
+ },
+ "segdp segment DP + wall term (weight 0.3), B \u00d7 3 base|13|2": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 3,
+    "collisions": 0,
+    "stalls_no_contact": 3,
+    "stalled": 3,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 7,
+    "collisions": 2,
+    "stalls_no_contact": 5,
+    "stalled": 6,
+    "contact_cells_median": 2.03318589925766,
+    "contact_over_path_median": 0.3488381179515002,
+    "contact_within_1_cell": 0
+   },
+   "8-16": {
+    "failures": 20,
+    "collisions": 4,
+    "stalls_no_contact": 16,
+    "stalled": 18,
+    "contact_cells_median": 0.34953778982162476,
+    "contact_over_path_median": 0.03581246346919173,
+    "contact_within_1_cell": 3
+   },
+   "16-32": {
+    "failures": 30,
+    "collisions": 5,
+    "stalls_no_contact": 25,
+    "stalled": 28,
+    "contact_cells_median": 1.998615026473999,
+    "contact_over_path_median": 0.12055034457258205,
+    "contact_within_1_cell": 1
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    147,
+    162
+   ],
+   "2-4": [
+    120,
+    150
+   ],
+   "4-8": [
+    106,
+    174
+   ],
+   "8-16": [
+    43,
+    114
+   ]
+  }
+ },
+ "segdp segment DP + wall term (weight 0.3), B \u00d7 3 base|13|87358": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 1,
+    "collisions": 0,
+    "stalls_no_contact": 1,
+    "stalled": 1,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 7,
+    "collisions": 1,
+    "stalls_no_contact": 6,
+    "stalled": 6,
+    "contact_cells_median": 0.7283885478973389,
+    "contact_over_path_median": 0.09771776524039069,
+    "contact_within_1_cell": 1
+   },
+   "8-16": {
+    "failures": 26,
+    "collisions": 3,
+    "stalls_no_contact": 23,
+    "stalled": 24,
+    "contact_cells_median": 1.7629377841949463,
+    "contact_over_path_median": 0.12604859559479728,
+    "contact_within_1_cell": 1
+   },
+   "16-32": {
+    "failures": 34,
+    "collisions": 12,
+    "stalls_no_contact": 22,
+    "stalled": 33,
+    "contact_cells_median": 1.1196198463439941,
+    "contact_over_path_median": 0.0646521176442747,
+    "contact_within_1_cell": 6
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    153,
+    162
+   ],
+   "2-4": [
+    123,
+    150
+   ],
+   "4-8": [
+    94,
+    174
+   ],
+   "8-16": [
+    24,
+    114
+   ]
+  }
+ },
+ "segdp segment DP + wall term (weight 0.3), 2048 split candidates|13|87358": {
+  "by_bin": {
+   "0.5-2": {
+    "failures": 0,
+    "collisions": 0,
+    "stalls_no_contact": 0,
+    "stalled": 0,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "2-4": {
+    "failures": 1,
+    "collisions": 0,
+    "stalls_no_contact": 1,
+    "stalled": 1,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "4-8": {
+    "failures": 4,
+    "collisions": 0,
+    "stalls_no_contact": 4,
+    "stalled": 4,
+    "contact_cells_median": null,
+    "contact_over_path_median": null,
+    "contact_within_1_cell": 0
+   },
+   "8-16": {
+    "failures": 21,
+    "collisions": 1,
+    "stalls_no_contact": 20,
+    "stalled": 21,
+    "contact_cells_median": 0.14961114525794983,
+    "contact_over_path_median": 0.012747901287266276,
+    "contact_within_1_cell": 1
+   },
+   "16-32": {
+    "failures": 25,
+    "collisions": 2,
+    "stalls_no_contact": 23,
+    "stalled": 23,
+    "contact_cells_median": 9.734467543661594,
+    "contact_over_path_median": 0.5035027824943813,
+    "contact_within_1_cell": 1
+   }
+  },
+  "by_euclid": {
+   "0-2": [
+    153,
+    162
+   ],
+   "2-4": [
+    132,
+    150
+   ],
+   "4-8": [
+    101,
+    174
+   ],
+   "8-16": [
+    67,
+    114
    ]
   }
  }

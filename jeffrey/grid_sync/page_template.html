@@ -1,0 +1,243 @@
+<title>2026-11-03 Grid-Synced Fourier Features</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;650;750&family=Public+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: the maze-scale family's reading column (~70ch) with full-width figure bands and one small-multiple panel per maze. */
+:root {
+  --bg: #f5f6f8; --surface: #ffffff; --ink: #15181d; --ink2: #4b525c; --muted: #737b86; --rule: #dde1e6; --wash: #eef1f5;
+  --accent: #eb6834; --gridline: #c9ced6;
+  --s-ntrl: #2a78d6; --s-bs: #6250d6; --s-ring: #eb6834; --s-circle: #1baf7a; --s-literal: #eda100; --s-scaled: #e87ba4; --s-snap: #008300;
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+    --accent: #d95926; --gridline: #4a515b;
+    --s-ntrl: #3987e5; --s-bs: #9085e9; --s-ring: #d95926; --s-circle: #199e70; --s-literal: #c98500; --s-scaled: #d55181; --s-snap: #2f9a2f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+  --accent: #d95926; --gridline: #4a515b;
+  --s-ntrl: #3987e5; --s-bs: #9085e9; --s-ring: #d95926; --s-circle: #199e70; --s-literal: #c98500; --s-scaled: #d55181; --s-snap: #2f9a2f;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 15.5px/1.6 var(--f-body); margin: 0; }
+.page { max-width: 1120px; margin: 0 auto; padding-block: 40px 72px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 44px; }
+.col { max-width: 70ch; min-width: 0; }
+header { display: grid; gap: 14px; }
+.eyebrow { font: 500 12px/1.4 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 750 clamp(30px, 5vw, 46px)/1.05 var(--f-display); letter-spacing: -0.015em; margin: 0; text-wrap: balance; }
+h2 { font: 650 23px/1.2 var(--f-display); margin: 0 0 10px; text-wrap: balance; }
+h3 { font: 650 16px/1.3 var(--f-display); margin: 18px 0 6px; }
+p { margin: 0 0 12px; }
+.lede { font-size: 17.5px; line-height: 1.55; }
+p strong, li strong { font-weight: 600; }
+section { display: grid; gap: 14px; min-width: 0; }
+figure { margin: 0; background: #ffffff; border: 1px solid var(--rule); border-radius: 6px; padding: 10px; overflow-x: auto; }
+figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+figcaption { color: #4b525c; font-size: 13px; margin-top: 6px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+.tile { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 12px 14px; display: grid; gap: 4px; align-content: start; }
+.tile .k { font: 500 12px/1.3 var(--f-mono); color: var(--muted); }
+.tile .v { font: 650 26px/1.15 var(--f-display); color: var(--ink); font-variant-numeric: tabular-nums; }
+.tile .v small { font: 500 13px var(--f-mono); color: var(--muted); }
+.tile .s { font-size: 13px; color: var(--ink2); }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.controls .lab { font: 500 12px var(--f-mono); color: var(--muted); margin-right: 4px; }
+.chip { display: inline-flex; align-items: center; gap: 7px; font: 500 13px var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 999px; padding: 5px 11px; cursor: pointer; }
+.chip[aria-pressed="false"] { color: var(--muted); background: transparent; }
+.chip[aria-pressed="false"] .key { opacity: 0.35; }
+.chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.key { width: 18px; height: 0; border-top: 3px solid currentColor; border-radius: 2px; display: inline-block; }
+.key.dash { border-top-style: dashed; border-top-width: 2px; }
+.key.dot { border-top-style: dotted; border-top-width: 3px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+.panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 10px 4px; position: relative; min-width: 0; }
+.panel h4 { font: 650 14px var(--f-display); margin: 0 0 2px 4px; display: flex; justify-content: space-between; gap: 8px; }
+.panel h4 span { font: 400 12px var(--f-mono); color: var(--muted); }
+.panel svg { display: block; width: 100%; height: auto; overflow: visible; }
+.axis text { fill: var(--muted); font: 9.5px var(--f-mono); }
+.axis .lab { fill: var(--ink2); font: 10px var(--f-mono); }
+.gridline { stroke: var(--rule); stroke-width: 1; }
+.tip { position: absolute; z-index: 5; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--rule); border-radius: 6px; padding: 8px 10px; box-shadow: 0 4px 14px rgba(0,0,0,0.12); font-size: 12.5px; min-width: 230px; }
+.tip .h { font: 500 11.5px var(--f-mono); color: var(--muted); margin-bottom: 4px; }
+.tip .r { display: grid; grid-template-columns: 18px auto 1fr; gap: 6px; align-items: center; }
+.tip .r b { font: 500 13px var(--f-mono); font-variant-numeric: tabular-nums; text-align: right; }
+.tip .r i { font-style: normal; color: var(--ink2); white-space: nowrap; }
+details { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 14px; }
+summary { cursor: pointer; font: 600 14px var(--f-body); }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; font-size: 13px; min-width: 560px; }
+th, td { padding: 6px 9px; border-bottom: 1px solid var(--rule); text-align: right; vertical-align: top; }
+th:first-child, td:first-child { text-align: left; }
+table.named th:nth-child(2), table.named td:nth-child(2) { text-align: left; min-width: 150px; }
+thead th { font: 600 12px var(--f-mono); color: var(--muted); white-space: nowrap; }
+td.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+td b { font-weight: 600; }
+.mute { color: var(--muted); font-size: 11.5px; }
+tbody tr:hover { background: var(--wash); }
+.note { font-size: 13.5px; color: var(--ink2); }
+ul.tight { margin: 0 0 12px; padding-left: 20px; display: grid; gap: 6px; }
+code { font: 13px var(--f-mono); background: var(--wash); padding: 1px 4px; border-radius: 4px; }
+.diagram { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 12px; overflow-x: auto; }
+.diagram svg { display: block; width: 100%; max-width: 760px; min-width: 540px; height: auto; margin: 0 auto; }
+.g-frame { fill: none; stroke: var(--rule); }
+.g-grid { stroke: var(--ink); stroke-width: 2.2; }
+.g-crest { stroke: var(--s-ring); stroke-width: 1.6; }
+.g-trough { stroke: var(--s-ring); stroke-width: 1.2; stroke-dasharray: 4 4; opacity: 0.8; }
+.g-ref { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 2 3; }
+.g-hit { fill: var(--s-ring); stroke: var(--surface); stroke-width: 1.5; }
+.g-hit2 { fill: var(--surface); stroke: var(--ink2); stroke-width: 1.5; }
+.g-leg { stroke: var(--ink); stroke-width: 2; fill: none; }
+.g-hyp { stroke: var(--ink); stroke-width: 2; fill: none; }
+.g-miss { stroke: var(--ink); stroke-width: 2.2; fill: none; }
+.g-ray { stroke: var(--ink2); stroke-width: 1.2; stroke-dasharray: 1 3; }
+.g-arc { stroke: var(--ink2); stroke-width: 1.2; fill: none; }
+.g-lab { font: 11px var(--f-mono); fill: var(--ink); paint-order: stroke; stroke: var(--surface); stroke-width: 3px; }
+.g-title { font: 600 13px var(--f-display); fill: var(--ink); }
+.g-cap { font: 11px var(--f-body); fill: var(--ink2); }
+@media (prefers-reduced-motion: no-preference) { .chip { transition: background-color 120ms, color 120ms; } }
+</style>
+
+<div class="page">
+  <header class="col">
+    <div class="eyebrow">jeffrey/grid_sync · ntrl-demo on SE(2) mazes · 2–3 Nov 2026</div>
+    <h1>Grid-Synced Fourier Features</h1>
+    <p class="lede"><!--LEDE--></p>
+  </header>
+
+  <section>
+    <div class="tiles"><!--TILES--></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>The idea</h2>
+      <!--IDEA-->
+    </div>
+    <div class="diagram"><!--GEOMETRY--></div>
+    <div class="col"><p class="note">Vertical lines: grid lines one cell apart (walls sit on them). Orange: the crests (solid) and troughs (dashed) of one Fourier feature at θ′ = 30° to the x axis; the dotted horizontal line marks where they cross the axis. Left: the frequency grows as 1/cos θ′, the crests are cell · cos θ′ apart along the wave and meet every grid line. Right: the frequency shrinks as cos θ′; a traveller moving along the wave (dotted ray) passes one half period per grid crossing, but across the grid the crests drift off the lines (⅓ cell at the next line, ⅔ at the one after).</p></div>
+    <figure><img src="freq.png" alt="Six panels of Fourier frequency layouts in grid units: ntrl-demo's small blob, the grid-synced square, the circle control, the literal clover, the scaled Gaussian disk and the snapped version." width="1950" height="390"><figcaption>The xy frequencies of the 128 Fourier rows (training seed 87358's draw) on the 13 × 13 maze, in units of the grid frequency (half period = one cell). Dashed lines: frequencies that are in step with the grid lines. ntrl-demo's own rows (left) all lie below a third of the grid frequency.</figcaption></figure>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Results</h2>
+      <!--RESULTS-->
+    </div>
+    <div class="tablewrap"><!--TOTALS--></div>
+    <div class="col"><p class="note">MPPI success over planning seeds 0, 1 and 2, pooled over the training seeds a field has (87358, 1, 2; small figures: per seed). Every field is ntrl-demo's own network and training with only the Fourier matrix changed.</p></div>
+    <div class="controls" id="legend" role="group" aria-label="Fields shown in the charts"><span class="lab">show</span></div>
+    <div class="grid" id="panels"></div>
+    <div class="col"><p class="note">Success by true travel distance; each point averages the training seeds a field has, the whisker is their range.</p></div>
+    <div class="col"><h3>The lock, seed by seed</h3><p class="note">Runs solved (of 3 planning seeds × the maze's queries) by the grid-synced octaves and the two controls with the same training seed, which means the same Fourier draw and the same initial weights. 22&times;22 has two extra seeds (3, 4) for this comparison only.</p></div>
+    <div class="tablewrap"><!--LOCKTABLE--></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Accuracy of the field</h2>
+      <!--ACCURACYTEXT-->
+    </div>
+    <div class="tablewrap"><!--ACCURACY--></div>
+    <div class="col"><p class="note">Large figure: median |log(T / T*)| of the learned travel time from start to goal over the maze's test queries (0 = exact). Small: held-out log-speed correlation of 1 / |∇T| with the true speed, and median cosine between the field's descent direction at the start and the truth's. Means over the training seeds a field has.</p></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Mechanism</h2>
+      <!--MECHTEXT-->
+    </div>
+    <figure><img src="profile.png" alt="Learned speed across interior grid lines for doorways and walls on the 13 and 22-cell mazes, for ntrl-demo, the grid-synced octaves and the two octave controls." width="858" height="676"><figcaption>Median learned speed on the perpendicular through the middle of every interior grid-line segment, heading along the crossing, training seed 87358. Top: doorways (no wall; the true speed is 1 along the whole line). Bottom: wall segments (dotted: the trained label).</figcaption></figure>
+    <div class="tablewrap"><!--MECHANISM--></div>
+    <div class="col"><p class="note">Doorway dip: learned speed in the middle of a free doorway over the speed half a cell either side (1 = no phantom wall). Phantom doorways: share slowed to half speed or less. Speed 0.35 cells from a wall: crossing heading, the trained label in brackets. Bumps: local minima of T(x, goal) along the true paths of queries of 8 cells or more, where MPPI can stall. Near-wall slope / cos: S·|∇T| and cos(∇T, into the wall) on held-out pairs 2–8 cells apart (targets 1 / 1).</p></div>
+    <figure><img src="speed.png" alt="Learned speed maps at heading 0 on the 13 by 13 and 22 by 22 mazes: truth, ntrl-demo, the grid-synced ring, the grid-synced octaves and the constant-magnitude octave control." width="1740" height="780"><figcaption>Learned speed 1 / |∇ₓT(x, goal)| at heading 0 towards the first truth goal, training seed 87358; light = full speed, dark = slow. On 22 × 22 the single-frequency ring draws a lattice over every cell regardless of the walls; the octave fields redraw the maze.</figcaption></figure>
+  </section>
+
+  <section class="col">
+    <h2>What this says</h2>
+    <!--VERDICT-->
+  </section>
+
+  <section class="col">
+    <h2>How it was measured</h2>
+    <!--MEASURED-->
+  </section>
+
+  <details class="col"><summary>Registered runs</summary><div class="tablewrap"><!--RUNS--></div></details>
+</div>
+
+<script>
+(() => {
+  const D = /*DATA*/;
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+  const h = (t, c, txt, p) => { const e = document.createElement(t); if (c) e.className = c; if (txt != null) e.textContent = txt; if (p) p.appendChild(e); return e; };
+  // hue = family (ring family orange, circle family aqua), dash = variant: solid single scale, dashed octaves, dotted half rows
+  const CSS = {'ntrl-demo': '--s-ntrl', 'best B × s': '--s-bs', ring: '--s-ring', octave: '--s-ring', ringhalf: '--s-ring', circle: '--s-circle', octavecircle: '--s-circle', circlehalf: '--s-circle', literal: '--s-literal', scaled: '--s-scaled', snap: '--s-snap'};
+  const DASH = {octave: '6 4', octavecircle: '6 4', ringhalf: '1.5 3.5', circlehalf: '1.5 3.5'};
+  const present = D.fields.filter(f => D.sizes.some(n => D.series[n][f]));
+  const ON = {}; present.forEach(f => { ON[f] = ['ntrl-demo', 'best B × s', 'ring', 'octave'].includes(f); });
+  const legend = document.getElementById('legend');
+  function drawLegend() {
+    legend.querySelectorAll('.chip').forEach(c => c.remove());
+    present.forEach((f, i) => {
+      const b = h('button', 'chip', null, legend); b.type = 'button'; b.id = `chip-${i}`;
+      const k = h('span', 'key' + (DASH[f] ? (DASH[f].startsWith('1.5') ? ' dot' : ' dash') : ''), null, b); k.style.color = `var(${CSS[f]})`;
+      b.append(D.label[f]); b.setAttribute('aria-pressed', String(ON[f]));
+      b.addEventListener('click', () => { ON[f] = !ON[f]; drawLegend(); drawAll(); });
+    });
+  }
+  function panel(box, n) {
+    const m = D.series[n]; if (!m) return;
+    const p = h('div', 'panel', null, box);
+    const h4 = h('h4', null, `${n} × ${n} maze`, p); h('span', null, 'MPPI success (%)', h4);
+    const W = 420, H = 250, L = 38, R = 12, T = 12, B = 40;
+    const svg = mk('svg', {viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': `MPPI success by distance on the ${n} by ${n} maze`}, p);
+    const series = present.filter(f => ON[f] && m[f]).map(f => ({f, d: m[f]}));
+    const bins = (m['ntrl-demo'] || Object.values(m)[0]).bins;
+    const X = k => L + (k + 0.5) / bins.length * (W - L - R);
+    const Y = v => T + (1 - v / 100) * (H - T - B);
+    const ax = mk('g', {class: 'axis'}, svg);
+    [0, 25, 50, 75, 100].forEach(v => { mk('line', {x1: L, x2: W - R, y1: Y(v), y2: Y(v), class: 'gridline'}, svg); mk('text', {x: L - 6, y: Y(v) + 3, 'text-anchor': 'end'}, ax).textContent = v; });
+    bins.forEach((b, k) => { mk('text', {x: X(k), y: H - B + 14, 'text-anchor': 'middle'}, ax).textContent = b; });
+    mk('text', {x: (L + W - R) / 2, y: H - 6, 'text-anchor': 'middle', class: 'lab'}, ax).textContent = 'true travel distance (cells)';
+    series.forEach(r => {
+      const css = `var(${CSS[r.f]})`;
+      const vals = bins.map(b => { const k = r.d.bins.indexOf(b); return k < 0 ? null : r.d.rows[k][0]; });
+      bins.forEach((b, k) => { const j = r.d.bins.indexOf(b); if (j >= 0 && r.d.rows[j][3] > 1) mk('line', {x1: X(k), x2: X(k), y1: Y(r.d.rows[j][1]), y2: Y(r.d.rows[j][2]), stroke: css, 'stroke-width': 1.2, 'stroke-opacity': 0.55}, svg); });
+      let d = '', pen = false;
+      vals.forEach((v, k) => { if (v != null) { d += `${pen ? 'L' : 'M'}${X(k).toFixed(1)},${Y(v).toFixed(1)}`; pen = true; } else pen = false; });
+      mk('path', {d, fill: 'none', stroke: css, 'stroke-width': r.f === 'ring' ? 2.6 : 2, 'stroke-dasharray': DASH[r.f] || '', 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
+      vals.forEach((v, k) => { if (v != null) mk('circle', {cx: X(k), cy: Y(v), r: 4, fill: css, stroke: 'var(--surface)', 'stroke-width': 2}, svg); });
+    });
+    const tip = h('div', 'tip', null, p); tip.hidden = true;
+    const cross = mk('line', {y1: T, y2: H - B, stroke: 'var(--muted)', 'stroke-width': 1, visibility: 'hidden'}, svg);
+    const hit = mk('rect', {x: L, y: T, width: W - L - R, height: H - T - B, fill: 'transparent', style: 'touch-action: pan-y'}, svg);
+    const show = ev => {
+      const rc = svg.getBoundingClientRect(), sx = (ev.clientX - rc.left) * W / rc.width;
+      const k = Math.max(0, Math.min(bins.length - 1, Math.floor((sx - L) / (W - L - R) * bins.length)));
+      cross.setAttribute('x1', X(k)); cross.setAttribute('x2', X(k)); cross.setAttribute('visibility', 'visible');
+      tip.textContent = ''; h('div', 'h', `${n}×${n} · ${bins[k]} cells`, tip);
+      series.forEach(r => { const j = r.d.bins.indexOf(bins[k]); if (j < 0) return; const row = h('div', 'r', null, tip);
+        const kk = h('span', 'key' + (DASH[r.f] ? (DASH[r.f].startsWith('1.5') ? ' dot' : ' dash') : ''), null, row); kk.style.color = `var(${CSS[r.f]})`;
+        h('i', null, D.label[r.f], row); h('b', null, `${r.d.rows[j][0].toFixed(0)} %  (${r.d.rows[j][4]}/${r.d.rows[j][5]})`, row); });
+      tip.hidden = false;
+      const pr = p.getBoundingClientRect(); let left = ev.clientX - pr.left + 14;
+      if (left + tip.offsetWidth > pr.width - 4) left = ev.clientX - pr.left - tip.offsetWidth - 14;
+      tip.style.left = `${Math.max(4, left)}px`; tip.style.top = `${Math.max(4, ev.clientY - pr.top - 20)}px`;
+    };
+    hit.addEventListener('pointermove', show); hit.addEventListener('pointerdown', show);
+    hit.addEventListener('pointerleave', () => { tip.hidden = true; cross.setAttribute('visibility', 'hidden'); });
+  }
+  function drawAll() { const box = document.getElementById('panels'); box.textContent = ''; D.sizes.forEach(n => panel(box, n)); }
+  drawLegend(); drawAll();
+})();
+</script>

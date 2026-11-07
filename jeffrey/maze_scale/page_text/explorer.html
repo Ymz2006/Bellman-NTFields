@@ -1,0 +1,287 @@
+  <section id="explorer">
+    <style>
+      /* Explorer: maze map on the left (click picks the pose), three line charts on the right; stacks on phones. */
+      .ex-wrap { display: grid; grid-template-columns: minmax(240px, 340px) minmax(0, 1fr); gap: 16px; align-items: start; }
+      @media (max-width: 760px) { .ex-wrap { grid-template-columns: minmax(0, 1fr); } }
+      .ex-side { display: grid; gap: 10px; min-width: 0; }
+      .ex-map { position: relative; background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 8px; }
+      .ex-map canvas { display: block; width: 100%; height: auto; aspect-ratio: 1; max-width: 100%; cursor: crosshair; touch-action: manipulation; }
+      .ex-map canvas:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+      .ex-readout { font: 400 13px/1.5 var(--f-body); color: var(--ink2); }
+      .ex-readout b { font: 500 13px var(--f-mono); color: var(--ink); font-variant-numeric: tabular-nums; }
+      .ex-charts { display: grid; gap: 12px; min-width: 0; }
+      .ex-charts .panel { padding-bottom: 8px; }
+      .ex-charts .panel h4 { flex-wrap: wrap; row-gap: 0; }
+      .chip[disabled] { opacity: 0.4; cursor: not-allowed; }
+      .ex-status { font: 500 12px var(--f-mono); color: var(--muted); min-height: 1.5em; }
+      .ex-band { fill: var(--muted); }
+      .ex-zb { display: inline-flex; gap: 4px; margin-left: auto; }
+      .ex-zb button { font: 500 12px/1.2 var(--f-mono); color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 2px 8px; cursor: pointer; }
+      .ex-zb button:hover { background: var(--wash); }
+      .ex-zb button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+      .ex-zb button[disabled] { opacity: 0.4; cursor: default; }
+      .ex-sel { fill: var(--accent); fill-opacity: 0.12; stroke: var(--accent); stroke-width: 1; }
+      .ex-src { stroke: var(--ink); stroke-width: 1; stroke-dasharray: 3 3; }
+      .ex-cross { stroke: var(--muted); stroke-width: 1; }
+      .axis .ex-axlab { fill: var(--ink2); font: 10px var(--f-mono); }
+    </style>
+    <div class="col">
+      <h2>Travel-time explorer</h2>
+      <p>Pick a pose in a maze: click a cell on the map (or focus the map and use the arrow keys), and choose the robot&rsquo;s heading. The charts show the travel time from that pose to every grid point on the same line: along x (the cell&rsquo;s row), along y (its column) and along the heading axis at the same spot. The black line is the true travel time from the grid solver; the coloured lines are the learned fields (training seed 87358). Times are in cells at full speed (the time to drive that many cells with nothing slowing the robot). Drag across a chart to zoom into that stretch (or use + and &minus;); double-click it or press Reset to zoom back out. Each chart is scaled to the poses the robot can occupy, so peaks inside a wall may run off the top; hover to read them. Shaded bands mark where the robot, held at the picked heading, is slowed by a wall: the darker the band, the slower it moves there, and the darkest means it is touching the wall.</p>
+    </div>
+    <div class="controls" role="group" aria-label="Maze"><span class="lab">maze</span><span id="ex-mazes" class="controls"></span></div>
+    <div class="controls" role="group" aria-label="Heading at the picked pose"><span class="lab">heading</span><span id="ex-heads" class="controls"></span></div>
+    <div class="controls" role="group" aria-label="Lines shown"><span class="lab">show</span><span id="ex-series" class="controls"></span></div>
+    <div class="ex-wrap">
+      <div class="ex-side">
+        <div class="ex-map"><canvas id="ex-canvas" width="680" height="680" tabindex="0" aria-label="Maze map: click a cell to pick the pose"></canvas></div>
+        <div class="ex-readout" id="ex-readout"></div>
+        <div class="ex-status" id="ex-status" role="status"></div>
+      </div>
+      <div class="ex-charts" id="ex-charts"></div>
+    </div>
+    <script>
+    (() => {
+      const M = {"4":{"n":4,"nx":62,"nt":13,"xs":[-0.05,0.0172,0.0844,0.1516,0.2189,0.2861,0.3533,0.4205,0.4877,0.5549,0.6221,0.6893,0.7566,0.8238,0.891,0.9582,1.0254,1.0926,1.1598,1.227,1.2943,1.3615,1.4287,1.4959,1.5631,1.6303,1.6975,1.7648,1.832,1.8992,1.9664,2.0336,2.1008,2.168,2.2352,2.3025,2.3697,2.4369,2.5041,2.5713,2.6385,2.7057,2.773,2.8402,2.9074,2.9746,3.0418,3.109,3.1762,3.2434,3.3107,3.3779,3.4451,3.5123,3.5795,3.6467,3.7139,3.7811,3.8484,3.9156,3.9828,4.05],"cells":[8,23,38,53],"headings":[0,45,90,-45],"head_nodes":[6,9,12,3],"theta_truth":[-90.0,-75.0,-60.0,-45.0,-30.0,-15.0,0.0,15.0,30.0,45.0,60.0,75.0,90.0],"theta_learned":[-90.0,-85.0,-80.0,-75.0,-70.0,-65.0,-60.0,-55.0,-50.0,-45.0,-40.0,-35.0,-30.0,-25.0,-20.0,-15.0,-10.0,-5.0,0.0,5.0,10.0,15.0,20.0,25.0,30.0,35.0,40.0,45.0,50.0,55.0,60.0,65.0,70.0,75.0,80.0,85.0,90.0],"V":[[1,1,1,1],[1,0,0,0],[0,0,0,0],[0,0,0,1],[1,1,1,1]],"H":[[1,0,0,1,1],[1,0,1,0,1],[1,1,0,1,1],[1,1,0,0,1]],"pitch":0.24390243902439027,"fields":[{"name":"ntrl-demo","run":"20261101T193251Z-f43026ee"},{"name":"segment DP","run":"20261101T203439Z-6ed89e28"}],"prepared":"20261101T192432Z-423319dc","layout":{"truth":[62,62,13],"learned":[62,62,37]},"median_ratio":{"ntrl-demo":0.9258286356925964,"segment DP":0.9208576381206512}},"7":{"n":7,"nx":107,"nt":13,"xs":[-0.05,0.017,0.084,0.1509,0.2179,0.2849,0.3519,0.4189,0.4858,0.5528,0.6198,0.6868,0.7538,0.8208,0.8877,0.9547,1.0217,1.0887,1.1557,1.2226,1.2896,1.3566,1.4236,1.4906,1.5575,1.6245,1.6915,1.7585,1.8255,1.8925,1.9594,2.0264,2.0934,2.1604,2.2274,2.2943,2.3613,2.4283,2.4953,2.5623,2.6292,2.6962,2.7632,2.8302,2.8972,2.9642,3.0311,3.0981,3.1651,3.2321,3.2991,3.366,3.433,3.5,3.567,3.634,3.7009,3.7679,3.8349,3.9019,3.9689,4.0358,4.1028,4.1698,4.2368,4.3038,4.3708,4.4377,4.5047,4.5717,4.6387,4.7057,4.7726,4.8396,4.9066,4.9736,5.0406,5.1075,5.1745,5.2415,5.3085,5.3755,5.4425,5.5094,5.5764,5.6434,5.7104,5.7774,5.8443,5.9113,5.9783,6.0453,6.1123,6.1792,6.2462,6.3132,6.3802,6.4472,6.5142,6.5811,6.6481,6.7151,6.7821,6.8491,6.916,6.983,7.05],"cells":[8,23,38,53,68,83,98],"headings":[0,45,90,-45],"head_nodes":[6,9,12,3],"theta_truth":[-90.0,-75.0,-60.0,-45.0,-30.0,-15.0,0.0,15.0,30.0,45.0,60.0,75.0,90.0],"theta_learned":[-90.0,-85.0,-80.0,-75.0,-70.0,-65.0,-60.0,-55.0,-50.0,-45.0,-40.0,-35.0,-30.0,-25.0,-20.0,-15.0,-10.0,-5.0,0.0,5.0,10.0,15.0,20.0,25.0,30.0,35.0,40.0,45.0,50.0,55.0,60.0,65.0,70.0,75.0,80.0,85.0,90.0],"V":[[1,1,1,1,1,1,1],[0,0,0,1,0,1,1],[0,1,1,0,0,0,0],[0,0,1,1,1,0,0],[1,0,0,0,0,0,0],[0,0,0,1,1,0,0],[1,1,1,0,0,0,1],[1,1,1,1,1,1,1]],"H":[[1,0,0,0,0,0,0,1],[1,1,0,1,1,0,1,1],[1,0,0,0,0,1,0,1],[1,1,0,1,0,0,1,1],[1,0,1,0,0,1,1,1],[1,1,1,1,0,0,0,1],[1,0,0,0,0,1,0,1]],"pitch":0.14084507042253522,"fields":[{"name":"ntrl-demo","run":"20261101T200440Z-b920137d"},{"name":"segment DP","run":"20261101T201621Z-4d135bc3"},{"name":"segment DP + wall term (weight 0.3)","run":"20261101T230634Z-024a6522"}],"prepared":"20261101T192446Z-9b1569db","layout":{"truth":[107,107,13],"learned":[107,107,37]},"median_ratio":{"ntrl-demo":1.0126370787620544,"segment DP":1.0113057494163513,"segment DP + wall term (weight 0.3)":0.958053320646286}},"10":{"n":10,"nx":153,"nt":13,"xs":[-0.05,0.0164,0.0829,0.1493,0.2158,0.2822,0.3487,0.4151,0.4816,0.548,0.6145,0.6809,0.7474,0.8138,0.8803,0.9467,1.0132,1.0796,1.1461,1.2125,1.2789,1.3454,1.4118,1.4783,1.5447,1.6112,1.6776,1.7441,1.8105,1.877,1.9434,2.0099,2.0763,2.1428,2.2092,2.2757,2.3421,2.4086,2.475,2.5414,2.6079,2.6743,2.7408,2.8072,2.8737,2.9401,3.0066,3.073,3.1395,3.2059,3.2724,3.3388,3.4053,3.4717,3.5382,3.6046,3.6711,3.7375,3.8039,3.8704,3.9368,4.0033,4.0697,4.1362,4.2026,4.2691,4.3355,4.402,4.4684,4.5349,4.6013,4.6678,4.7342,4.8007,4.8671,4.9336,5.0,5.0664,5.1329,5.1993,5.2658,5.3322,5.3987,5.4651,5.5316,5.598,5.6645,5.7309,5.7974,5.8638,5.9303,5.9967,6.0632,6.1296,6.1961,6.2625,6.3289,6.3954,6.4618,6.5283,6.5947,6.6612,6.7276,6.7941,6.8605,6.927,6.9934,7.0599,7.1263,7.1928,7.2592,7.3257,7.3921,7.4586,7.525,7.5914,7.6579,7.7243,7.7908,7.8572,7.9237,7.9901,8.0566,8.123,8.1895,8.2559,8.3224,8.3888,8.4553,8.5217,8.5882,8.6546,8.7211,8.7875,8.8539,8.9204,8.9868,9.0533,9.1197,9.1862,9.2526,9.3191,9.3855,9.452,9.5184,9.5849,9.6513,9.7178,9.7842,9.8507,9.9171,9.9836,10.05],"cells":[8,23,38,53,68,84,99,114,129,144],"headings":[0,45,90,-45],"head_nodes":[6,9,12,3],"theta_truth":[-90.0,-75.0,-60.0,-45.0,-30.0,-15.0,0.0,15.0,30.0,45.0,60.0,75.0,90.0],"theta_learned":[-90.0,-85.0,-80.0,-75.0,-70.0,-65.0,-60.0,-55.0,-50.0,-45.0,-40.0,-35.0,-30.0,-25.0,-20.0,-15.0,-10.0,-5.0,0.0,5.0,10.0,15.0,20.0,25.0,30.0,35.0,40.0,45.0,50.0,55.0,60.0,65.0,70.0,75.0,80.0,85.0,90.0],"V":[[1,1,1,1,1,1,1,1,1,1],[0,0,0,1,1,0,0,0,0,0],[1,0,1,1,1,1,1,0,1,0],[0,1,0,1,0,1,0,0,0,1],[1,0,1,1,0,0,0,1,0,0],[1,0,0,0,0,0,1,1,0,1],[0,1,0,1,1,1,1,0,1,0],[0,0,0,0,1,1,0,1,0,1],[1,1,0,1,0,0,0,1,0,1],[1,0,0,0,0,0,1,0,0,0],[1,1,1,1,1,1,1,1,1,1]],"H":[[1,1,0,0,1,0,1,1,0,0,1],[1,0,1,0,0,0,0,0,0,0,1],[1,0,0,0,0,0,0,1,0,1,1],[1,0,1,1,0,1,1,0,1,0,1],[1,0,0,1,0,1,0,0,1,0,1],[1,0,1,0,1,1,1,0,0,1,1],[1,1,1,0,0,1,0,0,0,0,1],[1,1,0,1,1,1,1,0,1,0,1],[1,0,0,0,1,1,1,1,1,1,1],[1,0,1,1,0,1,0,0,0,0,1]],"pitch":0.09900990099009901,"fields":[{"name":"ntrl-demo","run":"20261102T032216Z-e76476bf"},{"name":"segment DP","run":"20261102T033401Z-dec4726c"},{"name":"segment DP + wall term (weight 0.3)","run":"20261102T035422Z-06108e12"}],"prepared":"20261102T032150Z-b0baa8e9","layout":{"truth":[153,153,13],"learned":[153,153,37]},"median_ratio":{"ntrl-demo":1.1964406967163086,"segment DP":1.1455281972885132,"segment DP + wall term (weight 0.3)":1.043465793132782}},"13":{"n":13,"nx":197,"nt":13,"xs":[-0.05,0.0168,0.0837,0.1505,0.2173,0.2842,0.351,0.4179,0.4847,0.5515,0.6184,0.6852,0.752,0.8189,0.8857,0.9526,1.0194,1.0862,1.1531,1.2199,1.2867,1.3536,1.4204,1.4872,1.5541,1.6209,1.6878,1.7546,1.8214,1.8883,1.9551,2.0219,2.0888,2.1556,2.2224,2.2893,2.3561,2.423,2.4898,2.5566,2.6235,2.6903,2.7571,2.824,2.8908,2.9577,3.0245,3.0913,3.1582,3.225,3.2918,3.3587,3.4255,3.4923,3.5592,3.626,3.6929,3.7597,3.8265,3.8934,3.9602,4.027,4.0939,4.1607,4.2276,4.2944,4.3612,4.4281,4.4949,4.5617,4.6286,4.6954,4.7622,4.8291,4.8959,4.9628,5.0296,5.0964,5.1633,5.2301,5.2969,5.3638,5.4306,5.4974,5.5643,5.6311,5.698,5.7648,5.8316,5.8985,5.9653,6.0321,6.099,6.1658,6.2327,6.2995,6.3663,6.4332,6.5,6.5668,6.6337,6.7005,6.7673,6.8342,6.901,6.9679,7.0347,7.1015,7.1684,7.2352,7.302,7.3689,7.4357,7.5026,7.5694,7.6362,7.7031,7.7699,7.8367,7.9036,7.9704,8.0372,8.1041,8.1709,8.2378,8.3046,8.3714,8.4383,8.5051,8.5719,8.6388,8.7056,8.7724,8.8393,8.9061,8.973,9.0398,9.1066,9.1735,9.2403,9.3071,9.374,9.4408,9.5077,9.5745,9.6413,9.7082,9.775,9.8418,9.9087,9.9755,10.0423,10.1092,10.176,10.2429,10.3097,10.3765,10.4434,10.5102,10.577,10.6439,10.7107,10.7776,10.8444,10.9112,10.9781,11.0449,11.1117,11.1786,11.2454,11.3122,11.3791,11.4459,11.5128,11.5796,11.6464,11.7133,11.7801,11.8469,11.9138,11.9806,12.0474,12.1143,12.1811,12.248,12.3148,12.3816,12.4485,12.5153,12.5821,12.649,12.7158,12.7827,12.8495,12.9163,12.9832,13.05],"cells":[8,23,38,53,68,83,98,113,128,143,158,173,188],"headings":[0,45,90,-45],"head_nodes":[6,9,12,3],"theta_truth":[-90.0,-75.0,-60.0,-45.0,-30.0,-15.0,0.0,15.0,30.0,45.0,60.0,75.0,90.0],"theta_learned":[-90.0,-85.0,-80.0,-75.0,-70.0,-65.0,-60.0,-55.0,-50.0,-45.0,-40.0,-35.0,-30.0,-25.0,-20.0,-15.0,-10.0,-5.0,-0.0,5.0,10.0,15.0,20.0,25.0,30.0,35.0,40.0,45.0,50.0,55.0,60.0,65.0,70.0,75.0,80.0,85.0,90.0],"V":[[1,1,1,1,1,1,1,1,1,1,1,1,1],[1,0,0,1,0,0,0,0,1,0,1,0,0],[1,1,0,0,0,1,1,0,0,0,0,1,1],[0,0,1,1,0,0,0,0,1,1,1,0,0],[0,0,0,0,1,1,1,0,0,1,0,1,0],[0,0,0,1,1,0,0,0,0,0,0,1,0],[1,1,1,0,0,1,1,1,0,0,0,0,0],[0,1,1,0,0,0,1,1,0,0,1,0,1],[0,1,0,0,0,0,1,0,1,0,0,0,1],[1,1,0,0,1,1,0,0,0,0,0,1,0],[0,0,0,1,1,1,1,1,1,0,0,0,0],[0,1,0,0,1,0,0,0,1,0,0,1,1],[0,0,1,0,0,1,0,0,0,1,1,1,0],[1,1,1,1,1,1,1,1,1,1,1,1,1]],"H":[[1,0,0,1,0,1,0,0,0,0,1,0,1,1],[1,0,0,0,1,1,0,1,0,1,0,0,0,1],[1,1,0,0,1,1,0,0,1,1,1,0,0,1],[1,0,1,1,0,0,0,1,0,1,0,1,1,1],[1,1,1,1,0,1,1,1,1,0,1,0,0,1],[1,1,0,0,0,0,0,1,1,1,1,0,0,1],[1,0,0,0,1,0,0,0,0,1,0,0,1,1],[1,0,1,0,0,1,0,1,1,1,1,1,0,1],[1,0,0,1,0,0,0,1,1,0,1,0,0,1],[1,1,0,1,0,0,1,0,1,0,1,0,1,1],[1,0,1,0,0,1,1,1,1,0,0,0,0,1],[1,0,0,1,0,0,1,1,1,0,0,0,0,1],[1,0,0,1,0,0,0,0,1,0,0,0,1,1]],"pitch":0.07633587786259542,"fields":[{"name":"ntrl-demo","run":"20261101T203437Z-ebc95225"},{"name":"segment DP","run":"20261101T204654Z-6719910c"},{"name":"segment DP + wall term (weight 0.3)","run":"20261101T215932Z-1bbbfbc7"}],"prepared":"20261101T192504Z-13cf1d04","layout":{"truth":[197,197,13],"learned":[197,197,37]},"median_ratio":{"ntrl-demo":1.3368791937828064,"segment DP":1.2494774460792542,"segment DP + wall term (weight 0.3)":1.096544623374939}},"22":{"n":22,"nx":333,"nt":13,"xs":[-0.05,0.0166,0.0831,0.1497,0.2163,0.2828,0.3494,0.416,0.4825,0.5491,0.6157,0.6822,0.7488,0.8154,0.8819,0.9485,1.0151,1.0816,1.1482,1.2148,1.2813,1.3479,1.4145,1.481,1.5476,1.6142,1.6807,1.7473,1.8139,1.8804,1.947,2.0136,2.0801,2.1467,2.2133,2.2798,2.3464,2.413,2.4795,2.5461,2.6127,2.6792,2.7458,2.8123,2.8789,2.9455,3.012,3.0786,3.1452,3.2117,3.2783,3.3449,3.4114,3.478,3.5446,3.6111,3.6777,3.7443,3.8108,3.8774,3.944,4.0105,4.0771,4.1437,4.2102,4.2768,4.3434,4.4099,4.4765,4.5431,4.6096,4.6762,4.7428,4.8093,4.8759,4.9425,5.009,5.0756,5.1422,5.2087,5.2753,5.3419,5.4084,5.475,5.5416,5.6081,5.6747,5.7413,5.8078,5.8744,5.941,6.0075,6.0741,6.1407,6.2072,6.2738,6.3404,6.4069,6.4735,6.5401,6.6066,6.6732,6.7398,6.8063,6.8729,6.9395,7.006,7.0726,7.1392,7.2057,7.2723,7.3389,7.4054,7.472,7.5386,7.6051,7.6717,7.7383,7.8048,7.8714,7.938,8.0045,8.0711,8.1377,8.2042,8.2708,8.3373,8.4039,8.4705,8.537,8.6036,8.6702,8.7367,8.8033,8.8699,8.9364,9.003,9.0696,9.1361,9.2027,9.2693,9.3358,9.4024,9.469,9.5355,9.6021,9.6687,9.7352,9.8018,9.8684,9.9349,10.0015,10.0681,10.1346,10.2012,10.2678,10.3343,10.4009,10.4675,10.534,10.6006,10.6672,10.7337,10.8003,10.8669,10.9334,11.0,11.0666,11.1331,11.1997,11.2663,11.3328,11.3994,11.466,11.5325,11.5991,11.6657,11.7322,11.7988,11.8654,11.9319,11.9985,12.0651,12.1316,12.1982,12.2648,12.3313,12.3979,12.4645,12.531,12.5976,12.6642,12.7307,12.7973,12.8639,12.9304,12.997,13.0636,13.1301,13.1967,13.2633,13.3298,13.3964,13.463,13.5295,13.5961,13.6627,13.7292,13.7958,13.8623,13.9289,13.9955,14.062,14.1286,14.1952,14.2617,14.3283,14.3949,14.4614,14.528,14.5946,14.6611,14.7277,14.7943,14.8608,14.9274,14.994,15.0605,15.1271,15.1937,15.2602,15.3268,15.3934,15.4599,15.5265,15.5931,15.6596,15.7262,15.7928,15.8593,15.9259,15.9925,16.059,16.1256,16.1922,16.2587,16.3253,16.3919,16.4584,16.525,16.5916,16.6581,16.7247,16.7913,16.8578,16.9244,16.991,17.0575,17.1241,17.1907,17.2572,17.3238,17.3904,17.4569,17.5235,17.5901,17.6566,17.7232,17.7898,17.8563,17.9229,17.9895,18.056,18.1226,18.1892,18.2557,18.3223,18.3889,18.4554,18.522,18.5886,18.6551,18.7217,18.7883,18.8548,18.9214,18.988,19.0545,19.1211,19.1877,19.2542,19.3208,19.3873,19.4539,19.5205,19.587,19.6536,19.7202,19.7867,19.8533,19.9199,19.9864,20.053,20.1196,20.1861,20.2527,20.3193,20.3858,20.4524,20.519,20.5855,20.6521,20.7187,20.7852,20.8518,20.9184,20.9849,21.0515,21.1181,21.1846,21.2512,21.3178,21.3843,21.4509,21.5175,21.584,21.6506,21.7172,21.7837,21.8503,21.9169,21.9834,22.05],"cells":[8,23,38,53,68,83,98,113,128,143,158,174,189,204,219,234,249,264,279,294,309,324],"headings":[0,45,90,-45],"head_nodes":[6,9,12,3],"theta_truth":[-90.0,-75.0,-60.0,-45.0,-30.0,-15.0,0.0,15.0,30.0,45.0,60.0,75.0,90.0],"theta_learned":[-90.0,-85.0,-80.0,-75.0,-70.0,-65.0,-60.0,-55.0,-50.0,-45.0,-40.0,-35.0,-30.0,-25.0,-20.0,-15.0,-10.0,-5.0,-0.0,5.0,10.0,15.0,20.0,25.0,30.0,35.0,40.0,45.0,50.0,55.0,60.0,65.0,70.0,75.0,80.0,85.0,90.0],"V":[[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,1,1,0],[0,1,0,0,1,0,1,0,1,1,0,0,1,1,0,0,1,0,0,1,0,1],[1,0,1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,0,1,1],[0,1,1,1,0,0,0,1,0,1,0,1,1,1,0,0,0,0,1,1,1,0],[0,1,0,1,1,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,0,1],[1,0,0,1,1,0,1,0,1,1,0,1,0,1,1,0,0,0,0,1,0,0],[0,1,0,0,0,1,0,1,0,0,0,1,1,0,1,0,0,1,0,1,1,0],[0,1,0,1,0,0,1,0,1,1,1,1,1,1,1,0,0,0,1,0,1,0],[1,0,1,0,1,0,0,0,1,1,0,1,0,0,0,0,1,0,1,0,0,1],[0,1,0,1,0,1,1,0,1,0,0,0,0,1,0,1,0,0,0,1,0,1],[0,0,0,1,1,1,1,0,0,0,0,0,0,0,1,0,0,0,0,1,1,1],[1,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,0,0,1],[1,1,0,0,1,0,0,1,0,1,1,0,1,1,0,0,0,1,1,0,0,0],[0,1,1,0,0,0,0,0,0,0,1,1,0,1,0,1,0,1,0,0,0,1],[0,0,1,0,1,1,0,1,0,1,0,0,0,0,0,1,1,0,0,0,0,0],[0,0,0,1,1,0,0,1,0,1,0,0,1,0,1,0,0,1,1,1,0,1],[0,1,0,1,0,0,1,1,0,1,0,0,0,0,0,0,0,1,0,0,0,0],[0,0,0,0,1,1,0,1,1,1,1,0,0,1,1,0,1,1,0,0,1,0],[1,1,0,1,0,1,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0],[0,1,0,1,0,0,1,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0],[1,0,0,0,1,1,0,1,0,1,0,1,0,0,0,1,0,0,0,0,0,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]],"H":[[1,0,1,0,0,0,1,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,1],[1,1,0,0,1,1,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,1],[1,0,0,1,0,0,1,0,0,1,0,0,0,0,1,0,0,0,1,1,0,0,1],[1,0,0,0,0,0,1,0,1,0,0,1,0,0,0,1,1,0,0,0,0,0,1],[1,0,0,0,1,1,0,0,0,0,0,1,0,1,0,0,1,1,0,1,0,0,1],[1,0,1,1,0,0,0,1,1,1,0,1,0,1,1,1,0,1,0,1,1,1,1],[1,0,0,1,0,1,0,0,0,1,1,0,0,0,0,1,1,1,1,0,0,1,1],[1,0,0,0,1,0,1,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,1],[1,0,0,1,1,1,0,0,0,0,0,1,0,0,1,1,1,0,1,0,0,0,1],[1,1,1,0,1,0,1,0,0,1,0,0,1,0,0,1,1,0,0,0,0,0,1],[1,1,0,0,0,1,0,0,1,1,1,1,0,1,1,1,1,0,0,0,1,0,1],[1,0,1,0,0,1,0,0,0,0,1,1,0,0,0,1,0,1,1,1,0,0,1],[1,0,0,1,0,1,1,1,1,1,1,0,1,1,0,0,1,0,0,0,1,0,1],[1,1,0,0,0,0,1,1,1,1,0,1,0,0,0,0,0,1,0,0,0,1,1],[1,0,1,0,0,0,1,0,0,0,1,1,1,0,0,1,0,1,1,1,1,1,1],[1,1,0,0,0,1,1,1,0,0,1,1,0,1,1,1,0,1,0,0,0,0,1],[1,0,0,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,1,1,1,1],[1,0,1,1,1,0,0,0,0,0,1,1,1,0,0,1,0,0,0,1,1,1,1],[1,1,0,0,0,0,1,0,1,0,0,1,0,0,0,1,0,1,0,0,0,1,1],[1,0,0,0,1,1,0,1,1,0,1,0,1,1,0,1,1,1,0,1,0,1,1],[1,1,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,0,0,1],[1,0,1,0,0,1,0,1,0,1,0,0,1,1,1,1,0,1,1,0,0,0,1]],"pitch":0.04524886877828054,"fields":[{"name":"ntrl-demo","run":"20261101T193703Z-dd44f02b"},{"name":"segment DP","run":"20261101T202506Z-fbbff9fe"},{"name":"segment DP + wall term (weight 0.3)","run":"20261101T223027Z-dd0f1f6b"}],"prepared":"20261101T193403Z-cea05796","layout":{"truth":[333,333,13],"learned":[333,333,37]},"median_ratio":{"ntrl-demo":1.1419225931167603,"segment DP":1.2640939950942993,"segment DP + wall term (weight 0.3)":1.0491729974746704}}};
+      const SER = [
+        {name: 'truth', label: 'true travel time', css: '--ink', w: 2.2},
+        {name: 'ntrl-demo', label: 'ntrl-demo', css: '--s-ntrl', w: 1.8},
+        {name: 'segment DP', label: 'segment DP', css: '--s-dp', w: 1.8},
+        {name: 'segment DP + wall term (weight 0.3)', label: 'segment DP + wall term (weight 0.3)', css: '--s-wall', w: 1.8},
+      ];
+      const on = {truth: true, 'ntrl-demo': true, 'segment DP': true, 'segment DP + wall term (weight 0.3)': true};
+      const sizes = Object.keys(M).map(Number).sort((a, b) => a - b);
+      const st = {n: sizes.includes(13) ? 13 : sizes[0], head: 0, i: 0, j: 0, hover: null, zoom: {}};
+      const cache = {}, pending = {};
+      const NS = 'http://www.w3.org/2000/svg';
+      const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+      const hx = (tag, cls, text, parent) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; if (parent) parent.appendChild(e); return e; };
+      const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+      const H2F = (() => { const t = new Float32Array(65536); for (let h = 0; h < 65536; h++) { const s = h & 0x8000 ? -1 : 1, e = (h >> 10) & 31, f = h & 1023; t[h] = e === 0 ? s * Math.pow(2, -14) * f / 1024 : e === 31 ? (f ? NaN : s * Infinity) : s * Math.pow(2, e - 15) * (1 + f / 1024); } return t; })();
+      const bytes = txt => { const b = atob(txt.trim()); const u = new Uint8Array(b.length); for (let k = 0; k < b.length; k++) u[k] = b.charCodeAt(k); return u; };
+      const status = document.getElementById('ex-status');
+
+      function load(n, head) {
+        const key = `${n}|${head}`;
+        if (cache[key]) return Promise.resolve(cache[key]);
+        if (pending[key]) return pending[key];
+        const get = f => fetch(`explorer/${f}`).then(r => { if (!r.ok) throw new Error(`${f}: HTTP ${r.status}`); return r.text(); });
+        const sp = cache[`${n}|speed`] ? Promise.resolve(null) : get(`m${n}_speed.b64.txt`);
+        pending[key] = Promise.all([get(`m${n}_h${head}.b64.txt`), sp]).then(([t, s]) => {
+          const u = bytes(t); const raw = new Uint16Array(u.buffer, 0, u.length >> 1);
+          const v = new Float32Array(raw.length); for (let k = 0; k < raw.length; k++) v[k] = H2F[raw[k]];
+          if (s) cache[`${n}|speed`] = bytes(s);
+          cache[key] = v; delete pending[key]; return v;
+        });
+        return pending[key];
+      }
+
+      // one source's lines: {truth: {x, y, t}, <field>: {x, y, t}}
+      function lines(n, head) {
+        const m = M[n], v = cache[`${n}|${head}`]; if (!v) return null;
+        const nx = m.nx, nt = m.nt, nl = m.theta_learned.length, F = m.fields.length;
+        const row = 2 * nx + nt + F * (2 * nx + nl), base = (st.i * n + st.j) * row;
+        const out = {truth: {x: v.subarray(base, base + nx), y: v.subarray(base + nx, base + 2 * nx), t: v.subarray(base + 2 * nx, base + 2 * nx + nt)}};
+        let o = base + 2 * nx + nt;
+        m.fields.forEach(f => { out[f.name] = {x: v.subarray(o, o + nx), y: v.subarray(o + nx, o + 2 * nx), t: v.subarray(o + 2 * nx, o + 2 * nx + nl)}; o += 2 * nx + nl; });
+        return out;
+      }
+      function speedLine(n, head, axis) {     // true unit speed (0..1) along the row (axis 'x') or column ('y') through the pose
+        const s = cache[`${n}|speed`]; if (!s) return null;
+        const m = M[n], h = m.headings.indexOf(head), nx = m.nx;
+        const which = axis === 'x' ? 0 : 1, cell = axis === 'x' ? st.j : st.i;
+        const o = ((h * 2 + which) * n + cell) * nx;
+        return s.subarray(o, o + nx);
+      }
+
+      // ---- controls
+      function chips(box, items, isOn, click) {
+        box.textContent = '';
+        items.forEach(it => {
+          const b = hx('button', 'chip', null, box); b.type = 'button'; b.id = it.id;
+          if (it.key) { const k = hx('span', 'key', null, b); k.style.color = `var(${it.key})`; }
+          b.append(it.text);
+          b.setAttribute('aria-pressed', String(isOn(it)));
+          if (it.disabled) { b.disabled = true; b.title = it.disabled; }
+          b.addEventListener('click', () => click(it));
+        });
+      }
+      function drawControls() {
+        chips(document.getElementById('ex-mazes'), sizes.map(n => ({id: `ex-m${n}`, n, text: `${n}×${n}`})), it => it.n === st.n, it => { if (it.n !== st.n) { st.n = it.n; st.i = st.j = Math.floor(it.n / 2); st.hover = null; st.zoom = {}; refresh(); } });
+        chips(document.getElementById('ex-heads'), M[st.n].headings.map(h => ({id: `ex-h${h}`, h, text: `${h}°`})), it => it.h === st.head, it => { st.head = it.h; refresh(); });
+        const have = new Set(M[st.n].fields.map(f => f.name));
+        chips(document.getElementById('ex-series'), SER.map(s => ({id: `ex-s${SER.indexOf(s)}`, s, key: s.css, text: s.label, disabled: s.name === 'truth' || have.has(s.name) ? null : `no run of this field on the ${st.n}×${st.n} maze`})),
+          it => on[it.s.name] && (it.s.name === 'truth' || have.has(it.s.name)), it => { on[it.s.name] = !on[it.s.name]; drawControls(); draw(); });
+      }
+
+      // ---- map
+      const cv = document.getElementById('ex-canvas');
+      function geom() { const n = st.n, W = cv.width, pad = 14, s = (W - 2 * pad) / n; return {n, W, pad, s, X: x => pad + x * s, Y: y => W - pad - y * s}; }
+      function drawMap() {
+        const g = geom(), m = M[st.n], c = cv.getContext('2d');
+        const ink = css('--ink'), rule = css('--rule'), acc = css('--accent'), surf = css('--surface'), wash = css('--wash');
+        c.clearRect(0, 0, g.W, g.W); c.fillStyle = surf; c.fillRect(0, 0, g.W, g.W);
+        const xc = m.xs[m.cells[st.i]], yc = m.xs[m.cells[st.j]];
+        c.fillStyle = wash;                                   // the picked row and column
+        c.fillRect(g.X(0), g.Y(st.j + 1), g.n * g.s, g.s); c.fillRect(g.X(st.i), g.Y(g.n), g.s, g.n * g.s);
+        c.strokeStyle = acc; c.lineWidth = 1.5; c.setLineDash([6, 5]);
+        c.beginPath(); c.moveTo(g.X(0), g.Y(yc)); c.lineTo(g.X(g.n), g.Y(yc)); c.moveTo(g.X(xc), g.Y(0)); c.lineTo(g.X(xc), g.Y(g.n)); c.stroke(); c.setLineDash([]);
+        c.strokeStyle = ink; c.lineCap = 'square'; c.lineWidth = Math.max(2, 0.1 * g.s);
+        c.beginPath();
+        m.V.forEach((col, i) => col.forEach((w, j) => { if (w) { c.moveTo(g.X(i), g.Y(j)); c.lineTo(g.X(i), g.Y(j + 1)); } }));
+        m.H.forEach((col, i) => col.forEach((w, j) => { if (w) { c.moveTo(g.X(i), g.Y(j)); c.lineTo(g.X(i + 1), g.Y(j)); } }));
+        c.stroke();
+        const robot = (x, y, deg, fill, alpha) => {           // the 0.5 x 0.2-cell robot
+          c.save(); c.globalAlpha = alpha; c.translate(g.X(x), g.Y(y)); c.rotate(-deg * Math.PI / 180);
+          c.fillStyle = fill; c.fillRect(-0.25 * g.s, -0.1 * g.s, 0.5 * g.s, 0.2 * g.s);
+          c.fillStyle = surf; c.beginPath(); c.arc(0.17 * g.s, 0, Math.max(1.5, 0.035 * g.s), 0, 2 * Math.PI); c.fill(); c.restore();
+        };
+        if (st.hover) robot(st.hover.x, st.hover.y, st.hover.deg, css('--muted'), 0.75);
+        robot(xc, yc, st.head, acc, 1);
+      }
+      function pick(ev) {
+        const r = cv.getBoundingClientRect(), g = geom();
+        const px = (ev.clientX - r.left) * cv.width / r.width, py = (ev.clientY - r.top) * cv.height / r.height;
+        const i = Math.floor((px - g.pad) / g.s), j = Math.floor((g.W - g.pad - py) / g.s);
+        if (i >= 0 && i < g.n && j >= 0 && j < g.n && (i !== st.i || j !== st.j)) { st.i = i; st.j = j; st.hover = null; refresh(); }
+      }
+      cv.addEventListener('click', pick);
+      cv.addEventListener('keydown', ev => {
+        const d = {ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, 1], ArrowDown: [0, -1]}[ev.key]; if (!d) return;
+        ev.preventDefault();
+        st.i = Math.min(st.n - 1, Math.max(0, st.i + d[0])); st.j = Math.min(st.n - 1, Math.max(0, st.j + d[1])); st.hover = null; refresh();
+      });
+
+      // ---- charts
+      function niceMax(v) { if (!(v > 0)) return 1; const p = Math.pow(10, Math.floor(Math.log10(v))); for (const k of [1, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10]) if (k * p >= v) return k * p; return 10 * p; }
+      function ticks(lo, hi, count) { const span = hi - lo, raw = span / count, p = Math.pow(10, Math.floor(Math.log10(raw))); const step = [1, 2, 2.5, 5, 10].map(k => k * p).find(s => s >= raw); const out = []; for (let v = Math.ceil(lo / step) * step; v <= hi + 1e-9; v += step) out.push(+v.toFixed(6)); return out; }
+      let clipId = 0;
+      const fmt = v => v == null || !isFinite(v) ? '–' : v < 10 ? v.toFixed(2) : v.toFixed(1);
+
+      function chart(box, spec) {
+        // spec: {title, sub, xs (truth), xl (learned), unit, xlab, series: [{s, ys, xs}], src, band, pose(x)}
+        const p = hx('div', 'panel', null, box);
+        const h4 = hx('h4', null, spec.title, p); hx('span', null, spec.sub, h4);
+        const key = spec.unit, full = [spec.lo, spec.hi], minW = key === 'heading' ? 10 : 0.5;
+        const z = st.zoom[key] || full;
+        const setZoom = (a, b) => {                           // clamp to the full range, keep at least minW wide
+          let w = Math.max(minW, b - a); if (w >= full[1] - full[0]) { delete st.zoom[key]; draw(); return; }
+          let c = (a + b) / 2; a = c - w / 2; b = c + w / 2;
+          if (a < full[0]) { b += full[0] - a; a = full[0]; } if (b > full[1]) { a -= b - full[1]; b = full[1]; }
+          st.zoom[key] = [a, b]; draw();
+        };
+        const zb = hx('span', 'ex-zb', null, h4);
+        const zbtn = (label, title, fn, dis) => { const b = hx('button', null, label, zb); b.type = 'button'; b.title = title; b.setAttribute('aria-label', title); b.disabled = !!dis; b.addEventListener('click', fn); };
+        const zoomed = !!st.zoom[key];
+        zbtn('+', `Zoom in on ${spec.title.toLowerCase()}`, () => { const c = Math.min(Math.max(spec.src, z[0]), z[1]); const w = (z[1] - z[0]) / 2; setZoom(c - w / 2, c + w / 2); }, z[1] - z[0] <= minW + 1e-9);
+        zbtn('\u2212', `Zoom out on ${spec.title.toLowerCase()}`, () => { const c = (z[0] + z[1]) / 2, w = (z[1] - z[0]) * 2; setZoom(c - w / 2, c + w / 2); }, !zoomed);
+        zbtn('Reset', `Show the whole line ${spec.title.toLowerCase()}`, () => { delete st.zoom[key]; draw(); }, !zoomed);
+        const W = box.clientWidth && box.clientWidth < 520 ? 420 : 640, H = (spec.h || 210) * (W < 640 ? 0.85 : 1), L = 54, R = 12, T = 10, B = 36;
+        const svg = mk('svg', {viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': `${spec.title}: ${spec.sub}`}, p);
+        const x0 = z[0], x1 = z[1];
+        // scale to poses the robot can occupy (true unit speed above its floor); peaks inside walls run off the top
+        const free = (r, k) => !spec.band || r.xs !== spec.xs || spec.band[k] > 26;
+        const inView = (r, k) => r.xs[k] >= x0 - 1e-9 && r.xs[k] <= x1 + 1e-9;
+        let ymax = 0; spec.series.forEach(r => r.ys.forEach((v, k) => { if (isFinite(v) && v > ymax && free(r, k) && inView(r, k)) ymax = v; }));
+        ymax = niceMax(ymax * 1.04);
+        const cid = `ex-clip-${++clipId}`;
+        mk('rect', {x: L, y: T - 2, width: W - L - R, height: H - T - B + 4}, mk('clipPath', {id: cid}, mk('defs', {}, svg)));
+        const X = v => L + (v - x0) / (x1 - x0) * (W - L - R), Y = v => T + (1 - v / ymax) * (H - T - B);
+        const bandG = mk('g', {'clip-path': `url(#${cid})`}, svg);
+        if (spec.band) {                                       // slowed-by-wall bands: opacity grows as the true speed falls
+          const xs = spec.xs, sp = spec.band, lvl = k => sp[k] >= 254 ? 0 : sp[k] > 26 ? Math.min(3, 1 + Math.floor((1 - sp[k] / 255) * 3)) : 4;
+          const edge = k => k <= 0 ? xs[0] : k >= xs.length ? xs[xs.length - 1] : (xs[k - 1] + xs[k]) / 2;
+          for (let k = 0; k < xs.length;) {                  // merge runs of one slowness level into one rect (no seams)
+            const l = lvl(k); let e = k + 1; while (e < xs.length && lvl(e) === l) e++;
+            if (l) mk('rect', {x: X(edge(k)), y: T, width: Math.max(0.6, X(edge(e)) - X(edge(k))), height: H - T - B, class: 'ex-band', 'fill-opacity': [0, 0.1, 0.17, 0.24, 0.34][l]}, bandG);
+            k = e;
+          }
+        }
+        const ax = mk('g', {class: 'axis'}, svg);
+        ticks(0, ymax, 4).forEach(v => { mk('line', {x1: L, x2: W - R, y1: Y(v), y2: Y(v), class: 'gridline'}, svg); mk('text', {x: L - 6, y: Y(v) + 3, 'text-anchor': 'end'}, ax).textContent = v; });
+        (zoomed || !spec.xticks ? ticks(x0, x1, W < 640 ? 5 : 8) : spec.xticks).forEach(v => { mk('text', {x: X(v), y: H - B + 14, 'text-anchor': 'middle'}, ax).textContent = v; });
+        mk('text', {x: (L + W - R) / 2, y: H - 5, 'text-anchor': 'middle', class: 'ex-axlab'}, ax).textContent = spec.xlab;
+        mk('text', {x: 0, y: 0, transform: `translate(11 ${(T + H - B) / 2}) rotate(-90)`, 'text-anchor': 'middle', class: 'ex-axlab'}, ax).textContent = 'travel time (cells)';
+        const plot = mk('g', {'clip-path': `url(#${cid})`}, svg);
+        mk('line', {x1: X(spec.src), x2: X(spec.src), y1: T, y2: H - B, class: 'ex-src'}, plot);
+        spec.series.forEach(r => {
+          let d = '', pen = false;
+          r.xs.forEach((xv, k) => { const v = r.ys[k]; if (isFinite(v)) { d += `${pen ? 'L' : 'M'}${X(xv).toFixed(1)},${Y(v).toFixed(1)}`; pen = true; } else pen = false; });
+          mk('path', {d, fill: 'none', stroke: `var(${r.s.css})`, 'stroke-width': r.s.w, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, plot);
+          if (r.dots) r.xs.forEach((xv, k) => { if (isFinite(r.ys[k])) mk('circle', {cx: X(xv), cy: Y(r.ys[k]), r: 3, fill: `var(${r.s.css})`, stroke: 'var(--surface)', 'stroke-width': 1.5}, plot); });
+        });
+        if (spec.src >= x0 && spec.src <= x1) mk('circle', {cx: X(spec.src), cy: Y(0), r: 4.5, fill: 'var(--accent)', stroke: 'var(--surface)', 'stroke-width': 2}, svg);
+        // hover: crosshair + tooltip + ghost robot on the map
+        const cross = mk('line', {y1: T, y2: H - B, class: 'ex-cross', visibility: 'hidden'}, svg);
+        const sel = mk('rect', {y: T, height: H - T - B, width: 0, class: 'ex-sel', visibility: 'hidden'}, svg);
+        const hit = mk('rect', {x: L, y: T, width: W - L - R, height: H - T - B, fill: 'transparent', style: 'touch-action: pan-y; cursor: col-resize'}, svg);
+        const toV = ev => { const r = svg.getBoundingClientRect(), sx = (ev.clientX - r.left) * W / r.width; return {sx: Math.min(W - R, Math.max(L, sx)), v: x0 + (Math.min(W - R, Math.max(L, sx)) - L) / (W - L - R) * (x1 - x0)}; };
+        let drag = null;
+        hit.addEventListener('pointerdown', ev => { if (ev.button !== 0) return; drag = toV(ev); try { hit.setPointerCapture(ev.pointerId); } catch (e) {} });
+        hit.addEventListener('pointerup', ev => {
+          if (!drag) return; const a = drag, b = toV(ev); drag = null; sel.setAttribute('visibility', 'hidden');
+          if (Math.abs(b.sx - a.sx) >= 6) setZoom(Math.min(a.v, b.v), Math.max(a.v, b.v));
+        });
+        hit.addEventListener('pointercancel', () => { drag = null; sel.setAttribute('visibility', 'hidden'); });
+        hit.addEventListener('dblclick', () => { if (st.zoom[key]) { delete st.zoom[key]; draw(); } });
+        const tip = hx('div', 'tip', null, p); tip.hidden = true;
+        const nearest = (xs, v) => { let b = 0; for (let k = 1; k < xs.length; k++) if (Math.abs(xs[k] - v) < Math.abs(xs[b] - v)) b = k; return b; };
+        const move = ev => {
+          if (drag) { const b = toV(ev); sel.setAttribute('x', Math.min(drag.sx, b.sx)); sel.setAttribute('width', Math.abs(b.sx - drag.sx)); sel.setAttribute('visibility', 'visible'); }
+          const r = svg.getBoundingClientRect(), sx = (ev.clientX - r.left) * W / r.width;
+          const v = x0 + (sx - L) / (W - L - R) * (x1 - x0); if (v < x0 - 0.01 * (x1 - x0) || v > x1 + 0.01 * (x1 - x0)) return leave();
+          cross.setAttribute('x1', X(v)); cross.setAttribute('x2', X(v)); cross.setAttribute('visibility', 'visible');
+          tip.textContent = ''; hx('div', 'h', `${spec.unit} ${v.toFixed(spec.unit === 'heading' ? (x1 - x0 < 30 ? 1 : 0) : (x1 - x0 < 2 ? 3 : 2))}${spec.unit === 'heading' ? '°' : ''}`, tip);
+          spec.series.forEach(rw => { const k = nearest(rw.xs, v); const row = hx('div', 'r', null, tip); const kk = hx('span', 'key', null, row); kk.style.color = `var(${rw.s.css})`; hx('i', null, rw.s.label, row); hx('b', null, fmt(rw.ys[k]), row); });
+          if (spec.band) { const k = nearest(spec.xs, v); hx('div', 'h', `true speed here ${(spec.band[k] / 255).toFixed(2)}`, tip); }
+          tip.hidden = false;
+          const pr = p.getBoundingClientRect(), left = ev.clientX - pr.left + 14;
+          tip.style.left = `${Math.min(left, pr.width - tip.offsetWidth - 6)}px`; tip.style.top = `${ev.clientY - pr.top + 12}px`;
+          st.hover = spec.pose(v); drawMap();
+        };
+        const leave = () => { tip.hidden = true; cross.setAttribute('visibility', 'hidden'); if (st.hover) { st.hover = null; drawMap(); } };
+        hit.addEventListener('pointermove', move); hit.addEventListener('pointerleave', leave);
+      }
+
+      function draw() {
+        drawMap();
+        const box = document.getElementById('ex-charts'); box.textContent = '';
+        const m = M[st.n], ln = lines(st.n, st.head), readout = document.getElementById('ex-readout');
+        const xc = m.xs[m.cells[st.i]], yc = m.xs[m.cells[st.j]];
+        readout.innerHTML = '';
+        readout.append('Picked pose: cell ('); hx('b', null, `${st.i}, ${st.j}`, readout); readout.append('), x '); hx('b', null, xc.toFixed(2), readout);
+        readout.append(', y '); hx('b', null, yc.toFixed(2), readout); readout.append(' cells, heading '); hx('b', null, `${st.head}°`, readout); readout.append('.');
+        if (!ln) { hx('div', 'note', 'Loading travel times…', box); return; }
+        const shown = SER.filter(s => on[s.name] && ln[s.name]);
+        const ratio = shown.filter(s => s.name !== 'truth').map(s => {      // median learned / true over both lines, beyond half a cell
+          const r = []; ['x', 'y'].forEach(a => ln.truth[a].forEach((t, k) => { if (t > 0.5 && isFinite(ln[s.name][a][k])) r.push(ln[s.name][a][k] / t); }));
+          r.sort((a, b) => a - b); return `${s.label} ${r.length ? r[r.length >> 1].toFixed(2) : '–'}`;
+        });
+        if (ratio.length) { const d = hx('div', null, null, readout); d.append(`Median learned / true time along both lines: ${ratio.join(' · ')}.`); }
+        const xsT = Array.from(m.xs), thT = m.theta_truth, thL = m.theta_learned;
+        const xt = ticks(0, st.n, Math.min(st.n, 11));
+        chart(box, {title: 'Along x', sub: `row through the pose, y = ${yc.toFixed(2)}, heading ${st.head}°`, xs: xsT, lo: xsT[0], hi: xsT[xsT.length - 1], xticks: xt, unit: 'x', xlab: 'x (cells)', src: xc,
+          band: speedLine(st.n, st.head, 'x'), series: shown.map(s => ({s, xs: xsT, ys: ln[s.name].x})), pose: v => ({x: v, y: yc, deg: st.head})});
+        chart(box, {title: 'Along y', sub: `column through the pose, x = ${xc.toFixed(2)}, heading ${st.head}°`, xs: xsT, lo: xsT[0], hi: xsT[xsT.length - 1], xticks: xt, unit: 'y', xlab: 'y (cells)', src: yc,
+          band: speedLine(st.n, st.head, 'y'), series: shown.map(s => ({s, xs: xsT, ys: ln[s.name].y})), pose: v => ({x: xc, y: v, deg: st.head})});
+        chart(box, {title: 'Along heading', sub: `turning in place at (${xc.toFixed(2)}, ${yc.toFixed(2)})`, h: 180, xs: thT, lo: -90, hi: 90, xticks: [-90, -60, -30, 0, 30, 60, 90], unit: 'heading', xlab: 'heading (degrees) · truth on the 13 grid headings', src: st.head,
+          series: shown.map(s => s.name === 'truth' ? {s, xs: thT, ys: ln.truth.t, dots: true} : {s, xs: thL, ys: ln[s.name].t}), pose: v => ({x: xc, y: yc, deg: v})});
+      }
+      function refresh() {
+        drawControls(); draw();
+        const n = st.n, head = st.head;
+        if (!cache[`${n}|${head}`]) {
+          status.textContent = `Loading the ${n}×${n} maze at ${head}°…`;
+          load(n, head).then(() => { status.textContent = ''; if (st.n === n && st.head === head) draw(); })
+            .catch(e => { status.textContent = `Could not load the travel times (${e.message}). Reload the page to try again.`; });
+        }
+      }
+      st.i = st.j = Math.floor(st.n / 2);
+      refresh();
+      const mq = window.matchMedia('(prefers-color-scheme: dark)'); if (mq.addEventListener) mq.addEventListener('change', drawMap);
+      let rz, lastW = 0; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { const w = document.getElementById('ex-charts').clientWidth < 520; if (w !== lastW) { lastW = w; draw(); } }, 150); });
+      lastW = document.getElementById('ex-charts').clientWidth < 520;
+      new MutationObserver(drawMap).observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
+    })();
+    </script>
+  </section>

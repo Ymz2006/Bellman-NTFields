@@ -1,0 +1,346 @@
+<title>2026-11-04 Speed-Shaped Fourier Rows</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;650;750&family=Public+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* The maze-scale family: reading column of about 70ch with full-width figure bands. Hue = what the 16 rows hold; a hollow mark = the same rows with the walls flipped. */
+:root {
+  --bg: #f5f6f8; --surface: #ffffff; --ink: #15181d; --ink2: #4b525c; --muted: #737b86; --rule: #dde1e6; --wash: #eef1f5;
+  --accent: #eb6834;
+  --s-ntrl: #2a78d6; --s-speed: #eb6834; --s-oracle: #6250d6; --s-geo: #1baf7a; --s-base: #4b525c;
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+    --accent: #d95926;
+    --s-ntrl: #3987e5; --s-speed: #d95926; --s-oracle: #9085e9; --s-geo: #199e70; --s-base: #b6bcc5;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+  --accent: #d95926;
+  --s-ntrl: #3987e5; --s-speed: #d95926; --s-oracle: #9085e9; --s-geo: #199e70; --s-base: #b6bcc5;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 15.5px/1.6 var(--f-body); margin: 0; }
+.page { max-width: 1120px; margin: 0 auto; padding-block: 40px 72px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 44px; }
+.page > * { min-width: 0; }
+.col { max-width: 70ch; min-width: 0; }
+header { display: grid; gap: 14px; }
+.eyebrow { font: 500 12px/1.4 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 750 clamp(30px, 5vw, 46px)/1.05 var(--f-display); letter-spacing: -0.015em; margin: 0; text-wrap: balance; }
+h2 { font: 650 23px/1.2 var(--f-display); margin: 0 0 10px; text-wrap: balance; }
+h3 { font: 650 16px/1.3 var(--f-display); margin: 18px 0 6px; }
+p { margin: 0 0 12px; }
+.lede { font-size: 17.5px; line-height: 1.55; }
+p strong, li strong { font-weight: 600; }
+section { display: grid; gap: 14px; min-width: 0; }
+figure { margin: 0; background: #ffffff; border: 1px solid var(--rule); border-radius: 6px; padding: 10px; overflow-x: auto; }
+figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+figcaption { color: #4b525c; font-size: 13px; margin-top: 6px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
+.tile { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 12px 14px; display: grid; gap: 4px; align-content: start; }
+.tile .k { font: 500 12px/1.3 var(--f-mono); color: var(--muted); }
+.tile .v { font: 650 26px/1.15 var(--f-display); color: var(--ink); font-variant-numeric: tabular-nums; }
+.tile .v small { font: 500 13px var(--f-mono); color: var(--muted); }
+.tile .s { font-size: 13px; color: var(--ink2); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--ink2); align-items: center; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend svg, .panel .legend svg { width: 22px; height: 12px; flex: none; overflow: visible; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr)); gap: 12px; }
+.panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 10px 4px; position: relative; min-width: 0; }
+.panel h4 { font: 650 14px var(--f-display); margin: 0 0 2px 4px; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.panel h4 span { font: 400 12px var(--f-mono); color: var(--muted); }
+.panel svg { display: block; width: 100%; height: auto; overflow: visible; }
+.axis text { fill: var(--muted); font: 9.5px var(--f-mono); }
+.axis .lab { fill: var(--ink2); font: 10px var(--f-mono); }
+.rowlab { fill: var(--ink); font: 11px var(--f-body); }
+.gridline { stroke: var(--rule); stroke-width: 1; }
+.refline { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 3 3; }
+.tip { position: absolute; z-index: 5; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--rule); border-radius: 6px; padding: 8px 10px; box-shadow: 0 4px 14px rgba(0,0,0,0.12); font-size: 12.5px; max-width: 280px; }
+.tip .h { font: 500 11.5px var(--f-mono); color: var(--muted); margin-bottom: 4px; }
+.tip .r { display: flex; justify-content: space-between; gap: 12px; }
+.tip .r b { font: 500 12.5px var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tip .r i { font-style: normal; color: var(--ink2); }
+details { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 14px; min-width: 0; }
+summary { cursor: pointer; font: 600 14px var(--f-body); }
+.tablewrap { overflow-x: auto; margin-top: 8px; }
+table { border-collapse: collapse; font-size: 13px; min-width: 620px; width: 100%; }
+th, td { padding: 6px 9px; border-bottom: 1px solid var(--rule); text-align: right; vertical-align: top; }
+th:nth-child(-n+2), td:nth-child(-n+2) { text-align: left; }
+td.runs { text-align: left; font-size: 11px; line-height: 1.7; min-width: 210px; }
+thead th { font: 600 12px var(--f-mono); color: var(--muted); white-space: nowrap; }
+.p2 td:first-child { min-width: 215px; }
+.p2 th { vertical-align: bottom; }
+td.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.mute { color: var(--muted); font-size: 11.5px; }
+tbody tr:hover { background: var(--wash); }
+.note { font-size: 13.5px; color: var(--ink2); }
+ul.tight { margin: 0 0 12px; padding-left: 20px; display: grid; gap: 6px; }
+code { font: 13px var(--f-mono); background: var(--wash); padding: 1px 4px; border-radius: 4px; }
+td.runs code { font-size: 11px; white-space: nowrap; }
+</style>
+
+<div class="page">
+  <header class="col">
+    <div class="eyebrow">jeffrey/speed_fourier · ntrl-demo on SE(2) mazes · 4 Nov 2026</div>
+    <h1>Speed-Shaped Fourier Rows</h1>
+    <!--LEDE-->
+  </header>
+
+  <section><div class="tiles"><!--TILES--></div></section>
+
+  <section>
+    <div class="col"><!--BUILT--></div>
+    <figure><img src="rows.png" alt="Left: the speed map of the 13 by 13 maze with one line across it. Right: the speed signal along that line with its sums for 5 and 30 terms, and row maps at 30 and 120 degrees."><figcaption>The rows on the 13×13 maze. Each row is a sum of sin and cos terms along lines in one direction.</figcaption></figure>
+    <div class="grid" id="fit"></div>
+    <div class="col"><!--FITTEXT--></div>
+  </section>
+
+  <section>
+    <div class="col"><!--RESULT--></div>
+    <div class="legend" id="legend"></div>
+    <div class="grid" id="success"></div>
+    <div class="col"><!--RESULTTEXT--></div>
+  </section>
+
+  <section>
+    <div class="col"><!--TERMS--></div>
+    <div class="grid" id="sweep"></div>
+    <div class="col"><!--TERMSTEXT--></div>
+    <div class="grid" id="sweepmech"></div>
+    <div class="col"><!--TERMSTEXT2--></div>
+  </section>
+
+  <section>
+    <div class="col"><!--CAPTURE--></div>
+    <div class="grid" id="capture"></div>
+    <div class="col"><!--CAPTURETEXT--></div>
+  </section>
+
+  <section>
+    <div class="col"><!--WHY--></div>
+    <div class="grid" id="profile"></div>
+    <div class="col"><!--WHYTEXT--></div>
+    <div class="grid" id="freeze"></div>
+    <div class="col"><!--FREEZETEXT--></div>
+    <details><summary>Wall measures for every arm, intact and frozen</summary>
+      <div class="tablewrap"><table><thead><tr><th>maze</th><th>rows</th><th>success %</th><th>leak</th><th>rise</th><th>rise frozen</th><th>jump</th><th>jump frozen</th><th>sep</th><th>sep frozen</th><th>bumps</th></tr></thead><tbody><!--MECHROWS--></tbody></table></div>
+      <p class="note"><!--MECHNOTE--></p>
+    </details>
+  </section>
+
+  <section>
+    <div class="col"><!--INTEGRAL--></div>
+    <div class="tablewrap"><table class="p2"><thead><tr><th>rows</th><th>22×22</th><th>per seed,<br>of 720</th><th>points against<br>its control</th><th>flipped<br><span class="mute">true − flipped</span></th><th>jump</th><th>frozen</th><th>sep</th><th>bumps</th></tr></thead><tbody><!--P2ROWS--></tbody></table></div>
+    <p class="note"><!--INTEGRALNOTE--></p>
+    <div class="col"><!--INTEGRALTEXT--></div>
+  </section>
+
+  <section>
+    <div class="col"><!--NOOCT--></div>
+    <div class="tablewrap"><table class="p2"><thead><tr><th>embedding</th><th>13×13</th><th>22×22</th><th>T / T*</th><th>jump</th><th>direction</th><th>bumps</th><th>rank</th></tr></thead><tbody><!--P3ROWS--></tbody></table></div>
+    <p class="note"><!--NOOCTNOTE--></p>
+    <div class="col"><!--NOOCTTEXT--></div>
+  </section>
+
+  <section>
+    <div class="col"><!--RAYS--></div>
+    <figure><img src="rays.png" alt="Six maps of the 13 by 13 maze: the walls with one ray and one landmark, two ray hit-count rows, one integral row, one landmark row, and the same landmark row without walls."><figcaption>The new rows on the 13×13 maze. Hit counts are step functions. The integral is a ramp that climbs inside walls. A landmark row grows with distance from its landmark (the star) and carries the wall pattern; the control without walls is smooth.</figcaption></figure>
+    <div class="tablewrap"><table class="p2"><thead><tr><th>rows next to 120 octaves</th><th>22×22</th><th>per seed,<br>of 720</th><th>points against<br>empty rows</th><th>13×13</th><th>lost when<br>rows pinned</th><th>jump</th><th>bumps</th><th>screen</th></tr></thead><tbody><!--P4ROWS--></tbody></table></div>
+    <p class="note"><!--RAYSNOTE--></p>
+    <div class="col"><!--RAYSTEXT--></div>
+  </section>
+
+  <section><div class="col"><!--OTHER--></div></section>
+  <section><div class="col"><!--WRONG--></div></section>
+  <section><div class="col"><!--NEXT--></div></section>
+
+  <section>
+    <details><summary>Setup, and every run</summary>
+      <!--SETUP-->
+      <div class="tablewrap"><table><thead><tr><th>maze</th><th>rows</th><th>success</th><th>successes per seed</th><th>log-speed corr</th><th>T / T*</th><th>runs (seeds 87358, 1, 2)</th></tr></thead><tbody><!--RUNS--></tbody></table></div>
+    </details>
+  </section>
+</div>
+
+<script>
+(() => {
+  const D = /*DATA*/;
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+  const h = (t, c, txt, p) => { const e = document.createElement(t); if (c) e.className = c; if (txt != null) e.textContent = txt; if (p) p.appendChild(e); return e; };
+  const COL = {ntrl: '--s-ntrl', base: '--s-base', speed: '--s-speed', oracle: '--s-oracle', geo: '--s-geo', pure: '--s-speed', other: '--s-speed'};
+  const col = f => `var(${COL[f]})`;
+  function card(box, title, unit) { const p = h('div', 'panel', null, box); const t = h('h4', null, title, p); if (unit) h('span', null, unit, t); return p; }
+  function tipFor(p) { const tip = h('div', 'tip', null, p); tip.hidden = true; return tip; }
+  function place(tip, p, ev) {
+    tip.hidden = false; const pr = p.getBoundingClientRect(); let left = ev.clientX - pr.left + 14;
+    if (left + tip.offsetWidth > pr.width - 4) left = ev.clientX - pr.left - tip.offsetWidth - 14;
+    tip.style.left = `${Math.max(4, left)}px`; tip.style.top = `${Math.max(4, ev.clientY - pr.top - 20)}px`;
+  }
+  function fill(tip, head, rows) { tip.textContent = ''; h('div', 'h', head, tip); rows.forEach(([a, b]) => { const r = h('div', 'r', null, tip); h('i', null, a, r); h('b', null, b, r); }); }
+
+  // rows of dots: one row per arm, a small dot per training seed, a tall tick at the pooled value
+  function dots(box, n) {
+    const rows = D.success[n], p = card(box, `${n} × ${n} maze`, 'MPPI success (%)');
+    const vals = rows.flatMap(r => r.seeds.map(s => s.success));
+    const lo = Math.floor(Math.min(...vals) / 10) * 10, hi = Math.ceil(Math.max(...vals) / 10) * 10;
+    const W = 520, L = 158, Rr = 14, T = 6, RH = 26, H = T + RH * rows.length + 34;
+    const svg = mk('svg', {viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': `Success per training seed on the ${n} by ${n} maze`}, p);
+    const X = v => L + (v - lo) / (hi - lo) * (W - L - Rr), bottom = T + RH * rows.length;
+    const ax = mk('g', {class: 'axis'}, svg);
+    for (let v = lo; v <= hi; v += 10) { mk('line', {x1: X(v), x2: X(v), y1: T, y2: bottom, class: 'gridline'}, svg); mk('text', {x: X(v), y: bottom + 13, 'text-anchor': 'middle'}, ax).textContent = v; }
+    mk('text', {x: (L + W - Rr) / 2, y: bottom + 28, 'text-anchor': 'middle', class: 'lab'}, ax).textContent = 'success, % of queries × 3 planner seeds';
+    const zero = rows.find(r => r.key === 'topzero');
+    if (zero) mk('line', {x1: X(zero.mean), x2: X(zero.mean), y1: T, y2: bottom, class: 'refline'}, svg);
+    const tip = tipFor(p);
+    rows.forEach((r, i) => {
+      const y = T + RH * (i + 0.5), c = col(r.family), hollow = r.walls === 'flip';
+      mk('text', {x: L - 8, y: y + 4, 'text-anchor': 'end', class: 'rowlab'}, svg).textContent = r.label;
+      if (r.mean == null) { mk('text', {x: L + 2, y: y + 3, class: 'axis'}, svg); const e = mk('text', {x: L + 4, y: y + 4, fill: 'var(--muted)', 'font-size': 10}, svg); e.textContent = 'not run'; return; }
+      mk('line', {x1: X(r.mean), x2: X(r.mean), y1: y - 9, y2: y + 9, stroke: c, 'stroke-width': 3, 'stroke-linecap': 'round'}, svg);
+      r.seeds.forEach(s => mk('circle', {cx: X(s.success), cy: y, r: 4, fill: hollow ? 'var(--surface)' : c, stroke: hollow ? c : 'var(--surface)', 'stroke-width': hollow ? 1.8 : 1.5}, svg));
+      const hit = mk('rect', {x: 0, y: y - RH / 2, width: W, height: RH, fill: 'transparent'}, svg);
+      const show = ev => { fill(tip, r.label, [['pooled', `${r.mean.toFixed(1)} %`], ...r.seeds.map(s => [`seed ${s.seed}`, `${s.ok} / ${s.tot}`])]); place(tip, p, ev); };
+      hit.addEventListener('pointermove', show); hit.addEventListener('pointerdown', show); hit.addEventListener('pointerleave', () => { tip.hidden = true; });
+    });
+  }
+
+  // a line chart with a crosshair; series: {name, css, dash, pts: [[x, y], ...], hollow}
+  function lines(box, o) {
+    const p = card(box, o.title, o.unit);
+    const W = 420, H = 250, L = 42, Rr = 14, T = 12, B = 40;
+    const svg = mk('svg', {viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': o.title}, p);
+    const fx = o.log ? Math.log : (v => v);
+    const xs = [...new Set(o.series.flatMap(s => s.pts.map(q => q[0])))].sort((a, b) => a - b);
+    const X = v => L + (fx(v) - fx(o.x[0])) / (fx(o.x[1]) - fx(o.x[0])) * (W - L - Rr);
+    const Y = v => T + (1 - (v - o.y[0]) / (o.y[1] - o.y[0])) * (H - T - B);
+    const ax = mk('g', {class: 'axis'}, svg);
+    o.yt.forEach(v => { mk('line', {x1: L, x2: W - Rr, y1: Y(v), y2: Y(v), class: 'gridline'}, svg); mk('text', {x: L - 6, y: Y(v) + 3, 'text-anchor': 'end'}, ax).textContent = v; });
+    (o.xt || xs).forEach(v => { mk('text', {x: X(v), y: H - B + 14, 'text-anchor': 'middle'}, ax).textContent = v; });
+    mk('text', {x: (L + W - Rr) / 2, y: H - 6, 'text-anchor': 'middle', class: 'lab'}, ax).textContent = o.xlabel;
+    (o.refs || []).forEach(r => { mk('line', {x1: L, x2: W - Rr, y1: Y(r.y), y2: Y(r.y), class: 'refline'}, svg); const e = mk('text', {x: W - Rr, y: Y(r.y) - 4, 'text-anchor': 'end'}, ax); e.textContent = r.label; });
+    o.series.forEach(s => {
+      (s.scatter || []).forEach(q => mk('circle', {cx: X(q[0]), cy: Y(q[1]), r: 2.2, fill: s.css, 'fill-opacity': 0.45}, svg));
+      const d = s.pts.map((q, i) => `${i ? 'L' : 'M'}${X(q[0]).toFixed(1)},${Y(q[1]).toFixed(1)}`).join('');
+      mk('path', {d, fill: 'none', stroke: s.css, 'stroke-width': 2, 'stroke-dasharray': s.dash || '', 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
+      if (s.marks !== false) s.pts.forEach(q => mk('circle', {cx: X(q[0]), cy: Y(q[1]), r: 4, fill: s.hollow ? 'var(--surface)' : s.css, stroke: s.hollow ? s.css : 'var(--surface)', 'stroke-width': s.hollow ? 1.8 : 1.5}, svg));
+    });
+    const tip = tipFor(p), cross = mk('line', {y1: T, y2: H - B, stroke: 'var(--muted)', 'stroke-width': 1, visibility: 'hidden'}, svg);
+    const hit = mk('rect', {x: L, y: T, width: W - L - Rr, height: H - T - B, fill: 'transparent', style: 'touch-action: pan-y'}, svg);
+    const show = ev => {
+      const rc = svg.getBoundingClientRect(), sx = (ev.clientX - rc.left) * W / rc.width;
+      const k = xs.reduce((a, b) => Math.abs(X(b) - sx) < Math.abs(X(a) - sx) ? b : a, xs[0]);
+      cross.setAttribute('x1', X(k)); cross.setAttribute('x2', X(k)); cross.setAttribute('visibility', 'visible');
+      fill(tip, `${o.xname} ${o.fmtx ? o.fmtx(k) : k}`, o.series.filter(s => s.pts.some(q => q[0] === k)).map(s => [s.name, (o.fmt || (v => v.toFixed(2)))(s.pts.find(q => q[0] === k)[1])]));
+      place(tip, p, ev);
+    };
+    hit.addEventListener('pointermove', show); hit.addEventListener('pointerdown', show);
+    hit.addEventListener('pointerleave', () => { tip.hidden = true; cross.setAttribute('visibility', 'hidden'); });
+    if (o.legend !== false) { const lg = h('div', 'legend', null, p); lg.style.padding = '2px 4px 8px'; o.series.forEach(s => key(lg, s.name, s.css, s.dash, s.hollow)); }
+  }
+  function key(box, name, css, dash, hollow, dotOnly) {
+    const e = h('span', null, null, box), s = mk('svg', {viewBox: '0 0 22 12'}, e);
+    if (!dotOnly) mk('line', {x1: 0, x2: 22, y1: 6, y2: 6, stroke: css, 'stroke-width': 2, 'stroke-dasharray': dash || ''}, s);
+    if (dotOnly || hollow) mk('circle', {cx: 11, cy: 6, r: 4, fill: hollow ? 'var(--surface)' : css, stroke: css, 'stroke-width': 1.8}, s);
+    e.append(name);
+  }
+
+  // scatter of success against what the embedding carries
+  function scatter(box, n) {
+    const rows = D.capture[n].filter(r => r.family !== 'ntrl' || true), p = card(box, `${n} × ${n} maze`, 'one mark per arm');
+    const W = 420, H = 280, L = 42, Rr = 14, T = 12, B = 40;
+    const svg = mk('svg', {viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': `Success against speed captured after one random layer on the ${n} by ${n} maze`}, p);
+    const X = v => L + (Math.max(v, 0)) * (W - L - Rr), Y = v => T + (1 - v / 100) * (H - T - B);
+    const ax = mk('g', {class: 'axis'}, svg);
+    [0, 25, 50, 75, 100].forEach(v => { mk('line', {x1: L, x2: W - Rr, y1: Y(v), y2: Y(v), class: 'gridline'}, svg); mk('text', {x: L - 6, y: Y(v) + 3, 'text-anchor': 'end'}, ax).textContent = v; });
+    [0, 0.25, 0.5, 0.75, 1].forEach(v => { mk('text', {x: X(v), y: H - B + 14, 'text-anchor': 'middle'}, ax).textContent = v; });
+    mk('text', {x: (L + W - Rr) / 2, y: H - 6, 'text-anchor': 'middle', class: 'lab'}, ax).textContent = 'speed variance readable after one random layer (R²)';
+    const tip = tipFor(p);
+    rows.forEach(r => {
+      const hollow = /flip/.test(r.key), c = col(r.family);
+      const m = mk('circle', {cx: X(r.layer), cy: Y(r.success), r: 5, fill: hollow ? 'var(--surface)' : c, stroke: hollow ? c : 'var(--surface)', 'stroke-width': hollow ? 1.8 : 1.5}, svg);
+      const hit = mk('circle', {cx: X(r.layer), cy: Y(r.success), r: 11, fill: 'transparent'}, svg);
+      const show = ev => { fill(tip, r.label, [['success', `${r.success.toFixed(1)} %`], ['after one layer', r.layer.toFixed(2)], ['linear', r.capture.toFixed(2)], ['seeds', r.seeds]]); place(tip, p, ev); };
+      hit.addEventListener('pointermove', show); hit.addEventListener('pointerdown', show); hit.addEventListener('pointerleave', () => { tip.hidden = true; });
+      const name = (n === 22 ? {'ntrl-demo': 'ntrl-demo', octave: '128 octaves', 'oracle true': 'exact speed', 'geo true': 'distance rows', 'top line M30 true': '16 speed rows'} : {'ntrl-demo': 'ntrl-demo', 'oracle true': 'exact speed'})[r.key];
+      if (name) { const right = r.layer > 0.7, e = mk('text', {x: X(r.layer) + (right ? -8 : 8), y: Y(r.success) + (r.key === 'geo true' ? -7 : 4), 'text-anchor': right ? 'end' : 'start', class: 'rowlab'}, svg); e.textContent = name; }
+    });
+    const lg = h('div', 'legend', null, p); lg.style.padding = '2px 4px 8px';
+    [['ntrl-demo', 'var(--s-ntrl)'], ['octaves, empty rows', 'var(--s-base)'], ['speed rows', 'var(--s-speed)'], ['exact speed', 'var(--s-oracle)'], ['distance rows', 'var(--s-geo)']].forEach(([a, c]) => key(lg, a, c, '', false, true));
+    key(lg, 'walls flipped', 'var(--s-speed)', '', true, true);
+  }
+
+  // one row per arm: the field as trained (filled) and with the rows frozen (ring), joined
+  function dumbbell(box, n, o) {
+    const rows = D.mech[n].filter(r => r[o.f] != null && r[o.g] != null), p = card(box, o.title, `${n} × ${n}, filled: as trained, ring: rows frozen`);
+    const W = 520, L = 158, Rr = 14, T = 6, RH = 26, H = T + RH * rows.length + 34, bottom = T + RH * rows.length;
+    const svg = mk('svg', {viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': o.title}, p);
+    const X = v => L + (Math.min(v, o.max) / o.max) * (W - L - Rr);
+    const ax = mk('g', {class: 'axis'}, svg);
+    o.xt.forEach(v => { mk('line', {x1: X(v), x2: X(v), y1: T, y2: bottom, class: 'gridline'}, svg); mk('text', {x: X(v), y: bottom + 13, 'text-anchor': 'middle'}, ax).textContent = v; });
+    mk('text', {x: (L + W - Rr) / 2, y: bottom + 28, 'text-anchor': 'middle', class: 'lab'}, ax).textContent = o.xlabel;
+    if (o.ref != null) mk('line', {x1: X(o.ref), x2: X(o.ref), y1: T, y2: bottom, class: 'refline'}, svg);
+    const tip = tipFor(p);
+    rows.forEach((r, i) => {
+      const y = T + RH * (i + 0.5), c = col(r.family);
+      mk('text', {x: L - 8, y: y + 4, 'text-anchor': 'end', class: 'rowlab'}, svg).textContent = r.label;
+      mk('line', {x1: X(r[o.f]), x2: X(r[o.g]), y1: y, y2: y, stroke: c, 'stroke-width': 2}, svg);
+      mk('circle', {cx: X(r[o.g]), cy: y, r: 4.5, fill: 'var(--surface)', stroke: c, 'stroke-width': 2}, svg);
+      mk('circle', {cx: X(r[o.f]), cy: y, r: 5, fill: c, stroke: 'var(--surface)', 'stroke-width': 1.5}, svg);
+      const hit = mk('rect', {x: 0, y: y - RH / 2, width: W, height: RH, fill: 'transparent'}, svg);
+      const show = ev => { fill(tip, r.label, [['as trained', r[o.f].toFixed(2)], ['rows frozen', r[o.g].toFixed(2)]]); place(tip, p, ev); };
+      hit.addEventListener('pointermove', show); hit.addEventListener('pointerdown', show); hit.addEventListener('pointerleave', () => { tip.hidden = true; });
+    });
+  }
+
+  const legend = document.getElementById('legend');
+  key(legend, 'one training seed', 'var(--s-base)', null, false, true);
+  key(legend, 'same rows, walls flipped', 'var(--s-base)', null, true, true);
+  { const e = h('span', null, null, legend), s = mk('svg', {viewBox: '0 0 22 12'}, e); mk('line', {x1: 11, x2: 11, y1: 0, y2: 12, stroke: 'var(--s-base)', 'stroke-width': 3, 'stroke-linecap': 'round'}, s); e.append('pooled over seeds'); }
+  { const e = h('span', null, null, legend), s = mk('svg', {viewBox: '0 0 22 12'}, e); mk('line', {x1: 11, x2: 11, y1: 0, y2: 12, class: 'refline'}, s); e.append('120 octaves + 16 empty'); }
+  [22, 13].forEach(n => dots(document.getElementById('success'), n));
+
+  const F = D.fit, fitS = k => [13, 22].map((n, i) => ({name: `${n}×${n}`, css: i ? 'var(--ink)' : 'var(--muted)', pts: F[n].map(m => [m.M, m[k]])}));
+  const allM = F[13].map(m => m.M), fitX = [allM[0], allM[allM.length - 1]], fitT = allM.filter(m => [2, 5, 10, 30, 60, 120, 240].includes(m));
+  lines(document.getElementById('fit'), {title: 'How well the rows fit the speed', unit: 'R² against 1 − speed', series: fitS('r2'), x: fitX, xt: fitT, y: [0, 1], yt: [0, 0.25, 0.5, 0.75, 1], log: true, xlabel: 'sin/cos terms per row, M (log scale)', xname: 'M ='});
+  lines(document.getElementById('fit'), {title: 'How different the rows are from each other', unit: 'effective rank of 32 rows', series: fitS('rank'), x: fitX, xt: fitT, y: [1, 9], yt: [1, 3, 5, 7, 9], log: true, xlabel: 'sin/cos terms per row, M (log scale)', xname: 'M =', fmt: v => v.toFixed(1)});
+
+  [22, 13].forEach(n => {
+    const s = D.sweep[n], sr = [{name: 'true walls', css: 'var(--s-speed)', pts: s.series.true.map(p => [p.M, p.mean]), scatter: s.series.true.flatMap(p => p.seeds.map(v => [p.M, v]))}];
+    if (s.series.flip.length) sr.push({name: 'flipped walls', css: 'var(--s-speed)', dash: '5 4', hollow: true, pts: s.series.flip.map(p => [p.M, p.mean]), scatter: s.series.flip.flatMap(p => p.seeds.map(v => [p.M, v]))});
+    const all = sr.flatMap(x => [...x.pts.map(q => q[1]), ...x.scatter.map(q => q[1])]).concat([s.zero]);
+    const lo = Math.floor(Math.min(...all) / 5) * 5, hi = Math.ceil(Math.max(...all) / 5) * 5, yt = []; for (let v = lo; v <= hi; v += 5) yt.push(v);
+    lines(document.getElementById('sweep'), {title: `${n} × ${n} maze`, unit: 'success (%)', series: sr, x: [5, 120], xt: [5, 15, 30, 60, 120], y: [lo, hi], yt, log: true, xlabel: 'sin/cos terms per row, M (log scale)', xname: 'M =', fmt: v => `${v.toFixed(1)} %`, refs: [{y: s.zero, label: '16 empty rows'}]});
+  });
+
+  [['sep', 'sep_seeds', 'Separation across walls, 22 × 22', 'T / corridor distance', [0.2, 0.5], [0.2, 0.3, 0.4, 0.5]], ['jump', 'jump_seeds', 'Difference between the two sides, 22 × 22', 'share of the true difference', [0.2, 0.8], [0.2, 0.4, 0.6, 0.8]]].forEach(([f, fs, title, unit, y, yt]) => {
+    const s = D.sweep[22], sr = [['true walls', 'true', {}], ['flipped walls', 'flip', {dash: '5 4', hollow: true}]].map(([name, w, o]) => ({name, css: 'var(--s-speed)', ...o, pts: s.series[w].filter(p => p[f] != null).map(p => [p.M, p[f]]), scatter: s.series[w].filter(p => p[f] != null).flatMap(p => p[fs].map(v => [p.M, v]))}));
+    lines(document.getElementById('sweepmech'), {title, unit, series: sr, x: [5, 120], xt: [5, 15, 30, 60, 120], y, yt, log: true, xlabel: 'sin/cos terms per row, M (log scale)', xname: 'M =', fmt: v => v.toFixed(2), refs: [{y: D.mech[22].find(r => r.key === 'topzero')[f], label: '16 empty rows'}]});
+  });
+  [22, 13].forEach(n => scatter(document.getElementById('capture'), n));
+
+  [22, 13].forEach(n => {
+    const P = D.profile[n], A = P.arms, us = P.u.map(u => +u.toFixed(3)), S2 = [];
+    const add = (name, css, ys, dash) => S2.push({name, css, dash, marks: false, pts: us.map((u, i) => [u, ys[i]])});
+    add('truth', 'var(--ink)', P.truth);
+    if (A['topzero']) add(A['topzero'].label, 'var(--s-base)', A['topzero'].field);
+    if (A['top line M30 true']) { add(A['top line M30 true'].label, 'var(--s-speed)', A['top line M30 true'].field); add('… rows frozen', 'var(--s-speed)', A['top line M30 true'].frozen, '5 4'); }
+    if (A['oracle true']) add(A['oracle true'].label, 'var(--s-oracle)', A['oracle true'].field);
+    if (A['geo true']) add(A['geo true'].label, 'var(--s-geo)', A['geo true'].field);
+    const hi = Math.ceil(Math.max(...S2.flatMap(s => s.pts.map(q => q[1]))) / 2) * 2, yt = []; for (let v = 0; v <= hi; v += hi > 12 ? 4 : 2) yt.push(v);
+    lines(document.getElementById('profile'), {title: `T across a wall, ${n} × ${n}`, unit: 'median, cells', series: S2, x: [-0.4, 0.4], xt: [-0.4, -0.2, 0, 0.2, 0.4], y: [Math.min(0, ...S2.flatMap(s => s.pts.map(q => q[1]))), hi], yt, xlabel: 'cells from the wall centre (far side on the left)', xname: 'u =', fmtx: v => v.toFixed(2), fmt: v => v.toFixed(2)});
+  });
+
+  const fz = document.getElementById('freeze');
+  dumbbell(fz, 22, {title: 'Ridge on the wall', f: 'rise', g: 'frise', max: 10, xt: [0, 2, 4, 6, 8, 10], xlabel: 'median rise above the far side, cells'});
+  dumbbell(fz, 22, {title: 'Difference between the two sides', f: 'jump', g: 'fjump', max: 1.2, ref: 1, xt: [0, 0.2, 0.4, 0.6, 0.8, 1, 1.2], xlabel: 'share of the true difference in T'});
+})();
+</script>

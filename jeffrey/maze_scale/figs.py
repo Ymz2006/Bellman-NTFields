@@ -8,6 +8,7 @@ success.png      MPPI success by true travel distance, one panel per maze: ntrl-
 speedmaps.png    learned speed 1 / |grad_x T(x, goal)| at heading 0 against the true speed (n = 7 / 10 / 13 / 22) for
                  ntrl-demo and ntrl-demo with B x 3 (fourier.py)
 paths13.png      13-cell maze, one query per bin 4-8 / 8-16 / 16-32 where the fields' outcomes differ
+plus22.png       the plus variant of the 22-cell maze (plus.py): maze, true speed, ntrl-demo's learned speed
 uturn13.png      13-cell maze, u-turns around wall ends (uturn.py): truth and planning seed 0 of ntrl-demo, segment DP
                  + wall term (weight 0.3) and B x 3, close-up around the wall end
 Inference only (checkpoints of the registered runs); nothing is trained or registered here.
@@ -288,6 +289,43 @@ def fig_uturn(ntrl, seg, fourier, n=13, seed=87358, count=4, half=1.4):
     plt.close(fig)
 
 
+def maze_from_json(info, device='cuda:0'):
+    """A Maze with the walls recorded in a run's maze.json (e.g. the plus variant), without patching maze.py."""
+    m = MZ.Maze(info['n'], device)
+    m.V, m.H = np.array(info['V'], bool), np.array(info['H'], bool)
+    m.boxes = MZ.wall_boxes(m.V, m.H)
+    m.Vt, m.Ht = torch.tensor(m.V, device=device), torch.tensor(m.H, device=device)
+    return m
+
+
+def fig_plus(seed=87358):
+    """Plus variant of 22 x 22: the maze with the + outlined, true speed and ntrl-demo's learned speed (heading 0, goal 0)."""
+    pp = R.runs('plus-prepare')
+    runs = {d['seed']: d for d in R.runs('plus-ntrl')}
+    if not pp or seed not in runs:
+        return
+    d = pp[-1]['_dir']
+    info = json.load(open(d / 'maze.json'))
+    maze = maze_from_json(info)
+    goal = torch.tensor(np.load(d / 'goals.npy')[0], device=maze.device)
+    learned, true = speed_map(maze, P.load_field(runs[seed]['_dir'] / 'training/checkpoint.pt'), goal)
+    n, w, E = info['n'], info['plus_width'], info['n'] + MZ.T_WALL
+    c0, c1 = ((n - w) // 2 - n / 2) / E, ((n - w) // 2 + w - n / 2) / E
+    fig, axes = plt.subplots(1, 3, figsize=(10.2, 3.6))
+    draw_maze(axes[0], info)
+    for (x0, x1, y0, y1) in ((c0, c1, -0.5, 0.5), (-0.5, 0.5, c0, c1)):
+        axes[0].add_patch(plt.Rectangle((x0, y0), x1 - x0, y1 - y0, color=C['ntrl'], alpha=0.12, lw=0))
+    axes[0].set_title(f'{n} x {n} with a {w}-cell + opened ({info["plus_cells"]} of {n * n} cells)', fontsize=9, color=INK)
+    for ax, img, title in ((axes[1], true, 'true speed'), (axes[2], learned, f'ntrl-demo (speed fit {runs[seed]["speed_fit"]["log_speed_corr"]:.2f})')):
+        ax.imshow(np.clip(img, 0, 1.05).T, origin='lower', extent=(-0.5, 0.5, -0.5, 0.5), cmap='Blues_r', vmin=0, vmax=1.05)
+        ax.set_title(title, fontsize=9, color=INK)
+        ax.set_xticks([])
+        ax.set_yticks([])
+    fig.tight_layout()
+    fig.savefig(OUT / 'plus22.png', dpi=130)
+    plt.close(fig)
+
+
 def main():
     OUT.mkdir(exist_ok=True)
     prep, ntrl, seg = R.collect()
@@ -297,6 +335,7 @@ def main():
     fig_speedmaps(prep, ntrl, fourier)
     fig_paths(prep, ntrl, seg, n=13, pick_bins=['4-8', '8-16', '16-32'], name='paths13.png')
     fig_uturn(ntrl, seg, fourier)
+    fig_plus()
     print('figures in', OUT)
 
 

@@ -1,0 +1,312 @@
+<title>2026-11-05 Stretched Field View</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;650;750&family=Public+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* The cross-warp study's page style: reading column for text, a full-width linked pair (stretched field | ground truth), then the planning charts. */
+:root {
+  --bg: #f5f6f8; --surface: #ffffff; --ink: #15181d; --ink2: #4b525c; --muted: #737b86; --rule: #dde1e6; --wash: #eef1f5;
+  --accent: #eb6834; --wall: #15181d; --iso: rgba(21, 24, 29, 0.38); --seam: rgba(21, 24, 29, 0.45);
+  --ramp-lo: #ece9fb; --ramp-mid: #9a8de6; --ramp-hi: #33268f;
+  --s-ntrl: #2a78d6; --s-pm: #eb6834; --s-id: #8b929b;
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+    --accent: #f08a5d; --wall: #eef0f3; --iso: rgba(238, 240, 243, 0.34); --seam: rgba(238, 240, 243, 0.45);
+    --ramp-lo: #231f4d; --ramp-mid: #6250d6; --ramp-hi: #d5cffa;
+    --s-ntrl: #3987e5; --s-pm: #d95926; --s-id: #7d858f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+  --accent: #f08a5d; --wall: #eef0f3; --iso: rgba(238, 240, 243, 0.34); --seam: rgba(238, 240, 243, 0.45);
+  --ramp-lo: #231f4d; --ramp-mid: #6250d6; --ramp-hi: #d5cffa;
+  --s-ntrl: #3987e5; --s-pm: #d95926; --s-id: #7d858f;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 15.5px/1.6 var(--f-body); margin: 0; }
+.page { max-width: 1180px; margin: 0 auto; padding-block: 36px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 30px; }
+.col { max-width: 72ch; min-width: 0; }
+header { display: grid; gap: 12px; }
+.eyebrow { font: 500 12px/1.4 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 750 clamp(30px, 5vw, 44px)/1.05 var(--f-display); letter-spacing: -0.015em; margin: 0; text-wrap: balance; }
+h2 { font: 650 21px/1.2 var(--f-display); margin: 0 0 8px; text-wrap: balance; }
+p { margin: 0 0 10px; }
+.lede { font-size: 17px; line-height: 1.55; }
+section { display: grid; gap: 14px; min-width: 0; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; }
+.group { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; min-width: 0; }
+.lab { font: 500 12px var(--f-mono); color: var(--muted); margin-right: 2px; letter-spacing: 0.04em; }
+.seg { font: 500 13px var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 999px; padding: 5px 12px; cursor: pointer; }
+.seg[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.seg:focus-visible, select:focus-visible, .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+select { font: 500 13px var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 5px 8px; max-width: 100%; }
+.pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 14px; }
+.panel { position: relative; background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 10px; display: grid; gap: 6px; min-width: 0; }
+.panel h3 { font: 650 14.5px/1.3 var(--f-display); margin: 0; }
+.panel h3 span { display: block; font: 400 12px/1.4 var(--f-mono); color: var(--muted); }
+.stage { position: relative; width: 100%; aspect-ratio: 1; }
+.stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: crosshair; }
+.under { font: 400 12px/1.4 var(--f-mono); color: var(--muted); min-height: 1.4em; }
+.bar { display: flex; align-items: center; gap: 8px; font: 400 12px var(--f-mono); color: var(--muted); flex-wrap: wrap; }
+.bar i { display: block; width: min(260px, 50vw); height: 10px; border-radius: 2px; background: linear-gradient(90deg, var(--ramp-lo), var(--ramp-mid), var(--ramp-hi)); }
+.readout { font: 500 13px/1.5 var(--f-mono); color: var(--ink2); min-height: 1.5em; font-variant-numeric: tabular-nums; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+th, td { padding: 5px 12px; text-align: right; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+th { font: 500 12px var(--f-mono); color: var(--muted); }
+.chip { display: inline-flex; align-items: center; gap: 7px; font: 500 13px var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 999px; padding: 4px 11px; cursor: pointer; }
+.chip[aria-pressed="false"] { color: var(--muted); background: transparent; }
+.chip[aria-pressed="false"] .key { opacity: 0.35; }
+.key { display: inline-block; width: 18px; height: 0; border-top: 2.5px solid currentColor; }
+.key.dash { border-top-style: dashed; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 12px; }
+.panel h4 { font: 650 14px/1.3 var(--f-display); margin: 0; }
+.panel h4 span { display: block; font: 400 12px var(--f-mono); color: var(--muted); }
+svg { width: 100%; height: auto; display: block; }
+.axis text { font: 400 11px var(--f-mono); fill: var(--muted); }
+.gridline { stroke: var(--rule); stroke-width: 1; }
+.tip { position: absolute; z-index: 5; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--rule); border-radius: 6px; padding: 8px 10px; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16); max-width: min(330px, 86vw); font-size: 12.5px; }
+.tip .h { font: 500 11.5px var(--f-mono); color: var(--muted); margin-bottom: 4px; }
+.tip .r { display: grid; grid-template-columns: 18px 1fr auto; gap: 6px; align-items: center; }
+.tip .r b { font: 500 12.5px var(--f-mono); font-variant-numeric: tabular-nums; text-align: right; }
+.tip .r i { font-style: normal; color: var(--ink2); }
+details summary { cursor: pointer; font-weight: 600; }
+details > summary + * { margin-top: 10px; }
+code { font: 400 0.92em var(--f-mono); }
+</style>
+<div class="page">
+  <header class="col">
+    <div class="eyebrow">Cross warp · gap study · 2026-11-05</div>
+    <h1>The ×1 field, stretched over the wider plus</h1>
+    <p class="lede">Left is the field trained on gap &times;1, stretched onto a wider plus. Right is that maze&rsquo;s true travel time. The stretched times are far too short (ntrl-demo at &times;12: 82 % off at the median on the 22&times;22 maze), but inside the quadrants they point the right way, and the planner follows direction, not value. Planned on &times;12, ntrl-demo&rsquo;s &times;1 field solves 42.1 % and 64.7 % of the queries, against 24.2 % and 27.1 % for ntrl-demo trained on &times;12 itself.</p>
+  </header>
+
+  <section>
+    <div class="controls">
+      <div class="group" role="group" aria-label="Maze"><span class="lab">maze</span><span id="c-base" class="group"></span></div>
+      <div class="group" role="group" aria-label="Gap"><span class="lab">gap</span><span id="c-k" class="group"></span></div>
+      <div class="group" role="group" aria-label="Goal"><span class="lab">goal</span><span id="c-goal" class="group"></span></div>
+    </div>
+    <div class="controls">
+      <label class="group"><span class="lab">left</span>
+        <select id="c-field">
+          <optgroup label="Trained on ×1, stretched">
+            <option value="ntrl1">ntrl-demo ×1, stretched</option>
+            <option value="warp1">warped-maze field ×1, stretched</option>
+            <option value="truth1">true ×1 time, stretched (no fitting error)</option>
+          </optgroup>
+          <optgroup label="Trained on this gap (controls)">
+            <option value="ntrlk">ntrl-demo trained on this gap</option>
+            <option value="warpk">warped-maze field trained on this gap</option>
+          </optgroup>
+        </select>
+      </label>
+      <div class="group" role="group" aria-label="View"><span class="lab">view</span><span id="c-view" class="group"></span></div>
+      <div class="group" role="group" aria-label="Colour scale"><span class="lab">colour</span><span id="c-scale" class="group"></span></div>
+    </div>
+    <div class="pair">
+      <div class="panel"><h3 id="t-left"></h3><div class="stage"><canvas id="cv-left"></canvas><canvas id="ov-left"></canvas></div><div class="under" id="u-left"></div></div>
+      <div class="panel"><h3 id="t-right"></h3><div class="stage"><canvas id="cv-right"></canvas><canvas id="ov-right"></canvas></div><div class="under" id="u-right"></div></div>
+    </div>
+    <div class="bar"><span>short</span><i></i><span>long time to the goal</span><span id="b-note"></span></div>
+    <div class="readout" id="readout" aria-live="polite">Hover over either map to read both times at that point.</div>
+    <div class="tablewrap"><table id="stats"></table></div>
+    <div class="col"><p><b>The stretch.</b> A pose x on gap &times;k goes to &psi;(x) on gap &times;1: along x and along y, the quadrants and the band&rsquo;s edge cell stay where they are relative to their walls, the band&rsquo;s interior (6k &minus; 2 cells) is squeezed linearly onto its 4 cells at &times;1, and the heading is kept. The field is T<sub>k</sub>(x<sub>0</sub>, x<sub>1</sub>) = T<sub>1</sub>(&psi;(x<sub>0</sub>), &psi;(x<sub>1</sub>)), with no retraining and its time values unchanged. It is the inverse of the map that carried the 22&times;22 pairs onto the wider gaps earlier. Every wall lies in the part that keeps its shape or on the outer border, so free poses map to free poses and a path on one maze is a path on the other.</p><p>Dashed lines mark where the stretched part of the band starts and ends. In a quadrant view both maps use a finer grid (0.13 cells); pick &ldquo;each its own&rdquo; to compare shapes, since the left values are much smaller.</p></div>
+  </section>
+
+  <section>
+    <div class="col"><h2>Planning on the wider gaps</h2><p><b>How it was planned.</b> The fields trained on &times;1 (ntrl-demo, and the field trained on the warped maze with warped-maze pairs) on each gap&rsquo;s own 300 queries, planning seeds 0/1/2, on both bases. &ldquo;MPPI on each maze&rdquo; steps at that maze&rsquo;s normal size, the field looked up at &psi;(x). &ldquo;MPPI in the field&rsquo;s own coordinates&rdquo; keeps &times;1&rsquo;s constant step (for the warped-maze field, in its warped coordinates), so a step over the band&rsquo;s interior is longer on the wide maze, and the path is mapped back and scored on the wide maze. The chart is training seed 87358. Controls: the same two trainings done on each gap, and the &times;1 checkpoint plugged in without the plus-shaped stretch (same normalized coordinates, so the walls miss). At &times;1 the stretch is the identity and every run matches the original run for run.</p><p><b>Success almost stops falling with the gap.</b> ntrl-demo&rsquo;s &times;1 field stays at 40.6&ndash;44.1 % on the 22&times;22 maze and 64.6&ndash;70.2 % on the 10&times;10 maze from &times;1 to &times;12. Trained on each gap, ntrl-demo falls to 24.2 % and 27.1 %. The gain is in the queries that end in a quadrant: at &times;12 diagonal queries go from 0 to 27 % and 0 to 46 %, same-quadrant from 13 to 26 % and 14 to 69 %. The warped-maze field does the same in its own coordinates: 56.8&ndash;61.2 % and 91.3&ndash;92.6 %. At &times;12 that is 92.6 % against 84.6 % for training on &times;12 on the 10&times;10 maze, and level on the 22&times;22 maze (56.8 against 57.7 %).</p><p><b>Over the three training seeds at &times;12:</b> ntrl-demo stretched 38.8&ndash;44.0 % and 63.4&ndash;64.7 %, trained there 23.9&ndash;24.4 % and 26.2&ndash;27.1 %; the warped-maze field stretched 56.8&ndash;62.9 % and 90.1&ndash;93.7 %, trained there 54.9&ndash;61.6 % and 82.1&ndash;88.8 %. At &times;1 the seeds alone span 40.4&ndash;50.2 % and 62.9&ndash;72.2 % for ntrl-demo.</p><p><b>The plus-shaped stretch is what does it.</b> The same checkpoint without the stretch solves 18.8&ndash;25.9 %, nearly all of it open&ndash;open queries, and 5 of 2,880 runs between two quadrants.</p></div>
+    <div class="controls" id="legend" role="group" aria-label="Fields shown in the charts"><span class="lab">show</span></div>
+    <div class="grid2" id="panels"></div>
+    <div class="col"><p><b>Why a field with the wrong times plans better.</b> MPPI compares the times of nearby poses, so it needs direction, not the value. With the true &times;1 time stretched, the descent direction inside the quadrants is off by 1&deg; against the true &times;12 time (median, mean of four goals): the stretch costs nothing there, although the value is 83 % off. ntrl-demo&rsquo;s &times;1 field is off by 28&deg; and 13&deg; there (its fitting error at &times;1), ntrl-demo trained on &times;12 by 54&deg; and 46&deg;. So training on the wide maze gets the times right (7 % off) and the quadrants wrong, which fits the earlier finding that the quadrants take only 18 % and 12 % of each axis at &times;12. In the band the trade reverses: the stretched field is off by 16&deg; and the &times;12 field by 6&deg;, and the stretch alone accounts for that (the true time stretched is off by 20&deg;), because it squeezes the band&rsquo;s length but not the quadrants&rsquo;, so the best way across changes. Open&ndash;open queries still solve at about 100 %.</p><p><b>The cost shows in the paths.</b> On the runs both fields solve at &times;12, ntrl-demo&rsquo;s stretched field takes 3.9 % and 4.0 % longer than the optimum at the median, and 18 % and 15 % at the 90th percentile; the field trained on &times;12 is at the optimum (1.00 and 1.00 times it) at the median. Those shared runs are mostly open-band queries, the only ones that field solves.</p><p><b>The one failure: the warped-maze field with the maze planner.</b> From &times;8 it stalls: 15.8 and 22.8 % at &times;12, 700 and 691 of 900 runs never arrive, while the same field in its own coordinates solves 56.8 and 92.6 %. Same-quadrant queries, which never cross the band, are unaffected (68 and 98 %). The band is squeezed 17.5 times at &times;12 and this field also counts a band cell as about 1/m of a quadrant cell, so a normal step changes its time too little for the softmax to prefer any direction. That reading is arithmetic plus this one comparison: the other planner&rsquo;s longer step over the band is the main change, and I have not measured the softmax weights. ntrl-demo&rsquo;s field has only the first factor and does not stall.</p><p><b>What this does and does not show.</b> With the constant-step planner this is the &times;1 planning problem with its path redrawn, so the flat line is close to true by construction: the &times;1 rate on another draw of queries. The test shows that nothing about the wide gap has to be learned to solve these queries, so what training on the wide maze loses is the quadrants&rsquo; fit. It is not a method for a new maze: &psi; uses the plus layout, the same knowledge as the constructed warp, and it works here because the wide maze is the &times;1 maze with an empty band inserted. For ntrl-demo the maze planner against the constant step, mean over the three training seeds at &times;8 and &times;12: +2.6 and +5.2 points on the 22&times;22 maze, +1.5 and &minus;0.6 on the 10&times;10 maze. On the 22&times;22 maze that is the same direction as test 3; I have not traced it.</p></div>
+    <details><summary>Table: every field, planner and gap</summary><div class="tablewrap"><p class="note">% of 900 runs, training seed 87358; in brackets the range over the training seeds where several exist.</p><table><thead><tr><th>maze</th><th>gap</th><th>ntrl-demo on this gap</th><th>ntrl-demo &times;1, MPPI on the maze</th><th>ntrl-demo &times;1, constant step</th><th>&times;1, not stretched</th><th>warped field on this gap, own coordinates</th><th>warped field &times;1, own coordinates</th><th>warped field &times;1, MPPI on the maze</th></tr></thead><tbody><tr><td>22×22 cross maze</td><td>&times;1</td><td>40.8 <small>(40.4&ndash;50.2)</small></td><td>40.8 <small>(40.4&ndash;50.2)</small></td><td>40.7 <small>(40.3&ndash;50.1)</small></td><td>&ndash;</td><td>57.8 <small>(57.8&ndash;64.0)</small></td><td>57.8 <small>(57.8&ndash;64.1)</small></td><td>56.4 <small>(56.4&ndash;65.4)</small></td></tr><tr><td>22×22 cross maze</td><td>&times;2</td><td>34.8 <small>(29.8&ndash;34.8)</small></td><td>41.7 <small>(37.2&ndash;49.7)</small></td><td>36.9 <small>(35.0&ndash;47.6)</small></td><td>22.3</td><td>58.8</td><td>60.3 <small>(60.3&ndash;68.4)</small></td><td>60.6 <small>(60.6&ndash;70.8)</small></td></tr><tr><td>22×22 cross maze</td><td>&times;4</td><td>26.0 <small>(26.0&ndash;27.8)</small></td><td>44.1 <small>(41.6&ndash;44.8)</small></td><td>37.9 <small>(37.0&ndash;43.4)</small></td><td>18.8</td><td>60.1</td><td>60.4 <small>(60.4&ndash;64.2)</small></td><td>64.0 <small>(64.0&ndash;65.8)</small></td></tr><tr><td>22×22 cross maze</td><td>&times;8</td><td>26.3 <small>(25.0&ndash;26.4)</small></td><td>40.6 <small>(40.6&ndash;42.4)</small></td><td>36.1 <small>(35.8&ndash;44.9)</small></td><td>19.2</td><td>58.7 <small>(56.8&ndash;60.8)</small></td><td>61.2 <small>(61.2&ndash;68.0)</small></td><td>23.7 <small>(23.7&ndash;25.8)</small></td></tr><tr><td>22×22 cross maze</td><td>&times;12</td><td>24.2 <small>(23.9&ndash;24.4)</small></td><td>42.1 <small>(38.8&ndash;44.0)</small></td><td>36.8 <small>(32.6&ndash;39.9)</small></td><td>20.6</td><td>57.7 <small>(54.9&ndash;61.6)</small></td><td>56.8 <small>(56.8&ndash;62.9)</small></td><td>15.8 <small>(15.8&ndash;19.4)</small></td></tr><tr><td>10×10 maze</td><td>&times;1</td><td>70.2 <small>(62.9&ndash;72.2)</small></td><td>70.2 <small>(62.9&ndash;72.2)</small></td><td>70.3 <small>(63.0&ndash;72.2)</small></td><td>&ndash;</td><td>92.1 <small>(92.0&ndash;92.9)</small></td><td>92.1 <small>(92.0&ndash;92.9)</small></td><td>93.3 <small>(92.0&ndash;93.3)</small></td></tr><tr><td>10×10 maze</td><td>&times;2</td><td>52.0</td><td>70.0 <small>(67.0&ndash;70.0)</small></td><td>69.8 <small>(63.9&ndash;69.8)</small></td><td>21.1</td><td>86.6</td><td>91.3 <small>(88.9&ndash;93.1)</small></td><td>90.7 <small>(89.6&ndash;93.3)</small></td></tr><tr><td>10×10 maze</td><td>&times;4</td><td>32.0</td><td>67.3 <small>(61.8&ndash;67.3)</small></td><td>65.9 <small>(55.6&ndash;66.6)</small></td><td>21.0</td><td>84.8</td><td>91.4 <small>(91.4&ndash;95.0)</small></td><td>92.7 <small>(91.1&ndash;94.9)</small></td></tr><tr><td>10×10 maze</td><td>&times;8</td><td>25.1</td><td>64.6 <small>(62.9&ndash;67.6)</small></td><td>64.3 <small>(57.3&ndash;68.8)</small></td><td>21.0</td><td>81.2</td><td>91.9 <small>(87.8&ndash;91.9)</small></td><td>40.8 <small>(36.8&ndash;41.3)</small></td></tr><tr><td>10×10 maze</td><td>&times;12</td><td>27.1 <small>(26.2&ndash;27.1)</small></td><td>64.7 <small>(63.4&ndash;64.7)</small></td><td>63.8 <small>(63.8&ndash;65.6)</small></td><td>25.9</td><td>84.6 <small>(82.1&ndash;88.8)</small></td><td>92.6 <small>(90.1&ndash;93.7)</small></td><td>22.8 <small>(21.1&ndash;22.8)</small></td></tr></tbody></table></div></details>
+  </section>
+</div>
+<script>
+const R = {"ks": [1, 2, 4, 8, 12], "panels": [{"title": "22\u00d722 cross maze", "sub": "MPPI on each maze, field looked up", "series": {"id": [[40.77777777777778, 367, 900], [34.77777777777778, 313, 900], [26.0, 234, 900], [26.333333333333332, 237, 900], [24.22222222222222, 218, 900]], "ids": [[40.77777777777778, 367, 900], [41.666666666666664, 375, 900], [44.111111111111114, 397, 900], [40.55555555555556, 365, 900], [42.111111111111114, 379, 900]], "pmzw": [[56.44444444444444, 508, 900], [59.44444444444444, 535, 900], [63.111111111111114, 568, 900], [57.77777777777778, 520, 900], [53.111111111111114, 478, 900]], "pmzws": [[56.44444444444444, 508, 900], [60.55555555555556, 545, 900], [64.0, 576, 900], [23.666666666666668, 213, 900], [15.777777777777779, 142, 900]], "uni": [null, [22.333333333333332, 201, 900], [18.77777777777778, 169, 900], [19.22222222222222, 173, 900], [20.555555555555557, 185, 900]]}}, {"title": "22\u00d722 cross maze", "sub": "MPPI in the field's own coordinates", "series": {"id": [[40.77777777777778, 367, 900], [34.77777777777778, 313, 900], [26.0, 234, 900], [26.333333333333332, 237, 900], [24.22222222222222, 218, 900]], "ids": [[40.666666666666664, 366, 900], [36.888888888888886, 332, 900], [37.888888888888886, 341, 900], [36.111111111111114, 325, 900], [36.77777777777778, 331, 900]], "pmzw": [[57.77777777777778, 520, 900], [58.77777777777778, 529, 900], [60.111111111111114, 541, 900], [58.666666666666664, 528, 900], [57.666666666666664, 519, 900]], "pmzws": [[57.77777777777778, 520, 900], [60.333333333333336, 543, 900], [60.44444444444444, 544, 900], [61.22222222222222, 551, 900], [56.77777777777778, 511, 900]]}}, {"title": "10\u00d710 maze", "sub": "MPPI on each maze, field looked up", "series": {"id": [[70.22222222222223, 632, 900], [52.0, 468, 900], [32.0, 288, 900], [25.11111111111111, 226, 900], [27.11111111111111, 244, 900]], "ids": [[70.22222222222223, 632, 900], [70.0, 630, 900], [67.33333333333333, 606, 900], [64.55555555555556, 581, 900], [64.66666666666667, 582, 900]], "pmzw": [[93.33333333333333, 840, 900], [88.11111111111111, 793, 900], [86.0, 774, 900], [80.33333333333333, 723, 900], [83.88888888888889, 755, 900]], "pmzws": [[93.33333333333333, 840, 900], [90.66666666666667, 816, 900], [92.66666666666667, 834, 900], [40.77777777777778, 367, 900], [22.77777777777778, 205, 900]], "uni": [null, [21.11111111111111, 190, 900], [21.0, 189, 900], [21.0, 189, 900], [25.88888888888889, 233, 900]]}}, {"title": "10\u00d710 maze", "sub": "MPPI in the field's own coordinates", "series": {"id": [[70.22222222222223, 632, 900], [52.0, 468, 900], [32.0, 288, 900], [25.11111111111111, 226, 900], [27.11111111111111, 244, 900]], "ids": [[70.33333333333333, 633, 900], [69.77777777777777, 628, 900], [65.88888888888889, 593, 900], [64.33333333333333, 579, 900], [63.77777777777778, 574, 900]], "pmzw": [[92.11111111111111, 829, 900], [86.55555555555556, 779, 900], [84.77777777777777, 763, 900], [81.22222222222223, 731, 900], [84.55555555555556, 761, 900]], "pmzws": [[92.11111111111111, 829, 900], [91.33333333333333, 822, 900], [91.44444444444444, 823, 900], [91.88888888888889, 827, 900], [92.55555555555556, 833, 900]]}}], "fields": ["id", "ids", "pmzw", "pmzws", "uni"], "label": {"id": "ntrl-demo trained on each gap", "ids": "ntrl-demo \u00d71, stretched", "pmzw": "warped-maze field trained on each gap", "pmzws": "warped-maze field \u00d71, stretched", "uni": "ntrl-demo \u00d71, not stretched"}, "css": {"id": "--s-ntrl", "ids": "--s-ntrl", "pmzw": "--s-pm", "pmzws": "--s-pm", "uni": "--s-id"}, "dash": {"ids": "6 4", "pmzws": "6 4"}, "xlabel": "gap between the quadrants (\u00d7 6 cells)"};
+(() => {
+  const $ = id => document.getElementById(id);
+  const h = (tag, cls, text, parent) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; if (parent) parent.append(e); return e; };
+  const BASES = [['c22', '22\u00d722 cross'], ['m10', '10\u00d710 maze']], KS = [1, 2, 4, 8, 12];
+  const FIELD = {
+    ntrl1: ['ntrl-demo trained on \u00d71, stretched', 'cells of the \u00d71 maze'],
+    warp1: ['Warped-maze field trained on \u00d71, stretched', 'quadrant cells: a band cell of \u00d71 counts about 1/m'],
+    truth1: ['True \u00d71 travel time, stretched', 'cells of the \u00d71 maze, no fitting error'],
+    ntrlk: ['ntrl-demo trained on this gap', 'cells'],
+    warpk: ['Warped-maze field trained on this gap', 'quadrant cells: a band cell counts about 1/m'],
+  };
+  const S = {base: 'c22', k: 12, goal: 2, field: 'ntrl1', scale: 'shared', view: 'whole', cur: null};
+  const cache = {}, decoded = new Map();
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const rgb = c => { const m = c.match(/^#([0-9a-f]{6})$/i); const v = parseInt(m[1], 16); return [v >> 16, (v >> 8) & 255, v & 255]; };
+
+  const load = async (b, k) => {
+    const key = `${b}_k${k}`;
+    if (!cache[key]) cache[key] = fetch(`stretchview/${key}.json`).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+    return cache[key];
+  };
+  const decode = q => {
+    if (decoded.has(q)) return decoded.get(q);
+    const bin = atob(q.b64), n = bin.length / 2, out = new Float32Array(n), s = (q.hi - q.lo) / 65534;
+    for (let i = 0; i < n; i++) { const c = bin.charCodeAt(2 * i) | (bin.charCodeAt(2 * i + 1) << 8); out[i] = c === 65535 ? NaN : q.lo + c * s; }
+    decoded.set(q, out); return out;
+  };
+  const sample = (a, nd, x0, dx, cx, cy) => {         // bilinear, nearest where a corner is inside a wall; a[ix * nd + iy]
+    const fx = (cx - x0) / dx, fy = (cy - x0) / dx;
+    const i = Math.min(nd - 2, Math.max(0, Math.floor(fx))), j = Math.min(nd - 2, Math.max(0, Math.floor(fy)));
+    const u = Math.min(1, Math.max(0, fx - i)), v = Math.min(1, Math.max(0, fy - j));
+    const a00 = a[i * nd + j], a10 = a[(i + 1) * nd + j], a01 = a[i * nd + j + 1], a11 = a[(i + 1) * nd + j + 1];
+    if (a00 === a00 && a10 === a10 && a01 === a01 && a11 === a11) return (1 - u) * ((1 - v) * a00 + v * a01) + u * ((1 - v) * a10 + v * a11);
+    return a[(u < 0.5 ? i : i + 1) * nd + (v < 0.5 ? j : j + 1)];
+  };
+  const nice = t => { const p = Math.pow(10, Math.floor(Math.log10(t))), m = t / p; return (m < 1.5 ? 1 : m < 3.5 ? 2 : m < 7.5 ? 5 : 10) * p; };
+
+  const paint = (cv, a, d, V, tmin, tmax, step, seams) => {
+    const box = cv.parentElement.getBoundingClientRect();
+    const W = Math.max(120, Math.min(760, Math.round(box.width * Math.min(devicePixelRatio || 1, 2))));
+    cv.width = cv.height = W;
+    const ctx = cv.getContext('2d'), img = ctx.createImageData(W, W), px = img.data;
+    const lo = rgb(css('--ramp-lo')), mid = rgb(css('--ramp-mid')), hi = rgb(css('--ramp-hi'));
+    const surf = rgb(css('--surface')), iso = css('--iso').match(/[\d.]+/g).map(Number);
+    const x0 = V.x[0], dx = V.x[1] - V.x[0], nd = V.nd, [c0, c1] = V.win, span = c1 - c0, T = new Float32Array(W * W);
+    for (let r = 0; r < W; r++) { const cy = c0 + span * (1 - (r + 0.5) / W);
+      for (let c = 0; c < W; c++) T[r * W + c] = sample(a, nd, x0, dx, c0 + span * (c + 0.5) / W, cy); }
+    for (let r = 0; r < W; r++) for (let c = 0; c < W; c++) {
+      const i = r * W + c, t = T[i], o = 4 * i;
+      if (t !== t) { px[o] = surf[0]; px[o + 1] = surf[1]; px[o + 2] = surf[2]; px[o + 3] = 255; continue; }
+      const f = Math.min(1, Math.max(0, (t - tmin) / (tmax - tmin))), g = f < 0.5 ? f * 2 : f * 2 - 1, A = f < 0.5 ? lo : mid, B = f < 0.5 ? mid : hi;
+      let R0 = A[0] + (B[0] - A[0]) * g, G0 = A[1] + (B[1] - A[1]) * g, B0 = A[2] + (B[2] - A[2]) * g;
+      const l = Math.floor(t / step);
+      const e = (c + 1 < W && T[i + 1] === T[i + 1] && Math.floor(T[i + 1] / step) !== l) || (r + 1 < W && T[i + W] === T[i + W] && Math.floor(T[i + W] / step) !== l);
+      if (e) { const al = iso[3]; R0 = R0 * (1 - al) + iso[0] * al; G0 = G0 * (1 - al) + iso[1] * al; B0 = B0 * (1 - al) + iso[2] * al; }
+      px[o] = R0; px[o + 1] = G0; px[o + 2] = B0; px[o + 3] = 255;
+    }
+    ctx.putImageData(img, 0, 0);
+    const X = c => (c - c0) / span * W, Y = c => (1 - (c - c0) / span) * W;
+    if (seams && d.k > 1) {                            // where the band's interior starts and ends: the stretched part lies between
+      ctx.strokeStyle = css('--seam'); ctx.setLineDash([5, 5]); ctx.lineWidth = 1;
+      d.rigid.forEach(c => { ctx.beginPath(); ctx.moveTo(X(c), 0); ctx.lineTo(X(c), W); ctx.moveTo(0, Y(c)); ctx.lineTo(W, Y(c)); ctx.stroke(); });
+      ctx.setLineDash([]);
+    }
+    ctx.fillStyle = css('--wall');
+    const lw = Math.max(1.2, W / span * 0.1);
+    d.boxes.forEach(b => { const w = Math.max(lw, X(b[2]) - X(b[0])), hh = Math.max(lw, Y(b[1]) - Y(b[3])); ctx.fillRect(X(b[0]), Y(b[3]), w, hh); });
+    const g = d.goals[S.goal].cell;
+    ctx.beginPath(); ctx.arc(X(g[0]), Y(g[1]), Math.max(5, W * 0.012), 0, 7); ctx.fillStyle = css('--accent'); ctx.fill();
+    ctx.lineWidth = 2; ctx.strokeStyle = css('--surface'); ctx.stroke();
+  };
+
+  let D = null, V = null, LA = null, RA = null, seq = 0;
+  const f1 = (v, n = 1) => v == null || v !== v ? '\u2013' : v.toFixed(n);
+  const draw = async () => {
+    const my = ++seq, d = await load(S.base, S.k);
+    if (my !== seq) return;
+    D = d;
+    const g = d.goals[S.goal], zoomed = S.view !== 'whole';
+    V = zoomed ? d.zoom[S.view] : {win: [0, d.n], x: d.x, nd: d.nd};
+    const src = zoomed ? g.zoom[S.view] : g.fields;
+    const ql = src[S.field], qr = src.truth;
+    LA = decode(ql); RA = decode(qr);
+    const shared = S.scale === 'shared', z0 = q => (zoomed ? q.lo : 0);
+    const lo = shared ? Math.min(z0(ql), z0(qr)) : z0(ql), hi = shared ? Math.max(ql.hi, qr.hi) : ql.hi;
+    const lor = shared ? lo : z0(qr), hir = shared ? hi : qr.hi;
+    const sl = nice((hi - lo) / 12), sr = nice((hir - lor) / 12);
+    paint($('cv-left'), LA, d, V, lo, hi, sl, !zoomed);
+    paint($('cv-right'), RA, d, V, lor, hir, sr, false);
+    const stretched = S.field.endsWith('1') && S.k > 1;
+    $('t-left').innerHTML = ''; $('t-left').append(FIELD[S.field][0]); h('span', null, `${FIELD[S.field][1]}${stretched ? ` \u00b7 band interior \u00d7${f1(d.stretch)}` : ''}`, $('t-left'));
+    $('t-right').innerHTML = ''; $('t-right').append(`Ground truth, gap \u00d7${S.k}`); h('span', null, `T* of this maze (exact grid solver), cells`, $('t-right'));
+    $('u-left').textContent = `${f1(ql.lo)}\u2013${f1(ql.hi)} \u00b7 lines every ${sl}`;
+    $('u-right').textContent = `${f1(qr.lo)}\u2013${f1(qr.hi)} \u00b7 lines every ${sr}`;
+    $('b-note').textContent = shared ? 'both maps on one scale' : 'each map on its own scale';
+    const st = g.stats[S.field], t = $('stats'); t.textContent = '';
+    if (st) {
+      const hr = h('tr', null, null, h('thead', null, null, t));
+      ['left against the truth', 'median |T \u2212 T*| / T*', 'rank correlation', 'descent direction off by (median)'].forEach(c => h('th', null, c, hr));
+      const tb = h('tbody', null, null, t);
+      [['in the quadrants', 'quadrants'], ['in the band', 'band'], ['everywhere', 'all']].forEach(([lab, key]) => { const r = h('tr', null, null, tb), s = st[key];
+        h('td', null, lab, r); h('td', null, `${f1(100 * s.rel, 0)} %`, r); h('td', null, f1(s.rank, 3), r); h('td', null, s.angle == null ? '\u2013' : `${f1(s.angle, 0)}\u00b0`, r); });
+    }
+    readout();
+  };
+  const readout = () => {
+    ['left', 'right'].forEach(s => { const o = $('ov-' + s), c = $('cv-' + s); o.width = c.width; o.height = c.height; });
+    if (!S.cur || !D) { $('readout').textContent = 'Hover over either map to read both times at that point.'; return; }
+    const x0 = V.x[0], dx = V.x[1] - V.x[0], [cx, cy] = S.cur, [c0, c1] = V.win;
+    const a = sample(LA, V.nd, x0, dx, cx, cy), b = sample(RA, V.nd, x0, dx, cx, cy);
+    ['left', 'right'].forEach(s => { const o = $('ov-' + s), ctx = o.getContext('2d'), W = o.width, px = (cx - c0) / (c1 - c0) * W, py = (1 - (cy - c0) / (c1 - c0)) * W;
+      ctx.strokeStyle = css('--accent'); ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(px - 8, py); ctx.lineTo(px + 8, py); ctx.moveTo(px, py - 8); ctx.lineTo(px, py + 8); ctx.stroke(); });
+    $('readout').textContent = a !== a ? `cell (${f1(cx)}, ${f1(cy)}): inside a wall` : `cell (${f1(cx)}, ${f1(cy)})   left ${f1(a)}   truth ${f1(b)}   left / truth ${f1(a / b, 2)}`;
+  };
+  ['left', 'right'].forEach(s => { const o = $('ov-' + s);
+    const mv = ev => { if (!D) return; const r = o.getBoundingClientRect(), [c0, c1] = V.win; S.cur = [c0 + (ev.clientX - r.left) / r.width * (c1 - c0), c0 + (1 - (ev.clientY - r.top) / r.height) * (c1 - c0)]; readout(); };
+    o.addEventListener('pointermove', mv); o.addEventListener('pointerdown', mv);
+    o.addEventListener('pointerleave', () => { S.cur = null; readout(); }); });
+
+  const segs = (id, items, key, conv = v => v) => {
+    const box = $(id); box.textContent = '';
+    items.forEach(([v, label]) => { const b = h('button', 'seg', label, box); b.type = 'button'; b.setAttribute('aria-pressed', String(S[key] === v));
+      b.addEventListener('click', () => { S[key] = conv(v); S.cur = null; segs(id, items, key, conv); draw(); }); });
+  };
+  const goalSegs = async () => { const d = await load(S.base, S.k); segs('c-goal', d.goals.map((g, i) => [i, g.name]), 'goal'); };
+  segs('c-base', BASES, 'base'); segs('c-k', KS.map(k => [k, `\u00d7${k}`]), 'k');
+  segs('c-scale', [['shared', 'one scale'], ['own', 'each its own']], 'scale');
+  segs('c-view', [['whole', 'whole maze'], ['q0', 'bottom-left quadrant'], ['q3', 'top-right quadrant']], 'view');
+  $('c-field').addEventListener('change', e => { S.field = e.target.value; draw(); });
+  goalSegs(); draw();
+  addEventListener('resize', () => { clearTimeout(window._rs); window._rs = setTimeout(draw, 150); });
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
+  new MutationObserver(draw).observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
+
+  // ---- planning charts
+  if (!R) return;
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (t, at, p) => { const e = document.createElementNS(NS, t); for (const k in at) e.setAttribute(k, at[k]); if (p) p.append(e); return e; };
+  const ON = {}; R.fields.forEach(f => { ON[f] = true; });
+  const leg = $('legend'), box = $('panels');
+  const keyCls = f => 'key' + (R.dash[f] ? ' dash' : '');
+  const legend = () => { leg.querySelectorAll('.chip').forEach(c => c.remove());
+    R.fields.forEach(f => { const b = h('button', 'chip', null, leg); b.type = 'button'; const k = h('span', keyCls(f), null, b); k.style.color = `var(${R.css[f]})`;
+      b.append(R.label[f]); b.setAttribute('aria-pressed', String(ON[f])); b.addEventListener('click', () => { ON[f] = !ON[f]; legend(); all(); }); }); };
+  const panel = P => {
+    const p = h('div', 'panel', null, box), h4 = h('h4', null, P.title, p); h('span', null, P.sub, h4);
+    const W = 420, H = 250, L = 38, Rr = 12, T = 12, B = 40, ks = R.ks;
+    const svg = mk('svg', {viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': `Queries solved against the gap, ${P.title}, ${P.sub}`}, p);
+    const X = i => L + (i + 0.5) / ks.length * (W - L - Rr), Y = v => T + (1 - v / 100) * (H - T - B);
+    const ax = mk('g', {class: 'axis'}, svg);
+    [0, 25, 50, 75, 100].forEach(v => { mk('line', {x1: L, x2: W - Rr, y1: Y(v), y2: Y(v), class: 'gridline'}, svg); mk('text', {x: L - 6, y: Y(v) + 3, 'text-anchor': 'end'}, ax).textContent = v; });
+    ks.forEach((k, i) => { mk('text', {x: X(i), y: H - B + 14, 'text-anchor': 'middle'}, ax).textContent = `\u00d7${k}`; });
+    mk('text', {x: (L + W - Rr) / 2, y: H - 6, 'text-anchor': 'middle'}, ax).textContent = R.xlabel;
+    const series = R.fields.filter(f => ON[f] && P.series[f]);
+    series.forEach(f => { const c = `var(${R.css[f]})`, vals = P.series[f]; let d = '', pen = false;
+      vals.forEach((v, i) => { if (v) { d += `${pen ? 'L' : 'M'}${X(i).toFixed(1)},${Y(v[0]).toFixed(1)}`; pen = true; } else pen = false; });
+      mk('path', {d, fill: 'none', stroke: c, 'stroke-width': 2, 'stroke-dasharray': R.dash[f] || '', 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
+      vals.forEach((v, i) => { if (v) mk('circle', {cx: X(i), cy: Y(v[0]), r: 4, fill: R.dash[f] ? 'var(--surface)' : c, stroke: R.dash[f] ? c : 'var(--surface)', 'stroke-width': 2}, svg); }); });
+    const tip = h('div', 'tip', null, p); tip.hidden = true;
+    const cross = mk('line', {y1: T, y2: H - B, stroke: 'var(--muted)', 'stroke-width': 1, visibility: 'hidden'}, svg);
+    const hit = mk('rect', {x: L, y: T, width: W - L - Rr, height: H - T - B, fill: 'transparent', style: 'touch-action: pan-y'}, svg);
+    const show = ev => { const rc = svg.getBoundingClientRect(), sx = (ev.clientX - rc.left) * W / rc.width;
+      const i = Math.max(0, Math.min(ks.length - 1, Math.floor((sx - L) / (W - L - Rr) * ks.length)));
+      cross.setAttribute('x1', X(i)); cross.setAttribute('x2', X(i)); cross.setAttribute('visibility', 'visible');
+      tip.textContent = ''; h('div', 'h', `${P.title} \u00b7 gap \u00d7${ks[i]}`, tip);
+      series.forEach(f => { const v = P.series[f][i]; if (!v) return; const row = h('div', 'r', null, tip); const kk = h('span', keyCls(f), null, row); kk.style.color = `var(${R.css[f]})`;
+        h('i', null, R.label[f], row); h('b', null, `${v[0].toFixed(1)} %`, row); });
+      tip.hidden = false; const pr = p.getBoundingClientRect(); let left = ev.clientX - pr.left + 14;
+      if (left + tip.offsetWidth > pr.width - 4) left = ev.clientX - pr.left - tip.offsetWidth - 14;
+      tip.style.left = `${Math.max(4, left)}px`; tip.style.top = `${Math.max(4, ev.clientY - pr.top - 20)}px`; };
+    hit.addEventListener('pointermove', show); hit.addEventListener('pointerdown', show);
+    hit.addEventListener('pointerleave', () => { tip.hidden = true; cross.setAttribute('visibility', 'hidden'); });
+  };
+  const all = () => { box.textContent = ''; R.panels.forEach(panel); };
+  legend(); all();
+})();
+</script>

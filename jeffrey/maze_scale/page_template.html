@@ -83,24 +83,24 @@ tbody tr:hover { background: var(--wash); }
 .note { font-size: 13.5px; color: var(--ink2); }
 .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; align-items: start; }
 .two > * { min-width: 0; }
-ul.tight { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+ul.tight { margin: 0 0 12px; padding-left: 20px; display: grid; gap: 6px; }
 code { font: 13px var(--f-mono); background: var(--wash); padding: 1px 4px; border-radius: 4px; }
 @media (prefers-reduced-motion: no-preference) { .chip { transition: background-color 120ms, color 120ms; } }
 </style>
 
 <div class="page">
   <header class="col">
-    <div class="eyebrow">jeffrey/maze_scale · ntrl-demo · 1 Nov 2026</div>
+    <div class="eyebrow">jeffrey/maze_scale · ntrl-demo · 1–2 Nov 2026</div>
     <h1>Maze Scale Test</h1>
-    <p class="lede" id="lede">ntrl-demo plans flawlessly on mazes up to the size of its own demo maze (7&nbsp;&times;&nbsp;7 cells) and falls apart beyond it: <strong>99.7&nbsp;% of runs on 4&times;4 and 7&times;7, 59&nbsp;% on 13&times;13, 23&nbsp;% on 22&times;22 and 11&nbsp;% on 40&times;40</strong>, where it does no better than driving straight at the goal. It fails by hitting walls: as the maze grows, the walls fade out of its travel-time field. Segment DP alone repairs the long-range travel times but plans worse. With ntrl-demo&rsquo;s own wall term in every DP level it beats ntrl-demo at every distance on 13&times;13 (74 vs 59&nbsp;%) and doubles it on 22&times;22 (43 vs 21&nbsp;%); on 40&times;40 nothing tested gets past 8 cells.</p>
+    <p class="lede" id="lede">ntrl-demo plans flawlessly on mazes up to the size of its own demo maze (7&nbsp;&times;&nbsp;7 cells) and degrades beyond it: <strong>99.7&nbsp;% of runs on 4&times;4 and 7&times;7, 88&nbsp;% on 10&times;10, 59&nbsp;% on 13&times;13 and 23&nbsp;% on 22&times;22</strong>. It fails by hitting walls: as the maze grows, the walls fade out of its travel-time field. Two things help. A higher Fourier frequency for the input lifts it to 95, 90 and 43&nbsp;% on the three large mazes. Segment DP with ntrl-demo&rsquo;s own wall term in every level lifts 13&times;13 to 74&nbsp;% and doubles 22&times;22 to 43&nbsp;%. The two do not stack: the DP chain on a higher-frequency base plans worse than either.</p>
   </header>
 
   <section>
     <div class="col">
       <h2>Five mazes, one robot</h2>
-      <p>Perfect mazes (randomized Kruskal) with 15&nbsp;% of the remaining walls removed to open loops, like ntrl-demo&rsquo;s demo maze, at 4, 7, 13, 22 and 40 cells a side; the last is 10&times; the first in each direction. Each is an <code>.obj</code> normalized exactly as ntrl-demo&rsquo;s <code>to_off</code> does. The robot is a 0.5 &times; 0.2-cell rectangle planned in SE(2) as q&nbsp;=&nbsp;(x,&nbsp;y,&nbsp;&phi;) with &phi;&nbsp;=&nbsp;0.25&nbsp;&theta; in cell units: it can turn on a corridor&rsquo;s centre line but drives slowly broadside. Margin, planner step, tolerance and temperature are all set in cells, so only the number of cells changes between mazes.</p>
+      <p>Perfect mazes (randomized Kruskal) with 15&nbsp;% of the remaining walls removed to open loops, like ntrl-demo&rsquo;s demo maze, at 4, 7, 10, 13 and 22 cells a side. Each is an <code>.obj</code> normalized exactly as ntrl-demo&rsquo;s <code>to_off</code> does. The robot is a 0.5 &times; 0.2-cell rectangle planned in SE(2) as q&nbsp;=&nbsp;(x,&nbsp;y,&nbsp;&phi;) with &phi;&nbsp;=&nbsp;0.25&nbsp;&theta; in cell units: it can turn on a corridor&rsquo;s centre line but drives slowly broadside. Margin, planner step, tolerance and temperature are all set in cells, so only the number of cells changes between mazes.</p>
     </div>
-    <figure><img src="mazes.png" alt="The five mazes, 4, 7, 13, 22 and 40 cells a side, each drawn at the same size with the longest test query's true path." width="2015" height="429"><figcaption>Each maze fills ntrl-demo's unit box, so a bigger maze is the same world with more cells. Orange: the longest certified query's true path.</figcaption></figure>
+    <figure><img src="mazes.png" alt="The five mazes, 4, 7, 10, 13 and 22 cells a side, each drawn at the same size with the longest test query's true path." width="2015" height="429"><figcaption>Each maze fills ntrl-demo's unit box, so a bigger maze is the same world with more cells. Orange: the longest certified query's true path.</figcaption></figure>
     <div class="tiles" id="tiles"></div>
   </section>
 
@@ -117,10 +117,10 @@ code { font: 13px var(--f-mono); background: var(--wash); padding: 1px 4px; bord
   <section>
     <div class="col">
       <h2>Why it breaks: the walls fade out</h2>
-      <p>At 7&times;7 the learned speed redraws every wall. At 13&times;13 most walls survive, at 22&times;22 only a connected subset, at 40&times;40 almost none. On held-out pairs the learned speed&rsquo;s log-correlation with the true speed falls 0.96, 0.92, 0.69, 0.32, 0.16 from 4 to 40 cells. At poses next to a wall the field&rsquo;s rise into the wall (ntrl-demo&rsquo;s eikonal target is 1) falls from 0.84&ndash;0.89 to 0.20, and its pull away from the wall (cosine with the into-wall direction, target 1) from 0.98 to 0.07&ndash;0.10. On the 40&times;40 maze MPPI hits the first wall it meets, a median 0.4&ndash;0.8 cells after the start.</p>
+      <p>At 7&times;7 the learned speed redraws every wall. At 10&times;10 and 13&times;13 most walls survive, at 22&times;22 only a connected subset. On held-out pairs, the log-correlation between learned and true speed falls 0.96, 0.92, 0.81, 0.69 and 0.32 from 4 to 22 cells. At poses next to a wall, two measures fall too (training seed 87358, pairs 2&ndash;8 cells apart). The field&rsquo;s rise into the wall, whose eikonal target is 1, goes 0.89, 0.86, 0.62, 0.48, 0.24. Its pull away from the wall, the cosine with the into-wall direction (target 1), goes 0.99, 0.98, 0.96, 0.92, 0.56. On 22&times;22 a failing run touches its first wall a median 0.4&ndash;3.5 cells after the start, depending on the distance bin.</p>
     </div>
-    <figure><img src="speedmaps.png" alt="True speed and the learned speed 1/|grad T| at heading 0, for the 7, 13, 22 and 40-cell mazes, with the zoom control below." width="1440" height="1116"><figcaption>Speed towards goal 0 at heading 0 (dark = slow, i.e. a wall). Top: truth. Middle: ntrl-demo. Bottom: ntrl-demo trained on zoomed coordinates (one cell spans the same input length as in the 7-cell maze).</figcaption></figure>
-    <div class="col"><p><strong>Control: zoomed input.</strong> Training ntrl-demo on coordinates scaled so one cell spans the same input length as in the 7&times;7 maze (the same as multiplying its Fourier matrix B by 1.85, 3.11 or 5.65) recovers a lot at 13&times;13 (444 vs 347 of 600 runs for the same training seed) and some at 22&times;22 (213 vs 152 of 720), but not at 40&times;40 (108 vs 89 of 840; speed fit still 0.15). Input frequency per cell explains part of the loss at 13 and 22 cells; at 40 cells one network does not hold about 1,400 walls even at the right frequency.</p></div>
+    <figure><img src="speedmaps.png" alt="True speed and the learned speed 1/|grad T| at heading 0, for the 7, 10, 13 and 22-cell mazes, with ntrl-demo at B &times; 3 below." width="1440" height="1116"><figcaption>Speed towards goal 0 at heading 0 (dark = slow, i.e. a wall). Top: truth. Middle: ntrl-demo. Bottom: ntrl-demo with its Fourier matrix B multiplied by 3 (see Higher Fourier frequencies).</figcaption></figure>
+    <div class="col"><p><strong>Control: input frequency.</strong> Multiplying ntrl-demo&rsquo;s Fourier matrix B by 3 (same random draw, nothing else changed) restores much of the wall field: speed fit 0.90, 0.84 and 0.52 on 10, 13 and 22 cells. Planning recovers to 95&nbsp;% and 90&nbsp;% on 10&times;10 and 13&times;13, but only 27&nbsp;% on 22&times;22, where B &times; 6 reaches 43&nbsp;%. So the input frequency per cell explains much of the loss, but not all of it. The section on higher Fourier frequencies has the full sweep.</p></div>
   </section>
 
   <section>
@@ -130,7 +130,7 @@ code { font: 13px var(--f-mono); background: var(--wash); padding: 1px 4px; bord
     </div>
     <div class="tablewrap" id="dptable"></div>
     <div class="tablewrap" id="walltable"></div>
-    <div class="col"><p>Excluding through-wall base pieces from the DP (checked pieces) or starting from the zoomed field does not change this. Fitting ntrl-demo&rsquo;s own wall-direction term in every DP level (<code>segdp3.py</code>) brings the barrier back (near-wall table above), and the chains stop hitting walls; what still fails stalls in a local minimum of the long-range field (crosses in the figure). The term&rsquo;s weight matters. At weight 1 the long-range values drift low and long queries stall; at <strong>weight 0.3</strong> the chain beats ntrl-demo on all three 13&times;13 training seeds (451 / 456 / 420 vs 347 / 320 / 393 of 600 runs), at every distance including the longest (16&ndash;32 cells: 32 / 51 / 29 vs 32 / 4 / 34 of 120), doubles it on 22&times;22 (308 vs 152 of 720) and helps on 40&times;40 below 8 cells (155 vs 89 of 840). Where ntrl-demo is already perfect (7&times;7) the chain costs a little (454 vs 480).</p></div>
+    <div class="col"><p>Excluding through-wall base pieces from the DP (checked pieces) does not change this. Fitting ntrl-demo&rsquo;s own wall-direction term in every DP level (<code>segdp3.py</code>) brings the barrier back (near-wall table above), and the chains stop hitting walls; what still fails stalls in a local minimum of the long-range field (crosses in the figure). The term&rsquo;s weight matters. At weight 1 the long-range values drift low and long queries stall; at <strong>weight 0.3</strong> the chain beats ntrl-demo on all three 13&times;13 training seeds (451 / 456 / 420 vs 347 / 320 / 393 of 600 runs), at every distance including the longest (16&ndash;32 cells: 32 / 51 / 29 vs 32 / 4 / 34 of 120), doubles it on 22&times;22 (308 vs 152 of 720). Where ntrl-demo is already good, the chain costs a little. On 10&times;10 it scores 80 vs 88&nbsp;% (504 / 476 / 467 vs 500 / 523 / 560 of 600): it is perfect up to 4 cells but loses at 16&ndash;32 cells (32 vs 66&nbsp;%). On 7&times;7 it scores 454 vs 480.</p></div>
     <figure><img src="paths13.png" alt="Three queries on the 13-cell maze: the truth path and the paths planned by ntrl-demo, segment DP and segment DP with the wall term." width="1326" height="481"><figcaption>13 &times; 13 maze, planning seed 0, training seed 87358. Dashed: truth. A cross marks where a run that never reached the goal stopped.</figcaption></figure>
   </section>
 
@@ -169,6 +169,15 @@ code { font: 13px var(--f-mono); background: var(--wash); padding: 1px 4px; bord
 
   <section>
     <div class="col">
+      <h2>Opening a + in the 22 × 22 maze</h2>
+      <!--PLUS_TEXT-->
+    </div>
+    <!--PLUS_FIG-->
+    <div class="tablewrap" id="plustable"></div>
+  </section>
+
+  <section>
+    <div class="col">
       <h2>U-turns around a wall end</h2>
       <!--UTURN_TEXT-->
     </div>
@@ -183,17 +192,18 @@ code { font: 13px var(--f-mono); background: var(--wash); padding: 1px 4px; bord
 
   <section class="col">
     <h2>Caveats</h2>
-    <ul class="tight"><li>One maze layout per size; 40 queries per distance bin.</li><li>On 13&times;13, ntrl-demo, segment DP and both wall-term weights have three training seeds; every other DP and zoom number is training seed 87358 only. ntrl-demo&rsquo;s 13&times;13 seeds differ by up to 73 of 600 runs, mostly in the long bins.</li><li>The wall-term weight was tried at 1 and 0.3 only, chosen on 13&times;13 and carried to the other mazes.</li><li>Only ntrl-demo&rsquo;s MPPI was used as the planner; a gradient-descent planner was not tried.</li><li>The zoom control changes three things at once: Fourier frequency per cell, TD step (0.03 of the zoomed box) and time units (divided back out for the planner).</li></ul>
+    <ul class="tight"><li>One maze layout per size; 40 queries per distance bin.</li><li>ntrl-demo has three training seeds on every maze. Segment DP with the wall term at weight 0.3 has three on 10&times;10 and 13&times;13 and one on 7&times;7 and 22&times;22. The 13&times;13 variants have three seeds unless their table says otherwise; every other DP number is training seed 87358 only. ntrl-demo&rsquo;s 13&times;13 seeds differ by up to 73 of 600 runs, mostly in the long bins.</li><li>The wall-term weight was tried at 1 and 0.3 only, chosen on 13&times;13 and carried to the other mazes.</li><li>Only ntrl-demo&rsquo;s MPPI was used as the planner; a gradient-descent planner was not tried.</li></ul>
   </section>
 
   <details class="col"><summary>Registered runs</summary><div class="tablewrap" id="runs"></div></details>
+
+  <!--EXPLORER-->
 </div>
 
 <script>
 const D = /*DATA*/null;
 const SERIES = [
   {name: 'ntrl-demo', css: '--s-ntrl', on: true},
-  {name: 'ntrl-demo, zoomed input', css: '--s-zoom', on: true},
   {name: 'segment DP', css: '--s-dp', on: true},
   {name: 'segment DP + wall term (weight 0.3)', css: '--s-wall', on: true},
   {name: 'oracle (MPPI on T*)', css: '--s-ref', ref: 'oracle', dash: 'dash', on: true},
@@ -398,7 +408,7 @@ function fourierPanels() {
     h('td', 'num', `${frac(c.total[0], c.total[1])} (${c.total[0]}/${c.total[1]})`, tr); h('td', 'num', c.per_seed.join(' / ') + ` of ${c.per_seed_of}`, tr);
     h('td', 'num', c.speed_fit == null ? '–' : c.speed_fit.toFixed(2), tr);
   });
-  h('p', 'note', 'Blue: ntrl-demo with its Fourier matrix B multiplied by the scale (same random draw per seed; data, losses, step and time units unchanged); the line joins the pooled success, whiskers span the training seeds. Green diamond: the zoom control at its scale (one seed). Speed fit: log-correlation of learned and true speed on held-out pairs.', t);
+  h('p', 'note', 'Blue: ntrl-demo with its Fourier matrix B multiplied by the scale (same random draw per seed; data, losses, step and time units unchanged); the line joins the pooled success, whiskers span the training seeds. Speed fit: log-correlation of learned and true speed on held-out pairs.', t);
 }
 
 function uturnTable() {
@@ -414,7 +424,7 @@ function uturnTable() {
   row('oracle (MPPI on T*)', m => `${frac(m.oracle[0], m.oracle[1])}`);
   row('straight line', m => `${frac(m.straight[0], m.straight[1])}`);
   for (const n of names) row(n, m => { const f = m.fields[n]; if (!f) return ''; return `${frac(f.total[0], f.total[1])} (${f.seeds.length > 1 ? f.seeds.map(s => f.per_seed[s][0]).join('/') : f.total[0]})`; });
-  h('p', 'note', 'Pooled success; in brackets the runs solved per training seed (87358 / 1 / 2, each of 120) or the count for a single seed. Start and goal are the centres of the two cells beside the last wall segment, 0.5 cells from the wall and 0.5 cells back from its free end, with random headings; the true path goes round the end (median ' + U.map(m => m.path_cells_median.toFixed(1)).join(' / ') + ' cells for the 4 … 40 mazes).', box);
+  h('p', 'note', 'Pooled success; in brackets the runs solved per training seed (87358 / 1 / 2, each of 120) or the count for a single seed. Start and goal are the centres of the two cells beside the last wall segment, 0.5 cells from the wall and 0.5 cells back from its free end, with random headings; the true path goes round the end (median ' + U.map(m => m.path_cells_median.toFixed(1)).join(' / ') + ' cells for the 4 … 22 mazes).', box);
 }
 function candTable() {
   const C = D.extras && D.extras.candidates; const box = document.getElementById('candtable'); if (!C || !C.rows.length) return;
@@ -448,7 +458,24 @@ function scaledTable() {
   }
   h('p', 'note', 'The scaled chain starts from the B-scaled ntrl-demo network of the same training seed and warm-starts every DP level from the one below, so all levels keep the scaled Fourier matrix; the wall term, edges (ratio 1.35) and per-level budget are those of the unscaled chain. Per training seed in the order 87358 / 1 / 2.', box);
 }
-levelsTable(); candTable(); fourierPanels(); scaledTable(); uturnTable();
+function plusTable() {
+  const X = D.extras && D.extras.plus; const box = document.getElementById('plustable'); if (!X) return;
+  h('h3', null, `MPPI success by true distance (%), pooled over training seeds`, box);
+  const tb = h('table', 'named', null, box); const hr = h('tr', null, null, h('thead', null, null, tb));
+  ['field'].concat(X.bins.map(b => b + ' cells')).concat(['all', 'per training seed', 'speed fit']).forEach(x => h('th', null, x, hr));
+  const body = h('tbody', null, null, tb);
+  const tr0 = h('tr', null, null, body); h('td', null, 'oracle on the plus maze (MPPI on T*)', tr0); X.oracle.forEach(v => h('td', 'num', pct(v), tr0)); ['', '', ''].forEach(v => h('td', null, v, tr0));
+  const tr1 = h('tr', null, null, body); h('td', null, 'straight line on the plus maze', tr1); X.straight.forEach(v => h('td', 'num', pct(v), tr1)); ['', '', ''].forEach(v => h('td', null, v, tr1));
+  for (const r of X.rows) {
+    const tr = h('tr', null, null, body); h('td', null, r.name, tr);
+    r.per_bin.forEach(v => h('td', 'num', v ? frac(v[0], v[1]) : '–', tr));
+    h('td', 'num', `${frac(r.total[0], r.total[1])} (${r.total[0]}/${r.total[1]})`, tr);
+    h('td', 'num', r.per_seed.join(' / ') + ` of ${r.per_seed_of}`, tr); h('td', 'num', r.speed_fit.toFixed(2), tr);
+  }
+  const p = X.rows.find(r => r.by_where);
+  if (p) h('p', 'note', `Plus maze, by where the query's ends lie: both inside the + ${frac(...p.by_where[2])} (${X.where_counts[2]} queries), one end ${frac(...p.by_where[1])} (${X.where_counts[1]}), neither ${frac(...p.by_where[0])} (${X.where_counts[0]}). The two mazes have different query sets (each certified on its own maze), so compare by distance bin.`, box);
+}
+levelsTable(); candTable(); fourierPanels(); scaledTable(); plusTable(); uturnTable();
 
 
 legend(); render(); tiles(); tables(); runs();

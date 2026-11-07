@@ -1,0 +1,164 @@
+"""Tables for the grid-sync study from the registered runs: report/tables.md and report/summary.json.
+
+    ~/.venvs/bellman-ntfield/bin/python jeffrey/grid_sync/report.py
+
+Fields: ntrl-demo (maze_scale ntrl stage), ntrl-demo with B x s (maze_scale fourier stage, the earlier sweep) and the
+grid-sync modes (this study's gridsync stage). Success = MPPI successes over planning seeds 0/1/2 pooled over the
+training seeds a field has; 'seed 87358' columns compare like with like where a mode has one seed. Field accuracy:
+median |log(T / T*)| over the maze's queries (all, and by distance bin), held-out log-speed correlation, median
+cosine of the descent direction at the start with the truth's.
+"""
+import json
+from pathlib import Path
+import numpy as np
+
+ROOT = Path(__file__).resolve().parents[2]
+OUT = Path(__file__).resolve().parent / 'report'
+SIZES = [7, 10, 13, 22]
+PREPARED = {7: '20261101T192446Z-9b1569db', 10: '20261102T032150Z-b0baa8e9', 13: '20261101T192504Z-13cf1d04', 22: '20261101T193403Z-cea05796'}
+MODES = ['ring', 'circle', 'literal', 'scaled', 'snap', 'ringhalf', 'circlehalf', 'octave', 'octavecircle', 'octaveperm']
+MODE_LABEL = dict(ring='grid-synced ring (f = f_grid / cos θ′)', circle='circle control (constant f)', literal='literal (f = f_grid · cos θ′)',
+                  scaled='B × s_eff (Gaussian disk)', snap='B × s_eff, upper rows snapped to grid harmonics',
+                  ringhalf='half ntrl-demo rows + half ring rows', circlehalf='half ntrl-demo rows + half circle rows',
+                  octave='grid-synced octaves (half period 1, 2, 4, … cells)', octavecircle='octaves at constant magnitude (control)',
+                  octaveperm='octave magnitudes shuffled within octaves (control)')
+SUPERSEDED = set()
+MAIN_SEEDS = {87358, 1, 2}          # the seeds ntrl-demo and the earlier sweep have; extra seeds only enter the lock table
+BINS = ['0.5-2', '2-4', '4-8', '8-16', '16-32', '32-64']
+
+
+def runs():
+    """All complete, non-smoke results of the three stages on the four prepared mazes."""
+    out = []
+    want = {str(ROOT / f'results/registered_{v}') for v in PREPARED.values()}
+    for r in sorted(ROOT.glob('results/registered_*/results.json')):
+        rid = r.parent.name.replace('registered_', '')
+        if rid in SUPERSEDED:
+            continue
+        try:
+            d = json.loads(r.read_text())
+        except Exception:
+            continue
+        if d.get('stage') not in ('ntrl', 'fourier', 'gridsync') or not d.get('complete') or d.get('smoke'):
+            continue
+        if str(Path(d.get('prepared', '')).resolve()) not in want or d.get('epochs') != 5000 or d.get('variant', 'metric') != 'metric':
+            continue
+        d['_id'], d['_dir'] = rid, r.parent
+        out.append(d)
+    return out
+
+
+def field_key(d):
+    if d['stage'] == 'ntrl':
+        return 'ntrl-demo'
+    if d['stage'] == 'fourier':
+        return f'B × {d["b_scale"]:g}'
+    return d['mode']
+
+
+def accuracy(d):
+    q = np.load(Path(d['prepared']) / 'queries.npz')
+    rows = np.load(d['_dir'] / 'rows.npz')
+    err = np.abs(np.log(np.maximum(rows['t_pred'], 1e-9) / q['t_star']))
+    by = {}
+    for b in sorted(set(q['bin'].tolist())):
+        by[BINS[b]] = float(np.median(err[q['bin'] == b]))
+    return float(np.median(err)), by
+
+
+def collect():
+    table = {}
+    for d in runs():
+        n, key = d['maze']['n'], field_key(d)
+        if n not in SIZES:
+            continue
+        acc, acc_bin = accuracy(d)
+        rec = dict(id=d['_id'], seed=d['seed'], success=d['success_total'], by_bin=d['success_by_bin'], speed_corr=d['speed_fit']['log_speed_corr'],
+                   log_err=acc, log_err_by_bin=acc_bin, descent_cos=d['field']['descent_cos_median'],
+                   cos_by_bin={k: v['descent_cos_median'] for k, v in d['field']['by_bin'].items()},
+                   collisions=sum(v['collision'] for v in d['planning'].values()), converged=sum(v['converged'] for v in d['planning'].values()),
+                   s_eff=d.get('s_eff'), features=d.get('features'))
+        table.setdefault(n, {}).setdefault(key, {})[d['seed']] = rec
+    return table
+
+
+def pooled(recs, seeds=None):
+    rs = [recs[s] for s in sorted(recs, key=lambda s: (s != 87358, s)) if seeds is None or s in seeds]
+    if not rs:
+        return None
+    k = sum(r['success'][0] for r in rs)
+    m = sum(r['success'][1] for r in rs)
+    return k, m, [r['success'][0] for r in rs]
+
+
+def cell(recs, seeds=None):
+    p = pooled(recs, seeds)
+    if p is None:
+        return '–'
+    k, m, per = p
+    s = f'{100 * k / m:.0f} % ({k}/{m})'
+    return s + (f' [{" / ".join(map(str, per))}]' if len(per) > 1 else '')
+
+
+def main():
+    OUT.mkdir(exist_ok=True)
+    t = collect()
+    fields = ['ntrl-demo'] + sorted({k for n in t for k in t[n] if k.startswith('B ×')}, key=lambda s: float(s.split('×')[1])) + MODES
+    md = ['# Grid-sync tables (generated by report.py)', '']
+    md += ['## Success, training seed 87358 (MPPI, planning seeds 0/1/2)', '', '| field | ' + ' | '.join(f'{n}×{n}' for n in SIZES) + ' |', '|---|' + '---|' * len(SIZES)]
+    for f in fields:
+        md.append(f'| {MODE_LABEL.get(f, f)} | ' + ' | '.join(cell(t.get(n, {}).get(f, {}), {87358}) for n in SIZES) + ' |')
+    md += ['', '## Success, training seeds 87358 / 1 / 2 pooled ([per seed])', '', '| field | ' + ' | '.join(f'{n}×{n}' for n in SIZES) + ' |', '|---|' + '---|' * len(SIZES)]
+    for f in fields:
+        md.append(f'| {MODE_LABEL.get(f, f)} | ' + ' | '.join(cell(t.get(n, {}).get(f, {}), MAIN_SEEDS) for n in SIZES) + ' |')
+    md += ['', '## The lock: grid-synced octaves against the two octave controls, paired by training seed (every seed run)', '',
+           'Same seed = same Fourier draw (directions) and the same network initialization; runs solved of 3 × queries.', '',
+           '| maze | seed | octave | shuffled magnitudes | constant magnitude | octave − shuffled | octave − constant |', '|---|---|---|---|---|---|---|']
+    for n in SIZES:
+        o, pm, c = (t.get(n, {}).get(f, {}) for f in ('octave', 'octaveperm', 'octavecircle'))
+        for s_ in sorted(o, key=lambda s_: (s_ != 87358, s_)):
+            a = o[s_]['success'][0]
+            b = pm.get(s_, {}).get('success', [None])[0]
+            d = c.get(s_, {}).get('success', [None])[0]
+            fmt = lambda v: '–' if v is None else str(v)
+            diff = lambda v: '–' if v is None else f'{a - v:+d}'
+            md.append(f'| {n}×{n} | {s_} | {a} | {fmt(b)} | {fmt(d)} | {diff(b)} | {diff(d)} |')
+    md += ['', '## Field accuracy, training seed 87358', '', 'median |log(T/T*)| over all queries / held-out log-speed correlation / median descent cosine at the start', '',
+           '| field | ' + ' | '.join(f'{n}×{n}' for n in SIZES) + ' |', '|---|' + '---|' * len(SIZES)]
+    for f in fields:
+        row = []
+        for n in SIZES:
+            r = t.get(n, {}).get(f, {}).get(87358)
+            row.append('–' if r is None else f'{r["log_err"]:.3f} / {r["speed_corr"]:.2f} / {r["descent_cos"]:.2f}')
+        md.append(f'| {MODE_LABEL.get(f, f)} | ' + ' | '.join(row) + ' |')
+    md += ['', '## By distance bin, training seed 87358: success % and median |log(T/T*)|', '']
+    for n in SIZES:
+        bins = [b for b in BINS if any(b in r.get(87358, {}).get('by_bin', {}) for r in t.get(n, {}).values())]
+        md += [f'**{n}×{n}**', '', '| field | ' + ' | '.join(bins) + ' |', '|---|' + '---|' * len(bins)]
+        for f in fields:
+            r = t.get(n, {}).get(f, {}).get(87358)
+            if r is None:
+                continue
+            md.append(f'| {MODE_LABEL.get(f, f)} | ' + ' | '.join(
+                (f'{100 * r["by_bin"][b][0] / r["by_bin"][b][1]:.0f} % / {r["log_err_by_bin"][b]:.2f}' if b in r['by_bin'] else '–') for b in bins) + ' |')
+        md.append('')
+    md += ['## Failure type, training seed 87358 (all planning seeds)', '', 'runs that never converged (stalls) / converged runs with a collision', '',
+           '| field | ' + ' | '.join(f'{n}×{n}' for n in SIZES) + ' |', '|---|' + '---|' * len(SIZES)]
+    for f in fields:
+        row = []
+        for n in SIZES:
+            r = t.get(n, {}).get(f, {}).get(87358)
+            row.append('–' if r is None else f'{r["success"][1] - r["converged"]} / {r["converged"] - r["success"][0]}')
+        md.append(f'| {MODE_LABEL.get(f, f)} | ' + ' | '.join(row) + ' |')
+    md += ['', '## Run ids', '']
+    for n in SIZES:
+        for f in fields:
+            for s, r in sorted(t.get(n, {}).get(f, {}).items(), key=lambda kv: (kv[0] != 87358, kv[0])):
+                md.append(f'- {n}×{n} {f} seed {s}: {r["id"]}')
+    (OUT / 'tables.md').write_text('\n'.join(md) + '\n')
+    (OUT / 'summary.json').write_text(json.dumps({str(n): v for n, v in t.items()}, indent=1, default=float))
+    print('\n'.join(md))
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,170 @@
+{
+ "8|20261104T053843Z-b836aaaa": {
+  "k": 8,
+  "method": "warp + scaling",
+  "seed": 1,
+  "run": "20261104T053843Z-b836aaaa",
+  "sinks": {
+   "goals": 24,
+   "trapped_share": 0.8507247933292578,
+   "spurious_sinks": 122.66666666666667,
+   "res_cells": 0.25,
+   "headings": 12
+  },
+  "aliasing": {
+   "random_median": 0.4464755207300186,
+   "random_p10": 0.21803919970989227,
+   "n_random": 4658,
+   "sink_median": 0.3161171078681946,
+   "sink_p10": 0.1559172123670578,
+   "n_sink": 1401
+  }
+ },
+ "8|20261104T081526Z-8c1fb001": {
+  "k": 8,
+  "method": "warp + scaling",
+  "seed": 2,
+  "run": "20261104T081526Z-8c1fb001",
+  "sinks": {
+   "goals": 24,
+   "trapped_share": 0.5851384322213594,
+   "spurious_sinks": 16.208333333333332,
+   "res_cells": 0.25,
+   "headings": 12
+  },
+  "aliasing": {
+   "random_median": 0.792079895734787,
+   "random_p10": 0.6490993797779083,
+   "n_random": 4658,
+   "sink_median": 0.7389373183250427,
+   "sink_p10": 0.5606717824935913,
+   "n_sink": 213
+  }
+ },
+ "8|20261104T052915Z-24f6327b": {
+  "k": 8,
+  "method": "constructed",
+  "seed": 1,
+  "run": "20261104T052915Z-24f6327b",
+  "sinks": {
+   "goals": 24,
+   "trapped_share": 0.7781587165209919,
+   "spurious_sinks": 12.291666666666666,
+   "res_cells": 0.25,
+   "headings": 12
+  },
+  "aliasing": {
+   "random_median": 0.38042910397052765,
+   "random_p10": 0.13059840053319932,
+   "n_random": 4658,
+   "sink_median": 0.08192549273371696,
+   "sink_p10": 0.05236383303999901,
+   "n_sink": 112
+  }
+ },
+ "8|20261104T075941Z-e9d5a370": {
+  "k": 8,
+  "method": "constructed",
+  "seed": 2,
+  "run": "20261104T075941Z-e9d5a370",
+  "sinks": {
+   "goals": 24,
+   "trapped_share": 0.5935181666473902,
+   "spurious_sinks": 11.666666666666666,
+   "res_cells": 0.25,
+   "headings": 12
+  },
+  "aliasing": {
+   "random_median": 0.5081050395965576,
+   "random_p10": 0.24463627934455873,
+   "n_random": 4658,
+   "sink_median": 0.2999115586280823,
+   "sink_p10": 0.0863548293709755,
+   "n_sink": 83
+  }
+ },
+ "12|20261104T060407Z-b67b4e6a": {
+  "k": 12,
+  "method": "warp + scaling",
+  "seed": 1,
+  "run": "20261104T060407Z-b67b4e6a",
+  "sinks": {
+   "goals": 22,
+   "trapped_share": 0.9414771816317717,
+   "spurious_sinks": 509.59090909090907,
+   "res_cells": 0.25,
+   "headings": 12
+  },
+  "aliasing": {
+   "random_median": 0.2212856560945511,
+   "random_p10": 0.10977583900094032,
+   "n_random": 4718,
+   "sink_median": 0.16143279522657394,
+   "sink_p10": 0.09955466911196709,
+   "n_sink": 6186
+  }
+ },
+ "12|20261104T090815Z-85ecb0f9": {
+  "k": 12,
+  "method": "warp + scaling",
+  "seed": 2,
+  "run": "20261104T090815Z-85ecb0f9",
+  "sinks": {
+   "goals": 22,
+   "trapped_share": 0.8018674769499615,
+   "spurious_sinks": 97.86363636363636,
+   "res_cells": 0.25,
+   "headings": 12
+  },
+  "aliasing": {
+   "random_median": 0.491000235080719,
+   "random_p10": 0.31830671727657317,
+   "n_random": 4718,
+   "sink_median": 0.3644202649593353,
+   "sink_p10": 0.23222300708293914,
+   "n_sink": 1153
+  }
+ },
+ "12|20261104T054857Z-b7caf6ca": {
+  "k": 12,
+  "method": "constructed",
+  "seed": 1,
+  "run": "20261104T054857Z-b7caf6ca",
+  "sinks": {
+   "goals": 22,
+   "trapped_share": 0.7501121913013193,
+   "spurious_sinks": 18.545454545454547,
+   "res_cells": 0.25,
+   "headings": 12
+  },
+  "aliasing": {
+   "random_median": 0.35096412897109985,
+   "random_p10": 0.10406448915600777,
+   "n_random": 4718,
+   "sink_median": 0.12000943720340729,
+   "sink_p10": 0.04586329683661461,
+   "n_sink": 171
+  }
+ },
+ "12|20261104T085107Z-8df8c006": {
+  "k": 12,
+  "method": "constructed",
+  "seed": 2,
+  "run": "20261104T085107Z-8df8c006",
+  "sinks": {
+   "goals": 22,
+   "trapped_share": 0.5423783942183699,
+   "spurious_sinks": 15.5,
+   "res_cells": 0.25,
+   "headings": 12
+  },
+  "aliasing": {
+   "random_median": 0.305586576461792,
+   "random_p10": 0.08034519031643868,
+   "n_random": 4718,
+   "sink_median": 0.05792630463838577,
+   "sink_p10": 0.03621285781264305,
+   "n_sink": 179
+  }
+ }
+}

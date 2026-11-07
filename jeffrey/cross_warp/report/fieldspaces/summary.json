@@ -1,0 +1,5075 @@
+{
+ "gaps": {
+  "1": {
+   "ntrl": {
+    "seeds": [
+     1,
+     2,
+     87358
+    ],
+    "x": {
+     "success_total": [
+      1183,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       176,
+       540
+      ],
+      "adjacent quadrants": [
+       133,
+       540
+      ],
+      "diagonal quadrants": [
+       123,
+       540
+      ],
+      "quadrant - open": [
+       231,
+       540
+      ],
+      "open - open": [
+       520,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        367,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         59,
+         180
+        ],
+        "adjacent quadrants": [
+         48,
+         180
+        ],
+        "diagonal quadrants": [
+         33,
+         180
+        ],
+        "quadrant - open": [
+         59,
+         180
+        ],
+        "open - open": [
+         168,
+         180
+        ]
+       },
+       "source": "20261102T060517Z-0df939ae"
+      },
+      "1": {
+       "success_total": [
+        364,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         45,
+         180
+        ],
+        "adjacent quadrants": [
+         35,
+         180
+        ],
+        "diagonal quadrants": [
+         32,
+         180
+        ],
+        "quadrant - open": [
+         75,
+         180
+        ],
+        "open - open": [
+         177,
+         180
+        ]
+       },
+       "source": "20261102T062426Z-ed343a1b"
+      },
+      "2": {
+       "success_total": [
+        452,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         72,
+         180
+        ],
+        "adjacent quadrants": [
+         50,
+         180
+        ],
+        "diagonal quadrants": [
+         58,
+         180
+        ],
+        "quadrant - open": [
+         97,
+         180
+        ],
+        "open - open": [
+         175,
+         180
+        ]
+       },
+       "source": "20261102T063128Z-542b25dd"
+      }
+     }
+    }
+   },
+   "x_trained": {
+    "seeds": [
+     1,
+     2,
+     87358
+    ],
+    "x": {
+     "success_total": [
+      1742,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       343,
+       540
+      ],
+      "adjacent quadrants": [
+       269,
+       540
+      ],
+      "diagonal quadrants": [
+       259,
+       540
+      ],
+      "quadrant - open": [
+       346,
+       540
+      ],
+      "open - open": [
+       525,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        598,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         107,
+         180
+        ],
+        "adjacent quadrants": [
+         101,
+         180
+        ],
+        "diagonal quadrants": [
+         97,
+         180
+        ],
+        "quadrant - open": [
+         122,
+         180
+        ],
+        "open - open": [
+         171,
+         180
+        ]
+       },
+       "source": "20261103T171757Z-79906972"
+      },
+      "2": {
+       "success_total": [
+        530,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         107,
+         180
+        ],
+        "adjacent quadrants": [
+         66,
+         180
+        ],
+        "diagonal quadrants": [
+         75,
+         180
+        ],
+        "quadrant - open": [
+         102,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "20261103T173057Z-c4de6c30"
+      },
+      "1": {
+       "success_total": [
+        614,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         129,
+         180
+        ],
+        "adjacent quadrants": [
+         102,
+         180
+        ],
+        "diagonal quadrants": [
+         87,
+         180
+        ],
+        "quadrant - open": [
+         122,
+         180
+        ],
+        "open - open": [
+         174,
+         180
+        ]
+       },
+       "source": "20261103T173406Z-5a9640e4"
+      }
+     }
+    },
+    "z": {
+     "success_total": [
+      1720,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       343,
+       540
+      ],
+      "adjacent quadrants": [
+       255,
+       540
+      ],
+      "diagonal quadrants": [
+       241,
+       540
+      ],
+      "quadrant - open": [
+       360,
+       540
+      ],
+      "open - open": [
+       521,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        584,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         107,
+         180
+        ],
+        "adjacent quadrants": [
+         99,
+         180
+        ],
+        "diagonal quadrants": [
+         80,
+         180
+        ],
+        "quadrant - open": [
+         127,
+         180
+        ],
+        "open - open": [
+         171,
+         180
+        ]
+       },
+       "source": "registered_20261105T025336Z-f910e878",
+       "collision": 316,
+       "stalled": 0,
+       "time_ratio_median": 1.1310016541548338,
+       "length_ratio_median": 1.0923545452019674
+      },
+      "2": {
+       "success_total": [
+        529,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         107,
+         180
+        ],
+        "adjacent quadrants": [
+         62,
+         180
+        ],
+        "diagonal quadrants": [
+         75,
+         180
+        ],
+        "quadrant - open": [
+         105,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "registered_20261105T025336Z-f910e878",
+       "collision": 371,
+       "stalled": 0,
+       "time_ratio_median": 1.1233568147459505,
+       "length_ratio_median": 1.1005307816669483
+      },
+      "1": {
+       "success_total": [
+        607,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         129,
+         180
+        ],
+        "adjacent quadrants": [
+         94,
+         180
+        ],
+        "diagonal quadrants": [
+         86,
+         180
+        ],
+        "quadrant - open": [
+         128,
+         180
+        ],
+        "open - open": [
+         170,
+         180
+        ]
+       },
+       "source": "registered_20261105T025336Z-f910e878",
+       "collision": 291,
+       "stalled": 2,
+       "time_ratio_median": 1.1540118569110103,
+       "length_ratio_median": 1.089735972594957
+      }
+     }
+    }
+   },
+   "z_trained": {
+    "seeds": [
+     1,
+     2,
+     87358
+    ],
+    "x": {
+     "success_total": [
+      1657,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       411,
+       540
+      ],
+      "adjacent quadrants": [
+       168,
+       540
+      ],
+      "diagonal quadrants": [
+       156,
+       540
+      ],
+      "quadrant - open": [
+       386,
+       540
+      ],
+      "open - open": [
+       536,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        556,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         141,
+         180
+        ],
+        "adjacent quadrants": [
+         71,
+         180
+        ],
+        "diagonal quadrants": [
+         52,
+         180
+        ],
+        "quadrant - open": [
+         114,
+         180
+        ],
+        "open - open": [
+         178,
+         180
+        ]
+       },
+       "source": "registered_20261105T025022Z-f7d8f469",
+       "collision": 344,
+       "stalled": 0,
+       "time_ratio_median": 1.1664669200456106,
+       "length_ratio_median": 1.0949129581832995
+      },
+      "1": {
+       "success_total": [
+        526,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         122,
+         180
+        ],
+        "adjacent quadrants": [
+         39,
+         180
+        ],
+        "diagonal quadrants": [
+         44,
+         180
+        ],
+        "quadrant - open": [
+         141,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "registered_20261105T052823Z-7a9680f4",
+       "collision": 374,
+       "stalled": 0,
+       "time_ratio_median": 1.153589682254155,
+       "length_ratio_median": 1.1011436678266437
+      },
+      "2": {
+       "success_total": [
+        575,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         148,
+         180
+        ],
+        "adjacent quadrants": [
+         58,
+         180
+        ],
+        "diagonal quadrants": [
+         60,
+         180
+        ],
+        "quadrant - open": [
+         131,
+         180
+        ],
+        "open - open": [
+         178,
+         180
+        ]
+       },
+       "source": "registered_20261105T053155Z-bb04c534",
+       "collision": 325,
+       "stalled": 0,
+       "time_ratio_median": 1.150078261228211,
+       "length_ratio_median": 1.0900281981905842
+      }
+     }
+    },
+    "z": {
+     "success_total": [
+      1663,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       412,
+       540
+      ],
+      "adjacent quadrants": [
+       169,
+       540
+      ],
+      "diagonal quadrants": [
+       157,
+       540
+      ],
+      "quadrant - open": [
+       395,
+       540
+      ],
+      "open - open": [
+       530,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        549,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         141,
+         180
+        ],
+        "adjacent quadrants": [
+         63,
+         180
+        ],
+        "diagonal quadrants": [
+         50,
+         180
+        ],
+        "quadrant - open": [
+         118,
+         180
+        ],
+        "open - open": [
+         177,
+         180
+        ]
+       },
+       "source": "registered_20261105T025022Z-f7d8f469",
+       "collision": 351,
+       "stalled": 0,
+       "time_ratio_median": 1.0852885285047507,
+       "length_ratio_median": 1.0430818295356161
+      },
+      "1": {
+       "success_total": [
+        528,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         122,
+         180
+        ],
+        "adjacent quadrants": [
+         42,
+         180
+        ],
+        "diagonal quadrants": [
+         45,
+         180
+        ],
+        "quadrant - open": [
+         139,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "registered_20261105T052823Z-7a9680f4",
+       "collision": 372,
+       "stalled": 0,
+       "time_ratio_median": 1.0970353487932183,
+       "length_ratio_median": 1.0560682952310378
+      },
+      "2": {
+       "success_total": [
+        586,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         149,
+         180
+        ],
+        "adjacent quadrants": [
+         64,
+         180
+        ],
+        "diagonal quadrants": [
+         62,
+         180
+        ],
+        "quadrant - open": [
+         138,
+         180
+        ],
+        "open - open": [
+         173,
+         180
+        ]
+       },
+       "source": "registered_20261105T053155Z-bb04c534",
+       "collision": 314,
+       "stalled": 0,
+       "time_ratio_median": 1.0818007133879122,
+       "length_ratio_median": 1.044703340475718
+      }
+     }
+    }
+   },
+   "z_trained_zdraw": {
+    "seeds": [
+     1,
+     2,
+     87358
+    ],
+    "x": {
+     "success_total": [
+      1673,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       387,
+       540
+      ],
+      "adjacent quadrants": [
+       205,
+       540
+      ],
+      "diagonal quadrants": [
+       160,
+       540
+      ],
+      "quadrant - open": [
+       381,
+       540
+      ],
+      "open - open": [
+       540,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        508,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         104,
+         180
+        ],
+        "adjacent quadrants": [
+         58,
+         180
+        ],
+        "diagonal quadrants": [
+         44,
+         180
+        ],
+        "quadrant - open": [
+         122,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "20261105T071535Z-0404fd14",
+       "from_": "pipeline"
+      },
+      "1": {
+       "success_total": [
+        589,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         146,
+         180
+        ],
+        "adjacent quadrants": [
+         65,
+         180
+        ],
+        "diagonal quadrants": [
+         72,
+         180
+        ],
+        "quadrant - open": [
+         126,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "20261105T104818Z-a4bcbe07",
+       "from_": "pipeline"
+      },
+      "2": {
+       "success_total": [
+        576,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         137,
+         180
+        ],
+        "adjacent quadrants": [
+         82,
+         180
+        ],
+        "diagonal quadrants": [
+         44,
+         180
+        ],
+        "quadrant - open": [
+         133,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "20261105T105726Z-649082a8",
+       "from_": "pipeline"
+      }
+     }
+    },
+    "z": {
+     "success_total": [
+      1672,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       387,
+       540
+      ],
+      "adjacent quadrants": [
+       192,
+       540
+      ],
+      "diagonal quadrants": [
+       186,
+       540
+      ],
+      "quadrant - open": [
+       376,
+       540
+      ],
+      "open - open": [
+       531,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        520,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         104,
+         180
+        ],
+        "adjacent quadrants": [
+         55,
+         180
+        ],
+        "diagonal quadrants": [
+         57,
+         180
+        ],
+        "quadrant - open": [
+         124,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "registered_20261105T072128Z-99132dc6",
+       "collision": 377,
+       "stalled": 3,
+       "time_ratio_median": 1.0941151013543498,
+       "length_ratio_median": 1.0562400882757177
+      },
+      "1": {
+       "success_total": [
+        576,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         146,
+         180
+        ],
+        "adjacent quadrants": [
+         57,
+         180
+        ],
+        "diagonal quadrants": [
+         72,
+         180
+        ],
+        "quadrant - open": [
+         121,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "registered_20261105T105640Z-c336e3eb",
+       "collision": 324,
+       "stalled": 0,
+       "time_ratio_median": 1.1088358232234552,
+       "length_ratio_median": 1.0546294940309027
+      },
+      "2": {
+       "success_total": [
+        576,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         137,
+         180
+        ],
+        "adjacent quadrants": [
+         80,
+         180
+        ],
+        "diagonal quadrants": [
+         57,
+         180
+        ],
+        "quadrant - open": [
+         131,
+         180
+        ],
+        "open - open": [
+         171,
+         180
+        ]
+       },
+       "source": "registered_20261105T110514Z-f6c347ec",
+       "collision": 324,
+       "stalled": 0,
+       "time_ratio_median": 1.08688392865774,
+       "length_ratio_median": 1.047222616316204
+      }
+     }
+    }
+   }
+  },
+  "2": {
+   "ntrl": {
+    "seeds": [
+     1,
+     2,
+     87358
+    ],
+    "x": {
+     "success_total": [
+      872,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       117,
+       540
+      ],
+      "adjacent quadrants": [
+       56,
+       540
+      ],
+      "diagonal quadrants": [
+       41,
+       540
+      ],
+      "quadrant - open": [
+       136,
+       540
+      ],
+      "open - open": [
+       522,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        313,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         48,
+         180
+        ],
+        "adjacent quadrants": [
+         15,
+         180
+        ],
+        "diagonal quadrants": [
+         19,
+         180
+        ],
+        "quadrant - open": [
+         54,
+         180
+        ],
+        "open - open": [
+         177,
+         180
+        ]
+       },
+       "source": "20261103T234822Z-01f10400"
+      },
+      "1": {
+       "success_total": [
+        268,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         33,
+         180
+        ],
+        "adjacent quadrants": [
+         20,
+         180
+        ],
+        "diagonal quadrants": [
+         6,
+         180
+        ],
+        "quadrant - open": [
+         35,
+         180
+        ],
+        "open - open": [
+         174,
+         180
+        ]
+       },
+       "source": "20261104T043955Z-95601b71"
+      },
+      "2": {
+       "success_total": [
+        291,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         36,
+         180
+        ],
+        "adjacent quadrants": [
+         21,
+         180
+        ],
+        "diagonal quadrants": [
+         16,
+         180
+        ],
+        "quadrant - open": [
+         47,
+         180
+        ],
+        "open - open": [
+         171,
+         180
+        ]
+       },
+       "source": "20261104T063539Z-f8846560"
+      }
+     }
+    }
+   },
+   "x_trained": {
+    "seeds": [
+     1,
+     2,
+     87358
+    ],
+    "x": {
+     "success_total": [
+      1128,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       227,
+       540
+      ],
+      "adjacent quadrants": [
+       116,
+       540
+      ],
+      "diagonal quadrants": [
+       84,
+       540
+      ],
+      "quadrant - open": [
+       209,
+       540
+      ],
+      "open - open": [
+       492,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        456,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         87,
+         180
+        ],
+        "adjacent quadrants": [
+         70,
+         180
+        ],
+        "diagonal quadrants": [
+         27,
+         180
+        ],
+        "quadrant - open": [
+         92,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "20261103T235448Z-1245f15c"
+      },
+      "1": {
+       "success_total": [
+        324,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         86,
+         180
+        ],
+        "adjacent quadrants": [
+         16,
+         180
+        ],
+        "diagonal quadrants": [
+         22,
+         180
+        ],
+        "quadrant - open": [
+         59,
+         180
+        ],
+        "open - open": [
+         141,
+         180
+        ]
+       },
+       "source": "20261104T044652Z-4fe7acbe"
+      },
+      "2": {
+       "success_total": [
+        348,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         54,
+         180
+        ],
+        "adjacent quadrants": [
+         30,
+         180
+        ],
+        "diagonal quadrants": [
+         35,
+         180
+        ],
+        "quadrant - open": [
+         58,
+         180
+        ],
+        "open - open": [
+         171,
+         180
+        ]
+       },
+       "source": "20261104T064911Z-dc8969d6"
+      }
+     }
+    },
+    "z": {
+     "success_total": [
+      1129,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       227,
+       540
+      ],
+      "adjacent quadrants": [
+       121,
+       540
+      ],
+      "diagonal quadrants": [
+       68,
+       540
+      ],
+      "quadrant - open": [
+       228,
+       540
+      ],
+      "open - open": [
+       485,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        456,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         87,
+         180
+        ],
+        "adjacent quadrants": [
+         64,
+         180
+        ],
+        "diagonal quadrants": [
+         29,
+         180
+        ],
+        "quadrant - open": [
+         99,
+         180
+        ],
+        "open - open": [
+         177,
+         180
+        ]
+       },
+       "source": "registered_20261105T044234Z-1d455d2c",
+       "collision": 444,
+       "stalled": 0,
+       "time_ratio_median": 1.1913554269988806,
+       "length_ratio_median": 1.117436555082588
+      },
+      "1": {
+       "success_total": [
+        316,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         86,
+         180
+        ],
+        "adjacent quadrants": [
+         21,
+         180
+        ],
+        "diagonal quadrants": [
+         6,
+         180
+        ],
+        "quadrant - open": [
+         63,
+         180
+        ],
+        "open - open": [
+         140,
+         180
+        ]
+       },
+       "source": "registered_20261105T044234Z-1d455d2c",
+       "collision": 534,
+       "stalled": 50,
+       "time_ratio_median": 1.1886873852625288,
+       "length_ratio_median": 1.0830983146499764
+      },
+      "2": {
+       "success_total": [
+        357,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         54,
+         180
+        ],
+        "adjacent quadrants": [
+         36,
+         180
+        ],
+        "diagonal quadrants": [
+         33,
+         180
+        ],
+        "quadrant - open": [
+         66,
+         180
+        ],
+        "open - open": [
+         168,
+         180
+        ]
+       },
+       "source": "registered_20261105T044234Z-1d455d2c",
+       "collision": 537,
+       "stalled": 6,
+       "time_ratio_median": 1.1910328110536423,
+       "length_ratio_median": 1.1421291302893304
+      }
+     }
+    }
+   },
+   "z_trained": {
+    "seeds": [
+     87358
+    ],
+    "x": {
+     "success_total": [
+      531,
+      900
+     ],
+     "by_category": {
+      "same quadrant": [
+       126,
+       180
+      ],
+      "adjacent quadrants": [
+       75,
+       180
+      ],
+      "diagonal quadrants": [
+       27,
+       180
+      ],
+      "quadrant - open": [
+       123,
+       180
+      ],
+      "open - open": [
+       180,
+       180
+      ]
+     },
+     "seeds": [
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        531,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         126,
+         180
+        ],
+        "adjacent quadrants": [
+         75,
+         180
+        ],
+        "diagonal quadrants": [
+         27,
+         180
+        ],
+        "quadrant - open": [
+         123,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "registered_20261105T034146Z-ca02d97d",
+       "collision": 366,
+       "stalled": 3,
+       "time_ratio_median": 1.1957405401943362,
+       "length_ratio_median": 1.120042098780484
+      }
+     }
+    },
+    "z": {
+     "success_total": [
+      513,
+      900
+     ],
+     "by_category": {
+      "same quadrant": [
+       126,
+       180
+      ],
+      "adjacent quadrants": [
+       65,
+       180
+      ],
+      "diagonal quadrants": [
+       25,
+       180
+      ],
+      "quadrant - open": [
+       117,
+       180
+      ],
+      "open - open": [
+       180,
+       180
+      ]
+     },
+     "seeds": [
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        513,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         126,
+         180
+        ],
+        "adjacent quadrants": [
+         65,
+         180
+        ],
+        "diagonal quadrants": [
+         25,
+         180
+        ],
+        "quadrant - open": [
+         117,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "registered_20261105T034146Z-ca02d97d",
+       "collision": 384,
+       "stalled": 3,
+       "time_ratio_median": 1.1170871107593925,
+       "length_ratio_median": 1.0595373474442324
+      }
+     }
+    }
+   },
+   "z_trained_zdraw": {
+    "seeds": [
+     87358
+    ],
+    "x": {
+     "success_total": [
+      535,
+      900
+     ],
+     "by_category": {
+      "same quadrant": [
+       129,
+       180
+      ],
+      "adjacent quadrants": [
+       61,
+       180
+      ],
+      "diagonal quadrants": [
+       38,
+       180
+      ],
+      "quadrant - open": [
+       127,
+       180
+      ],
+      "open - open": [
+       180,
+       180
+      ]
+     },
+     "seeds": [
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        535,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         129,
+         180
+        ],
+        "adjacent quadrants": [
+         61,
+         180
+        ],
+        "diagonal quadrants": [
+         38,
+         180
+        ],
+        "quadrant - open": [
+         127,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "20261105T110650Z-dc9e2eb0",
+       "from_": "pipeline"
+      }
+     }
+    },
+    "z": {
+     "success_total": [
+      529,
+      900
+     ],
+     "by_category": {
+      "same quadrant": [
+       129,
+       180
+      ],
+      "adjacent quadrants": [
+       59,
+       180
+      ],
+      "diagonal quadrants": [
+       40,
+       180
+      ],
+      "quadrant - open": [
+       121,
+       180
+      ],
+      "open - open": [
+       180,
+       180
+      ]
+     },
+     "seeds": [
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        529,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         129,
+         180
+        ],
+        "adjacent quadrants": [
+         59,
+         180
+        ],
+        "diagonal quadrants": [
+         40,
+         180
+        ],
+        "quadrant - open": [
+         121,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "registered_20261105T111525Z-42600f64",
+       "collision": 371,
+       "stalled": 0,
+       "time_ratio_median": 1.1139313309574739,
+       "length_ratio_median": 1.0611318359315611
+      }
+     }
+    }
+   }
+  },
+  "4": {
+   "ntrl": {
+    "seeds": [
+     1,
+     2,
+     87358
+    ],
+    "x": {
+     "success_total": [
+      724,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       81,
+       540
+      ],
+      "adjacent quadrants": [
+       47,
+       540
+      ],
+      "diagonal quadrants": [
+       2,
+       540
+      ],
+      "quadrant - open": [
+       65,
+       540
+      ],
+      "open - open": [
+       529,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        234,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         23,
+         180
+        ],
+        "adjacent quadrants": [
+         15,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         21,
+         180
+        ],
+        "open - open": [
+         175,
+         180
+        ]
+       },
+       "source": "20261104T000005Z-10f76571"
+      },
+      "1": {
+       "success_total": [
+        240,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         30,
+         180
+        ],
+        "adjacent quadrants": [
+         15,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         18,
+         180
+        ],
+        "open - open": [
+         177,
+         180
+        ]
+       },
+       "source": "20261104T045012Z-a9333984"
+      },
+      "2": {
+       "success_total": [
+        250,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         28,
+         180
+        ],
+        "adjacent quadrants": [
+         17,
+         180
+        ],
+        "diagonal quadrants": [
+         2,
+         180
+        ],
+        "quadrant - open": [
+         26,
+         180
+        ],
+        "open - open": [
+         177,
+         180
+        ]
+       },
+       "source": "20261104T071459Z-122a61ac"
+      }
+     }
+    }
+   },
+   "x_trained": {
+    "seeds": [
+     1,
+     2,
+     87358
+    ],
+    "x": {
+     "success_total": [
+      569,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       194,
+       540
+      ],
+      "adjacent quadrants": [
+       7,
+       540
+      ],
+      "diagonal quadrants": [
+       0,
+       540
+      ],
+      "quadrant - open": [
+       103,
+       540
+      ],
+      "open - open": [
+       265,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        226,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         68,
+         180
+        ],
+        "adjacent quadrants": [
+         1,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         50,
+         180
+        ],
+        "open - open": [
+         107,
+         180
+        ]
+       },
+       "source": "20261104T000701Z-edf619b1"
+      },
+      "1": {
+       "success_total": [
+        198,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         91,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         38,
+         180
+        ],
+        "open - open": [
+         69,
+         180
+        ]
+       },
+       "source": "20261104T045712Z-b01cb091"
+      },
+      "2": {
+       "success_total": [
+        145,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         35,
+         180
+        ],
+        "adjacent quadrants": [
+         6,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         15,
+         180
+        ],
+        "open - open": [
+         89,
+         180
+        ]
+       },
+       "source": "20261104T073201Z-232df1a3"
+      }
+     }
+    },
+    "z": {
+     "success_total": [
+      562,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       194,
+       540
+      ],
+      "adjacent quadrants": [
+       7,
+       540
+      ],
+      "diagonal quadrants": [
+       0,
+       540
+      ],
+      "quadrant - open": [
+       91,
+       540
+      ],
+      "open - open": [
+       270,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        229,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         68,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         47,
+         180
+        ],
+        "open - open": [
+         114,
+         180
+        ]
+       },
+       "source": "registered_20261105T043349Z-4819798a",
+       "collision": 582,
+       "stalled": 89,
+       "time_ratio_median": 1.2191923368202775,
+       "length_ratio_median": 1.093915321945562
+      },
+      "1": {
+       "success_total": [
+        198,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         91,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         38,
+         180
+        ],
+        "open - open": [
+         69,
+         180
+        ]
+       },
+       "source": "registered_20261105T043349Z-4819798a",
+       "collision": 575,
+       "stalled": 127,
+       "time_ratio_median": 1.189882173132939,
+       "length_ratio_median": 1.1129659978505644
+      },
+      "2": {
+       "success_total": [
+        135,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         35,
+         180
+        ],
+        "adjacent quadrants": [
+         7,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         6,
+         180
+        ],
+        "open - open": [
+         87,
+         180
+        ]
+       },
+       "source": "registered_20261105T043349Z-4819798a",
+       "collision": 661,
+       "stalled": 104,
+       "time_ratio_median": 1.1869230432196158,
+       "length_ratio_median": 1.1207955168503025
+      }
+     }
+    }
+   },
+   "z_trained": {
+    "seeds": [
+     87358
+    ],
+    "x": {
+     "success_total": [
+      411,
+      900
+     ],
+     "by_category": {
+      "same quadrant": [
+       90,
+       180
+      ],
+      "adjacent quadrants": [
+       23,
+       180
+      ],
+      "diagonal quadrants": [
+       10,
+       180
+      ],
+      "quadrant - open": [
+       108,
+       180
+      ],
+      "open - open": [
+       180,
+       180
+      ]
+     },
+     "seeds": [
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        411,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         90,
+         180
+        ],
+        "adjacent quadrants": [
+         23,
+         180
+        ],
+        "diagonal quadrants": [
+         10,
+         180
+        ],
+        "quadrant - open": [
+         108,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "registered_20261105T033718Z-a345c790",
+       "collision": 471,
+       "stalled": 18,
+       "time_ratio_median": 1.1640735735309296,
+       "length_ratio_median": 1.1161014072916733
+      }
+     }
+    },
+    "z": {
+     "success_total": [
+      419,
+      900
+     ],
+     "by_category": {
+      "same quadrant": [
+       90,
+       180
+      ],
+      "adjacent quadrants": [
+       31,
+       180
+      ],
+      "diagonal quadrants": [
+       15,
+       180
+      ],
+      "quadrant - open": [
+       103,
+       180
+      ],
+      "open - open": [
+       180,
+       180
+      ]
+     },
+     "seeds": [
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        419,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         90,
+         180
+        ],
+        "adjacent quadrants": [
+         31,
+         180
+        ],
+        "diagonal quadrants": [
+         15,
+         180
+        ],
+        "quadrant - open": [
+         103,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "registered_20261105T033718Z-a345c790",
+       "collision": 462,
+       "stalled": 19,
+       "time_ratio_median": 1.1303091684933997,
+       "length_ratio_median": 1.0711730722730564
+      }
+     }
+    }
+   },
+   "z_trained_zdraw": {
+    "seeds": [
+     87358
+    ],
+    "x": {
+     "success_total": [
+      568,
+      900
+     ],
+     "by_category": {
+      "same quadrant": [
+       111,
+       180
+      ],
+      "adjacent quadrants": [
+       82,
+       180
+      ],
+      "diagonal quadrants": [
+       58,
+       180
+      ],
+      "quadrant - open": [
+       137,
+       180
+      ],
+      "open - open": [
+       180,
+       180
+      ]
+     },
+     "seeds": [
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        568,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         111,
+         180
+        ],
+        "adjacent quadrants": [
+         82,
+         180
+        ],
+        "diagonal quadrants": [
+         58,
+         180
+        ],
+        "quadrant - open": [
+         137,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "20261105T111612Z-503aa6cf",
+       "from_": "pipeline"
+      }
+     }
+    },
+    "z": {
+     "success_total": [
+      541,
+      900
+     ],
+     "by_category": {
+      "same quadrant": [
+       111,
+       180
+      ],
+      "adjacent quadrants": [
+       80,
+       180
+      ],
+      "diagonal quadrants": [
+       50,
+       180
+      ],
+      "quadrant - open": [
+       120,
+       180
+      ],
+      "open - open": [
+       180,
+       180
+      ]
+     },
+     "seeds": [
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        541,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         111,
+         180
+        ],
+        "adjacent quadrants": [
+         80,
+         180
+        ],
+        "diagonal quadrants": [
+         50,
+         180
+        ],
+        "quadrant - open": [
+         120,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "registered_20261105T112437Z-5c97535c",
+       "collision": 359,
+       "stalled": 0,
+       "time_ratio_median": 1.1362614920344518,
+       "length_ratio_median": 1.0687486377061721
+      }
+     }
+    }
+   }
+  },
+  "8": {
+   "ntrl": {
+    "seeds": [
+     1,
+     2,
+     87358
+    ],
+    "x": {
+     "success_total": [
+      700,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       66,
+       540
+      ],
+      "adjacent quadrants": [
+       15,
+       540
+      ],
+      "diagonal quadrants": [
+       11,
+       540
+      ],
+      "quadrant - open": [
+       68,
+       540
+      ],
+      "open - open": [
+       540,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        237,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         22,
+         180
+        ],
+        "adjacent quadrants": [
+         6,
+         180
+        ],
+        "diagonal quadrants": [
+         5,
+         180
+        ],
+        "quadrant - open": [
+         24,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "20261104T002837Z-2df7f1bf"
+      },
+      "1": {
+       "success_total": [
+        238,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         23,
+         180
+        ],
+        "adjacent quadrants": [
+         6,
+         180
+        ],
+        "diagonal quadrants": [
+         6,
+         180
+        ],
+        "quadrant - open": [
+         23,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "20261104T052156Z-8bd8a4a0"
+      },
+      "2": {
+       "success_total": [
+        225,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         21,
+         180
+        ],
+        "adjacent quadrants": [
+         3,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         21,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "20261104T074553Z-081d3e7a"
+      }
+     }
+    }
+   },
+   "x_trained": {
+    "seeds": [
+     1,
+     2,
+     87358
+    ],
+    "x": {
+     "success_total": [
+      275,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       138,
+       540
+      ],
+      "adjacent quadrants": [
+       3,
+       540
+      ],
+      "diagonal quadrants": [
+       0,
+       540
+      ],
+      "quadrant - open": [
+       17,
+       540
+      ],
+      "open - open": [
+       117,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        102,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         51,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         9,
+         180
+        ],
+        "open - open": [
+         42,
+         180
+        ]
+       },
+       "source": "20261104T003532Z-a14d325b"
+      },
+      "1": {
+       "success_total": [
+        69,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         48,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         3,
+         180
+        ],
+        "open - open": [
+         18,
+         180
+        ]
+       },
+       "source": "20261104T052915Z-24f6327b"
+      },
+      "2": {
+       "success_total": [
+        104,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         39,
+         180
+        ],
+        "adjacent quadrants": [
+         3,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         5,
+         180
+        ],
+        "open - open": [
+         57,
+         180
+        ]
+       },
+       "source": "20261104T075941Z-e9d5a370"
+      }
+     }
+    },
+    "z": {
+     "success_total": [
+      274,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       138,
+       540
+      ],
+      "adjacent quadrants": [
+       0,
+       540
+      ],
+      "diagonal quadrants": [
+       0,
+       540
+      ],
+      "quadrant - open": [
+       3,
+       540
+      ],
+      "open - open": [
+       133,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        98,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         51,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         0,
+         180
+        ],
+        "open - open": [
+         47,
+         180
+        ]
+       },
+       "source": "registered_20261105T034254Z-46edefdb",
+       "collision": 656,
+       "stalled": 146,
+       "time_ratio_median": 1.1753496914948978,
+       "length_ratio_median": 1.0764916700482607
+      },
+      "1": {
+       "success_total": [
+        68,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         48,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         3,
+         180
+        ],
+        "open - open": [
+         17,
+         180
+        ]
+       },
+       "source": "registered_20261105T034254Z-46edefdb",
+       "collision": 654,
+       "stalled": 178,
+       "time_ratio_median": 1.14639600709073,
+       "length_ratio_median": 1.0373936238581136
+      },
+      "2": {
+       "success_total": [
+        108,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         39,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         0,
+         180
+        ],
+        "open - open": [
+         69,
+         180
+        ]
+       },
+       "source": "registered_20261105T034254Z-46edefdb",
+       "collision": 678,
+       "stalled": 114,
+       "time_ratio_median": 1.1730062354896331,
+       "length_ratio_median": 1.1657662305397989
+      }
+     }
+    }
+   },
+   "z_trained": {
+    "seeds": [
+     1,
+     2,
+     87358
+    ],
+    "x": {
+     "success_total": [
+      932,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       291,
+       540
+      ],
+      "adjacent quadrants": [
+       15,
+       540
+      ],
+      "diagonal quadrants": [
+       5,
+       540
+      ],
+      "quadrant - open": [
+       158,
+       540
+      ],
+      "open - open": [
+       463,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        316,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         99,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         47,
+         180
+        ],
+        "open - open": [
+         170,
+         180
+        ]
+       },
+       "source": "registered_20261105T033155Z-86c67b03",
+       "collision": 544,
+       "stalled": 40,
+       "time_ratio_median": 1.1429261272234958,
+       "length_ratio_median": 1.0875077095978107
+      },
+      "1": {
+       "success_total": [
+        256,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         95,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         27,
+         180
+        ],
+        "open - open": [
+         134,
+         180
+        ]
+       },
+       "source": "registered_20261105T051115Z-c9f3ddce",
+       "collision": 584,
+       "stalled": 60,
+       "time_ratio_median": 1.125236180067287,
+       "length_ratio_median": 1.0546991318455552
+      },
+      "2": {
+       "success_total": [
+        360,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         97,
+         180
+        ],
+        "adjacent quadrants": [
+         15,
+         180
+        ],
+        "diagonal quadrants": [
+         5,
+         180
+        ],
+        "quadrant - open": [
+         84,
+         180
+        ],
+        "open - open": [
+         159,
+         180
+        ]
+       },
+       "source": "registered_20261105T051811Z-2164334e",
+       "collision": 506,
+       "stalled": 34,
+       "time_ratio_median": 1.1487978980051627,
+       "length_ratio_median": 1.085262423608498
+      }
+     }
+    },
+    "z": {
+     "success_total": [
+      993,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       290,
+       540
+      ],
+      "adjacent quadrants": [
+       27,
+       540
+      ],
+      "diagonal quadrants": [
+       17,
+       540
+      ],
+      "quadrant - open": [
+       178,
+       540
+      ],
+      "open - open": [
+       481,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        334,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         98,
+         180
+        ],
+        "adjacent quadrants": [
+         3,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         66,
+         180
+        ],
+        "open - open": [
+         167,
+         180
+        ]
+       },
+       "source": "registered_20261105T033155Z-86c67b03",
+       "collision": 532,
+       "stalled": 34,
+       "time_ratio_median": 1.1262637339198396,
+       "length_ratio_median": 1.0684903283303333
+      },
+      "1": {
+       "success_total": [
+        282,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         95,
+         180
+        ],
+        "adjacent quadrants": [
+         3,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         35,
+         180
+        ],
+        "open - open": [
+         149,
+         180
+        ]
+       },
+       "source": "registered_20261105T051115Z-c9f3ddce",
+       "collision": 581,
+       "stalled": 37,
+       "time_ratio_median": 1.1815826209746794,
+       "length_ratio_median": 1.0572749324575983
+      },
+      "2": {
+       "success_total": [
+        377,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         97,
+         180
+        ],
+        "adjacent quadrants": [
+         21,
+         180
+        ],
+        "diagonal quadrants": [
+         17,
+         180
+        ],
+        "quadrant - open": [
+         77,
+         180
+        ],
+        "open - open": [
+         165,
+         180
+        ]
+       },
+       "source": "registered_20261105T051811Z-2164334e",
+       "collision": 508,
+       "stalled": 15,
+       "time_ratio_median": 1.138854391140651,
+       "length_ratio_median": 1.070648316873739
+      }
+     }
+    }
+   },
+   "z_trained_zdraw": {
+    "seeds": [
+     1,
+     2,
+     87358
+    ],
+    "x": {
+     "success_total": [
+      1562,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       396,
+       540
+      ],
+      "adjacent quadrants": [
+       166,
+       540
+      ],
+      "diagonal quadrants": [
+       132,
+       540
+      ],
+      "quadrant - open": [
+       331,
+       540
+      ],
+      "open - open": [
+       537,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        520,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         131,
+         180
+        ],
+        "adjacent quadrants": [
+         64,
+         180
+        ],
+        "diagonal quadrants": [
+         39,
+         180
+        ],
+        "quadrant - open": [
+         109,
+         180
+        ],
+        "open - open": [
+         177,
+         180
+        ]
+       },
+       "source": "20261105T095149Z-bd248c8e",
+       "from_": "pipeline"
+      },
+      "1": {
+       "success_total": [
+        511,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         133,
+         180
+        ],
+        "adjacent quadrants": [
+         54,
+         180
+        ],
+        "diagonal quadrants": [
+         37,
+         180
+        ],
+        "quadrant - open": [
+         107,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "20261105T173827Z-70c94fb1",
+       "from_": "pipeline"
+      },
+      "2": {
+       "success_total": [
+        531,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         132,
+         180
+        ],
+        "adjacent quadrants": [
+         48,
+         180
+        ],
+        "diagonal quadrants": [
+         56,
+         180
+        ],
+        "quadrant - open": [
+         115,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "20261105T175953Z-366fd7aa",
+       "from_": "pipeline"
+      }
+     }
+    },
+    "z": {
+     "success_total": [
+      1586,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       397,
+       540
+      ],
+      "adjacent quadrants": [
+       160,
+       540
+      ],
+      "diagonal quadrants": [
+       126,
+       540
+      ],
+      "quadrant - open": [
+       366,
+       540
+      ],
+      "open - open": [
+       537,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        528,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         132,
+         180
+        ],
+        "adjacent quadrants": [
+         64,
+         180
+        ],
+        "diagonal quadrants": [
+         34,
+         180
+        ],
+        "quadrant - open": [
+         121,
+         180
+        ],
+        "open - open": [
+         177,
+         180
+        ]
+       },
+       "source": "registered_20261105T110558Z-049d6f06",
+       "collision": 369,
+       "stalled": 3,
+       "time_ratio_median": 1.1355507649028713,
+       "length_ratio_median": 1.0696292212728453
+      },
+      "1": {
+       "success_total": [
+        511,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         133,
+         180
+        ],
+        "adjacent quadrants": [
+         45,
+         180
+        ],
+        "diagonal quadrants": [
+         37,
+         180
+        ],
+        "quadrant - open": [
+         116,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "registered_20261105T174515Z-3a65f08e",
+       "collision": 389,
+       "stalled": 0,
+       "time_ratio_median": 1.156411173438998,
+       "length_ratio_median": 1.0795419956227856
+      },
+      "2": {
+       "success_total": [
+        547,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         132,
+         180
+        ],
+        "adjacent quadrants": [
+         51,
+         180
+        ],
+        "diagonal quadrants": [
+         55,
+         180
+        ],
+        "quadrant - open": [
+         129,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "registered_20261105T180643Z-c81db3b0",
+       "collision": 353,
+       "stalled": 0,
+       "time_ratio_median": 1.1328875213198473,
+       "length_ratio_median": 1.0767509706783527
+      }
+     }
+    }
+   }
+  },
+  "12": {
+   "ntrl": {
+    "seeds": [
+     1,
+     2,
+     87358
+    ],
+    "x": {
+     "success_total": [
+      653,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       75,
+       540
+      ],
+      "adjacent quadrants": [
+       0,
+       540
+      ],
+      "diagonal quadrants": [
+       0,
+       540
+      ],
+      "quadrant - open": [
+       38,
+       540
+      ],
+      "open - open": [
+       540,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        218,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         24,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         14,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "20261104T004407Z-e1930a37"
+      },
+      "1": {
+       "success_total": [
+        220,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         25,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         15,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "20261104T053413Z-f52a2144"
+      },
+      "2": {
+       "success_total": [
+        215,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         26,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         9,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "20261104T083547Z-a13350df"
+      }
+     }
+    }
+   },
+   "x_trained": {
+    "seeds": [
+     1,
+     2,
+     87358
+    ],
+    "x": {
+     "success_total": [
+      264,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       105,
+       540
+      ],
+      "adjacent quadrants": [
+       0,
+       540
+      ],
+      "diagonal quadrants": [
+       0,
+       540
+      ],
+      "quadrant - open": [
+       3,
+       540
+      ],
+      "open - open": [
+       156,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        90,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         33,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         3,
+         180
+        ],
+        "open - open": [
+         54,
+         180
+        ]
+       },
+       "source": "20261104T005114Z-c5349c90"
+      },
+      "1": {
+       "success_total": [
+        66,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         33,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         0,
+         180
+        ],
+        "open - open": [
+         33,
+         180
+        ]
+       },
+       "source": "20261104T054857Z-b7caf6ca"
+      },
+      "2": {
+       "success_total": [
+        108,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         39,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         0,
+         180
+        ],
+        "open - open": [
+         69,
+         180
+        ]
+       },
+       "source": "20261104T085107Z-8df8c006"
+      }
+     }
+    },
+    "z": {
+     "success_total": [
+      323,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       105,
+       540
+      ],
+      "adjacent quadrants": [
+       0,
+       540
+      ],
+      "diagonal quadrants": [
+       0,
+       540
+      ],
+      "quadrant - open": [
+       14,
+       540
+      ],
+      "open - open": [
+       204,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        92,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         33,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         5,
+         180
+        ],
+        "open - open": [
+         54,
+         180
+        ]
+       },
+       "source": "registered_20261105T031301Z-bcaaa662",
+       "collision": 655,
+       "stalled": 153,
+       "time_ratio_median": 1.1836065991981826,
+       "length_ratio_median": 1.1315621914698184
+      },
+      "1": {
+       "success_total": [
+        84,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         33,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         3,
+         180
+        ],
+        "open - open": [
+         48,
+         180
+        ]
+       },
+       "source": "registered_20261105T031301Z-bcaaa662",
+       "collision": 664,
+       "stalled": 152,
+       "time_ratio_median": 1.1504554918041738,
+       "length_ratio_median": 1.1260472000304165
+      },
+      "2": {
+       "success_total": [
+        147,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         39,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         6,
+         180
+        ],
+        "open - open": [
+         102,
+         180
+        ]
+       },
+       "source": "registered_20261105T031301Z-bcaaa662",
+       "collision": 648,
+       "stalled": 105,
+       "time_ratio_median": 1.3328989769701451,
+       "length_ratio_median": 1.254035747531306
+      }
+     }
+    }
+   },
+   "x_trained_k1data": {
+    "seeds": [
+     87358
+    ],
+    "x": {
+     "success_total": [
+      132,
+      900
+     ],
+     "by_category": {
+      "same quadrant": [
+       45,
+       180
+      ],
+      "adjacent quadrants": [
+       0,
+       180
+      ],
+      "diagonal quadrants": [
+       0,
+       180
+      ],
+      "quadrant - open": [
+       6,
+       180
+      ],
+      "open - open": [
+       81,
+       180
+      ]
+     },
+     "seeds": [
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        132,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         45,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         6,
+         180
+        ],
+        "open - open": [
+         81,
+         180
+        ]
+       },
+       "source": "registered_20261105T042343Z-6e3a1754",
+       "collision": 659,
+       "stalled": 109,
+       "time_ratio_median": 1.1284662917723205,
+       "length_ratio_median": 1.0974782070268059
+      }
+     }
+    },
+    "z": {
+     "success_total": [
+      145,
+      900
+     ],
+     "by_category": {
+      "same quadrant": [
+       44,
+       180
+      ],
+      "adjacent quadrants": [
+       2,
+       180
+      ],
+      "diagonal quadrants": [
+       0,
+       180
+      ],
+      "quadrant - open": [
+       6,
+       180
+      ],
+      "open - open": [
+       93,
+       180
+      ]
+     },
+     "seeds": [
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        145,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         44,
+         180
+        ],
+        "adjacent quadrants": [
+         2,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         6,
+         180
+        ],
+        "open - open": [
+         93,
+         180
+        ]
+       },
+       "source": "registered_20261105T042343Z-6e3a1754",
+       "collision": 654,
+       "stalled": 101,
+       "time_ratio_median": 1.1395354815962861,
+       "length_ratio_median": 1.1222048979370645
+      }
+     }
+    }
+   },
+   "x_trained_zdraw": {
+    "seeds": [
+     87358
+    ],
+    "x": {
+     "success_total": [
+      158,
+      900
+     ],
+     "by_category": {
+      "same quadrant": [
+       41,
+       180
+      ],
+      "adjacent quadrants": [
+       3,
+       180
+      ],
+      "diagonal quadrants": [
+       0,
+       180
+      ],
+      "quadrant - open": [
+       18,
+       180
+      ],
+      "open - open": [
+       96,
+       180
+      ]
+     },
+     "seeds": [
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        158,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         41,
+         180
+        ],
+        "adjacent quadrants": [
+         3,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         18,
+         180
+        ],
+        "open - open": [
+         96,
+         180
+        ]
+       },
+       "source": "20261105T085221Z-0adb49c2",
+       "from_": "pipeline"
+      }
+     }
+    }
+   },
+   "z_trained": {
+    "seeds": [
+     1,
+     2,
+     87358
+    ],
+    "x": {
+     "success_total": [
+      680,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       216,
+       540
+      ],
+      "adjacent quadrants": [
+       4,
+       540
+      ],
+      "diagonal quadrants": [
+       0,
+       540
+      ],
+      "quadrant - open": [
+       59,
+       540
+      ],
+      "open - open": [
+       401,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        236,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         69,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         21,
+         180
+        ],
+        "open - open": [
+         146,
+         180
+        ]
+       },
+       "source": "registered_20261105T030017Z-e1fbb776",
+       "collision": 599,
+       "stalled": 65,
+       "time_ratio_median": 1.099679696900421,
+       "length_ratio_median": 1.0677848083136188
+      },
+      "1": {
+       "success_total": [
+        202,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         60,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         17,
+         180
+        ],
+        "open - open": [
+         125,
+         180
+        ]
+       },
+       "source": "registered_20261105T045121Z-34ac8adb",
+       "collision": 624,
+       "stalled": 74,
+       "time_ratio_median": 1.0895515571467296,
+       "length_ratio_median": 1.0647163871736753
+      },
+      "2": {
+       "success_total": [
+        242,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         87,
+         180
+        ],
+        "adjacent quadrants": [
+         4,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         21,
+         180
+        ],
+        "open - open": [
+         130,
+         180
+        ]
+       },
+       "source": "registered_20261105T050029Z-390d7d60",
+       "collision": 581,
+       "stalled": 77,
+       "time_ratio_median": 1.1026700805909941,
+       "length_ratio_median": 1.051800505637992
+      }
+     }
+    },
+    "z": {
+     "success_total": [
+      788,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       218,
+       540
+      ],
+      "adjacent quadrants": [
+       2,
+       540
+      ],
+      "diagonal quadrants": [
+       3,
+       540
+      ],
+      "quadrant - open": [
+       97,
+       540
+      ],
+      "open - open": [
+       468,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        272,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         70,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         43,
+         180
+        ],
+        "open - open": [
+         159,
+         180
+        ]
+       },
+       "source": "registered_20261105T030017Z-e1fbb776",
+       "collision": 587,
+       "stalled": 41,
+       "time_ratio_median": 1.0556967104854873,
+       "length_ratio_median": 1.0333748516928765
+      },
+      "1": {
+       "success_total": [
+        232,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         61,
+         180
+        ],
+        "adjacent quadrants": [
+         0,
+         180
+        ],
+        "diagonal quadrants": [
+         0,
+         180
+        ],
+        "quadrant - open": [
+         21,
+         180
+        ],
+        "open - open": [
+         150,
+         180
+        ]
+       },
+       "source": "registered_20261105T045121Z-34ac8adb",
+       "collision": 623,
+       "stalled": 45,
+       "time_ratio_median": 1.0353014229848876,
+       "length_ratio_median": 1.0281620669000313
+      },
+      "2": {
+       "success_total": [
+        284,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         87,
+         180
+        ],
+        "adjacent quadrants": [
+         2,
+         180
+        ],
+        "diagonal quadrants": [
+         3,
+         180
+        ],
+        "quadrant - open": [
+         33,
+         180
+        ],
+        "open - open": [
+         159,
+         180
+        ]
+       },
+       "source": "registered_20261105T050029Z-390d7d60",
+       "collision": 580,
+       "stalled": 36,
+       "time_ratio_median": 1.0555050785359326,
+       "length_ratio_median": 1.0224024646140983
+      }
+     }
+    }
+   },
+   "z_trained_k1data": {
+    "seeds": [
+     87358
+    ],
+    "x": {
+     "success_total": [
+      372,
+      900
+     ],
+     "by_category": {
+      "same quadrant": [
+       104,
+       180
+      ],
+      "adjacent quadrants": [
+       24,
+       180
+      ],
+      "diagonal quadrants": [
+       12,
+       180
+      ],
+      "quadrant - open": [
+       70,
+       180
+      ],
+      "open - open": [
+       162,
+       180
+      ]
+     },
+     "seeds": [
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        372,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         104,
+         180
+        ],
+        "adjacent quadrants": [
+         24,
+         180
+        ],
+        "diagonal quadrants": [
+         12,
+         180
+        ],
+        "quadrant - open": [
+         70,
+         180
+        ],
+        "open - open": [
+         162,
+         180
+        ]
+       },
+       "source": "registered_20261105T035709Z-4b525202",
+       "collision": 503,
+       "stalled": 25,
+       "time_ratio_median": 1.10683603397993,
+       "length_ratio_median": 1.0748311706957219
+      }
+     }
+    },
+    "z": {
+     "success_total": [
+      414,
+      900
+     ],
+     "by_category": {
+      "same quadrant": [
+       105,
+       180
+      ],
+      "adjacent quadrants": [
+       32,
+       180
+      ],
+      "diagonal quadrants": [
+       16,
+       180
+      ],
+      "quadrant - open": [
+       88,
+       180
+      ],
+      "open - open": [
+       173,
+       180
+      ]
+     },
+     "seeds": [
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        414,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         105,
+         180
+        ],
+        "adjacent quadrants": [
+         32,
+         180
+        ],
+        "diagonal quadrants": [
+         16,
+         180
+        ],
+        "quadrant - open": [
+         88,
+         180
+        ],
+        "open - open": [
+         173,
+         180
+        ]
+       },
+       "source": "registered_20261105T035709Z-4b525202",
+       "collision": 473,
+       "stalled": 13,
+       "time_ratio_median": 1.076157040575308,
+       "length_ratio_median": 1.0435483243546915
+      }
+     }
+    }
+   },
+   "z_trained_zdraw": {
+    "seeds": [
+     1,
+     2,
+     87358
+    ],
+    "x": {
+     "success_total": [
+      1470,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       401,
+       540
+      ],
+      "adjacent quadrants": [
+       151,
+       540
+      ],
+      "diagonal quadrants": [
+       87,
+       540
+      ],
+      "quadrant - open": [
+       293,
+       540
+      ],
+      "open - open": [
+       538,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        478,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         138,
+         180
+        ],
+        "adjacent quadrants": [
+         42,
+         180
+        ],
+        "diagonal quadrants": [
+         31,
+         180
+        ],
+        "quadrant - open": [
+         87,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "20261105T070717Z-0cb70093",
+       "from_": "pipeline"
+      },
+      "1": {
+       "success_total": [
+        451,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         120,
+         180
+        ],
+        "adjacent quadrants": [
+         38,
+         180
+        ],
+        "diagonal quadrants": [
+         18,
+         180
+        ],
+        "quadrant - open": [
+         95,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "20261105T081641Z-9b26b9a9",
+       "from_": "pipeline"
+      },
+      "2": {
+       "success_total": [
+        541,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         143,
+         180
+        ],
+        "adjacent quadrants": [
+         71,
+         180
+        ],
+        "diagonal quadrants": [
+         38,
+         180
+        ],
+        "quadrant - open": [
+         111,
+         180
+        ],
+        "open - open": [
+         178,
+         180
+        ]
+       },
+       "source": "20261105T083109Z-a93a2dd4",
+       "from_": "pipeline"
+      }
+     }
+    },
+    "z": {
+     "success_total": [
+      1567,
+      2700
+     ],
+     "by_category": {
+      "same quadrant": [
+       401,
+       540
+      ],
+      "adjacent quadrants": [
+       170,
+       540
+      ],
+      "diagonal quadrants": [
+       94,
+       540
+      ],
+      "quadrant - open": [
+       362,
+       540
+      ],
+      "open - open": [
+       540,
+       540
+      ]
+     },
+     "seeds": [
+      1,
+      2,
+      87358
+     ],
+     "per_seed": {
+      "87358": {
+       "success_total": [
+        519,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         138,
+         180
+        ],
+        "adjacent quadrants": [
+         52,
+         180
+        ],
+        "diagonal quadrants": [
+         27,
+         180
+        ],
+        "quadrant - open": [
+         122,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "registered_20261105T071502Z-3ddbb782",
+       "collision": 381,
+       "stalled": 0,
+       "time_ratio_median": 1.113742559164512,
+       "length_ratio_median": 1.039799185077844
+      },
+      "1": {
+       "success_total": [
+        494,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         120,
+         180
+        ],
+        "adjacent quadrants": [
+         43,
+         180
+        ],
+        "diagonal quadrants": [
+         28,
+         180
+        ],
+        "quadrant - open": [
+         123,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "registered_20261105T083015Z-7ca06e00",
+       "collision": 406,
+       "stalled": 0,
+       "time_ratio_median": 1.1010385679015728,
+       "length_ratio_median": 1.0402090116848923
+      },
+      "2": {
+       "success_total": [
+        554,
+        900
+       ],
+       "by_category": {
+        "same quadrant": [
+         143,
+         180
+        ],
+        "adjacent quadrants": [
+         75,
+         180
+        ],
+        "diagonal quadrants": [
+         39,
+         180
+        ],
+        "quadrant - open": [
+         117,
+         180
+        ],
+        "open - open": [
+         180,
+         180
+        ]
+       },
+       "source": "registered_20261105T084240Z-0b1240bd",
+       "collision": 346,
+       "stalled": 0,
+       "time_ratio_median": 1.0982610988523591,
+       "length_ratio_median": 1.0408789564415142
+      }
+     }
+    }
+   }
+  }
+ },
+ "checks": [
+  {
+   "k": 1,
+   "field": "x_trained",
+   "seed": 87358,
+   "gap_study": [
+    598,
+    900
+   ],
+   "zq": [
+    594,
+    900
+   ],
+   "zq_run": "registered_20261105T025336Z-f910e878"
+  },
+  {
+   "k": 1,
+   "field": "x_trained",
+   "seed": 2,
+   "gap_study": [
+    530,
+    900
+   ],
+   "zq": [
+    529,
+    900
+   ],
+   "zq_run": "registered_20261105T025336Z-f910e878"
+  },
+  {
+   "k": 1,
+   "field": "x_trained",
+   "seed": 1,
+   "gap_study": [
+    614,
+    900
+   ],
+   "zq": [
+    610,
+    900
+   ],
+   "zq_run": "registered_20261105T025336Z-f910e878"
+  },
+  {
+   "k": 12,
+   "field": "x_trained",
+   "seed": 87358,
+   "gap_study": [
+    90,
+    900
+   ],
+   "zq": [
+    90,
+    900
+   ],
+   "zq_run": "registered_20261105T031301Z-bcaaa662"
+  },
+  {
+   "k": 12,
+   "field": "x_trained",
+   "seed": 1,
+   "gap_study": [
+    66,
+    900
+   ],
+   "zq": [
+    66,
+    900
+   ],
+   "zq_run": "registered_20261105T031301Z-bcaaa662"
+  },
+  {
+   "k": 12,
+   "field": "x_trained",
+   "seed": 2,
+   "gap_study": [
+    108,
+    900
+   ],
+   "zq": [
+    108,
+    900
+   ],
+   "zq_run": "registered_20261105T031301Z-bcaaa662"
+  },
+  {
+   "k": 8,
+   "field": "x_trained",
+   "seed": 87358,
+   "gap_study": [
+    102,
+    900
+   ],
+   "zq": [
+    102,
+    900
+   ],
+   "zq_run": "registered_20261105T034254Z-46edefdb"
+  },
+  {
+   "k": 8,
+   "field": "x_trained",
+   "seed": 1,
+   "gap_study": [
+    69,
+    900
+   ],
+   "zq": [
+    69,
+    900
+   ],
+   "zq_run": "registered_20261105T034254Z-46edefdb"
+  },
+  {
+   "k": 8,
+   "field": "x_trained",
+   "seed": 2,
+   "gap_study": [
+    104,
+    900
+   ],
+   "zq": [
+    105,
+    900
+   ],
+   "zq_run": "registered_20261105T034254Z-46edefdb"
+  },
+  {
+   "k": 4,
+   "field": "x_trained",
+   "seed": 87358,
+   "gap_study": [
+    226,
+    900
+   ],
+   "zq": [
+    226,
+    900
+   ],
+   "zq_run": "registered_20261105T043349Z-4819798a"
+  },
+  {
+   "k": 4,
+   "field": "x_trained",
+   "seed": 1,
+   "gap_study": [
+    198,
+    900
+   ],
+   "zq": [
+    198,
+    900
+   ],
+   "zq_run": "registered_20261105T043349Z-4819798a"
+  },
+  {
+   "k": 4,
+   "field": "x_trained",
+   "seed": 2,
+   "gap_study": [
+    145,
+    900
+   ],
+   "zq": [
+    145,
+    900
+   ],
+   "zq_run": "registered_20261105T043349Z-4819798a"
+  },
+  {
+   "k": 2,
+   "field": "x_trained",
+   "seed": 87358,
+   "gap_study": [
+    456,
+    900
+   ],
+   "zq": [
+    455,
+    900
+   ],
+   "zq_run": "registered_20261105T044234Z-1d455d2c"
+  },
+  {
+   "k": 2,
+   "field": "x_trained",
+   "seed": 1,
+   "gap_study": [
+    324,
+    900
+   ],
+   "zq": [
+    324,
+    900
+   ],
+   "zq_run": "registered_20261105T044234Z-1d455d2c"
+  },
+  {
+   "k": 2,
+   "field": "x_trained",
+   "seed": 2,
+   "gap_study": [
+    348,
+    900
+   ],
+   "zq": [
+    351,
+    900
+   ],
+   "zq_run": "registered_20261105T044234Z-1d455d2c"
+  }
+ ],
+ "pairs": {
+  "1": {
+   "x0_in_quadrant": 0.833595,
+   "same_quadrant": 0.34279,
+   "length_cells_median": 4.967684745788574,
+   "zdraw": {
+    "x0_in_quadrant": 0.851525,
+    "same_quadrant": 0.4049,
+    "length_cells_median": 4.699124813079834,
+    "prepare": "registered_20261105T070347Z-9293df88"
+   }
+  },
+  "2": {
+   "x0_in_quadrant": 0.79721,
+   "same_quadrant": 0.26467,
+   "length_cells_median": 6.657683372497559,
+   "zdraw": {
+    "x0_in_quadrant": 0.84638,
+    "same_quadrant": 0.38739,
+    "length_cells_median": 5.228157997131348,
+    "prepare": "registered_20261105T070351Z-cb170cc0"
+   }
+  },
+  "4": {
+   "x0_in_quadrant": 0.731145,
+   "same_quadrant": 0.18266,
+   "length_cells_median": 10.0098237991333,
+   "zdraw": {
+    "x0_in_quadrant": 0.842395,
+    "same_quadrant": 0.37093,
+    "length_cells_median": 5.860053062438965,
+    "prepare": "registered_20261105T070355Z-2d877603"
+   }
+  },
+  "8": {
+   "x0_in_quadrant": 0.618405,
+   "same_quadrant": 0.10563,
+   "length_cells_median": 17.189783096313477,
+   "zdraw": {
+    "x0_in_quadrant": 0.839365,
+    "same_quadrant": 0.358315,
+    "length_cells_median": 6.68677282333374,
+    "prepare": "registered_20261105T070359Z-6d7cc189"
+   }
+  },
+  "12": {
+   "x0_in_quadrant": 0.534765,
+   "same_quadrant": 0.070595,
+   "length_cells_median": 24.43806266784668,
+   "zdraw": {
+    "x0_in_quadrant": 0.83787,
+    "same_quadrant": 0.352515,
+    "length_cells_median": 7.218560218811035,
+    "prepare": "registered_20261105T070343Z-fda24e40"
+   }
+  }
+ },
+ "mapped_queries": {
+  "12": {
+   "z_trained_k1data": {
+    "x": {
+     "success_total": [
+      405,
+      900
+     ],
+     "by_category": {
+      "same quadrant": [
+       134,
+       180
+      ],
+      "adjacent quadrants": [
+       49,
+       180
+      ],
+      "diagonal quadrants": [
+       6,
+       180
+      ],
+      "quadrant - open": [
+       71,
+       180
+      ],
+      "open - open": [
+       145,
+       180
+      ]
+     },
+     "seed": 87358,
+     "source": "registered_20261105T040411Z-659eac96",
+     "queries": "registered_20261105T035533Z-b034d053"
+    },
+    "z": {
+     "success_total": [
+      465,
+      900
+     ],
+     "by_category": {
+      "same quadrant": [
+       135,
+       180
+      ],
+      "adjacent quadrants": [
+       63,
+       180
+      ],
+      "diagonal quadrants": [
+       12,
+       180
+      ],
+      "quadrant - open": [
+       91,
+       180
+      ],
+      "open - open": [
+       164,
+       180
+      ]
+     },
+     "seed": 87358,
+     "source": "registered_20261105T040411Z-659eac96",
+     "queries": "registered_20261105T035533Z-b034d053"
+    }
+   },
+   "z_trained": {
+    "x": {
+     "success_total": [
+      184,
+      900
+     ],
+     "by_category": {
+      "same quadrant": [
+       71,
+       180
+      ],
+      "adjacent quadrants": [
+       0,
+       180
+      ],
+      "diagonal quadrants": [
+       0,
+       180
+      ],
+      "quadrant - open": [
+       26,
+       180
+      ],
+      "open - open": [
+       87,
+       180
+      ]
+     },
+     "seed": 87358,
+     "source": "registered_20261105T040411Z-659eac96",
+     "queries": "registered_20261105T035533Z-b034d053"
+    },
+    "z": {
+     "success_total": [
+      212,
+      900
+     ],
+     "by_category": {
+      "same quadrant": [
+       71,
+       180
+      ],
+      "adjacent quadrants": [
+       0,
+       180
+      ],
+      "diagonal quadrants": [
+       0,
+       180
+      ],
+      "quadrant - open": [
+       36,
+       180
+      ],
+      "open - open": [
+       105,
+       180
+      ]
+     },
+     "seed": 87358,
+     "source": "registered_20261105T040411Z-659eac96",
+     "queries": "registered_20261105T035533Z-b034d053"
+    }
+   },
+   "x_trained": {
+    "x": {
+     "success_total": [
+      40,
+      900
+     ],
+     "by_category": {
+      "same quadrant": [
+       24,
+       180
+      ],
+      "adjacent quadrants": [
+       0,
+       180
+      ],
+      "diagonal quadrants": [
+       0,
+       180
+      ],
+      "quadrant - open": [
+       4,
+       180
+      ],
+      "open - open": [
+       12,
+       180
+      ]
+     },
+     "seed": 87358,
+     "source": "registered_20261105T040411Z-659eac96",
+     "queries": "registered_20261105T035533Z-b034d053"
+    },
+    "z": {
+     "success_total": [
+      43,
+      900
+     ],
+     "by_category": {
+      "same quadrant": [
+       24,
+       180
+      ],
+      "adjacent quadrants": [
+       0,
+       180
+      ],
+      "diagonal quadrants": [
+       0,
+       180
+      ],
+      "quadrant - open": [
+       4,
+       180
+      ],
+      "open - open": [
+       15,
+       180
+      ]
+     },
+     "seed": 87358,
+     "source": "registered_20261105T040411Z-659eac96",
+     "queries": "registered_20261105T035533Z-b034d053"
+    }
+   },
+   "ntrl": {
+    "x": {
+     "success_total": [
+      223,
+      900
+     ],
+     "by_category": {
+      "same quadrant": [
+       19,
+       180
+      ],
+      "adjacent quadrants": [
+       3,
+       180
+      ],
+      "diagonal quadrants": [
+       0,
+       180
+      ],
+      "quadrant - open": [
+       27,
+       180
+      ],
+      "open - open": [
+       174,
+       180
+      ]
+     },
+     "seed": 87358,
+     "source": "registered_20261105T040411Z-659eac96",
+     "queries": "registered_20261105T035533Z-b034d053"
+    },
+    "z": {
+     "success_total": [
+      223,
+      900
+     ],
+     "by_category": {
+      "same quadrant": [
+       19,
+       180
+      ],
+      "adjacent quadrants": [
+       3,
+       180
+      ],
+      "diagonal quadrants": [
+       0,
+       180
+      ],
+      "quadrant - open": [
+       27,
+       180
+      ],
+      "open - open": [
+       174,
+       180
+      ]
+     },
+     "seed": 87358,
+     "source": "registered_20261105T040411Z-659eac96",
+     "queries": "registered_20261105T035533Z-b034d053"
+    }
+   },
+   "x_trained_k1data": {
+    "x": {
+     "success_total": [
+      117,
+      900
+     ],
+     "by_category": {
+      "same quadrant": [
+       54,
+       180
+      ],
+      "adjacent quadrants": [
+       0,
+       180
+      ],
+      "diagonal quadrants": [
+       0,
+       180
+      ],
+      "quadrant - open": [
+       12,
+       180
+      ],
+      "open - open": [
+       51,
+       180
+      ]
+     },
+     "seed": 87358,
+     "source": "registered_20261105T042858Z-bf858ebe",
+     "queries": "registered_20261105T035533Z-b034d053"
+    },
+    "z": {
+     "success_total": [
+      129,
+      900
+     ],
+     "by_category": {
+      "same quadrant": [
+       54,
+       180
+      ],
+      "adjacent quadrants": [
+       0,
+       180
+      ],
+      "diagonal quadrants": [
+       0,
+       180
+      ],
+      "quadrant - open": [
+       13,
+       180
+      ],
+      "open - open": [
+       62,
+       180
+      ]
+     },
+     "seed": 87358,
+     "source": "registered_20261105T042858Z-bf858ebe",
+     "queries": "registered_20261105T035533Z-b034d053"
+    }
+   }
+  }
+ },
+ "why": "<p><b>1. Is the constructed warp the same at every gap? Yes.</b> It is one design, scaled so that a quadrant cell looks the same to the encoder at every gap, and training never changes it: its grids are created without gradients, they are not in the optimizer, and every checkpoint holds the design bit for bit (&times;1 to &times;12; epoch 1,000 equals epoch 5,000). In the encoder&rsquo;s input a quadrant is 2.17 units wide at every gap, and the band grows only from 0.89 to 1.48 units while it grows from 6 to 72 cells (the whole maze: 5.23 &rarr; 5.82 units). The warped mazes are almost the same picture.</p><p><b>2. Did the model know it was warped? In the gap study, yes: through its loss.</b> The gap study took ntrl-demo&rsquo;s loss on the maze: its eikonal, TD and normal terms are derivatives with respect to the pose x, so the chain rule runs through &phi; on every step, although &phi; itself never changes. The network had to output the robot&rsquo;s real travel time, and in the warped coordinates that target changes with the gap while the input does not. Crossing a quadrant takes 0.36 time units at &times;1 and 0.09 at &times;12 over the same 2.17 input units; crossing the band takes 0.27 over 0.89 units at &times;1 and 0.82 over 1.48 at &times;12. At &times;12 the quadrants are almost flat and the band is steep (the field &ldquo;trained on the maze&rdquo; at every gap, below). That is the function the gap study&rsquo;s network failed to fit: all queries 64.5 % at &times;1, 9.8 % at &times;12 (three training seeds; ntrl-demo 43.8 &rarr; 24.2 %).</p><p><b>3. The test: train and plan on the warped maze.</b> Here the network never sees x. Every training pose is mapped once to z = &phi;(x) under no_grad, so no gradient reaches the warp or passes through its Jacobian; the clearance normals are carried into z; and ntrl-demo&rsquo;s loss is taken in z exactly as it is taken in x without a warp. MPPI then runs on z with the same code and the same step per quadrant cell, and each path is mapped back to the maze exactly and scored there. All queries solved, training seed 87358: &times;1 61.0 %, &times;2 57.0 %, &times;4 46.6 %, &times;8 37.1 %, &times;12 30.2 % (the gap study&rsquo;s constructed warp, same seed, planned on the maze: &times;1 66.4 %, &times;2 50.7 %, &times;4 25.1 %, &times;8 11.3 %, &times;12 10.0 %). Over three training seeds (87358, 1, 2), MPPI on the warped maze: &times;1 61.6 % against ntrl-demo 43.8 % and the gap study&rsquo;s constructed warp 64.5 %; &times;8 36.8 % against ntrl-demo 25.9 % and the gap study&rsquo;s constructed warp 10.2 %; &times;12 29.2 % against ntrl-demo 24.2 % and the gap study&rsquo;s constructed warp 9.8 % (both pooled over the same three seeds, planned on the maze).</p><p><b>4. What is still different: the training pairs.</b> Training on the warped maze makes the input and the loss the same at every gap, but not the data. ntrl-demo&rsquo;s recipe draws its pairs on the maze in units of the maze&rsquo;s side: x0 within the wall margin of any wall, x1 a random distance away. As the band widens, its outer border takes a growing share of the walls and the pairs get longer: 83 % of the starts lie in a quadrant at &times;1 and 53 % at &times;12, and 34 % of the pairs have both ends in one quadrant at &times;1 against 7 % at &times;12. The quadrants are identical in the warped space, but at &times;12 they get about a fifth of the pairs.</p><p><b>5. The same pairs.</b> Every 22 &times; 22 training pair moved into the &times;12 maze, with the quadrants and the band&rsquo;s edge cells unchanged and only the band&rsquo;s interior stretched, is exactly the 22 &times; 22 pair inside the quadrants in the warped space (largest difference 7&middot;10<sup>&minus;6</sup> units). Trained on these pairs in the warped space (training seed 87358, as every control in this and the next paragraph), &times;12 solves 46.0 % with MPPI on the warped maze (41.3 % on the maze) instead of 30.2 %. Trained on the same pairs the gap study&rsquo;s way, with the loss on the maze, it stays at 14.7 % (16.1 % with MPPI on the warped maze): the pairs only help once the network is no longer asked for the real travel time.</p><p><b>6. The same queries.</b> The 22 &times; 22 queries carried into the &times;12 maze the same way are the same queries in the warped space wherever they stay out of the band&rsquo;s interior. The &times;12 field trained on the warped maze with the 22 &times; 22 pairs solves 51.7 % of them with MPPI on the warped maze; the 22 &times; 22 field solved 61.0 % of the originals. By kind: same quadrant 75 against 78 %; adjacent 35 against 35 %; diagonal 7 against 28 %; quadrant&ndash;open 51 against 66 %; open&ndash;open 91 against 98 %. On the same carried queries: trained on the warped maze with &times;12&rsquo;s own pairs 23.6 %; the gap study&rsquo;s constructed warp 4.8 %; ntrl-demo 24.8 %.</p><p><b>7. Pairs drawn on the warped maze.</b> ntrl-demo&rsquo;s recipe run on the warped maze instead (its draws read as coordinates of the warped box and mapped back exactly before its wall rules apply; <code>gapprepare.py --z-draw</code>) spreads the pairs over the warped maze as it spreads them over the 22 &times; 22 maze: at &times;12, 35 % of the pairs have both ends in one quadrant (drawn on the maze 7 %; the 22 &times; 22 maze 34 %). Trained and planned on the warped maze, &times;12 solves 58.0 % of all queries over three training seeds, against 29.2 % with the pairs drawn on the maze and ntrl-demo&rsquo;s 24.2 %; &times;1&rsquo;s field solves 61.6 %. Given to the gap study&rsquo;s constructed warp, trained on the maze, the same pairs give 17.6 % (10.0 % with its own; training seed 87358): they help only with the loss taken in the warped space. The field is under &ldquo;trained on the warped maze, pairs drawn on the warped maze&rdquo; above.</p><p><b>So why does it fall off?</b> Not because of the warp. The warped mazes are nearly the same, no gradient ever reaches the warp, and a network given the same thing in the warped space plans at &times;12 about as well as at &times;1 on the queries that stay in the quadrants or only cross a band arm (same quadrant 75 against 78 %, adjacent 35 against 35 %). The gap study&rsquo;s version fell off for three reasons, and the warp removes none of them. Its loss asked for the robot&rsquo;s real travel time (10.2 &rarr; 30.2 % at &times;12 once the loss is taken in the warped space). Its training pairs are drawn on the real maze (30.2 &rarr; 57.7 % with the pairs drawn on the warped maze; these steps on training seed 87358). And it leaves the band&rsquo;s interior at its own scale: 0.94 units wide in the warped space at &times;12 against 0.34 at &times;1, so the &times;12 warped maze is not quite the &times;1 warped maze, and the queries that cross the band&rsquo;s centre are the ones still behind (diagonal 15.0 % with the pairs drawn on the warped maze, against 27.8 % at &times;1). Shrink the band&rsquo;s interior to its &times;1 width as well (density 0.288 instead of 1) and the two are the same maze in the warped space. Then &times;12 solves 63.4 % (diagonal 25.6 %), as the &times;1 field does (61.0 %, diagonal 27.8 %; training seed 87358), whichever warp its pairs were drawn on (63.0 %), while the shrunk draw&rsquo;s pairs trained on the unshrunk warp do not get there (53.1 %): the width decides, not the pairs. On the 10 &times; 10 maze&rsquo;s quadrants with the same gaps (findings page): ntrl-demo 70.2 &rarr; 27.1 % from &times;1 to &times;12, trained on the warped maze with the pairs drawn there 92.1 &rarr; 84.6 %, with the band shrunk 92.2 %. These fields need the planner on the warped maze: MPPI on the maze stalls in the shrunk band.</p>"
+}

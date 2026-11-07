@@ -2,8 +2,8 @@
 
 ![mazes](report/mazes.png)
 
-**Mazes** (`maze.py`). Five square mazes of n = 4, 7, 13, 22 and 40 cells a side (about ×1.78 per step; the last is
-10× the first in each direction, 100× in area). Cell pitch 1, walls 0.1 thick on the grid lines. Layout: a perfect
+**Mazes** (`maze.py`). Five square mazes of n = 4, 7, 10, 13 and 22 cells a side (a 40 × 40 maze was run first and
+dropped on request, see Dropped runs). Cell pitch 1, walls 0.1 thick on the grid lines. Layout: a perfect
 maze (randomized Kruskal), then 15 % of the remaining interior walls removed to open loops, as in ntrl-demo's own demo
 maze (`datasets/test/maze`, 7 × 7 cells, open). Every maze is written as an `.obj` (walls extruded to height 0.5) and
 normalized exactly as ntrl-demo's `to_off` does (centre on the bounding box, divide by its largest extent n + 0.1), so

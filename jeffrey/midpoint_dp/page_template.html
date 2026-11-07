@@ -1,0 +1,297 @@
+<title>Travel-Time Midpoint Loss</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;650;750&family=Public+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: the maze-scale report's reading column (~70ch) with full-width chart bands and small multiples, one panel per maze. */
+:root {
+  --bg: #f5f6f8; --surface: #ffffff; --ink: #15181d; --ink2: #4b525c; --muted: #737b86; --rule: #dde1e6; --wash: #eef1f5;
+  --accent: #eb6834;
+  --s-ntrl: #2a78d6; --s-mid: #eb6834; --s-ctrl: #8b929b; --path: #9c9b97;
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+    --accent: #d95926; --s-ntrl: #3987e5; --s-mid: #d95926; --s-ctrl: #7d858f; --path: #6d727a; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+  --accent: #d95926; --s-ntrl: #3987e5; --s-mid: #d95926; --s-ctrl: #7d858f; --path: #6d727a; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 15.5px/1.6 var(--f-body); margin: 0; }
+.page { max-width: 1120px; margin: 0 auto; padding-block: 40px 72px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 44px; }
+.col { max-width: 70ch; min-width: 0; }
+header { display: grid; gap: 14px; }
+.eyebrow { font: 500 12px/1.4 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 750 clamp(30px, 5vw, 46px)/1.05 var(--f-display); letter-spacing: -0.015em; margin: 0; text-wrap: balance; }
+h2 { font: 650 23px/1.2 var(--f-display); margin: 0 0 10px; text-wrap: balance; }
+h3 { font: 650 16px/1.3 var(--f-display); margin: 18px 0 6px; }
+p { margin: 0 0 12px; }
+.lede { font-size: 17.5px; line-height: 1.55; }
+.lede strong, p strong { font-weight: 600; }
+section { display: grid; gap: 14px; min-width: 0; }
+figure { margin: 0; background: #ffffff; border: 1px solid var(--rule); border-radius: 6px; padding: 10px; overflow-x: auto; }
+figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+figcaption { color: #4b525c; font-size: 13px; margin-top: 6px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; }
+.tile { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 12px 14px; display: grid; gap: 2px; }
+.tile .k { font: 500 12px/1.3 var(--f-mono); color: var(--muted); }
+.tile .v { font: 650 30px/1.15 var(--f-display); color: var(--ink); }
+.tile .s { font-size: 13px; color: var(--ink2); }
+.tile .mute { color: var(--muted); font-size: 12px; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.controls .lab { font: 500 12px var(--f-mono); color: var(--muted); margin-right: 4px; }
+.chip { display: inline-flex; align-items: center; gap: 7px; font: 500 13px var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 999px; padding: 5px 11px; cursor: pointer; }
+.chip[aria-pressed="false"] { color: var(--muted); background: transparent; }
+.chip[aria-pressed="false"] .key { opacity: 0.35; }
+.chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.key { width: 18px; height: 0; border-top: 3px solid currentColor; border-radius: 2px; display: inline-block; }
+.key.dash { border-top-style: dashed; border-top-width: 2px; }
+.key.thin { border-top-width: 2px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+.panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 10px 4px; position: relative; min-width: 0; }
+.panel h4 { font: 650 14px var(--f-display); margin: 0 0 2px 4px; display: flex; justify-content: space-between; gap: 8px; }
+.panel h4 span { font: 400 12px var(--f-mono); color: var(--muted); }
+.panel svg { display: block; width: 100%; height: auto; overflow: visible; }
+.axis text { fill: var(--muted); font: 9.5px var(--f-mono); }
+.axis .lab { fill: var(--ink2); font: 10px var(--f-mono); }
+.gridline { stroke: var(--rule); stroke-width: 1; }
+.refline { stroke: var(--ink2); stroke-width: 1; stroke-dasharray: 2 3; }
+.tip { position: absolute; z-index: 5; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--rule); border-radius: 6px; padding: 8px 10px; box-shadow: 0 4px 14px rgba(0,0,0,0.12); font-size: 12.5px; min-width: 210px; }
+.tip .h { font: 500 11.5px var(--f-mono); color: var(--muted); margin-bottom: 4px; }
+.tip .r { display: grid; grid-template-columns: 18px auto 1fr; gap: 6px; align-items: center; }
+.tip .r b { font: 500 13px var(--f-mono); font-variant-numeric: tabular-nums; text-align: right; }
+.tip .r i { font-style: normal; color: var(--ink2); white-space: nowrap; }
+details { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 14px; }
+summary { cursor: pointer; font: 600 14px var(--f-body); }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; font-size: 13px; min-width: 520px; }
+th, td { padding: 5px 9px; border-bottom: 1px solid var(--rule); text-align: right; white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+table.named th:nth-child(2), table.named td:nth-child(2) { text-align: left; white-space: normal; min-width: 150px; }
+thead th { font: 600 12px var(--f-mono); color: var(--muted); }
+td.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+tbody tr:hover { background: var(--wash); }
+.note { font-size: 13.5px; color: var(--ink2); }
+ul.tight { margin: 0 0 12px; padding-left: 20px; display: grid; gap: 6px; }
+ol.tight { margin: 0 0 12px; padding-left: 22px; display: grid; gap: 6px; }
+code { font: 13px var(--f-mono); background: var(--wash); padding: 1px 4px; border-radius: 4px; }
+.diagram { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 12px; overflow-x: auto; }
+.diagram svg { display: block; width: 100%; min-width: 560px; height: auto; }
+.diagram text { font: 12px var(--f-body); fill: var(--ink); }
+.diagram .m { font: 11px var(--f-mono); fill: var(--ink2); }
+.diagram .wall { fill: var(--path); }
+.diagram .route { fill: none; stroke: var(--s-mid); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.diagram .chord { fill: none; stroke: var(--ink2); stroke-width: 1.2; stroke-dasharray: 4 4; }
+.diagram .dot { fill: var(--surface); stroke: var(--ink); stroke-width: 2; }
+.diagram .mid { fill: var(--s-mid); stroke: var(--surface); stroke-width: 2; }
+.diagram .q { fill: var(--s-ntrl); stroke: var(--surface); stroke-width: 2; }
+.diagram .dist { fill: var(--surface); stroke: var(--ink); stroke-width: 2; }
+.diagram .leaf { fill: var(--ink2); }
+.diagram .slow { fill: var(--accent); fill-opacity: 0.16; }
+.diagram .b { font-weight: 600; fill: var(--ink); }
+@media (prefers-reduced-motion: no-preference) { .chip { transition: background-color 120ms, color 120ms; } }
+</style>
+
+<div class="page">
+  <header class="col">
+    <div class="eyebrow">jeffrey/midpoint_dp · ntrl-demo · 2 Nov 2026</div>
+    <h1>Travel-Time Midpoint Loss</h1>
+    <p class="lede"><!--LEDE--></p>
+  </header>
+
+  <section>
+    <div class="tiles"><!--TILES--></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>The loss</h2>
+      <p>ntrl-demo learns T(x, y), the travel time between two poses, from local terms: an eikonal term that ties |&nabla;T| to the speed at a sampled pose, a TD step and a wall-normal term. Nothing in it looks at long distances, and on mazes larger than its 7&times;7 demo the long-range values drift up to twice the true travel time while MPPI starts cutting through walls. The midpoint term adds that long-range check, using the planner itself.</p>
+      <ol class="tight">
+        <li>Every 100 epochs, take 8,192 random pairs (a, b) of collision-free poses and let ntrl-demo&rsquo;s own MPPI drive from a to b on the current field, all pairs at once on the GPU. During these training drives a rollout that would bring the robot within 0.02 cells of a wall is ruled out; the planner under test never does this. If a drive still touches a wall or stalls, keep the part before that and treat its end as the goal.</li>
+        <li>Measure the drive&rsquo;s travel time along the way (path length over the robot&rsquo;s speed) and cut it at <strong>c, the pose reached after half the travel time</strong>. That is not the distance midpoint: the robot is slow next to walls, so a slow stretch uses up travel time over a short length and pulls c towards it.</li>
+        <li>Cut each half again at its own travel-time midpoint, and so on, until a piece takes at most one cell of travel time, the scale at which ntrl-demo&rsquo;s own field is accurate.</li>
+        <li>Each leaf piece is worth the smaller of the network&rsquo;s T between its ends and the time the robot actually took over it. Every larger piece gets the sum of the leaves inside it as its target, so T(a, b) should equal T(a, c) + T(c, b), and each half the sum of its own halves.</li>
+        <li>From epoch 2,000 on, every training step adds the mean |log&nbsp;T&nbsp;&minus;&nbsp;log&nbsp;target| over 8,192 sampled pieces to ntrl-demo&rsquo;s loss, its weight ramped from 0 to 1 over 500 epochs.</li>
+      </ol>
+    </div>
+    <div class="diagram" role="img" aria-label="A route from a through a narrow gap and around a wall end to b. Its travel-time midpoint c lies just past the gap, long before half its length; equal-time leaves are short in the gap and long in the open.">
+      <svg viewBox="0 0 760 300">
+        <rect class="slow" x="138" y="104" width="64" height="32" rx="3"/>
+        <rect class="wall" x="166" y="26" width="8" height="78" rx="2"/>
+        <rect class="wall" x="166" y="136" width="8" height="104" rx="2"/>
+        <rect class="wall" x="416" y="26" width="8" height="174" rx="2"/>
+        <path class="route" d="M 60 120 L 200 120 C 265 120, 300 228, 420 226 C 525 224, 600 132, 690 84"/>
+        <circle class="leaf" cx="146.2" cy="120" r="3.2"/><circle class="leaf" cx="186.1" cy="120" r="3.2"/>
+        <circle class="leaf" cx="334.4" cy="205.4" r="3.2"/><circle class="leaf" cx="580.2" cy="158.5" r="3.2"/>
+        <circle class="dot" cx="60" cy="120" r="7"/><text x="38" y="125">a</text>
+        <circle class="dot" cx="690" cy="84" r="7"/><text x="704" y="89">b</text>
+        <circle class="q" cx="166.2" cy="120" r="6"/><text class="m" x="124" y="111">c&#8321;</text>
+        <circle class="mid" cx="227.9" cy="126.7" r="8"/><text class="m" x="236" y="104"><tspan class="b">c</tspan> = half the travel time</text>
+        <circle class="q" cx="463.3" cy="220" r="6"/><text class="m" x="455" y="248">c&#8322;</text>
+        <rect class="dist" x="374.7" y="217.2" width="10" height="10" transform="rotate(45 379.7 222.2)"/>
+        <text class="m" x="330" y="252">half the length</text>
+        <text class="m" x="22" y="168">slow stretch</text>
+        <text class="m" x="22" y="181">(0.15 &#215; full speed)</text>
+        <text class="m" x="40" y="288">T(a,b) = T(a,c) + T(c,b) = [T(a,c&#8321;) + T(c&#8321;,c)] + [T(c,c&#8322;) + T(c&#8322;,b)] = &hellip; down to one-cell leaves</text>
+      </svg>
+    </div>
+    <div class="col"><p class="note">Schematic, with the cut points computed for the drawn route. The robot crawls through the narrow gap at 0.15 of its speed, so half of the travel time is spent by the time it is just past the gap (c), long before half of the length (&#9671;). Small dots: the ends of eight leaves of equal travel time. Cutting by time puts many short pieces where the robot is slow, next to walls, and few long ones in the open.</p></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Success by distance</h2>
+      <p>The test queries, planner and scorer are those of the maze-scale study: 40 queries per true-distance bin, each certified by a collision-free truth path; ntrl-demo&rsquo;s MPPI with planning seeds 0, 1 and 2; a run succeeds when it reaches the goal without the robot touching a wall. Each point averages the training seeds (87358, 1, 2 where run); the whisker is the seed range. Every field is the network at epoch 5,000. <em>Control</em> resumes the same epoch-2,000 network with the same loop and no midpoint term.</p>
+    </div>
+    <div class="controls" id="legend" role="group" aria-label="Series shown in the charts"><span class="lab">show</span></div>
+    <div class="grid" id="panels"></div>
+    <details><summary>Numbers by training seed and by distance</summary><div class="tablewrap"><!--HEADLINE--></div><div class="tablewrap" style="margin-top:10px"><!--BINTABLE--></div></details>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>On the higher-frequency network</h2>
+      <p id="fouriertext"></p>
+    </div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>What changes in the field</h2>
+      <p id="fieldtext">The midpoint term calibrates the long-range values and turns the field&rsquo;s descent direction away from walls.</p>
+    </div>
+    <div class="grid" id="rpanels"></div>
+    <div class="tablewrap"><!--FIELDTABLE--></div>
+    <div class="col"><p class="note">Descent into wall: share of near-wall poses (inside ntrl-demo&rsquo;s speed margin) where &minus;&nabla;T(x, goal) has a component above 0.3 into the wall, for goals at least 8 cells away (400,000 poses paired with the 48 truth goals). Free-space |&nabla;T|: median at poses at least 0.25 cells from any wall, where the true value is 1.</p></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Which parts matter</h2>
+      <p id="varianttext"></p>
+    </div>
+    <div class="tablewrap"><!--VARIANTS--></div>
+    <div class="col"><h3>Schedule and weight</h3><p id="abltext"></p></div>
+    <div class="tablewrap"><!--ABLATIONS--></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>U-turns around a wall end</h2>
+      <p id="uturntext"></p>
+    </div>
+    <div class="tablewrap"><!--UTURNTABLE--></div>
+  </section>
+
+  <section>
+    <div class="col"><h2>Example paths</h2></div>
+    <figure><img src="paths13.png" alt="Three 13x13 queries where ntrl-demo hits a wall and the midpoint-loss field reaches the goal, with the truth path." width="1352" height="494"><figcaption>13 &times; 13 maze, training seed 87358, planning seed 0: queries where ntrl-demo fails and the midpoint field succeeds. Dashed: truth; circle: start; square: goal.</figcaption></figure>
+    <figure><img src="paths22.png" alt="Three 22x22 queries where ntrl-demo hits a wall and the midpoint-loss field reaches the goal, with the truth path." width="1352" height="494"><figcaption>22 &times; 22 maze, same conventions.</figcaption></figure>
+  </section>
+
+  <section class="col">
+    <h2>How it was measured</h2>
+    <ul class="tight" id="measured"></ul>
+  </section>
+
+  <section class="col">
+    <h2>Caveats</h2>
+    <ul class="tight" id="caveats"></ul>
+  </section>
+
+  <details class="col"><summary>Registered runs</summary><div class="tablewrap"><!--RUNS--></div></details>
+</div>
+
+<script>
+(() => {
+  const D = /*DATA*/;
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+  const h = (t, c, txt, p) => { const e = document.createElement(t); if (c) e.className = c; if (txt != null) e.textContent = txt; if (p) p.appendChild(e); return e; };
+  const MAIN = 'safe, min leaves, tree + sub-paths';
+  const SER = n => [
+    {key: 'ntrl-demo', label: 'ntrl-demo', css: '--s-ntrl', w: 2, dash: '', shape: 'circle'},
+    {key: 'control', label: 'control (no term)', css: '--s-ctrl', w: 1.6, dash: '', shape: 'circle', thin: true},
+    {key: MAIN, label: 'midpoint loss', css: '--s-mid', w: 2.4, dash: '', shape: 'circle'},
+    {key: `ntrl-demo B×${D.bscale[n]}`, label: 'ntrl-demo, higher frequency', css: '--s-ntrl', w: 1.8, dash: '5 4', shape: 'square'},
+    {key: `${MAIN} on B×${D.bscale[n]}`, label: 'midpoint loss, higher frequency', css: '--s-mid', w: 1.8, dash: '5 4', shape: 'square'},
+  ];
+  const ON = {0: true, 1: true, 2: true, 3: false, 4: false};
+  const legend = document.getElementById('legend');
+  function drawLegend() {
+    legend.querySelectorAll('.chip').forEach(c => c.remove());
+    SER('13').forEach((s, i) => {
+      const b = h('button', 'chip', null, legend); b.type = 'button'; b.id = `chip-${i}`;
+      const k = h('span', 'key' + (s.dash ? ' dash' : '') + (s.thin ? ' thin' : ''), null, b); k.style.color = `var(${s.css})`;
+      b.append(s.label.replace('higher frequency', 'B×3 / B×6'));
+      b.setAttribute('aria-pressed', String(ON[i]));
+      b.addEventListener('click', () => { ON[i] = !ON[i]; drawLegend(); drawAll(); });
+    });
+  }
+  function ticks(lo, hi, n) { const raw = (hi - lo) / n, p = Math.pow(10, Math.floor(Math.log10(raw))); const st = [1, 2, 2.5, 5, 10].map(k => k * p).find(s => s >= raw); const o = []; for (let v = Math.ceil(lo / st) * st; v <= hi + 1e-9; v += st) o.push(+v.toFixed(6)); return o; }
+  function panel(box, n, spec) {
+    const m = D.series[n]; if (!m) return;
+    const p = h('div', 'panel', null, box);
+    const h4 = h('h4', null, `${n} × ${n} maze`, p); h('span', null, spec.sub, h4);
+    const W = 420, H = 250, L = 42, R = 12, T = 12, B = 40;
+    const svg = mk('svg', {viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': `${spec.aria} on the ${n} by ${n} maze`}, p);
+    const series = SER(n).map((s, i) => ({s, i, d: m[s.key]})).filter(r => r.d && ON[r.i]);
+    const bins = (m['ntrl-demo'] || series[0].d).bins;
+    const X = k => L + (k + 0.5) / bins.length * (W - L - R);
+    const [y0, y1] = spec.yrange(series);
+    const Y = v => T + (1 - (v - y0) / (y1 - y0)) * (H - T - B);
+    const ax = mk('g', {class: 'axis'}, svg);
+    ticks(y0, y1, 4).forEach(v => { mk('line', {x1: L, x2: W - R, y1: Y(v), y2: Y(v), class: 'gridline'}, svg); mk('text', {x: L - 6, y: Y(v) + 3, 'text-anchor': 'end'}, ax).textContent = spec.fmt(v); });
+    if (spec.ref != null) mk('line', {x1: L, x2: W - R, y1: Y(spec.ref), y2: Y(spec.ref), class: 'refline'}, svg);
+    bins.forEach((b, k) => { mk('text', {x: X(k), y: H - B + 14, 'text-anchor': 'middle'}, ax).textContent = b; });
+    mk('text', {x: (L + W - R) / 2, y: H - 6, 'text-anchor': 'middle', class: 'lab'}, ax).textContent = 'true travel distance (cells)';
+    series.forEach(r => {
+      const vals = bins.map(b => { const k = r.d.bins.indexOf(b); return k < 0 ? null : spec.val(r.d, k); });
+      if (spec.range) bins.forEach((b, k) => { const j = r.d.bins.indexOf(b); if (j >= 0 && r.d.rows[j][3] > 1) mk('line', {x1: X(k), x2: X(k), y1: Y(r.d.rows[j][1]), y2: Y(r.d.rows[j][2]), stroke: `var(${r.s.css})`, 'stroke-width': 1.2, 'stroke-opacity': 0.55}, svg); });
+      let d = '', pen = false;
+      vals.forEach((v, k) => { if (v != null) { d += `${pen ? 'L' : 'M'}${X(k).toFixed(1)},${Y(v).toFixed(1)}`; pen = true; } else pen = false; });
+      mk('path', {d, fill: 'none', stroke: `var(${r.s.css})`, 'stroke-width': r.s.w, 'stroke-dasharray': r.s.dash, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
+      vals.forEach((v, k) => { if (v == null) return;
+        if (r.s.shape === 'square') mk('rect', {x: X(k) - 4, y: Y(v) - 4, width: 8, height: 8, fill: 'var(--surface)', stroke: `var(${r.s.css})`, 'stroke-width': 2}, svg);
+        else mk('circle', {cx: X(k), cy: Y(v), r: r.s.thin ? 3 : 4, fill: `var(${r.s.css})`, stroke: 'var(--surface)', 'stroke-width': 2}, svg); });
+    });
+    const tip = h('div', 'tip', null, p); tip.hidden = true;
+    const cross = mk('line', {y1: T, y2: H - B, stroke: 'var(--muted)', 'stroke-width': 1, visibility: 'hidden'}, svg);
+    const hit = mk('rect', {x: L, y: T, width: W - L - R, height: H - T - B, fill: 'transparent', style: 'touch-action: pan-y'}, svg);
+    const show = ev => {
+      const rc = svg.getBoundingClientRect(), sx = (ev.clientX - rc.left) * W / rc.width;
+      const k = Math.max(0, Math.min(bins.length - 1, Math.floor((sx - L) / (W - L - R) * bins.length)));
+      cross.setAttribute('x1', X(k)); cross.setAttribute('x2', X(k)); cross.setAttribute('visibility', 'visible');
+      tip.textContent = ''; h('div', 'h', `${n}×${n} · ${bins[k]} cells`, tip);
+      series.forEach(r => { const j = r.d.bins.indexOf(bins[k]); if (j < 0) return; const row = h('div', 'r', null, tip);
+        const kk = h('span', 'key' + (r.s.dash ? ' dash' : '') + (r.s.thin ? ' thin' : ''), null, row); kk.style.color = `var(${r.s.css})`;
+        h('i', null, r.s.label, row); h('b', null, spec.tipval(r.d, j), row); });
+      tip.hidden = false;
+      const pr = p.getBoundingClientRect(); let left = ev.clientX - pr.left + 14;
+      if (left + tip.offsetWidth > pr.width - 4) left = ev.clientX - pr.left - tip.offsetWidth - 14;
+      tip.style.left = `${Math.max(4, left)}px`; tip.style.top = `${Math.max(4, ev.clientY - pr.top - 20)}px`;
+    };
+    hit.addEventListener('pointermove', show); hit.addEventListener('pointerdown', show);
+    hit.addEventListener('pointerleave', () => { tip.hidden = true; cross.setAttribute('visibility', 'hidden'); });
+  }
+  function drawAll() {
+    const box = document.getElementById('panels'); box.textContent = '';
+    ['10', '13', '22'].forEach(n => panel(box, n, {sub: 'MPPI success (%)', aria: 'MPPI success by distance', range: true,
+      yrange: () => [0, 100], fmt: v => v, val: (d, k) => d.rows[k][0],
+      tipval: (d, k) => `${d.rows[k][0].toFixed(0)} %  (${d.rows[k][4]}/${d.rows[k][5]})`}));
+    const rb = document.getElementById('rpanels'); rb.textContent = '';
+    ['10', '13', '22'].forEach(n => panel(rb, n, {sub: 'median learned T / true T*', aria: 'learned over true travel time by distance', ref: 1,
+      yrange: s => { let hi = 1.2; s.forEach(r => r.d.ratio.forEach(v => { if (v != null && v > hi) hi = v; })); return [0.8, Math.ceil(hi * 10) / 10]; },
+      fmt: v => (Math.round(v * 100) / 100).toString(), val: (d, k) => d.ratio[k], tipval: (d, k) => d.ratio[k] == null ? '–' : d.ratio[k].toFixed(2)}));
+  }
+  drawLegend(); drawAll();
+})();
+</script>

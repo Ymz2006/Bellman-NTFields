@@ -1,0 +1,355 @@
+<title>2026-11-07 Wall Speed Lines</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: an instrument bench. One control row, the maze beside its two line traces, then the wall distributions. */
+:root {
+  --bg: #f6f8f8; --panel: #ffffff; --ink: #101617; --ink2: #4a5557; --ink3: #768184; --rule: #dde3e4; --grid: #e9edee;
+  --shade: #e3e8e9; --wall: #1d2526; --band: #eef2f2; --accent: #0f6f8a;
+  --s-target: #101617; --s-idw: #2a78d6; --s-id: #eb6834; --s-pmzw: #1baf7a;
+  --sans: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121617; --panel: #1a1f20; --ink: #eef2f2; --ink2: #b9c3c5; --ink3: #89959a; --rule: #303739; --grid: #262c2e;
+  --shade: #2a3133; --wall: #d7dfe0; --band: #20272a; --accent: #5cb8d3;
+  --s-target: #eef2f2; --s-idw: #3987e5; --s-id: #d95926; --s-pmzw: #199e70; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #121617; --panel: #1a1f20; --ink: #eef2f2; --ink2: #b9c3c5; --ink3: #89959a; --rule: #303739; --grid: #262c2e;
+  --shade: #2a3133; --wall: #d7dfe0; --band: #20272a; --accent: #5cb8d3;
+  --s-target: #eef2f2; --s-idw: #3987e5; --s-id: #d95926; --s-pmzw: #199e70; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--sans) }
+.wrap { max-width: 1240px; margin: 0 auto; padding-block: 28px 56px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 22px }
+h1 { font-size: 26px; line-height: 1.2; font-weight: 600; margin: 0; text-wrap: balance }
+h2 { font-size: 18px; font-weight: 600; margin: 0; text-wrap: balance }
+h3 { font-size: 13.5px; font-weight: 600; margin: 0; color: var(--ink) }
+p { margin: 0; max-width: 74ch } .lede { display: grid; gap: 10px } .sub { color: var(--ink2); font-size: 14px }
+.note { color: var(--ink3); font-size: 12.5px; max-width: 86ch }
+.bar { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: flex-end; padding: 12px 14px; background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5 }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg) }
+.ctl { display: grid; gap: 4px; min-width: 0 } .ctl > span, .lab { font-size: 11.5px; letter-spacing: .04em; color: var(--ink3); text-transform: uppercase }
+.seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--rule); border-radius: 5px; overflow: hidden }
+.seg button { font: 500 13px var(--sans); color: var(--ink2); background: transparent; border: 0; border-right: 1px solid var(--rule); padding: 5px 10px; cursor: pointer }
+.seg button:last-child { border-right: 0 } .seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg) }
+.seg button:hover:not([aria-pressed="true"]) { background: var(--band) }
+button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px }
+.chk { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; color: var(--ink2); cursor: pointer } .chk i { width: 16px; height: 2.5px; border-radius: 2px; display: inline-block }
+.chks { display: flex; flex-wrap: wrap; gap: 4px 14px }
+select, input[type=number] { font: 13px var(--mono); color: var(--ink); background: var(--panel); border: 1px solid var(--rule); border-radius: 4px; padding: 4px 6px }
+input[type=number] { width: 78px } input[type=range] { width: 100%; accent-color: var(--accent) }
+.bench { display: grid; grid-template-columns: minmax(250px, 320px) minmax(0, 1fr); gap: 18px; align-items: start }
+.side { display: grid; gap: 12px; min-width: 0 } .main { display: grid; gap: 14px; min-width: 0 }
+.card { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 12px 14px; min-width: 0; display: grid; gap: 8px }
+.map svg { display: block; width: 100%; height: auto; cursor: crosshair; touch-action: none; background: var(--band); border-radius: 3px }
+.row { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center }
+.chart { position: relative; min-width: 0 } .chart svg { display: block; width: 100%; touch-action: pan-y; user-select: none }
+.chart text { font: 11px var(--mono); fill: var(--ink3) } .chart .dl { font: 500 11px var(--sans); fill: var(--ink2) }
+.tip { position: absolute; pointer-events: none; background: var(--panel); border: 1px solid var(--rule); border-radius: 5px; padding: 6px 8px; font-size: 12px; display: grid; gap: 2px; z-index: 4; min-width: 150px; box-shadow: 0 2px 10px rgba(0,0,0,.12) }
+.tip[hidden] { display: none } .tip .h { color: var(--ink3); font: 11px var(--mono) } .tip .r { display: grid; grid-template-columns: 14px auto 1fr; gap: 6px; align-items: center } .tip .r i { height: 2.5px; border-radius: 2px } .tip b { font: 500 12px var(--mono); color: var(--ink) } .tip span { color: var(--ink2) }
+.legend { display: flex; flex-wrap: wrap; gap: 3px 14px; font-size: 12.5px; color: var(--ink2) } .legend span { display: inline-flex; gap: 6px; align-items: center } .legend i { width: 18px; height: 0; border-top: 2.5px solid; display: inline-block }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px 16px } .stat { display: grid; gap: 1px } .stat b { font: 500 16px var(--mono) } .stat span { font-size: 12px; color: var(--ink2) }
+.three { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 14px } @media (max-width: 460px) { .three { grid-template-columns: minmax(0, 1fr) } }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px } @media (max-width: 460px) { .two { grid-template-columns: minmax(0, 1fr) } }
+.find { display: grid; gap: 7px; padding: 0; margin: 0; list-style: none; max-width: 92ch } .find li { padding-left: 14px; position: relative } .find li::before { content: ""; position: absolute; left: 0; top: .62em; width: 6px; height: 2px; background: var(--accent) }
+details { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 14px } summary { cursor: pointer; font-weight: 500; font-size: 14px }
+.tw { overflow-x: auto; margin-top: 10px } table { border-collapse: collapse; font-size: 12.5px; width: 100% } th, td { padding: 4px 9px; text-align: right; border-bottom: 1px solid var(--grid); white-space: nowrap; font-variant-numeric: tabular-nums } th { color: var(--ink3); font-weight: 500 } td:first-child, th:first-child, td:nth-child(2), th:nth-child(2) { text-align: left } td code { font: 11.5px var(--mono); color: var(--ink2) }
+.msg { font-size: 13px; color: var(--ink3); min-height: 19px }
+@media (max-width: 860px) { .bench { grid-template-columns: minmax(0, 1fr) } .bar { position: static } }
+@media (prefers-reduced-motion: no-preference) { .seg button { transition: background .12s } }
+</style>
+<div class="wrap">
+  <header class="lede">
+    <h1>Does ntrl-demo represent the walls?</h1>
+    <!--LEDE-->
+  </header>
+  <div class="bar">
+    <div class="ctl"><span>Maze</span><div class="seg" id="base"></div></div>
+    <div class="ctl"><span>Gap</span><div class="seg" id="gap"></div></div>
+    <div class="ctl"><span>Fields</span><div class="chks" id="fields"></div></div>
+  </div>
+  <section class="bench">
+    <div class="side">
+      <div class="card map">
+        <h3>Pick a line</h3>
+        <div id="map"></div>
+        <div class="note">Click the maze to move the line.</div>
+      </div>
+      <div class="card">
+        <div class="ctl"><span>Line runs along</span><div class="seg" id="axis"></div></div>
+        <div class="ctl"><span id="poslab">Position</span>
+          <div class="row"><input type="range" id="pos" min="0" max="1" step="1" aria-label="Line position"><input type="number" id="posn" step="0.125" aria-label="Line position in cells"></div>
+        </div>
+        <div class="ctl"><label class="lab" for="goal">Goal</label><select id="goal"></select></div>
+      </div>
+    </div>
+    <div class="main">
+      <div class="card">
+        <div class="row" style="justify-content:space-between">
+          <h2 id="ltitle">Speed along the line</h2>
+          <div class="row">
+            <div class="seg" id="range"></div>
+            <div class="seg" id="scale"></div>
+          </div>
+        </div>
+        <div class="legend" id="leg"></div>
+        <div class="chart" id="c1"></div>
+        <h3>Normalized: each curve divided by its own average along the whole line</h3>
+        <div class="chart" id="c2"></div>
+        <div class="msg" id="msg"></div>
+        <div class="stats" id="stats"></div>
+      </div>
+    </div>
+  </section>
+  <section class="main">
+    <div class="row" style="justify-content:space-between;align-items:flex-end">
+      <div style="display:grid;gap:3px"><h2>Speed near the walls</h2><p class="sub" id="wsub"></p></div>
+      <div class="ctl"><span>Goal of each pose</span><div class="seg" id="variant"></div></div>
+    </div>
+    <div class="two">
+      <div class="card"><h3>Distribution of speed, poses within 0.175 cells of a wall</h3><div class="legend" id="leg2"></div><div class="chart" id="h1"></div></div>
+      <div class="card"><h3>Speed against clearance (median, shaded 10–90 %)</h3><div class="legend" id="leg3"></div><div class="chart" id="h2"></div></div>
+    </div>
+    <div class="card"><h3>Speed at the slowest target poses (target below 0.05), at every gap</h3>
+      <div class="legend" id="leg4"></div>
+      <div class="two"><div><div class="lab" id="g1t"></div><div class="chart" id="g1"></div></div><div><div class="lab" id="g2t"></div><div class="chart" id="g2"></div></div></div>
+    </div>
+    <details><summary>All mazes in numbers</summary><div class="tw" id="tbl"></div></details>
+    <details><summary>How this was measured</summary><div style="display:grid;gap:8px;margin-top:10px"><!--NOTES--></div></details>
+  </section>
+</div>
+<script>
+const INDEX = /*INDEX*/null;
+const FIELDS = [['idw', 'ntrl-demo, warped pairs', 'ntrl-demo, warped pairs'], ['id', 'ntrl-demo, maze pairs', 'ntrl-demo, maze pairs'], ['pmzw', 'Trained on warped maze', 'Trained on warped maze']];
+const NAME = Object.fromEntries(FIELDS.map(f => [f[0], f[1]]));
+const COLOR = { target: 'var(--s-target)', idw: 'var(--s-idw)', id: 'var(--s-id)', pmzw: 'var(--s-pmzw)' };
+const BASES = [['c22', 'Plus 22×22'], ['m10', 'Plus 10×10']];
+const GAPS = [1, 2, 4, 8, 12];
+const S = { base: 'c22', k: 12, axis: 'x', p: 3.5, goal: 4, range: 'first', log: false, show: { idw: true, id: true, pmzw: true }, variant: 'pair', zoom: null };
+const $ = id => document.getElementById(id);
+const ns = 'http://www.w3.org/2000/svg';
+const E = (tag, a = {}, kids = []) => { const e = document.createElementNS(ns, tag); for (const k in a) e.setAttribute(k, a[k]); kids.forEach(c => e.appendChild(c)); return e; };
+const fmt = v => v == null || !isFinite(v) ? '–' : v >= 100 ? v.toFixed(0) : v >= 10 ? v.toFixed(1) : v >= 1 ? v.toFixed(2) : v >= 0.1 ? v.toFixed(3) : v.toFixed(4);
+const entry = (b, k) => INDEX.find(e => e.base === b && e.k === k);
+let uid = 0;
+
+function seg(host, items, get, set) {
+  host.textContent = '';
+  items.forEach(([v, label]) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = label; b.addEventListener('click', () => set(v)); b.dataset.v = v; host.appendChild(b); });
+  host._sync = () => [...host.children].forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === String(get()))));
+  host._sync();
+}
+function ticksLin(lo, hi, n = 5) {
+  const raw = (hi - lo) / n, p = 10 ** Math.floor(Math.log10(raw)), m = raw / p, st = (m < 1.5 ? 1 : m < 3 ? 2 : m < 7 ? 5 : 10) * p, out = [];
+  for (let v = Math.ceil(lo / st) * st; v <= hi + st * 1e-6; v += st) out.push(+v.toFixed(10));
+  return out;
+}
+const LOGT = [0.003, 0.01, 0.03, 0.1, 0.3, 1, 3, 10];
+
+/* One chart routine for every panel: lines, shaded bands, reference rules, crosshair and optional drag zoom. */
+function chart(host, o) {
+  const W = Math.max(280, host.clientWidth || 600), H = o.h || 220, narrow = W < 520;
+  const m = { l: 50, r: o.labels && !narrow ? 150 : 12, t: 8, b: o.xlabel ? 38 : 22 };
+  const [x0, x1] = o.xd, iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const ty = v => o.log ? Math.log10(Math.max(v, 1e-9)) : v;
+  const [yl, yh] = [ty(o.yd[0]), ty(o.yd[1])];
+  const X = v => m.l + (v - x0) / (x1 - x0) * iw, Y = v => m.t + ih - (ty(v) - yl) / (yh - yl) * ih;
+  const inv = px => x0 + (px - m.l) / iw * (x1 - x0);
+  const svg = E('svg', { viewBox: `0 0 ${W} ${H}`, height: H, role: 'img', 'aria-label': o.aria || 'chart' });
+  const clip = 'c' + (++uid);
+  svg.appendChild(E('defs', {}, [E('clipPath', { id: clip }, [E('rect', { x: m.l, y: m.t, width: iw, height: ih })])]));
+  const body = E('g', { 'clip-path': `url(#${clip})` });
+  (o.shade || []).forEach(([a, b]) => body.appendChild(E('rect', { x: X(a), y: m.t, width: Math.max(1, X(b) - X(a)), height: ih, fill: 'var(--shade)' })));
+  const yt = o.log ? LOGT.filter(v => v >= o.yd[0] && v <= o.yd[1]) : ticksLin(o.yd[0], o.yd[1], 4);
+  yt.forEach(v => { svg.appendChild(E('line', { x1: m.l, x2: m.l + iw, y1: Y(v), y2: Y(v), stroke: 'var(--grid)', 'stroke-width': 1 })); const t = E('text', { x: m.l - 6, y: Y(v) + 4, 'text-anchor': 'end' }); t.textContent = o.fy ? o.fy(v) : String(v); svg.appendChild(t); });
+  const xt = o.xticks || ticksLin(x0, x1, narrow ? 4 : 7);
+  xt.forEach(v => { const t = E('text', { x: X(v), y: H - (o.xlabel ? 22 : 6), 'text-anchor': 'middle' }); t.textContent = o.fx ? o.fx(v) : String(v); svg.appendChild(t); });
+  if (o.xlabel) { const t = E('text', { x: m.l + iw / 2, y: H - 5, 'text-anchor': 'middle' }); t.textContent = o.xlabel; svg.appendChild(t); }
+  if (o.ylabel) { const t = E('text', { x: 11, y: m.t + ih / 2, 'text-anchor': 'middle', transform: `rotate(-90 11 ${m.t + ih / 2})` }); t.textContent = o.ylabel; svg.appendChild(t); }
+  (o.bands || []).forEach(b => { const up = [], dn = []; b.xs.forEach((x, i) => { up.push(`${X(x).toFixed(1)},${Y(b.hi[i]).toFixed(1)}`); dn.unshift(`${X(x).toFixed(1)},${Y(b.lo[i]).toFixed(1)}`); }); body.appendChild(E('polygon', { points: up.concat(dn).join(' '), fill: b.color, 'fill-opacity': 0.16, stroke: 'none' })); });
+  (o.refs || []).forEach(r => body.appendChild(E('line', { x1: m.l, x2: m.l + iw, y1: Y(r), y2: Y(r), stroke: 'var(--ink3)', 'stroke-width': 1 })));
+  o.series.forEach(s => {
+    const pts = s.xs.map((x, i) => s.ys[i] == null ? null : `${X(x).toFixed(1)},${Y(s.ys[i]).toFixed(1)}`).filter(Boolean).join(' ');
+    body.appendChild(E('polyline', { points: pts, fill: 'none', stroke: s.color, 'stroke-width': s.w || 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', ...(s.dash ? { 'stroke-dasharray': s.dash } : {}) }));
+    if (s.marks) s.xs.forEach((x, i) => s.ys[i] != null && body.appendChild(E('circle', { cx: X(x), cy: Y(s.ys[i]), r: 4, fill: s.color, stroke: 'var(--panel)', 'stroke-width': 2 })));
+  });
+  svg.appendChild(body);
+  svg.appendChild(E('line', { x1: m.l, x2: m.l + iw, y1: m.t + ih, y2: m.t + ih, stroke: 'var(--rule)', 'stroke-width': 1 }));
+  if (o.labels && !narrow) {
+    const near = (s, x) => { let b = 0, d = 1e18; s.xs.forEach((v, i) => { if (s.ys[i] != null && Math.abs(v - x) < d) { d = Math.abs(v - x); b = i; } }); return b; };
+    const ls = o.series.filter(s => s.direct).map(s => ({ s, y: Math.min(m.t + ih, Math.max(m.t + 6, Y(s.ys[near(s, x1)]))) })).sort((a, b) => a.y - b.y);
+    for (let i = 1; i < ls.length; i++) if (ls[i].y - ls[i - 1].y < 14) ls[i].y = ls[i - 1].y + 14;
+    const over = ls.length ? ls[ls.length - 1].y - (m.t + ih) : 0; if (over > 0) ls.forEach(l => l.y -= over);
+    ls.forEach(l => { const t = E('text', { x: m.l + iw + 8, y: l.y + 4, class: 'dl' }); t.textContent = l.s.direct; svg.appendChild(t); });
+  }
+  const hair = E('line', { y1: m.t, y2: m.t + ih, stroke: 'var(--ink3)', 'stroke-width': 1, visibility: 'hidden' }), sel = E('rect', { y: m.t, height: ih, fill: 'var(--accent)', 'fill-opacity': .14, visibility: 'hidden' });
+  svg.appendChild(sel); svg.appendChild(hair);
+  host.textContent = ''; host.appendChild(svg);
+  const tip = document.createElement('div'); tip.className = 'tip'; tip.hidden = true; host.appendChild(tip);
+  const nearest = (xs, x) => { let lo = 0, hi = xs.length - 1; while (hi - lo > 1) { const c = (lo + hi) >> 1; if (xs[c] < x) lo = c; else hi = c; } return Math.abs(xs[lo] - x) <= Math.abs(xs[hi] - x) ? lo : hi; };
+  const pos = e => { const r = svg.getBoundingClientRect(); return (e.clientX - r.left) * W / r.width; };
+  let drag = null;
+  svg.addEventListener('pointerdown', e => { if (!o.onZoom || e.pointerType === 'touch') return; drag = pos(e); svg.setPointerCapture(e.pointerId); });
+  svg.addEventListener('pointermove', e => {
+    const px = Math.min(m.l + iw, Math.max(m.l, pos(e))), x = inv(px);
+    if (drag != null) { sel.setAttribute('x', Math.min(drag, px)); sel.setAttribute('width', Math.abs(px - drag)); sel.setAttribute('visibility', 'visible'); }
+    hair.setAttribute('x1', px); hair.setAttribute('x2', px); hair.setAttribute('visibility', 'visible');
+    tip.textContent = '';
+    const h = document.createElement('div'); h.className = 'h'; h.textContent = o.tipx ? o.tipx(x) : x.toFixed(2); tip.appendChild(h);
+    o.series.filter(s => !s.noTip).forEach(s => {
+      const i = nearest(s.xs, x), r = document.createElement('div'); r.className = 'r';
+      const k = document.createElement('i'); k.style.background = s.color; const b = document.createElement('b'); b.textContent = s.ys[i] == null ? '–' : (o.ftip || fmt)(s.ys[i]); const t = document.createElement('span'); t.textContent = s.name;
+      r.append(k, b, t); tip.appendChild(r);
+    });
+    tip.hidden = false;
+    const hw = host.clientWidth, tw = tip.offsetWidth, sx = hw / W, left = px * sx + 14 + tw > hw ? px * sx - tw - 14 : px * sx + 14;
+    tip.style.left = Math.max(0, left) + 'px'; tip.style.top = '6px';
+  });
+  svg.addEventListener('pointerup', e => { if (drag == null) return; const a = drag, b = Math.min(m.l + iw, Math.max(m.l, pos(e))); drag = null; sel.setAttribute('visibility', 'hidden'); if (Math.abs(a - b) > 8) o.onZoom([inv(Math.min(a, b)), inv(Math.max(a, b))]); });
+  svg.addEventListener('pointerleave', () => { if (drag == null) { hair.setAttribute('visibility', 'hidden'); tip.hidden = true; } });
+}
+function legend(host, items) {
+  host.textContent = '';
+  items.forEach(it => { const s = document.createElement('span'), i = document.createElement('i'); i.style.borderTopColor = it.color; if (it.dash) i.style.borderTopStyle = 'dashed'; s.append(i, document.createTextNode(it.name)); host.appendChild(s); });
+}
+
+/* Line data: fetched per maze, decoded lazily. */
+const cache = new Map();
+async function load(b, k) {
+  const key = b + k; if (cache.has(key)) return cache.get(key);
+  const r = await fetch(`speedlines/${b}_k${k}.json`); if (!r.ok) throw new Error(r.status);
+  const d = await r.json(); d.lut = new Float32Array(256); for (let i = 0; i < 255; i++) d.lut[i] = 10 ** (d.log_lo + i / 254 * (d.log_hi - d.log_lo));
+  d.dec = {}; cache.set(key, d); return d;
+}
+function layer(d, ax, name, i) {
+  const key = ax + name + (i ?? ''); if (d.dec[key]) return d.dec[key];
+  const s = atob(i == null ? d.lines[ax][name] : d.lines[ax][name][i]), a = new Uint8Array(s.length); for (let j = 0; j < s.length; j++) a[j] = s.charCodeAt(j);
+  return d.dec[key] = a;
+}
+const row = (d, ax, name, i, pi) => { const U = d.us.length, a = layer(d, ax, name, i), o = new Array(U); for (let j = 0; j < U; j++) o[j] = d.lut[a[pi * U + j]]; return o; };
+function lineMean(us, v) { let s = 0, w = 0; for (let i = 1; i < us.length; i++) { const h = us[i] - us[i - 1]; s += (v[i] + v[i - 1]) * h / 2; w += h; } return s / w; }
+
+let D = null;
+function drawMap() {
+  const e = entry(S.base, S.k), n = e.n, host = $('map');
+  const svg = E('svg', { viewBox: `-0.6 -0.6 ${n + 1.2} ${n + 1.2}`, role: 'img', 'aria-label': 'Maze walls with the chosen line' });
+  const g = E('g', { transform: `translate(0 ${n}) scale(1 -1)` });
+  e.boxes.forEach(b => g.appendChild(E('rect', { x: b[0], y: b[1], width: b[2] - b[0], height: b[3] - b[1], fill: 'var(--wall)' })));
+  const lw = n / 110;
+  const horizontal = S.axis === 'x';
+  g.appendChild(E('line', horizontal ? { x1: 0, x2: n, y1: S.p, y2: S.p, stroke: 'var(--accent)', 'stroke-width': lw } : { x1: S.p, x2: S.p, y1: 0, y2: n, stroke: 'var(--accent)', 'stroke-width': lw }));
+  if (S.goal < 4) { const c = e.goals[S.goal].cell; g.appendChild(E('circle', { cx: c[0], cy: c[1], r: n / 55, fill: 'var(--s-id)', stroke: 'var(--panel)', 'stroke-width': n / 220 })); }
+  else e.pool_cells.forEach(c => g.appendChild(E('circle', { cx: c[0], cy: c[1], r: n / 130, fill: 'var(--ink3)' })));
+  svg.appendChild(g);
+  const pick = ev => { const r = svg.getBoundingClientRect(), u = (ev.clientX - r.left) / r.width * (n + 1.2) - 0.6, v = n - ((ev.clientY - r.top) / r.height * (n + 1.2) - 0.6); setPos(horizontal ? v : u); };
+  svg.addEventListener('pointerdown', ev => { pick(ev); svg.setPointerCapture(ev.pointerId); svg._d = true; });
+  svg.addEventListener('pointermove', ev => { if (svg._d) pick(ev); });
+  svg.addEventListener('pointerup', () => { svg._d = false; });
+  host.textContent = ''; host.appendChild(svg);
+}
+function setPos(v) {
+  if (!D) return;
+  let bi = 0, bd = 1e9; D.ps.forEach((p, i) => { if (Math.abs(p - v) < bd) { bd = Math.abs(p - v); bi = i; } });
+  S.p = D.ps[bi]; renderLines();
+}
+function floorRuns(us, t) { const out = []; let a = null; for (let i = 0; i < us.length; i++) { const f = t[i] < 0.05; if (f && a == null) a = i; if ((!f || i === us.length - 1) && a != null) { out.push([us[a], us[f ? i : i - 1] + 0.0001]); a = null; } } return out; }
+
+function renderLines() {
+  const e = entry(S.base, S.k);
+  drawMap();
+  if (!D) return;
+  const d = D, us = d.us, pi = d.ps.indexOf(S.p), ax = S.axis, other = ax === 'x' ? 'y' : 'x';
+  $('pos').max = d.ps.length - 1; $('pos').value = pi; $('posn').value = S.p; $('posn').min = 0; $('posn').max = e.n;
+  $('poslab').textContent = `Fixed ${other} (cells)`;
+  $('ltitle').textContent = `Speed along ${ax}, at ${other} = ${S.p} cells`;
+  const tgt = row(d, ax, 'target', null, pi), vis = FIELDS.map(f => f[0]).filter(f => S.show[f]);
+  const series = [], norm = [], bands = [], leg = [{ name: 'Target speed', color: COLOR.target }], stats = [];
+  const tm = lineMean(us, tgt);
+  const shade = floorRuns(us, tgt);
+  const range = S.zoom || (S.range === 'first' ? [0, e.block + 1] : S.range === 'last' ? [e.n - e.block - 1, e.n] : [0, e.n]);
+  series.push({ name: 'Target', xs: us, ys: tgt, color: COLOR.target, w: 2, direct: 'Target' });
+  norm.push({ name: 'Target', xs: us, ys: tgt.map(v => v / tm), color: COLOR.target, w: 2, direct: 'Target' });
+  stats.push(['Target', tm, Math.min(...tgt)]);
+  const gi = S.goal;
+  vis.forEach(f => {
+    const ys = row(d, ax, f, gi, pi), av = gi === 4 ? ys : row(d, ax, f, 4, pi), mean = lineMean(us, ys), short = NAME[f];
+    series.push({ name: short, xs: us, ys, color: COLOR[f], direct: short });
+    norm.push({ name: short, xs: us, ys: ys.map(v => v / mean), color: COLOR[f], direct: short });
+    if (gi !== 4) { series.push({ name: short + ' (48-goal average)', xs: us, ys: av, color: COLOR[f], w: 1.2, dash: '4 3' }); const am = lineMean(us, av); norm.push({ name: short + ' (48-goal average)', xs: us, ys: av.map(v => v / am), color: COLOR[f], w: 1.2, dash: '4 3' }); }
+    if (f === vis[0]) bands.push({ xs: us, lo: row(d, ax, f, 5, pi), hi: row(d, ax, f, 6, pi), color: COLOR[f] });
+    leg.push({ name: short, color: COLOR[f] });
+    stats.push([short, mean, Math.min(...ys)]);
+  });
+  if (gi !== 4) leg.push({ name: 'Dashed: average over the 48 goals', color: 'var(--ink3)', dash: true });
+  legend($('leg'), leg);
+  const inRange = (xs, ys) => ys.filter((v, i) => xs[i] >= range[0] && xs[i] <= range[1]);
+  const all = series.flatMap(s => inRange(s.xs, s.ys)).concat(bands.flatMap(b => inRange(b.xs, b.hi)));
+  const ymax = Math.max(...all), ymin = Math.min(...series.flatMap(s => inRange(s.xs, s.ys)));
+  const nmax = Math.max(...norm.flatMap(s => inRange(s.xs, s.ys)));
+  const zoom = r => { S.zoom = r; renderLines(); };
+  const tipx = x => `${ax} = ${x.toFixed(2)} cells`;
+  chart($('c1'), { xd: range, yd: S.log ? [Math.max(0.006, ymin * 0.8), ymax * 1.3] : [0, ymax * 1.06], log: S.log, series, bands, shade, labels: true, h: 250, ylabel: 'speed', onZoom: zoom, tipx, refs: [1], aria: 'Speed along the chosen line' });
+  chart($('c2'), { xd: range, yd: [0, nmax * 1.06], series: norm, shade, labels: true, h: 210, xlabel: `distance along the line, ${ax} (cells)`, ylabel: 'speed ÷ average', onZoom: zoom, tipx, refs: [1], aria: 'Normalized speed along the chosen line' });
+  $('msg').textContent = 'Grey strips: target below 0.05, where the robot is touching or within 0.02 cells of a wall. Training barely reaches these poses, so read the ramps beside them. Shading on the first field: 10–90 % over the 48 goals. Drag across a chart to zoom in.';
+  const st = $('stats'); st.textContent = '';
+  stats.forEach(([n, mean, lo]) => { const c = document.createElement('div'); c.className = 'stat'; const b = document.createElement('b'); b.textContent = `${fmt(mean)} / ${fmt(lo)}`; const s = document.createElement('span'); s.textContent = `${n}: line average / lowest`; c.append(b, s); st.appendChild(c); });
+  [$('range')._sync, $('scale')._sync, $('axis')._sync].forEach(f => f());
+}
+
+function renderWalls() {
+  const e = entry(S.base, S.k), ds = e.dist, v = S.variant, vis = FIELDS.map(f => f[0]).filter(f => S.show[f]);
+  const logx = ds.edges.slice(0, -1).map((a, i) => (a + ds.edges[i + 1]) / 2);
+  const step = h => { const tot = h.reduce((a, b) => a + b, 0) || 1, xs = [], ys = []; h.forEach((c, i) => { xs.push(ds.edges[i], ds.edges[i + 1]); ys.push(100 * c / tot, 100 * c / tot); }); return { xs, ys }; };
+  const hs = [{ name: 'Target', color: COLOR.target, ...step(ds.target_hist), w: 2 }].concat(vis.map(f => ({ name: NAME[f], color: COLOR[f], ...step(ds.fields[f][v].hist) })));
+  legend($('leg2'), hs); legend($('leg3'), hs); 
+  const xt = [0.01, 0.03, 0.1, 0.3, 1, 3].map(Math.log10);
+  chart($('h1'), { xd: [ds.edges[0], ds.edges[ds.edges.length - 1]], yd: [0, Math.max(...hs.flatMap(s => s.ys)) * 1.08], series: hs, xticks: xt, fx: x => String(Number((10 ** x).toPrecision(1))), xlabel: 'speed (log scale)', ylabel: '% of poses', tipx: x => `speed ${fmt(10 ** x)}`, ftip: y => y.toFixed(1) + ' %', h: 270, aria: 'Histogram of speed near walls' });
+  const cc = ds.clear_centres, med = f => ds.fields[f][v].clear.map(r => r ? r[2] : null), bands = vis.map(f => { const rows = ds.fields[f][v].clear.map((r, i) => r ? [cc[i], r[0], r[4]] : null).filter(Boolean); return { xs: rows.map(r => r[0]), lo: rows.map(r => r[1]), hi: rows.map(r => r[2]), color: COLOR[f] }; });
+  const cs = [{ name: 'Target', xs: ds.target_curve[0], ys: ds.target_curve[1], color: COLOR.target }].concat(vis.map(f => ({ name: NAME[f], xs: cc, ys: med(f), color: COLOR[f], marks: true })));
+  chart($('h2'), { xd: [0, 0.18], yd: [0.008, 3], log: true, series: cs, bands, xlabel: 'clearance (cells)', ylabel: 'speed', tipx: x => `clearance ${x.toFixed(3)}`, h: 270, aria: 'Speed against clearance' });
+  $('wsub').textContent = `${ds.count.toLocaleString()} held-out poses, the same for every field. Target median ${fmt(ds.target_median)}; ${(100 * ds.target_floor_share).toFixed(0)} % have a target below 0.05.`;
+  const g = (b, host, title) => {
+    $(title).textContent = BASES.find(x => x[0] === b)[1];
+    const xs = GAPS.map((_, i) => i), ser = vis.map(f => ({ name: NAME[f], xs, ys: GAPS.map(k => entry(b, k).dist.fields[f][v].floor_median), color: COLOR[f], marks: true }));
+    ser.push({ name: 'Target', xs, ys: GAPS.map(k => entry(b, k).dist.target_floor_median), color: COLOR.target, w: 2 });
+    chart($(host), { xd: [-0.3, 4.3], yd: [0.008, 1.6], log: true, series: ser, xticks: xs, fx: i => '×' + GAPS[i], xlabel: 'gap', ylabel: 'median speed', tipx: x => 'gap ×' + GAPS[Math.round(Math.min(4, Math.max(0, x)))], h: 220, aria: 'Median speed at the slowest target poses by gap' });
+  };
+  legend($('leg4'), vis.map(f => ({ name: NAME[f], color: COLOR[f] })).concat([{ name: 'Target', color: COLOR.target }]));
+  g('c22', 'g1', 'g1t'); g('m10', 'g2', 'g2t');
+}
+function table() {
+  const head = ['Maze', 'Field', 'Gap', 'Solved %', 'Speed at target < 0.05, own pair', 'Same, far goal', 'Speed in open space', 'Open ÷ wall', 'log-speed corr.', 'Run'];
+  const t = document.createElement('table'), tr = document.createElement('tr'); head.forEach(h => { const c = document.createElement('th'); c.textContent = h; tr.appendChild(c); }); t.appendChild(tr);
+  BASES.forEach(([b, name]) => FIELDS.forEach(([f, label]) => GAPS.forEach(k => {
+    const e = entry(b, k), x = e.dist.fields[f], r = e.runs[f], s = r.success ? 100 * r.success[0] / r.success[1] : null, row = document.createElement('tr');
+    [name, label, '×' + k, s == null ? '–' : s.toFixed(1), fmt(x.pair.floor_median), fmt(x.far.floor_median), fmt(x.free.median), x.contrast.toFixed(1) + '×', x.pair.corr.toFixed(2)].forEach(v => { const c = document.createElement('td'); c.textContent = v; row.appendChild(c); });
+    const c = document.createElement('td'), code = document.createElement('code'); code.textContent = r.id; c.appendChild(code); row.appendChild(c); t.appendChild(row);
+  })));
+  $('tbl').appendChild(t);
+}
+async function pick() {
+  $('base')._sync(); $('gap')._sync(); D = null; S.zoom = null;
+  const e = entry(S.base, S.k);
+  $('msg').textContent = 'Loading the line data…';
+  renderWalls(); drawMap();
+  const want = S.base + S.k;
+  try { const d = await load(S.base, S.k); if (want !== S.base + S.k) return; D = d; setPos(S.p > e.n ? e.n / 2 : S.p); }
+  catch (err) { $('msg').textContent = 'The line data did not load. Reload the page to try again.'; }
+}
+function init() {
+  seg($('base'), BASES, () => S.base, v => { S.base = v; pick(); });
+  seg($('gap'), GAPS.map(k => [k, '×' + k]), () => S.k, v => { S.k = +v; pick(); });
+  seg($('axis'), [['x', 'x axis'], ['y', 'y axis']], () => S.axis, v => { S.axis = v; S.zoom = null; renderLines(); });
+  seg($('range'), [['first', 'First block'], ['all', 'Whole line'], ['last', 'Last block']], () => S.zoom ? '' : S.range, v => { S.range = v; S.zoom = null; renderLines(); });
+  seg($('scale'), [['lin', 'Linear'], ['log', 'Log']], () => S.log ? 'log' : 'lin', v => { S.log = v === 'log'; renderLines(); });
+  seg($('variant'), [['pair', 'Its held-out partner'], ['far', 'A random far goal']], () => S.variant, v => { S.variant = v; $('variant')._sync(); renderWalls(); });
+  const fh = $('fields');
+  FIELDS.forEach(([f, label]) => { const l = document.createElement('label'); l.className = 'chk'; const c = document.createElement('input'); c.type = 'checkbox'; c.id = 'f-' + f; c.checked = S.show[f]; c.addEventListener('change', () => { S.show[f] = c.checked; renderLines(); renderWalls(); }); const i = document.createElement('i'); i.style.background = COLOR[f]; l.append(c, i, document.createTextNode(label)); fh.appendChild(l); });
+  const gs = $('goal'); ['Band centre', 'Lower band arm', 'Top-right block', 'Bottom-left block', 'Average over 48 goals'].forEach((t, i) => { const o = document.createElement('option'); o.value = i; o.textContent = t; gs.appendChild(o); });
+  gs.value = S.goal; gs.addEventListener('change', () => { S.goal = +gs.value; renderLines(); });
+  $('pos').addEventListener('input', ev => { if (D) { S.p = D.ps[+ev.target.value]; renderLines(); } });
+  $('posn').addEventListener('change', ev => setPos(+ev.target.value));
+  table(); pick();
+  let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { renderLines(); renderWalls(); }, 150); });
+}
+init();
+</script>

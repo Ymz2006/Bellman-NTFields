@@ -31,7 +31,9 @@ STAGE_SOURCES = dict(prepare=COMMON + ['prepare.py'], ntrl=COMMON + ['train.py',
                      uturn=COMMON + ['uturn.py'],
                      plusprepare=COMMON + ['plus.py', 'prepare.py', 'plusprepare.py'],
                      plusntrl=COMMON + ['plus.py', 'train.py', 'evaluate.py', 'ntrl.py', 'plusntrl.py'],
-                     uturneval=COMMON + ['fields.py', 'zoomfield.py', 'uturn.py', 'uturneval.py'])
+                     uturneval=COMMON + ['fields.py', 'zoomfield.py', 'uturn.py', 'uturneval.py'],
+                     quadrant=COMMON + ['plus.py', 'uturn.py', 'quadrant.py'],
+                     quadeval=COMMON + ['fields.py', 'zoomfield.py', 'uturn.py', 'uturneval.py', 'plus.py', 'quadeval.py'])
 NTRL = ['models/metric/model_train_metric.py', 'models/metric/model_network_metric.py', 'models/metric/model_function_metric.py', 'models/data_mlp.py']
 PREPARED_FILES = dict(prepare=[], ntrl=['maze.json', 'goals.npy', 'queries.npz', 'data', 'heldout'],
                       segdp=['maze.json', 'goals.npy', 'queries.npz', 'heldout', 'pool.npy', 'truth_fields.npy', 'results.json'],
@@ -42,7 +44,9 @@ PREPARED_FILES = dict(prepare=[], ntrl=['maze.json', 'goals.npy', 'queries.npz',
                       uturn=['maze.json', 'results.json'],
                       plusprepare=[],
                       plusntrl=['maze.json', 'goals.npy', 'queries.npz', 'data', 'heldout'],
-                      uturneval=['maze.json', 'uturn.npz', 'results.json'])
+                      uturneval=['maze.json', 'uturn.npz', 'results.json'],
+                      quadrant=[],
+                      quadeval=['maze.json', 'uturn.npz', 'results.json'])
 REQUIRED = dict(prepare=['results.json', 'log.txt', 'queries.npz', 'truth_fields.npy', 'pool.npy', 'maze.obj', 'data/sampled_points.npy'],
                 ntrl=['results.json', 'log.txt', 'rows.npz', 'training/checkpoint.pt'],
                 segdp=['results.json', 'log.txt', 'rows.npz', 'chain/field.pt'],
@@ -53,7 +57,9 @@ REQUIRED = dict(prepare=['results.json', 'log.txt', 'queries.npz', 'truth_fields
                 uturn=['results.json', 'log.txt', 'uturn.npz', 'maze.json', 'truth_paths.npy'],
                 plusprepare=['results.json', 'log.txt', 'queries.npz', 'truth_fields.npy', 'pool.npy', 'maze.obj', 'data/sampled_points.npy'],
                 plusntrl=['results.json', 'log.txt', 'rows.npz', 'training/checkpoint.pt'],
-                uturneval=['results.json', 'log.txt'])
+                uturneval=['results.json', 'log.txt'],
+                quadrant=['results.json', 'log.txt', 'orig/uturn.npz', 'plus/uturn.npz', 'orig/maze.json', 'plus/maze.json'],
+                quadeval=['results.json', 'log.txt'])
 
 
 def rel(p):
@@ -79,10 +85,10 @@ def main():
     a = p.parse_args()
     py = sys.executable
     inputs = dict(registry=str(REGISTRY), **{'source_' + s: str(HERE / DIR / s) for s in STAGE_SOURCES[a.stage]})
-    if a.stage in ('ntrl', 'segdp', 'zoom', 'segdp2', 'segdp3', 'fourier', 'uturneval', 'plusntrl'):
+    if a.stage in ('ntrl', 'segdp', 'zoom', 'segdp2', 'segdp3', 'fourier', 'uturneval', 'plusntrl', 'quadeval'):
         inputs.update({'ntrl_' + s.replace('/', '_'): str(HERE / 'baselines/ntrl-demo' / s) for s in NTRL})
     config = dict(action='maze-scale-' + a.stage, smoke=a.smoke, extra=a.extra)
-    if a.stage in ('prepare', 'plusprepare'):
+    if a.stage in ('prepare', 'plusprepare', 'quadrant'):
         assert a.n, '--n'
         args = ['--n', str(a.n)]
         config['n'] = a.n
@@ -97,7 +103,7 @@ def main():
             assert a.zoom, '--zoom'
             args += ['--zoom', repr(a.zoom)]
             config['zoom'] = a.zoom
-        if a.stage == 'uturneval':
+        if a.stage in ('uturneval', 'quadeval'):
             runs = [Path(r).resolve() for r in a.runs.split(',') if r]
             assert runs, '--runs'
             for r in runs:

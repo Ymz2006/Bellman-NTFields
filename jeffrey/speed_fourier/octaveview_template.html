@@ -1,0 +1,368 @@
+<title>2026-11-04 Octave Row Visualizer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;650;750&family=Public+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* The maze-scale family. A bench instrument: controls on top, the wave over the maze on the left, the frequency plane and the row's numbers on the right, all 128 rows below. */
+:root {
+  --bg: #f5f6f8; --surface: #ffffff; --ink: #15181d; --ink2: #4b525c; --muted: #737b86; --rule: #dde1e6; --wash: #eef1f5;
+  --accent: #eb6834; --wall: #15181d; --grid: #5d6672;
+  --neg: #2a78d6; --mid: #f3f4f6; --pos: #eb6834;
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+    --accent: #f07a48; --wall: #f4f5f7; --grid: #a3abb5;
+    --neg: #3987e5; --mid: #1d2026; --pos: #e8703c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+  --accent: #f07a48; --wall: #f4f5f7; --grid: #a3abb5;
+  --neg: #3987e5; --mid: #1d2026; --pos: #e8703c;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 15px/1.55 var(--f-body); margin: 0; }
+.page { max-width: 1120px; margin: 0 auto; padding-block: 32px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 22px; }
+.page > * { min-width: 0; }
+header { display: grid; gap: 10px; max-width: 72ch; }
+.eyebrow { font: 500 12px/1.4 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 750 clamp(26px, 4.4vw, 38px)/1.08 var(--f-display); letter-spacing: -0.015em; margin: 0; text-wrap: balance; }
+h2 { font: 650 17px/1.25 var(--f-display); margin: 0; }
+p { margin: 0; }
+code, .mono { font-family: var(--f-mono); font-size: 0.93em; }
+.controls { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: end; background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 12px 14px; }
+.ctl { display: grid; gap: 4px; min-width: 0; }
+.ctl > span, .ctl > label { font: 500 11.5px/1.3 var(--f-mono); color: var(--muted); letter-spacing: 0.03em; }
+.seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--rule); border-radius: 5px; overflow: hidden; }
+.seg label { position: relative; font: 500 13px/1 var(--f-body); padding: 7px 10px; cursor: pointer; color: var(--ink2); border-right: 1px solid var(--rule); background: var(--surface); }
+.seg label:last-child { border-right: 0; }
+.seg input { position: absolute; opacity: 0; inset: 0; cursor: pointer; margin: 0; }
+.seg label:has(input:checked) { background: var(--ink); color: var(--bg); }
+.seg label:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: -2px; }
+.seg label:has(input:disabled) { opacity: 0.4; cursor: default; }
+input[type="range"] { width: 170px; max-width: 100%; accent-color: var(--accent); }
+.work { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 800px) { .work { grid-template-columns: minmax(0, 1fr); } }
+.panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 12px; display: grid; gap: 8px; min-width: 0; }
+.panel .cap { font-size: 13px; color: var(--ink2); }
+.side { display: grid; gap: 16px; min-width: 0; }
+canvas { display: block; width: 100%; }
+.mapwrap { position: relative; }
+#map { cursor: crosshair; touch-action: manipulation; }
+#freq { cursor: pointer; max-width: 380px; margin: 0 auto; }
+.tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--bg); font: 500 11.5px/1.35 var(--f-mono); padding: 5px 7px; border-radius: 4px; white-space: nowrap; transform: translate(-50%, -130%); z-index: 2; }
+.scale { display: flex; align-items: center; gap: 8px; font: 500 11.5px var(--f-mono); color: var(--muted); }
+.scale i { flex: none; width: 120px; height: 9px; border-radius: 2px; background: linear-gradient(90deg, var(--neg), var(--mid), var(--pos)); border: 1px solid var(--rule); }
+.rowhead { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.step { display: inline-flex; gap: 6px; }
+button.sq { font: 500 14px/1 var(--f-mono); width: 30px; height: 28px; border: 1px solid var(--rule); border-radius: 5px; background: var(--surface); color: var(--ink); cursor: pointer; }
+button.sq:hover { background: var(--wash); }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+dl { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 14px; margin: 0; font-size: 13.5px; }
+dt { color: var(--muted); }
+dd { margin: 0; font-family: var(--f-mono); font-size: 12.5px; font-variant-numeric: tabular-nums; text-align: right; overflow-wrap: anywhere; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips label { font: 500 12px/1 var(--f-mono); border: 1px solid var(--rule); border-radius: 999px; padding: 6px 10px; cursor: pointer; color: var(--ink2); position: relative; }
+.chips input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.chips label:has(input:checked) { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chips label:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 1px; }
+.gallery { display: grid; gap: 14px; }
+.group { display: grid; gap: 6px; }
+.group h3 { font: 500 12px/1.3 var(--f-mono); color: var(--muted); margin: 0; letter-spacing: 0.03em; }
+.thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(46px, 1fr)); gap: 5px; }
+.thumbs button { padding: 0; border: 1px solid var(--rule); border-radius: 3px; background: var(--mid); cursor: pointer; aspect-ratio: 1; overflow: hidden; position: relative; }
+.thumbs button canvas { width: 100%; height: 100%; }
+.thumbs button[aria-pressed="true"] { outline: 2.5px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+.note { font-size: 13px; color: var(--ink2); max-width: 78ch; }
+</style>
+
+<div class="page">
+  <header>
+    <div class="eyebrow">jeffrey/grid_sync · octave rows · 4 Nov 2026</div>
+    <h1>Octave Row Visualizer</h1>
+    <p>A point is q = (x, y, φ), with x and y running from −0.5 to 0.5 across the maze. The network never sees q itself. It sees sin and cos of 2π&nbsp;b·q for 128 rows b, so each row is a plane wave over the maze. The grid-synced octaves keep each row's random direction and set its length so the wave flips sign every L cells along its main axis. The grid-anchored rows go one step further and make the wave start and end on grid lines.</p>
+  </header>
+
+  <div class="controls">
+    <div class="ctl"><span>maze</span><div class="seg" id="g-maze"><label><input type="radio" name="maze" id="maze-13" value="13" checked>13×13</label><label><input type="radio" name="maze" id="maze-22" value="22">22×22</label></div></div>
+    <div class="ctl"><span>training seed</span><div class="seg" id="g-seed"><label><input type="radio" name="seed" id="seed-87358" value="87358" checked>87358</label><label><input type="radio" name="seed" id="seed-1" value="1">1</label><label><input type="radio" name="seed" id="seed-2" value="2">2</label></div></div>
+    <div class="ctl"><span>rows</span><div class="seg" id="g-matrix"><label><input type="radio" name="matrix" id="matrix-axis" value="axis" checked>anchored, on axis</label><label><input type="radio" name="matrix" id="matrix-axiscell" value="axiscell">+ one period per cell</label><label><input type="radio" name="matrix" id="matrix-lattice" value="lattice">anchored, tilted</label><label><input type="radio" name="matrix" id="matrix-anchor" value="anchor">octaves, shifted</label><label><input type="radio" name="matrix" id="matrix-octave" value="octave">grid-synced octaves</label><label><input type="radio" name="matrix" id="matrix-ntrl" value="ntrl">ntrl-demo's own draw</label></div></div>
+    <div class="ctl"><span>show</span><div class="seg" id="g-view"><label><input type="radio" name="view" id="view-row" value="row" checked>one row</label><label><input type="radio" name="view" id="view-kernel" value="kernel">similarity to a point</label></div></div>
+    <div class="ctl"><span>feature</span><div class="seg" id="g-part"><label><input type="radio" name="part" id="part-sin" value="sin" checked>sin</label><label><input type="radio" name="part" id="part-cos" value="cos">cos</label></div></div>
+    <div class="ctl"><span>overlay</span><div class="chips"><label><input type="checkbox" id="grid" checked>cell grid</label></div></div>
+    <div class="ctl"><label for="theta">heading θ = <span id="thetaval">0°</span></label><input type="range" id="theta" min="-90" max="90" step="1" value="0"></div>
+  </div>
+
+  <div class="work">
+    <div class="panel">
+      <div class="rowhead"><h2 id="maptitle">Row over the maze</h2><div class="scale"><span>−1</span><i></i><span>+1</span></div></div>
+      <div class="mapwrap"><canvas id="map" aria-label="The selected feature over the maze"></canvas><div class="tip" id="tip" hidden></div></div>
+      <p class="cap" id="mapcap"></p>
+      <canvas id="cut" aria-label="The feature along the dashed line"></canvas>
+      <p class="cap" id="cutcap"></p>
+    </div>
+    <div class="side">
+      <div class="panel">
+        <div class="rowhead"><h2>Frequency plane</h2><span class="cap mono" id="fgrid"></span></div>
+        <canvas id="freq" aria-label="Each row's frequency vector; click a dot to select the row"></canvas>
+        <p class="cap" id="freqcap"></p>
+      </div>
+      <div class="panel" id="rowpanel">
+        <div class="rowhead"><h2 id="rowtitle">Row</h2><div class="step"><button class="sq" id="prev" aria-label="Previous row">‹</button><button class="sq" id="next" aria-label="Next row">›</button></div></div>
+        <dl id="readout"></dl>
+      </div>
+      <div class="panel" id="kernelpanel" hidden>
+        <h2>Rows in the sum</h2>
+        <div class="chips" id="chips"></div>
+        <p class="cap">Half period in cells. Switch octaves off to see what each scale contributes.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="rowhead"><h2>All 128 rows</h2><span class="cap" id="gallerycap"></span></div>
+    <div class="gallery" id="gallery"></div>
+  </div>
+
+  <p class="note" id="foot"></p>
+</div>
+
+<script>
+const D = /*DATA*/;
+const TAU = Math.PI * 2;
+const S = { n: '13', seed: '87358', matrix: 'axis', view: 'row', part: 'sin', theta: 0, row: 0, probe: null, on: {}, grid: true };
+const $ = id => document.getElementById(id);
+const maze = () => D.mazes[S.n];
+const rows = () => maze().seeds[S.seed][S.matrix].rows;
+const Lof = () => maze().seeds[S.seed][S.matrix].L;
+const ladder = () => Lof() ? [...new Set(Lof())].sort((a, b) => b - a) : [];
+const Lname = L => L === 0.5 ? '½' : String(L);
+const fgrid = () => maze().E / 2;
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const rgb = hex => { const h = hex.replace('#', ''); return [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16)); };
+const fmt = (v, d = 3) => (Math.abs(v) < 5e-4 ? 0 : v).toFixed(d).replace('-', '−');
+let PAL = null;
+function palette() { PAL = { neg: rgb(css('--neg')), mid: rgb(css('--mid')), pos: rgb(css('--pos')), ink: css('--ink'), ink2: css('--ink2'), muted: css('--muted'), rule: css('--rule'), wall: css('--wall'), grid: css('--grid'), accent: css('--accent'), surface: css('--surface') }; }
+function color(v, out, o) {                                   // v in [-1, 1] -> diverging, neutral at 0
+  const a = Math.min(1, Math.abs(v)), c = v < 0 ? PAL.neg : PAL.pos, m = PAL.mid;
+  out[o] = m[0] + (c[0] - m[0]) * a; out[o + 1] = m[1] + (c[1] - m[1]) * a; out[o + 2] = m[2] + (c[2] - m[2]) * a; out[o + 3] = 255;
+}
+const headingPhase = r => TAU * r[2] * (maze().rho * (S.theta * Math.PI / 180) / maze().E);      // phi = rho * theta / E
+function rowValue(r, x, y) { const a = TAU * (r[0] * x + r[1] * y) + headingPhase(r) + r[3]; return S.part === 'sin' ? Math.sin(a) : Math.cos(a); }
+function activeRows() {
+  const R = rows();
+  const L = Lof();
+  if (!L) return R;
+  return R.filter((_, i) => S.on[L[i]] !== false);
+}
+function kernelValue(A, x, y) { let s = 0; const dx = x - S.probe[0], dy = y - S.probe[1]; for (const r of A) s += Math.cos(TAU * (r[0] * dx + r[1] * dy)); return A.length ? s / A.length : 0; }
+function value(x, y, A) { return S.view === 'row' ? rowValue(rows()[S.row], x, y) : kernelValue(A, x, y); }
+
+function field(G, fn) {                                         // G x G image of fn(x, y), y up
+  const off = document.createElement('canvas'); off.width = off.height = G;
+  const ctx = off.getContext('2d'), img = ctx.createImageData(G, G);
+  for (let j = 0; j < G; j++) { const y = 0.5 - (j + 0.5) / G; for (let i = 0; i < G; i++) color(fn(-0.5 + (i + 0.5) / G, y), img.data, 4 * (j * G + i)); }
+  ctx.putImageData(img, 0, 0); return off;
+}
+function size(c, hcss) {                                        // set the backing store; returns [ctx, dpr, css width, css height]
+  const dpr = Math.min(window.devicePixelRatio || 1, 2), w = c.clientWidth || 300, h = hcss(w);
+  c.style.height = h + 'px'; c.width = Math.round(w * dpr); c.height = Math.round(h * dpr);
+  const ctx = c.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); return [ctx, dpr, w, h];
+}
+const MG = { l: 40, r: 10, t: 8, b: 26 };
+let mapGeo = null;
+function drawMap() {
+  const [ctx, , w, h] = size($('map'), w => w - MG.l - MG.r + MG.t + MG.b);
+  const W = w - MG.l - MG.r, m = maze(), A = activeRows();
+  mapGeo = { W, x0: MG.l, y0: MG.t };
+  const G = S.view === 'row' ? 300 : 200;
+  ctx.clearRect(0, 0, w, h);
+  ctx.imageSmoothingEnabled = true;
+  ctx.drawImage(field(G, (x, y) => value(x, y, A)), MG.l, MG.t, W, W);
+  const X = x => MG.l + (x + 0.5) * W, Y = y => MG.t + (0.5 - y) * W, N = c => (c - m.n / 2) / m.E, hw = m.t_wall / 2;
+  if (S.grid) {
+    ctx.strokeStyle = PAL.grid; ctx.globalAlpha = 0.6; ctx.lineWidth = 1; ctx.beginPath();
+    for (let i = 0; i <= m.n; i++) { const gx = Math.round(X(N(i))) + 0.5, gy = Math.round(Y(N(i))) + 0.5; ctx.moveTo(gx, Y(N(m.n))); ctx.lineTo(gx, Y(N(0))); ctx.moveTo(X(N(0)), gy); ctx.lineTo(X(N(m.n)), gy); }
+    ctx.stroke(); ctx.globalAlpha = 1;
+  }
+  ctx.fillStyle = PAL.wall; ctx.globalAlpha = 0.9;
+  for (let i = 0; i <= m.n; i++) for (let j = 0; j < m.n; j++) if (m.V[i][j]) ctx.fillRect(X(N(i - hw)), Y(N(j + 1 + hw)), (2 * hw / m.E) * W, ((1 + 2 * hw) / m.E) * W);
+  for (let i = 0; i < m.n; i++) for (let j = 0; j <= m.n; j++) if (m.H[i][j]) ctx.fillRect(X(N(i - hw)), Y(N(j + hw)), ((1 + 2 * hw) / m.E) * W, (2 * hw / m.E) * W);
+  ctx.globalAlpha = 1;
+  ctx.strokeStyle = PAL.rule; ctx.lineWidth = 1; ctx.strokeRect(MG.l + 0.5, MG.t + 0.5, W - 1, W - 1);
+  ctx.fillStyle = PAL.muted; ctx.font = '500 11px ' + css('--f-mono'); ctx.textBaseline = 'top'; ctx.textAlign = 'center';
+  for (const t of [-0.5, -0.25, 0, 0.25, 0.5]) {
+    ctx.textAlign = t === -0.5 ? 'left' : t === 0.5 ? 'right' : 'center'; ctx.textBaseline = 'top';
+    ctx.fillText(fmt(t, 2), X(t), MG.t + W + 6);
+    ctx.textAlign = 'right'; ctx.textBaseline = t === -0.5 ? 'bottom' : t === 0.5 ? 'top' : 'middle';
+    ctx.fillText(fmt(t, 2), MG.l - 6, Y(t));
+  }
+  ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillStyle = PAL.ink2;
+  ctx.fillText('x', X(0.125), MG.t + W + 6); ctx.save(); ctx.translate(MG.l - 30, Y(0.125)); ctx.rotate(-Math.PI / 2); ctx.fillText('y', 0, 0); ctx.restore();
+  const [px, py] = S.probe;
+  ctx.save(); ctx.setLineDash([5, 4]); ctx.strokeStyle = PAL.ink; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(MG.l, Y(py)); ctx.lineTo(MG.l + W, Y(py)); ctx.stroke(); ctx.restore();
+  ctx.beginPath(); ctx.arc(X(px), Y(py), 5.5, 0, TAU); ctx.fillStyle = PAL.surface; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = PAL.ink; ctx.stroke();
+  drawCut(A);
+}
+function drawCut(A) {
+  const [ctx, , w, h] = size($('cut'), () => 132);
+  const W = w - MG.l - MG.r, top = 8, H = h - top - 8, m = maze(), py = S.probe[1];
+  const X = x => MG.l + (x + 0.5) * W, Yv = v => top + (1 - v) / 2 * H;
+  ctx.clearRect(0, 0, w, h);
+  const cj = Math.min(m.n - 1, Math.max(0, Math.floor(py * m.E + m.n / 2)));
+  if (S.grid) { ctx.strokeStyle = PAL.grid; ctx.globalAlpha = 0.6; ctx.lineWidth = 1; ctx.beginPath(); for (let i = 0; i <= m.n; i++) { const gx = Math.round(X((i - m.n / 2) / m.E)) + 0.5; ctx.moveTo(gx, top); ctx.lineTo(gx, top + H); } ctx.stroke(); }
+  ctx.fillStyle = PAL.wall; ctx.globalAlpha = 0.5;
+  for (let i = 0; i <= m.n; i++) if (m.V[i][cj]) { const xc = (i - m.n / 2) / m.E; ctx.fillRect(X(xc - m.t_wall / 2 / m.E), top, Math.max(1.5, m.t_wall / m.E * W), H); }
+  ctx.globalAlpha = 1;
+  ctx.strokeStyle = PAL.rule; ctx.lineWidth = 1; ctx.fillStyle = PAL.muted; ctx.font = '500 11px ' + css('--f-mono'); ctx.textAlign = 'right';
+  for (const v of [-1, 0, 1]) { ctx.beginPath(); ctx.moveTo(MG.l, Yv(v) + 0.5); ctx.lineTo(MG.l + W, Yv(v) + 0.5); ctx.stroke(); ctx.textBaseline = v === 1 ? 'top' : v === -1 ? 'bottom' : 'middle'; ctx.fillText(v > 0 ? '+1' : v < 0 ? '−1' : '0', MG.l - 6, Yv(v)); }
+  ctx.beginPath(); const K = 700;
+  for (let k = 0; k <= K; k++) { const x = -0.5 + k / K, v = value(x, py, A); k ? ctx.lineTo(X(x), Yv(v)) : ctx.moveTo(X(x), Yv(v)); }
+  ctx.strokeStyle = PAL.accent; ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.stroke();
+  ctx.beginPath(); ctx.arc(X(S.probe[0]), Yv(value(S.probe[0], py, A)), 4.5, 0, TAU); ctx.fillStyle = PAL.surface; ctx.fill(); ctx.strokeStyle = PAL.ink; ctx.lineWidth = 2; ctx.stroke();
+  $('cutcap').textContent = `Along the dashed line, y = ${fmt(py)} (cell row ${cj}). ${S.grid ? 'Thin lines are the cell grid, thick bars' : 'Thick bars'} are the walls the line crosses.`;
+}
+let freqGeo = null;
+function drawFreq() {
+  const [ctx, , w, h] = size($('freq'), w => w);
+  const R = rows(), g = fgrid(), pad = 36, W = w - 2 * pad;
+  const maxc = Math.max(...R.map(r => Math.max(Math.abs(r[0]), Math.abs(r[1])))) / g, range = maxc * 1.18;
+  const X = f => pad + (f / g / range + 1) / 2 * W, Y = f => pad + (1 - f / g / range) / 2 * W;
+  freqGeo = { X, Y };
+  ctx.clearRect(0, 0, w, h);
+  ctx.strokeStyle = PAL.rule; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(pad, Y(0) + 0.5); ctx.lineTo(pad + W, Y(0) + 0.5); ctx.moveTo(X(0) + 0.5, pad); ctx.lineTo(X(0) + 0.5, pad + W); ctx.stroke();
+  ctx.font = '500 10.5px ' + css('--f-mono'); ctx.fillStyle = PAL.muted;
+  if (Lof()) {
+    const sel = S.view === 'row' ? Lof()[S.row] : -1, lad = ladder();
+    for (const L of lad) {
+      const a = g / L; ctx.strokeStyle = L === sel ? PAL.accent : PAL.rule; ctx.lineWidth = L === sel ? 1.6 : 1;
+      ctx.strokeRect(X(-a), Y(a), X(a) - X(-a), Y(-a) - Y(a));
+      if (lad.indexOf(L) >= lad.length - 3) { ctx.textAlign = 'left'; ctx.textBaseline = 'bottom'; ctx.fillStyle = L === sel ? PAL.accent : PAL.muted; ctx.fillText('L = ' + Lname(L), X(-a) + 3, Y(a) - 2); }
+    }
+  }
+  ctx.fillStyle = PAL.muted; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  const tick = +(maxc).toPrecision(1);
+  for (const t of [-tick, tick]) { ctx.fillText(fmt(t, tick < 1 ? 2 : 0), X(t * g), pad + W + 5); }
+  ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+  for (const t of [-tick, tick]) ctx.fillText(fmt(t, tick < 1 ? 2 : 0), pad - 4, Y(t * g));
+  ctx.fillStyle = PAL.ink2; ctx.globalAlpha = 0.75;
+  R.forEach((r, i) => { if (i !== S.row) { ctx.beginPath(); ctx.arc(X(r[0]), Y(r[1]), 2.6, 0, TAU); ctx.fill(); } });
+  ctx.globalAlpha = 1;
+  if (S.view === 'row') { const r = R[S.row]; ctx.beginPath(); ctx.arc(X(r[0]), Y(r[1]), 6, 0, TAU); ctx.fillStyle = PAL.accent; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = PAL.surface; ctx.stroke(); }
+  $('fgrid').textContent = `f_grid = E / 2 = ${fmt(g, 2)}`;
+  $('freqcap').textContent = 'Axes are f_x and f_y in units of f_grid, the frequency whose half period is one cell. ' + ({
+    octave: 'Every row sits on a square: its larger component is exactly f_grid / L. The smaller one is whatever the random direction gives.',
+    anchor: 'The same frequencies as the grid-synced octaves. Only the starting point of each wave is moved.',
+    axis: 'Every row is turned onto its main axis, so the dots sit on the two axes. Rows of one octave differ only in axis, sign and heading frequency.',
+    axiscell: 'As the on-axis rows, with one more square at 2 f_grid: one full period per cell.',
+    lattice: 'The smaller component is snapped to 0, half or all of the larger one, so tilts are 0°, 26.6° or 45° and the wave repeats on the grid.',
+    ntrl: 'ntrl-demo draws every component from a normal truncated at ±2 cycles across the whole maze, so no wave is much shorter than half the maze.' })[S.matrix];
+}
+function readout() {
+  const r = rows()[S.row], m = maze(), g = fgrid(), mag = Math.hypot(r[0], r[1]), dom = Math.max(Math.abs(r[0]), Math.abs(r[1]));
+  const items = [];
+  if (Lof()) items.push(['octave', `half period ${Lname(Lof()[S.row])} cell${Lof()[S.row] > 1 ? 's' : ''}`]);
+  items.push(['f_x, f_y (cycles per unit)', `${fmt(r[0], 2)}, ${fmt(r[1], 2)}`], ['in units of f_grid', `${fmt(r[0] / g)}, ${fmt(r[1] / g)}`],
+    ['direction', `${fmt(Math.atan2(r[1], r[0]) * 180 / Math.PI, 1)}°`], ['wavelength along the wave', `${fmt(m.E / mag, 2)} cells`], ['half period along its main axis', `${fmt(m.E / (2 * dom), 2)} cells`],
+    ['f_φ (cycles per unit of φ)', fmt(r[2], 2)], ['turns of phase from θ = −90° to 90°', fmt(r[2] * m.rho * Math.PI / m.E, 2)], ['starting shift δ', `${fmt(r[3] / Math.PI, 2)} π`]);
+  $('rowtitle').textContent = `Row ${S.row}`;
+  $('readout').innerHTML = items.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('');
+}
+function gallery(rebuild) {
+  const R = rows(), box = $('gallery');
+  if (rebuild) {
+    box.innerHTML = '';
+    const groups = Lof() ? ladder().map(L => [`half period ${Lname(L)} cell${L > 1 ? 's' : ''}`, R.map((_, i) => i).filter(i => Lof()[i] === L)])
+      : [['sorted by frequency, lowest first', R.map((_, i) => i).sort((a, b) => Math.hypot(R[a][0], R[a][1]) - Math.hypot(R[b][0], R[b][1]))]];
+    for (const [name, idx] of groups) {
+      const gEl = document.createElement('div'); gEl.className = 'group';
+      gEl.innerHTML = `<h3>${name} · ${idx.length} rows</h3><div class="thumbs"></div>`;
+      for (const i of idx) { const b = document.createElement('button'); b.dataset.row = i; b.setAttribute('aria-label', 'Row ' + i); b.appendChild(document.createElement('canvas')); gEl.lastChild.appendChild(b); }
+      box.appendChild(gEl);
+    }
+  }
+  const G = 40;
+  box.querySelectorAll('button').forEach(b => {
+    const i = +b.dataset.row, c = b.firstChild; c.width = c.height = G;
+    c.getContext('2d').drawImage(field(G, (x, y) => rowValue(R[i], x, y)), 0, 0);
+    b.setAttribute('aria-pressed', String(i === S.row && S.view === 'row'));
+  });
+}
+function chips() {
+  const box = $('chips');
+  box.innerHTML = ladder().map(L => `<label><input type="checkbox" id="oct-${String(L).replace('.', '_')}" value="${L}" ${S.on[L] !== false ? 'checked' : ''}>L = ${Lname(L)}</label>`).join('');
+}
+function texts() {
+  const m = maze(), k = S.view === 'kernel';
+  $('maptitle').textContent = k ? 'Similarity to the marked point' : `${S.part} of row ${S.row} over the maze`;
+  $('mapcap').textContent = k
+    ? 'Mean over the rows of cos 2π b·(q − q₀). This is the dot product of the two embeddings, so bright areas are places the embedding cannot tell from the marked point. Click the map to move the point.'
+    : 'Thin gray lines are the cell grid, thick bars the walls. ' + ({
+      octave: `The grid fixes this wave's period, not where it starts: x = 0 is the maze centre, which is ${m.n % 2 ? 'the middle of a cell' : 'a grid line'} on this maze, and tilt shifts each row further.`,
+      anchor: 'The octave wave, shifted so its phase is zero at the lower-left grid corner. A tilted wave still drifts along a wall.',
+      axis: 'At heading 0 the sin of this row is zero on every L-th grid line along its whole length, and the cos is ±1 there.',
+      axiscell: 'At heading 0 the sin of this row is zero on every L-th grid line. In the last octave the wave is the same in every cell.',
+      lattice: 'A tilted wave that still repeats on the grid: at heading 0 its phase is a multiple of π at every 2L-th grid corner.',
+      ntrl: 'ntrl-demo\'s own row: too long a wave to tell neighbouring cells apart.' })[S.matrix] + ` One cell is 1 / E = ${fmt(1 / m.E, 4)} of the axis. Changing the heading slides every wave. Click the map to move the dashed line.`;
+  $('rowpanel').hidden = k; $('kernelpanel').hidden = !k || !Lof();
+  for (const id of ['part-sin', 'part-cos', 'theta']) $(id).disabled = k;
+  $('thetaval').textContent = S.theta + '°';
+  $('gallerycap').textContent = `${S.part}, heading ${S.theta}°. Click a tile to select the row.`;
+  $('foot').textContent = `Heading enters as φ = ρ θ / E with ρ = ${m.rho}, so φ spans ±${fmt(m.rho * Math.PI / 2 / m.E, 4)} on this maze. All six row sets come from the same random draw of the training seed, so row r has the same direction family and heading frequency in each.`;
+}
+function render(what = {}) {
+  palette(); texts(); drawMap(); drawFreq(); if (S.view === 'row') readout(); gallery(what.rebuild);
+}
+function reset() {                                            // after a maze / seed / matrix change
+  const m = maze(), c = Math.floor(m.n / 2);
+  if (!S.probe) S.probe = [(c + 0.5 - m.n / 2) / m.E, (c + 0.5 - m.n / 2) / m.E];
+  S.on = {}; chips();
+  const L = Lof();
+  if (L) { S.row = L.findIndex((l, i) => l === 1 && Math.abs(rows()[i][0]) > Math.abs(rows()[i][1])); if (S.row < 0) S.row = 0; }
+  else if (S.row == null) S.row = 0;
+  render({ rebuild: true });
+}
+function pick(e) {
+  const c = $('map'), b = c.getBoundingClientRect(), x = (e.clientX - b.left - mapGeo.x0) / mapGeo.W - 0.5, y = 0.5 - (e.clientY - b.top - mapGeo.y0) / mapGeo.W;
+  return [x, y];
+}
+$('map').addEventListener('click', e => { const [x, y] = pick(e); if (Math.abs(x) <= 0.5 && Math.abs(y) <= 0.5) { S.probe = [x, y]; render(); } });
+$('map').addEventListener('mousemove', e => {
+  const [x, y] = pick(e), tip = $('tip'), m = maze();
+  if (Math.abs(x) > 0.5 || Math.abs(y) > 0.5) { tip.hidden = true; return; }
+  const b = $('map').getBoundingClientRect(), ci = Math.floor(x * m.E + m.n / 2), cj = Math.floor(y * m.E + m.n / 2), v = value(x, y, activeRows());
+  tip.hidden = false; tip.style.left = Math.min(Math.max(e.clientX - b.left, 90), b.width - 90) + 'px'; tip.style.top = Math.max(e.clientY - b.top, 34) + 'px';
+  tip.textContent = `x ${fmt(x)}  y ${fmt(y)}  cell (${ci}, ${cj})  ${v >= 0 ? '+' : ''}${fmt(v, 2)}`;
+});
+$('map').addEventListener('mouseleave', () => { $('tip').hidden = true; });
+$('freq').addEventListener('click', e => {
+  const b = $('freq').getBoundingClientRect(), mx = e.clientX - b.left, my = e.clientY - b.top; let best = -1, bd = 18 * 18;
+  rows().forEach((r, i) => { const d = (freqGeo.X(r[0]) - mx) ** 2 + (freqGeo.Y(r[1]) - my) ** 2; if (d < bd) { bd = d; best = i; } });
+  if (best >= 0) select(best);
+});
+function select(i) { S.row = i; if (S.view !== 'row') { S.view = 'row'; $('view-row').checked = true; } render(); }
+$('gallery').addEventListener('click', e => { const b = e.target.closest('button'); if (b) select(+b.dataset.row); });
+$('prev').addEventListener('click', () => select((S.row + 127) % 128));
+$('next').addEventListener('click', () => select((S.row + 1) % 128));
+for (const [name, key] of [['maze', 'n'], ['seed', 'seed'], ['matrix', 'matrix']]) document.querySelectorAll(`input[name="${name}"]`).forEach(el => el.addEventListener('change', () => {
+  S[key] = el.value; if (name === 'maze') S.probe = null; reset();
+}));
+for (const name of ['view', 'part']) document.querySelectorAll(`input[name="${name}"]`).forEach(el => el.addEventListener('change', () => { S[name] = el.value; render(); }));
+let raf = 0;
+$('theta').addEventListener('input', e => { S.theta = +e.target.value; cancelAnimationFrame(raf); raf = requestAnimationFrame(() => render()); });
+$('grid').addEventListener('change', e => { S.grid = e.target.checked; render(); });
+$('chips').addEventListener('change', e => { S.on[e.target.value] = e.target.checked; render(); });
+new ResizeObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { palette(); drawMap(); drawFreq(); }); }).observe($('map').parentElement);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => render());
+new MutationObserver(() => render()).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+reset();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => render());
+</script>

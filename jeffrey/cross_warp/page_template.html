@@ -1,0 +1,231 @@
+<title>2026-11-03 Cross Warp</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;650;750&family=Public+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: the maze-scale family's reading column (~70ch) with full-width figure bands; two chart panels (the two query sets) share one legend. */
+:root {
+  --bg: #f5f6f8; --surface: #ffffff; --ink: #15181d; --ink2: #4b525c; --muted: #737b86; --rule: #dde1e6; --wash: #eef1f5;
+  --accent: #eb6834; --gridline: #c9ced6;
+  --s-ntrl: #2a78d6; --s-u4: #6250d6; --s-u6: #a99be8; --s-pm: #eb6834; --s-la: #1baf7a; --s-lf: #eda100; --s-id: #8b929b;
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+    --accent: #d95926; --gridline: #4a515b;
+    --s-ntrl: #3987e5; --s-u4: #9085e9; --s-u6: #6c5fc7; --s-pm: #d95926; --s-la: #199e70; --s-lf: #c98500; --s-id: #7d858f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+  --accent: #d95926; --gridline: #4a515b;
+  --s-ntrl: #3987e5; --s-u4: #9085e9; --s-u6: #6c5fc7; --s-pm: #d95926; --s-la: #199e70; --s-lf: #c98500; --s-id: #7d858f;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 15.5px/1.6 var(--f-body); margin: 0; }
+.page { max-width: 1120px; margin: 0 auto; padding-block: 40px 72px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 44px; }
+.col { max-width: 70ch; min-width: 0; }
+header { display: grid; gap: 14px; }
+.eyebrow { font: 500 12px/1.4 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 750 clamp(30px, 5vw, 46px)/1.05 var(--f-display); letter-spacing: -0.015em; margin: 0; text-wrap: balance; }
+h2 { font: 650 23px/1.2 var(--f-display); margin: 0 0 10px; text-wrap: balance; }
+h3 { font: 650 16px/1.3 var(--f-display); margin: 18px 0 6px; }
+p { margin: 0 0 12px; }
+.lede { font-size: 17.5px; line-height: 1.55; }
+p strong, li strong { font-weight: 600; }
+section { display: grid; gap: 14px; min-width: 0; }
+figure { margin: 0; background: #ffffff; border: 1px solid var(--rule); border-radius: 6px; padding: 10px; overflow-x: auto; }
+figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+figcaption { color: #4b525c; font-size: 13px; margin-top: 6px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+.tile { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 12px 14px; display: grid; gap: 4px; align-content: start; }
+.tile .k { font: 500 12px/1.3 var(--f-mono); color: var(--muted); }
+.tile .v { font: 650 26px/1.15 var(--f-display); color: var(--ink); font-variant-numeric: tabular-nums; }
+.tile .v small { font: 500 13px var(--f-mono); color: var(--muted); }
+.tile .s { font-size: 13px; color: var(--ink2); }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.controls .lab { font: 500 12px var(--f-mono); color: var(--muted); margin-right: 4px; }
+.chip { display: inline-flex; align-items: center; gap: 7px; font: 500 13px var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 999px; padding: 5px 11px; cursor: pointer; }
+.chip[aria-pressed="false"] { color: var(--muted); background: transparent; }
+.chip[aria-pressed="false"] .key { opacity: 0.35; }
+.chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.key { width: 18px; height: 0; border-top: 3px solid currentColor; border-radius: 2px; display: inline-block; }
+.key.dash { border-top-style: dashed; border-top-width: 2px; }
+.key.dot { border-top-style: dotted; border-top-width: 3px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+.panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 10px 4px; position: relative; min-width: 0; }
+.panel h4 { font: 650 14px var(--f-display); margin: 0 0 2px 4px; display: flex; justify-content: space-between; gap: 8px; }
+.panel h4 span { font: 400 12px var(--f-mono); color: var(--muted); }
+.panel svg { display: block; width: 100%; height: auto; overflow: visible; }
+.axis text { fill: var(--muted); font: 9.5px var(--f-mono); }
+.axis .lab { fill: var(--ink2); font: 10px var(--f-mono); }
+.gridline { stroke: var(--rule); stroke-width: 1; }
+.tip { position: absolute; z-index: 5; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--rule); border-radius: 6px; padding: 8px 10px; box-shadow: 0 4px 14px rgba(0,0,0,0.12); font-size: 12.5px; min-width: 230px; }
+.tip .h { font: 500 11.5px var(--f-mono); color: var(--muted); margin-bottom: 4px; }
+.tip .r { display: grid; grid-template-columns: 18px auto 1fr; gap: 6px; align-items: center; }
+.tip .r b { font: 500 13px var(--f-mono); font-variant-numeric: tabular-nums; text-align: right; }
+.tip .r i { font-style: normal; color: var(--ink2); white-space: nowrap; }
+details { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 14px; }
+summary { cursor: pointer; font: 600 14px var(--f-body); }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; font-size: 13px; min-width: 560px; }
+th, td { padding: 6px 9px; border-bottom: 1px solid var(--rule); text-align: right; vertical-align: top; }
+th:first-child, td:first-child { text-align: left; }
+table.named th:first-child, table.named td:first-child { min-width: 210px; }
+thead th { font: 600 12px var(--f-mono); color: var(--muted); white-space: nowrap; }
+td.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+td b { font-weight: 600; }
+.mute { color: var(--muted); font-size: 11.5px; }
+tbody tr:hover { background: var(--wash); }
+.note { font-size: 13.5px; color: var(--ink2); }
+ul.tight { margin: 0 0 12px; padding-left: 20px; display: grid; gap: 6px; }
+code { font: 13px var(--f-mono); background: var(--wash); padding: 1px 4px; border-radius: 4px; }
+.diagram { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 12px; overflow-x: auto; }
+.diagram svg { display: block; width: 100%; max-width: 760px; min-width: 540px; height: auto; margin: 0 auto; }
+@media (prefers-reduced-motion: no-preference) { .chip { transition: background-color 120ms, color 120ms; } }
+</style>
+
+<div class="page">
+  <header class="col">
+    <div class="eyebrow">jeffrey/cross_warp · ntrl-demo on the 22 × 22 cross maze · 3 Nov 2026</div>
+    <h1>Cross Warp</h1>
+    <p class="lede"><!--LEDE--></p>
+  </header>
+
+  <section>
+    <div class="tiles"><!--TILES--></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>The idea</h2>
+      <!--IDEA-->
+    </div>
+    <figure><img src="warps.png" alt="Four panels: the cross maze as ntrl-demo's encoder sees it under the identity, the uniform six-fold stretch, the designed warp and the learned warp; the maze quadrants are magnified, the open plus is not." width="1471" height="591"><figcaption><!--WARPCAP--></figcaption></figure>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Results</h2>
+      <!--RESULTS-->
+    </div>
+    <div class="tablewrap"><!--TOTALS--></div>
+    <div class="col"><p class="note"><!--TOTALSNOTE--></p></div>
+    <div class="controls" id="legend" role="group" aria-label="Fields shown in the charts"><span class="lab">show</span></div>
+    <div class="grid" id="panels"></div>
+    <div class="col"><p class="note">Success by true travel distance; each point pools the training seeds a field has, the whisker is their range. Left: the maze-scale study's 240 queries, planning seeds 0/1/2. Right: the 1,200-query set from 96 new goals, planning seed 0. Hover a panel for the numbers.</p></div>
+    <div class="col"><!--SMALLER--></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Why the README warp as proposed does not help here</h2>
+      <!--BOXTEXT-->
+    </div>
+    <div class="tablewrap"><!--BOXTABLE--></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Why a local stretch beats a uniform one</h2>
+      <!--MECHTEXT-->
+    </div>
+    <div class="tablewrap"><!--MECHTABLE--></div>
+    <figure><img src="speed.png" alt="Learned speed maps at heading 0 on the cross maze: truth, ntrl-demo, the uniform six-fold stretch, the designed warp and the learned warp." width="1749" height="392"><figcaption><!--SPEEDCAP--></figcaption></figure>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>The learned warp</h2>
+      <!--LEARNTEXT-->
+    </div>
+    <figure><img src="density.png" alt="Local stretch along x across the cross maze for the designed warp and the learned warps; both compress the plus band and magnify the maze." width="1140" height="408"><figcaption><!--DENSCAP--></figcaption></figure>
+    <div class="tablewrap"><!--LEARNTABLE--></div>
+  </section>
+
+  <section class="col">
+    <h2>What this says</h2>
+    <!--VERDICT-->
+  </section>
+
+  <section class="col">
+    <h2>How it was measured</h2>
+    <!--MEASURED-->
+  </section>
+
+  <details class="col"><summary>Registered runs</summary><div class="tablewrap"><!--RUNS--></div></details>
+</div>
+
+<script>
+(() => {
+  const D = /*DATA*/;
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+  const h = (t, c, txt, p) => { const e = document.createElement(t); if (c) e.className = c; if (txt != null) e.textContent = txt; if (p) p.appendChild(e); return e; };
+  // hue = field: ntrl-demo blue, uniform stretch violet (B x 4 dark, B x 6 light), designed warp orange, learned warp aqua, box-preserving README warp gold
+  const CSS = D.css;
+  const DASH = D.dash;
+  const present = D.fields.filter(f => D.sizes.some(n => D.series[n][f]));
+  const ON = {}; present.forEach(f => { ON[f] = D.on.includes(f); });
+  const legend = document.getElementById('legend');
+  function drawLegend() {
+    legend.querySelectorAll('.chip').forEach(c => c.remove());
+    present.forEach((f, i) => {
+      const b = h('button', 'chip', null, legend); b.type = 'button'; b.id = `chip-${i}`;
+      const k = h('span', 'key' + (DASH[f] ? (DASH[f].startsWith('1.5') ? ' dot' : ' dash') : ''), null, b); k.style.color = `var(${CSS[f]})`;
+      b.append(D.label[f]); b.setAttribute('aria-pressed', String(ON[f]));
+      b.addEventListener('click', () => { ON[f] = !ON[f]; drawLegend(); drawAll(); });
+    });
+  }
+  function panel(box, n) {
+    const m = D.series[n]; if (!m) return;
+    const p = h('div', 'panel', null, box);
+    const h4 = h('h4', null, D.title[n], p); h('span', null, 'MPPI success (%)', h4);
+    const W = 420, H = 250, L = 38, R = 12, T = 12, B = 40;
+    const svg = mk('svg', {viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': `MPPI success by distance, ${D.title[n]}`}, p);
+    const series = present.filter(f => ON[f] && m[f]).map(f => ({f, d: m[f]}));
+    const bins = (m['ntrl-demo'] || Object.values(m)[0]).bins;
+    const X = k => L + (k + 0.5) / bins.length * (W - L - R);
+    const Y = v => T + (1 - v / 100) * (H - T - B);
+    const ax = mk('g', {class: 'axis'}, svg);
+    [0, 25, 50, 75, 100].forEach(v => { mk('line', {x1: L, x2: W - R, y1: Y(v), y2: Y(v), class: 'gridline'}, svg); mk('text', {x: L - 6, y: Y(v) + 3, 'text-anchor': 'end'}, ax).textContent = v; });
+    bins.forEach((b, k) => { mk('text', {x: X(k), y: H - B + 14, 'text-anchor': 'middle'}, ax).textContent = b; });
+    mk('text', {x: (L + W - R) / 2, y: H - 6, 'text-anchor': 'middle', class: 'lab'}, ax).textContent = 'true travel distance (cells)';
+    series.forEach(r => {
+      const css = `var(${CSS[r.f]})`;
+      const vals = bins.map(b => { const k = r.d.bins.indexOf(b); return k < 0 ? null : r.d.rows[k][0]; });
+      bins.forEach((b, k) => { const j = r.d.bins.indexOf(b); if (j >= 0 && r.d.rows[j][3] > 1) mk('line', {x1: X(k), x2: X(k), y1: Y(r.d.rows[j][1]), y2: Y(r.d.rows[j][2]), stroke: css, 'stroke-width': 1.2, 'stroke-opacity': 0.55}, svg); });
+      let d = '', pen = false;
+      vals.forEach((v, k) => { if (v != null) { d += `${pen ? 'L' : 'M'}${X(k).toFixed(1)},${Y(v).toFixed(1)}`; pen = true; } else pen = false; });
+      mk('path', {d, fill: 'none', stroke: css, 'stroke-width': D.bold.includes(r.f) ? 2.6 : 2, 'stroke-dasharray': DASH[r.f] || '', 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
+      vals.forEach((v, k) => { if (v != null) mk('circle', {cx: X(k), cy: Y(v), r: 4, fill: css, stroke: 'var(--surface)', 'stroke-width': 2}, svg); });
+    });
+    const tip = h('div', 'tip', null, p); tip.hidden = true;
+    const cross = mk('line', {y1: T, y2: H - B, stroke: 'var(--muted)', 'stroke-width': 1, visibility: 'hidden'}, svg);
+    const hit = mk('rect', {x: L, y: T, width: W - L - R, height: H - T - B, fill: 'transparent', style: 'touch-action: pan-y'}, svg);
+    const show = ev => {
+      const rc = svg.getBoundingClientRect(), sx = (ev.clientX - rc.left) * W / rc.width;
+      const k = Math.max(0, Math.min(bins.length - 1, Math.floor((sx - L) / (W - L - R) * bins.length)));
+      cross.setAttribute('x1', X(k)); cross.setAttribute('x2', X(k)); cross.setAttribute('visibility', 'visible');
+      tip.textContent = ''; h('div', 'h', `${D.title[n]} · ${bins[k]} cells`, tip);
+      series.forEach(r => { const j = r.d.bins.indexOf(bins[k]); if (j < 0) return; const row = h('div', 'r', null, tip);
+        const kk = h('span', 'key' + (DASH[r.f] ? (DASH[r.f].startsWith('1.5') ? ' dot' : ' dash') : ''), null, row); kk.style.color = `var(${CSS[r.f]})`;
+        h('i', null, D.label[r.f], row); h('b', null, `${r.d.rows[j][0].toFixed(0)} %  (${r.d.rows[j][4]}/${r.d.rows[j][5]})`, row); });
+      tip.hidden = false;
+      const pr = p.getBoundingClientRect(); let left = ev.clientX - pr.left + 14;
+      if (left + tip.offsetWidth > pr.width - 4) left = ev.clientX - pr.left - tip.offsetWidth - 14;
+      tip.style.left = `${Math.max(4, left)}px`; tip.style.top = `${Math.max(4, ev.clientY - pr.top - 20)}px`;
+    };
+    hit.addEventListener('pointermove', show); hit.addEventListener('pointerdown', show);
+    hit.addEventListener('pointerleave', () => { tip.hidden = true; cross.setAttribute('visibility', 'hidden'); });
+  }
+  function drawAll() { const box = document.getElementById('panels'); box.textContent = ''; D.sizes.forEach(n => panel(box, n)); }
+  drawLegend(); drawAll();
+})();
+</script>

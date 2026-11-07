@@ -1,0 +1,10 @@
+<p>ntrl-demo&rsquo;s input layer is a random Fourier embedding sin/cos(B&nbsp;x), and its frequencies are tuned to the demo maze. I multiplied B by a scale s (1.5, 3, and 6 on the larger mazes) and changed nothing else: same random draw per seed, same data, losses, step and time units. Each scale has three training seeds, except s&nbsp;=&nbsp;6 on 10&times;10 and 13&times;13, which has one.</p>
+<p><strong>Every maze has a best frequency, and it grows with the maze.</strong></p>
+<ul class="tight">
+<li><strong>7&times;7</strong>: s&nbsp;=&nbsp;1 is already perfect (99.8&nbsp;%), and 1.5 changes nothing.</li>
+<li><strong>10&times;10</strong>: 88&nbsp;% rises to 93&nbsp;% at s&nbsp;=&nbsp;1.5 and 95&nbsp;% at 3.</li>
+<li><strong>13&times;13</strong>: 59&nbsp;% rises to 76, 90 and 91&nbsp;% at s&nbsp;=&nbsp;1.5, 3 and 6. The 16&ndash;32-cell bin goes from 19 to 75&ndash;82&nbsp;%.</li>
+<li><strong>22&times;22</strong>: 23&nbsp;% stays at 24 and 27&nbsp;% for s&nbsp;=&nbsp;1.5 and 3, then reaches 43&nbsp;% at 6, still rising.</li>
+</ul>
+<p>Past the best scale, planning collapses: 7&times;7 at s&nbsp;=&nbsp;3 drops to 78&nbsp;% and 10&times;10 at s&nbsp;=&nbsp;6 to 51&nbsp;%, losing mostly the long bins. These failures are a different kind from the unscaled ones. Every failed run stalls short of the goal (89 of 89 and 296 of 296 for training seed 87358); unscaled ntrl-demo fails mostly by hitting walls. With too high a frequency for the maze, the field grows local minima that MPPI cannot leave.</p>
+<p>The speed fit is no guide here. It rises with s on every maze, including where planning collapses (0.96 on 7&times;7 at s&nbsp;=&nbsp;3), because it measures how well the walls are drawn, not whether the field descends to the goal.</p>

@@ -63,6 +63,42 @@ Success by Euclidean distance (cells), all planning seeds: 0-2: 150/150, 2-4: 18
 
 Success by Euclidean distance (cells), all planning seeds: 0-2: 150/150, 2-4: 186/186, 4-8: 144/144
 
+**ntrl, 10 x 10, training seed 1** (20261102T033305Z-5d802f80)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 2 | 2 | 0 | 0 | 1.31 | 0.36 | 1 |
+| 4-8 | 3 | 3 | 0 | 0 | 2.85 | 0.42 | 0 |
+| 8-16 | 5 | 5 | 0 | 0 | 2.05 | 0.20 | 2 |
+| 16-32 | 19 | 17 | 2 | 2 | 5.08 | 0.27 | 2 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 153/156, 2-4: 155/168, 4-8: 195/240, 8-16: 20/36
+
+**ntrl, 10 x 10, training seed 2** (20261102T032238Z-09a41392)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 3 | 3 | 0 | 0 | 1.67 | 0.47 | 1 |
+| 4-8 | 2 | 2 | 1 | 0 | 2.39 | 0.43 | 1 |
+| 8-16 | 5 | 5 | 0 | 0 | 2.99 | 0.32 | 2 |
+| 16-32 | 3 | 3 | 0 | 0 | 15.96 | 0.92 | 0 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 153/156, 2-4: 158/168, 4-8: 216/240, 8-16: 33/36
+
+**ntrl, 10 x 10, training seed 87358** (20261102T032216Z-e76476bf)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 1 | 1 | 0 | 0 | 0.68 | 0.42 | 1 |
+| 2-4 | 5 | 4 | 1 | 1 | 1.26 | 0.40 | 1 |
+| 4-8 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 8-16 | 6 | 6 | 0 | 0 | 7.46 | 0.59 | 1 |
+| 16-32 | 19 | 17 | 2 | 2 | 10.10 | 0.58 | 1 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 145/156, 2-4: 144/168, 4-8: 182/240, 8-16: 29/36
+
 **ntrl, 13 x 13, training seed 1** (20261101T204630Z-58badec5)
 
 | bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
@@ -138,87 +174,6 @@ Success by Euclidean distance (cells), all planning seeds: 0-2: 95/132, 2-4: 33/
 
 Success by Euclidean distance (cells), all planning seeds: 0-2: 90/132, 2-4: 28/156, 4-8: 19/129, 8-16: 12/192, 16-32: 3/111
 
-**ntrl, 40 x 40, training seed 1** (20261101T194659Z-7d97259d)
-
-| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
-|---|---|---|---|---|---|---|---|
-| 0.5-2 | 13 | 13 | 0 | 0 | 0.46 | 0.34 | 11 |
-| 2-4 | 38 | 38 | 0 | 0 | 0.57 | 0.20 | 26 |
-| 4-8 | 40 | 40 | 0 | 0 | 0.80 | 0.12 | 24 |
-| 8-16 | 40 | 40 | 0 | 0 | 0.81 | 0.06 | 22 |
-| 16-32 | 40 | 40 | 0 | 0 | 0.71 | 0.03 | 24 |
-| 32-64 | 40 | 40 | 0 | 0 | 0.50 | 0.01 | 31 |
-| 64-128 | 40 | 40 | 0 | 0 | 0.34 | 0.01 | 34 |
-
-Success by Euclidean distance (cells), all planning seeds: 0-2: 80/138, 2-4: 6/135, 4-8: 0/117, 8-16: 0/153, 16-32: 0/147, 32-64: 0/150
-
-**ntrl, 40 x 40, training seed 2** (20261101T200157Z-9b30f307)
-
-| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
-|---|---|---|---|---|---|---|---|
-| 0.5-2 | 13 | 13 | 0 | 0 | 0.42 | 0.35 | 12 |
-| 2-4 | 35 | 35 | 0 | 0 | 0.76 | 0.25 | 21 |
-| 4-8 | 40 | 40 | 0 | 0 | 0.82 | 0.13 | 23 |
-| 8-16 | 40 | 40 | 0 | 0 | 0.71 | 0.06 | 25 |
-| 16-32 | 40 | 40 | 0 | 0 | 0.84 | 0.03 | 24 |
-| 32-64 | 40 | 40 | 0 | 0 | 0.65 | 0.02 | 24 |
-| 64-128 | 40 | 40 | 0 | 0 | 0.32 | 0.00 | 34 |
-
-Success by Euclidean distance (cells), all planning seeds: 0-2: 81/138, 2-4: 12/135, 4-8: 0/117, 8-16: 0/153, 16-32: 0/147, 32-64: 0/150
-
-**ntrl, 40 x 40, training seed 87358** (20261101T193402Z-ffc2decc)
-
-| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
-|---|---|---|---|---|---|---|---|
-| 0.5-2 | 14 | 14 | 0 | 0 | 0.44 | 0.35 | 12 |
-| 2-4 | 36 | 36 | 0 | 0 | 0.56 | 0.22 | 27 |
-| 4-8 | 40 | 40 | 3 | 0 | 0.61 | 0.13 | 27 |
-| 8-16 | 40 | 40 | 1 | 0 | 0.73 | 0.06 | 24 |
-| 16-32 | 40 | 40 | 0 | 0 | 0.82 | 0.03 | 22 |
-| 32-64 | 40 | 40 | 1 | 0 | 0.60 | 0.01 | 31 |
-| 64-128 | 40 | 40 | 0 | 0 | 0.41 | 0.01 | 32 |
-
-Success by Euclidean distance (cells), all planning seeds: 0-2: 78/138, 2-4: 11/135, 4-8: 0/117, 8-16: 0/153, 16-32: 0/147, 32-64: 0/150
-
-**zoom, 13 x 13, training seed 87358** (20261101T204839Z-df3ab517)
-
-| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
-|---|---|---|---|---|---|---|---|
-| 0.5-2 | 1 | 1 | 0 | 0 | 0.94 | 0.55 | 1 |
-| 2-4 | 5 | 5 | 0 | 0 | 0.71 | 0.26 | 3 |
-| 4-8 | 8 | 8 | 2 | 0 | 2.00 | 0.40 | 3 |
-| 8-16 | 16 | 16 | 3 | 0 | 4.11 | 0.35 | 1 |
-| 16-32 | 22 | 21 | 7 | 1 | 5.25 | 0.32 | 1 |
-
-Success by Euclidean distance (cells), all planning seeds: 0-2: 141/162, 2-4: 129/150, 4-8: 121/174, 8-16: 53/114
-
-**zoom, 22 x 22, training seed 87358** (20261101T202555Z-61b47892)
-
-| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
-|---|---|---|---|---|---|---|---|
-| 0.5-2 | 9 | 9 | 0 | 0 | 0.47 | 0.30 | 8 |
-| 2-4 | 16 | 16 | 0 | 0 | 1.05 | 0.31 | 7 |
-| 4-8 | 28 | 27 | 1 | 1 | 3.38 | 0.50 | 2 |
-| 8-16 | 37 | 34 | 4 | 3 | 2.72 | 0.19 | 9 |
-| 16-32 | 40 | 34 | 22 | 6 | 2.48 | 0.14 | 9 |
-| 32-64 | 40 | 31 | 31 | 9 | 1.04 | 0.03 | 15 |
-
-Success by Euclidean distance (cells), all planning seeds: 0-2: 99/132, 2-4: 75/156, 4-8: 35/129, 8-16: 4/192, 16-32: 0/111
-
-**zoom, 40 x 40, training seed 87358** (20261101T202151Z-8e48de41)
-
-| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
-|---|---|---|---|---|---|---|---|
-| 0.5-2 | 13 | 13 | 0 | 0 | 0.37 | 0.27 | 12 |
-| 2-4 | 32 | 32 | 0 | 0 | 0.53 | 0.21 | 21 |
-| 4-8 | 39 | 38 | 2 | 1 | 0.75 | 0.16 | 21 |
-| 8-16 | 40 | 38 | 14 | 2 | 1.41 | 0.10 | 17 |
-| 16-32 | 40 | 33 | 32 | 7 | 1.09 | 0.05 | 16 |
-| 32-64 | 40 | 37 | 37 | 3 | 0.66 | 0.02 | 27 |
-| 64-128 | 40 | 38 | 40 | 2 | 0.57 | 0.01 | 28 |
-
-Success by Euclidean distance (cells), all planning seeds: 0-2: 81/138, 2-4: 24/135, 4-8: 3/117, 8-16: 0/153, 16-32: 0/147, 32-64: 0/150
-
 **segdp segment DP, 4 x 4, training seed 87358** (20261101T203439Z-6ed89e28)
 
 | bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
@@ -239,6 +194,18 @@ Success by Euclidean distance (cells), all planning seeds: 0-2: 174/174, 2-4: 18
 | 8-16 | 5 | 0 | 5 | 5 | - | - | 0 |
 
 Success by Euclidean distance (cells), all planning seeds: 0-2: 150/150, 2-4: 174/186, 4-8: 135/144
+
+**segdp segment DP, 10 x 10, training seed 87358** (20261102T033401Z-dec4726c)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 2 | 2 | 0 | 0 | 0.43 | 0.28 | 2 |
+| 2-4 | 6 | 6 | 0 | 0 | 1.14 | 0.37 | 2 |
+| 4-8 | 5 | 5 | 0 | 0 | 2.75 | 0.43 | 2 |
+| 8-16 | 14 | 12 | 2 | 2 | 2.43 | 0.18 | 3 |
+| 16-32 | 33 | 27 | 10 | 6 | 1.19 | 0.06 | 13 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 134/156, 2-4: 129/168, 4-8: 138/240, 8-16: 20/36
 
 **segdp segment DP, 13 x 13, training seed 1** (20261101T221325Z-26a627cd)
 
@@ -288,33 +255,6 @@ Success by Euclidean distance (cells), all planning seeds: 0-2: 124/162, 2-4: 77
 | 32-64 | 40 | 40 | 0 | 0 | 0.66 | 0.02 | 22 |
 
 Success by Euclidean distance (cells), all planning seeds: 0-2: 90/132, 2-4: 21/156, 4-8: 3/129, 8-16: 1/192, 16-32: 3/111
-
-**segdp segment DP, 40 x 40, training seed 87358** (20261101T195644Z-ac24eb74)
-
-| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
-|---|---|---|---|---|---|---|---|
-| 0.5-2 | 16 | 16 | 0 | 0 | 0.52 | 0.40 | 13 |
-| 2-4 | 36 | 36 | 0 | 0 | 0.51 | 0.20 | 27 |
-| 4-8 | 40 | 40 | 0 | 0 | 0.64 | 0.10 | 28 |
-| 8-16 | 40 | 40 | 0 | 0 | 0.63 | 0.05 | 29 |
-| 16-32 | 40 | 40 | 0 | 0 | 0.58 | 0.03 | 28 |
-| 32-64 | 40 | 40 | 0 | 0 | 0.60 | 0.01 | 29 |
-| 64-128 | 40 | 40 | 0 | 0 | 0.43 | 0.01 | 33 |
-
-Success by Euclidean distance (cells), all planning seeds: 0-2: 74/138, 2-4: 11/135, 4-8: 0/117, 8-16: 0/153, 16-32: 0/147, 32-64: 0/150
-
-**segdp segment DP, zoomed base, 22 x 22, training seed 87358** (20261101T204927Z-51fa1b1c)
-
-| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
-|---|---|---|---|---|---|---|---|
-| 0.5-2 | 9 | 9 | 0 | 0 | 0.50 | 0.30 | 8 |
-| 2-4 | 22 | 22 | 0 | 0 | 1.08 | 0.31 | 10 |
-| 4-8 | 34 | 32 | 3 | 2 | 1.41 | 0.23 | 14 |
-| 8-16 | 38 | 37 | 7 | 1 | 2.28 | 0.15 | 11 |
-| 16-32 | 40 | 38 | 13 | 2 | 1.26 | 0.06 | 18 |
-| 32-64 | 40 | 40 | 14 | 0 | 1.29 | 0.04 | 18 |
-
-Success by Euclidean distance (cells), all planning seeds: 0-2: 98/132, 2-4: 53/156, 4-8: 13/129, 8-16: 5/192, 16-32: 0/111
 
 **segdp segment DP, checked pieces, 22 x 22, training seed 87358** (20261101T204940Z-0ab9e137)
 
@@ -400,6 +340,42 @@ Success by Euclidean distance (cells), all planning seeds: 0-2: 112/132, 2-4: 76
 
 Success by Euclidean distance (cells), all planning seeds: 0-2: 150/150, 2-4: 171/186, 4-8: 133/144
 
+**segdp segment DP + wall term (weight 0.3), 10 x 10, training seed 1** (20261102T042037Z-5a6a9ec6)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 4-8 | 5 | 1 | 4 | 4 | 0.17 | 0.02 | 1 |
+| 8-16 | 10 | 0 | 10 | 10 | - | - | 0 |
+| 16-32 | 26 | 4 | 25 | 22 | 1.68 | 0.08 | 1 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 153/156, 2-4: 141/168, 4-8: 163/240, 8-16: 19/36
+
+**segdp segment DP + wall term (weight 0.3), 10 x 10, training seed 2** (20261102T043331Z-50fe7ef2)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 4-8 | 5 | 0 | 5 | 5 | - | - | 0 |
+| 8-16 | 12 | 8 | 12 | 4 | 0.37 | 0.04 | 5 |
+| 16-32 | 30 | 17 | 29 | 13 | 0.43 | 0.02 | 12 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 153/156, 2-4: 137/168, 4-8: 153/240, 8-16: 24/36
+
+**segdp segment DP + wall term (weight 0.3), 10 x 10, training seed 87358** (20261102T035422Z-06108e12)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 4-8 | 2 | 1 | 1 | 1 | 0.19 | 0.03 | 1 |
+| 8-16 | 5 | 1 | 5 | 4 | 5.60 | 0.43 | 0 |
+| 16-32 | 23 | 5 | 23 | 18 | 0.42 | 0.02 | 4 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 153/156, 2-4: 144/168, 4-8: 177/240, 8-16: 30/36
+
 **segdp segment DP + wall term (weight 0.3), 13 x 13, training seed 1** (20261101T222804Z-9ddcbd27)
 
 | bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
@@ -449,16 +425,269 @@ Success by Euclidean distance (cells), all planning seeds: 0-2: 159/162, 2-4: 13
 
 Success by Euclidean distance (cells), all planning seeds: 0-2: 117/132, 2-4: 100/156, 4-8: 62/129, 8-16: 25/192, 16-32: 4/111
 
-**segdp segment DP + wall term (weight 0.3), 40 x 40, training seed 87358** (20261101T223506Z-f2a8699a)
+**segdp segment DP + wall term (weight 0.3), 5 levels (ratio 2.000), 13 x 13, training seed 1** (20261102T012132Z-a6dec306)
 
 | bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
 |---|---|---|---|---|---|---|---|
-| 0.5-2 | 10 | 10 | 0 | 0 | 0.47 | 0.38 | 9 |
-| 2-4 | 20 | 11 | 10 | 9 | 1.68 | 0.51 | 1 |
-| 4-8 | 37 | 16 | 26 | 21 | 3.30 | 0.62 | 3 |
-| 8-16 | 40 | 11 | 38 | 29 | 2.50 | 0.18 | 5 |
-| 16-32 | 40 | 10 | 40 | 30 | 2.53 | 0.11 | 1 |
-| 32-64 | 40 | 4 | 40 | 36 | 1.45 | 0.04 | 1 |
-| 64-128 | 40 | 4 | 40 | 36 | 1.17 | 0.02 | 1 |
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 2 | 1 | 1 | 1 | 1.61 | 0.67 | 0 |
+| 4-8 | 9 | 4 | 6 | 5 | 2.16 | 0.34 | 1 |
+| 8-16 | 32 | 3 | 30 | 29 | 1.81 | 0.17 | 1 |
+| 16-32 | 40 | 3 | 39 | 37 | 1.87 | 0.11 | 1 |
 
-Success by Euclidean distance (cells), all planning seeds: 0-2: 95/138, 2-4: 51/135, 4-8: 9/117, 8-16: 0/153, 16-32: 0/147, 32-64: 0/150
+Success by Euclidean distance (cells), all planning seeds: 0-2: 154/162, 2-4: 121/150, 4-8: 70/174, 8-16: 9/114
+
+**segdp segment DP + wall term (weight 0.3), 5 levels (ratio 2.000), 13 x 13, training seed 2** (20261102T012908Z-d59d9ade)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 2 | 0 | 2 | 2 | - | - | 0 |
+| 4-8 | 11 | 3 | 8 | 8 | 2.39 | 0.36 | 0 |
+| 8-16 | 35 | 1 | 35 | 34 | 1.16 | 0.12 | 0 |
+| 16-32 | 40 | 7 | 39 | 33 | 2.20 | 0.11 | 1 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 148/162, 2-4: 124/150, 4-8: 60/174, 8-16: 6/114
+
+**segdp segment DP + wall term (weight 0.3), 5 levels (ratio 2.000), 13 x 13, training seed 87358** (20261102T012132Z-9aa296ff)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 2 | 0 | 2 | 2 | - | - | 0 |
+| 4-8 | 9 | 1 | 8 | 8 | 4.61 | 0.93 | 0 |
+| 8-16 | 33 | 3 | 32 | 30 | 4.21 | 0.43 | 1 |
+| 16-32 | 39 | 4 | 38 | 35 | 4.35 | 0.19 | 1 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 152/162, 2-4: 116/150, 4-8: 70/174, 8-16: 8/114
+
+**segdp segment DP + wall term (weight 0.3), 7 levels (ratio 1.641), 13 x 13, training seed 1** (20261102T013903Z-b5314eb9)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 1 | 1 | 0 | 0 | 1.88 | 0.77 | 0 |
+| 4-8 | 17 | 6 | 13 | 11 | 0.63 | 0.10 | 5 |
+| 8-16 | 39 | 7 | 39 | 32 | 0.75 | 0.07 | 4 |
+| 16-32 | 40 | 5 | 38 | 35 | 1.33 | 0.06 | 2 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 159/162, 2-4: 126/150, 4-8: 24/174, 8-16: 0/114
+
+**segdp segment DP + wall term (weight 0.3), 7 levels (ratio 1.641), 13 x 13, training seed 2** (20261102T015440Z-ec43512e)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 2 | 0 | 2 | 2 | - | - | 0 |
+| 4-8 | 5 | 1 | 4 | 4 | 2.53 | 0.40 | 0 |
+| 8-16 | 29 | 3 | 27 | 26 | 3.16 | 0.31 | 1 |
+| 16-32 | 40 | 4 | 40 | 36 | 5.78 | 0.35 | 0 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 152/162, 2-4: 123/150, 4-8: 81/174, 8-16: 10/114
+
+**segdp segment DP + wall term (weight 0.3), 7 levels (ratio 1.641), 13 x 13, training seed 87358** (20261102T012934Z-101307e4)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 2 | 1 | 1 | 1 | 1.66 | 0.68 | 0 |
+| 4-8 | 5 | 3 | 2 | 2 | 3.20 | 0.51 | 0 |
+| 8-16 | 26 | 4 | 25 | 22 | 1.47 | 0.11 | 2 |
+| 16-32 | 35 | 5 | 34 | 30 | 3.14 | 0.16 | 1 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 150/162, 2-4: 132/150, 4-8: 92/174, 8-16: 25/114
+
+**segdp segment DP + wall term (weight 0.3), 9 levels (ratio 1.470), 13 x 13, training seed 1** (20261102T021128Z-9540f3a2)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 1 | 1 | 0 | 0 | 1.81 | 0.75 | 0 |
+| 4-8 | 5 | 3 | 2 | 2 | 5.11 | 0.97 | 0 |
+| 8-16 | 23 | 2 | 23 | 21 | 0.38 | 0.03 | 2 |
+| 16-32 | 32 | 4 | 30 | 28 | 2.89 | 0.15 | 1 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 153/162, 2-4: 127/150, 4-8: 103/174, 8-16: 35/114
+
+**segdp segment DP + wall term (weight 0.3), 9 levels (ratio 1.470), 13 x 13, training seed 2** (20261102T021233Z-f8e3720c)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 2 | 0 | 2 | 2 | - | - | 0 |
+| 4-8 | 6 | 2 | 4 | 4 | 2.40 | 0.48 | 1 |
+| 8-16 | 25 | 0 | 25 | 25 | - | - | 0 |
+| 16-32 | 35 | 4 | 32 | 31 | 1.96 | 0.11 | 2 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 153/162, 2-4: 126/150, 4-8: 97/174, 8-16: 23/114
+
+**segdp segment DP + wall term (weight 0.3), 9 levels (ratio 1.470), 13 x 13, training seed 87358** (20261102T015332Z-ba98834b)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 1 | 1 | 0 | 0 | 3.00 | 0.84 | 0 |
+| 4-8 | 8 | 2 | 6 | 6 | 3.56 | 0.66 | 0 |
+| 8-16 | 20 | 2 | 20 | 18 | 3.94 | 0.30 | 0 |
+| 16-32 | 30 | 2 | 29 | 28 | 9.48 | 0.42 | 0 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 151/162, 2-4: 125/150, 4-8: 98/174, 8-16: 46/114
+
+**segdp segment DP + wall term (weight 0.3), 32 split candidates, 13 x 13, training seed 1** (20261102T061154Z-2545427f)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 1 | 0 | 1 | 1 | - | - | 0 |
+| 4-8 | 5 | 1 | 5 | 4 | 0.41 | 0.07 | 1 |
+| 8-16 | 25 | 3 | 22 | 22 | 8.91 | 0.77 | 0 |
+| 16-32 | 36 | 2 | 34 | 34 | 1.36 | 0.08 | 1 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 155/162, 2-4: 122/150, 4-8: 99/174, 8-16: 24/114
+
+**segdp segment DP + wall term (weight 0.3), 32 split candidates, 13 x 13, training seed 2** (20261102T063829Z-e7f58b92)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 2 | 1 | 1 | 1 | 2.95 | 0.83 | 0 |
+| 4-8 | 8 | 2 | 6 | 6 | 3.91 | 0.83 | 0 |
+| 8-16 | 23 | 0 | 23 | 23 | - | - | 0 |
+| 16-32 | 31 | 3 | 30 | 28 | 5.40 | 0.32 | 1 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 149/162, 2-4: 120/150, 4-8: 92/174, 8-16: 36/114
+
+**segdp segment DP + wall term (weight 0.3), 32 split candidates, 13 x 13, training seed 87358** (20261102T033412Z-8cbad86a)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 4-8 | 4 | 1 | 3 | 3 | 4.72 | 0.95 | 0 |
+| 8-16 | 19 | 0 | 19 | 19 | - | - | 0 |
+| 16-32 | 29 | 2 | 27 | 27 | 15.89 | 0.79 | 0 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 154/162, 2-4: 131/150, 4-8: 104/174, 8-16: 51/114
+
+**segdp segment DP + wall term (weight 0.3), 512 split candidates, 13 x 13, training seed 1** (20261102T040942Z-75713471)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 1 | 1 | 0 | 0 | 1.82 | 0.75 | 0 |
+| 4-8 | 6 | 2 | 4 | 4 | 5.07 | 0.94 | 0 |
+| 8-16 | 17 | 0 | 17 | 17 | - | - | 0 |
+| 16-32 | 20 | 0 | 20 | 20 | - | - | 0 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 153/162, 2-4: 129/150, 4-8: 112/174, 8-16: 67/114
+
+**segdp segment DP + wall term (weight 0.3), 512 split candidates, 13 x 13, training seed 2** (20261102T062931Z-3c07502a)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 2 | 0 | 2 | 2 | - | - | 0 |
+| 4-8 | 3 | 0 | 3 | 3 | - | - | 0 |
+| 8-16 | 18 | 1 | 18 | 17 | 4.33 | 0.32 | 0 |
+| 16-32 | 30 | 3 | 28 | 27 | 1.97 | 0.12 | 1 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 150/162, 2-4: 133/150, 4-8: 113/174, 8-16: 46/114
+
+**segdp segment DP + wall term (weight 0.3), 512 split candidates, 13 x 13, training seed 87358** (20261102T034331Z-c1a186b3)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 4-8 | 5 | 2 | 3 | 3 | 5.56 | 1.03 | 0 |
+| 8-16 | 16 | 0 | 16 | 16 | - | - | 0 |
+| 16-32 | 26 | 4 | 25 | 22 | 2.24 | 0.11 | 1 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 156/162, 2-4: 135/150, 4-8: 110/174, 8-16: 64/114
+
+**segdp segment DP + wall term (weight 0.3), B × 6 base, 22 x 22, training seed 1** (20261102T053010Z-af4df7de)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 1 | 0 | 1 | 1 | - | - | 0 |
+| 2-4 | 10 | 2 | 10 | 8 | 4.52 | 1.32 | 0 |
+| 4-8 | 27 | 1 | 26 | 26 | 1.45 | 0.21 | 0 |
+| 8-16 | 39 | 0 | 39 | 39 | - | - | 0 |
+| 16-32 | 39 | 3 | 39 | 36 | 1.96 | 0.09 | 1 |
+| 32-64 | 40 | 7 | 40 | 33 | 1.23 | 0.04 | 3 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 125/132, 2-4: 99/156, 4-8: 25/129, 8-16: 7/192, 16-32: 0/111
+
+**segdp segment DP + wall term (weight 0.3), B × 6 base, 22 x 22, training seed 2** (20261102T060007Z-00d3a738)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 7 | 1 | 6 | 6 | 1.39 | 0.43 | 0 |
+| 4-8 | 23 | 3 | 22 | 20 | 1.45 | 0.21 | 0 |
+| 8-16 | 38 | 5 | 38 | 33 | 1.08 | 0.08 | 2 |
+| 16-32 | 39 | 2 | 39 | 37 | 0.52 | 0.02 | 2 |
+| 32-64 | 40 | 1 | 40 | 39 | 1.61 | 0.05 | 0 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 129/132, 2-4: 106/156, 4-8: 42/129, 8-16: 5/192, 16-32: 0/111
+
+**segdp segment DP + wall term (weight 0.3), B × 6 base, 22 x 22, training seed 87358** (20261102T042435Z-82754848)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 1 | 1 | 0 | 0 | 1.08 | 0.69 | 0 |
+| 2-4 | 6 | 1 | 5 | 5 | 2.64 | 0.85 | 0 |
+| 4-8 | 28 | 2 | 26 | 26 | 3.39 | 0.58 | 0 |
+| 8-16 | 37 | 3 | 36 | 34 | 2.48 | 0.25 | 0 |
+| 16-32 | 40 | 2 | 40 | 38 | 0.57 | 0.02 | 2 |
+| 32-64 | 40 | 8 | 40 | 32 | 0.42 | 0.01 | 8 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 126/132, 2-4: 105/156, 4-8: 28/129, 8-16: 4/192, 16-32: 0/111
+
+**segdp segment DP + wall term (weight 0.3), B × 3 base, 13 x 13, training seed 1** (20261102T052759Z-2b71d0e2)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 1 | 0 | 1 | 1 | - | - | 0 |
+| 4-8 | 9 | 1 | 8 | 8 | 0.89 | 0.12 | 1 |
+| 8-16 | 30 | 6 | 30 | 24 | 0.61 | 0.05 | 5 |
+| 16-32 | 35 | 4 | 35 | 31 | 2.20 | 0.11 | 2 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 150/162, 2-4: 126/150, 4-8: 81/174, 8-16: 21/114
+
+**segdp segment DP + wall term (weight 0.3), B × 3 base, 13 x 13, training seed 2** (20261102T054648Z-86efcb25)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 3 | 0 | 3 | 3 | - | - | 0 |
+| 4-8 | 7 | 2 | 6 | 5 | 2.03 | 0.35 | 0 |
+| 8-16 | 20 | 4 | 18 | 16 | 0.35 | 0.04 | 3 |
+| 16-32 | 30 | 5 | 28 | 25 | 2.00 | 0.12 | 1 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 147/162, 2-4: 120/150, 4-8: 106/174, 8-16: 43/114
+
+**segdp segment DP + wall term (weight 0.3), B × 3 base, 13 x 13, training seed 87358** (20261102T050349Z-80833d30)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 1 | 0 | 1 | 1 | - | - | 0 |
+| 4-8 | 7 | 1 | 6 | 6 | 0.73 | 0.10 | 1 |
+| 8-16 | 26 | 3 | 24 | 23 | 1.76 | 0.13 | 1 |
+| 16-32 | 34 | 12 | 33 | 22 | 1.12 | 0.06 | 6 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 153/162, 2-4: 123/150, 4-8: 94/174, 8-16: 24/114
+
+**segdp segment DP + wall term (weight 0.3), 2048 split candidates, 13 x 13, training seed 87358** (20261102T065920Z-755e354e)
+
+| bin (cells) | failures | wall hit while driving | stalled (never reached the goal) | stalled without a wall hit | first contact after (cells, median) | ... as share of the true path | contact within 1 cell |
+|---|---|---|---|---|---|---|---|
+| 0.5-2 | 0 | 0 | 0 | 0 | - | - | 0 |
+| 2-4 | 1 | 0 | 1 | 1 | - | - | 0 |
+| 4-8 | 4 | 0 | 4 | 4 | - | - | 0 |
+| 8-16 | 21 | 1 | 21 | 20 | 0.15 | 0.01 | 1 |
+| 16-32 | 25 | 2 | 23 | 23 | 9.73 | 0.50 | 1 |
+
+Success by Euclidean distance (cells), all planning seeds: 0-2: 153/162, 2-4: 132/150, 4-8: 101/174, 8-16: 67/114

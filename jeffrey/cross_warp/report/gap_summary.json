@@ -1,0 +1,2204 @@
+{
+ "1|ntrl-demo": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 43.81481481481482,
+  "per_seed_pct": [
+   40.77777777777778,
+   40.44444444444444,
+   50.22222222222222
+  ],
+  "same quadrant": 32.592592592592595,
+  "same quadrant range": [
+   25.0,
+   40.0
+  ],
+  "adjacent quadrants": 24.62962962962963,
+  "adjacent quadrants range": [
+   19.444444444444443,
+   27.77777777777778
+  ],
+  "diagonal quadrants": 22.77777777777778,
+  "diagonal quadrants range": [
+   17.77777777777778,
+   32.22222222222222
+  ],
+  "quadrant - open": 42.77777777777778,
+  "quadrant - open range": [
+   32.77777777777778,
+   53.888888888888886
+  ],
+  "open - open": 96.29629629629629,
+  "open - open range": [
+   93.33333333333333,
+   98.33333333333333
+  ]
+ },
+ "1|uniform": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 61.925925925925924,
+  "per_seed_pct": [
+   63.111111111111114,
+   63.22222222222222,
+   59.44444444444444
+  ],
+  "same quadrant": 54.629629629629626,
+  "same quadrant range": [
+   52.22222222222222,
+   57.77777777777778
+  ],
+  "adjacent quadrants": 50.18518518518518,
+  "adjacent quadrants range": [
+   47.22222222222222,
+   55.55555555555556
+  ],
+  "diagonal quadrants": 50.55555555555556,
+  "diagonal quadrants range": [
+   48.333333333333336,
+   51.666666666666664
+  ],
+  "quadrant - open": 55.925925925925924,
+  "quadrant - open range": [
+   48.888888888888886,
+   62.22222222222222
+  ],
+  "open - open": 98.33333333333333,
+  "open - open range": [
+   96.66666666666667,
+   100.0
+  ]
+ },
+ "1|constructed": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 64.51851851851852,
+  "per_seed_pct": [
+   66.44444444444444,
+   68.22222222222223,
+   58.888888888888886
+  ],
+  "same quadrant": 63.51851851851852,
+  "same quadrant range": [
+   59.44444444444444,
+   71.66666666666667
+  ],
+  "adjacent quadrants": 49.81481481481482,
+  "adjacent quadrants range": [
+   36.666666666666664,
+   56.666666666666664
+  ],
+  "diagonal quadrants": 47.96296296296296,
+  "diagonal quadrants range": [
+   41.666666666666664,
+   53.888888888888886
+  ],
+  "quadrant - open": 64.07407407407408,
+  "quadrant - open range": [
+   56.666666666666664,
+   67.77777777777777
+  ],
+  "open - open": 97.22222222222223,
+  "open - open range": [
+   95.0,
+   100.0
+  ]
+ },
+ "1|learned": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 60.0,
+  "per_seed_pct": [
+   63.77777777777778,
+   54.666666666666664,
+   61.55555555555556
+  ],
+  "same quadrant": 61.851851851851855,
+  "same quadrant range": [
+   59.44444444444444,
+   64.44444444444444
+  ],
+  "adjacent quadrants": 42.96296296296296,
+  "adjacent quadrants range": [
+   27.77777777777778,
+   55.55555555555556
+  ],
+  "diagonal quadrants": 40.370370370370374,
+  "diagonal quadrants range": [
+   26.11111111111111,
+   48.333333333333336
+  ],
+  "quadrant - open": 57.96296296296296,
+  "quadrant - open range": [
+   55.55555555555556,
+   61.666666666666664
+  ],
+  "open - open": 96.85185185185185,
+  "open - open range": [
+   93.33333333333333,
+   98.88888888888889
+  ]
+ },
+ "1|warp + scaling": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 58.51851851851852,
+  "per_seed_pct": [
+   58.333333333333336,
+   60.333333333333336,
+   56.888888888888886
+  ],
+  "same quadrant": 55.18518518518518,
+  "same quadrant range": [
+   52.77777777777778,
+   57.77777777777778
+  ],
+  "adjacent quadrants": 41.851851851851855,
+  "adjacent quadrants range": [
+   31.666666666666668,
+   49.44444444444444
+  ],
+  "diagonal quadrants": 43.148148148148145,
+  "diagonal quadrants range": [
+   42.22222222222222,
+   44.44444444444444
+  ],
+  "quadrant - open": 56.666666666666664,
+  "quadrant - open range": [
+   51.666666666666664,
+   60.0
+  ],
+  "open - open": 95.74074074074075,
+  "open - open range": [
+   95.0,
+   97.22222222222223
+  ]
+ },
+ "1|README warp": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 46.25925925925926,
+  "per_seed_pct": [
+   49.44444444444444,
+   45.666666666666664,
+   43.666666666666664
+  ],
+  "same quadrant": 28.88888888888889,
+  "same quadrant range": [
+   22.22222222222222,
+   33.333333333333336
+  ],
+  "adjacent quadrants": 20.555555555555557,
+  "adjacent quadrants range": [
+   18.88888888888889,
+   22.77777777777778
+  ],
+  "diagonal quadrants": 36.666666666666664,
+  "diagonal quadrants range": [
+   32.77777777777778,
+   44.44444444444444
+  ],
+  "quadrant - open": 48.51851851851852,
+  "quadrant - open range": [
+   42.77777777777778,
+   56.666666666666664
+  ],
+  "open - open": 96.66666666666667,
+  "open - open range": [
+   93.88888888888889,
+   98.33333333333333
+  ]
+ },
+ "2|ntrl-demo": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 32.2962962962963,
+  "per_seed_pct": [
+   34.77777777777778,
+   29.77777777777778,
+   32.333333333333336
+  ],
+  "same quadrant": 21.666666666666668,
+  "same quadrant range": [
+   18.333333333333332,
+   26.666666666666668
+  ],
+  "adjacent quadrants": 10.37037037037037,
+  "adjacent quadrants range": [
+   8.333333333333334,
+   11.666666666666666
+  ],
+  "diagonal quadrants": 7.592592592592593,
+  "diagonal quadrants range": [
+   3.3333333333333335,
+   10.555555555555555
+  ],
+  "quadrant - open": 25.185185185185187,
+  "quadrant - open range": [
+   19.444444444444443,
+   30.0
+  ],
+  "open - open": 96.66666666666667,
+  "open - open range": [
+   95.0,
+   98.33333333333333
+  ]
+ },
+ "2|uniform": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 41.333333333333336,
+  "per_seed_pct": [
+   48.55555555555556,
+   34.55555555555556,
+   40.888888888888886
+  ],
+  "same quadrant": 40.925925925925924,
+  "same quadrant range": [
+   36.111111111111114,
+   47.22222222222222
+  ],
+  "adjacent quadrants": 17.59259259259259,
+  "adjacent quadrants range": [
+   13.333333333333334,
+   23.88888888888889
+  ],
+  "diagonal quadrants": 18.51851851851852,
+  "diagonal quadrants range": [
+   13.333333333333334,
+   25.555555555555557
+  ],
+  "quadrant - open": 40.370370370370374,
+  "quadrant - open range": [
+   35.55555555555556,
+   47.77777777777778
+  ],
+  "open - open": 89.25925925925925,
+  "open - open range": [
+   71.11111111111111,
+   98.33333333333333
+  ]
+ },
+ "2|constructed": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 41.77777777777778,
+  "per_seed_pct": [
+   50.666666666666664,
+   36.0,
+   38.666666666666664
+  ],
+  "same quadrant": 42.03703703703704,
+  "same quadrant range": [
+   30.0,
+   48.333333333333336
+  ],
+  "adjacent quadrants": 21.48148148148148,
+  "adjacent quadrants range": [
+   8.88888888888889,
+   38.888888888888886
+  ],
+  "diagonal quadrants": 15.555555555555555,
+  "diagonal quadrants range": [
+   12.222222222222221,
+   19.444444444444443
+  ],
+  "quadrant - open": 38.7037037037037,
+  "quadrant - open range": [
+   32.22222222222222,
+   51.111111111111114
+  ],
+  "open - open": 91.11111111111111,
+  "open - open range": [
+   78.33333333333333,
+   100.0
+  ]
+ },
+ "2|learned": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 35.7037037037037,
+  "per_seed_pct": [
+   34.888888888888886,
+   35.55555555555556,
+   36.666666666666664
+  ],
+  "same quadrant": 46.851851851851855,
+  "same quadrant range": [
+   34.44444444444444,
+   55.0
+  ],
+  "adjacent quadrants": 24.814814814814813,
+  "adjacent quadrants range": [
+   18.333333333333332,
+   30.555555555555557
+  ],
+  "diagonal quadrants": 7.037037037037037,
+  "diagonal quadrants range": [
+   0.0,
+   17.77777777777778
+  ],
+  "quadrant - open": 30.37037037037037,
+  "quadrant - open range": [
+   22.77777777777778,
+   40.55555555555556
+  ],
+  "open - open": 69.44444444444444,
+  "open - open range": [
+   53.333333333333336,
+   90.0
+  ]
+ },
+ "2|warp + scaling": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 36.629629629629626,
+  "per_seed_pct": [
+   37.666666666666664,
+   40.333333333333336,
+   31.88888888888889
+  ],
+  "same quadrant": 34.074074074074076,
+  "same quadrant range": [
+   23.333333333333332,
+   42.22222222222222
+  ],
+  "adjacent quadrants": 15.37037037037037,
+  "adjacent quadrants range": [
+   7.222222222222222,
+   27.22222222222222
+  ],
+  "diagonal quadrants": 17.962962962962962,
+  "diagonal quadrants range": [
+   13.333333333333334,
+   23.88888888888889
+  ],
+  "quadrant - open": 30.185185185185187,
+  "quadrant - open range": [
+   24.444444444444443,
+   35.55555555555556
+  ],
+  "open - open": 85.55555555555556,
+  "open - open range": [
+   80.0,
+   91.66666666666667
+  ]
+ },
+ "2|README warp": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 37.666666666666664,
+  "per_seed_pct": [
+   31.333333333333332,
+   40.55555555555556,
+   41.111111111111114
+  ],
+  "same quadrant": 26.296296296296298,
+  "same quadrant range": [
+   22.77777777777778,
+   32.77777777777778
+  ],
+  "adjacent quadrants": 11.11111111111111,
+  "adjacent quadrants range": [
+   6.666666666666667,
+   15.0
+  ],
+  "diagonal quadrants": 18.703703703703702,
+  "diagonal quadrants range": [
+   10.0,
+   27.22222222222222
+  ],
+  "quadrant - open": 34.44444444444444,
+  "quadrant - open range": [
+   22.22222222222222,
+   43.333333333333336
+  ],
+  "open - open": 97.77777777777777,
+  "open - open range": [
+   95.0,
+   100.0
+  ]
+ },
+ "4|ntrl-demo": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 26.814814814814813,
+  "per_seed_pct": [
+   26.0,
+   26.666666666666668,
+   27.77777777777778
+  ],
+  "same quadrant": 15.0,
+  "same quadrant range": [
+   12.777777777777779,
+   16.666666666666668
+  ],
+  "adjacent quadrants": 8.703703703703704,
+  "adjacent quadrants range": [
+   8.333333333333334,
+   9.444444444444445
+  ],
+  "diagonal quadrants": 0.37037037037037035,
+  "diagonal quadrants range": [
+   0.0,
+   1.1111111111111112
+  ],
+  "quadrant - open": 12.037037037037036,
+  "quadrant - open range": [
+   10.0,
+   14.444444444444445
+  ],
+  "open - open": 97.96296296296296,
+  "open - open range": [
+   97.22222222222223,
+   98.33333333333333
+  ]
+ },
+ "4|uniform": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 22.88888888888889,
+  "per_seed_pct": [
+   19.333333333333332,
+   15.88888888888889,
+   33.44444444444444
+  ],
+  "same quadrant": 29.074074074074073,
+  "same quadrant range": [
+   23.88888888888889,
+   33.888888888888886
+  ],
+  "adjacent quadrants": 8.703703703703704,
+  "adjacent quadrants range": [
+   2.2222222222222223,
+   17.77777777777778
+  ],
+  "diagonal quadrants": 2.7777777777777777,
+  "diagonal quadrants range": [
+   0.0,
+   5.0
+  ],
+  "quadrant - open": 20.185185185185187,
+  "quadrant - open range": [
+   14.444444444444445,
+   28.88888888888889
+  ],
+  "open - open": 53.7037037037037,
+  "open - open range": [
+   25.0,
+   86.11111111111111
+  ]
+ },
+ "4|constructed": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 21.074074074074073,
+  "per_seed_pct": [
+   25.11111111111111,
+   22.0,
+   16.11111111111111
+  ],
+  "same quadrant": 35.925925925925924,
+  "same quadrant range": [
+   19.444444444444443,
+   50.55555555555556
+  ],
+  "adjacent quadrants": 1.2962962962962963,
+  "adjacent quadrants range": [
+   0.0,
+   3.3333333333333335
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 19.074074074074073,
+  "quadrant - open range": [
+   8.333333333333334,
+   27.77777777777778
+  ],
+  "open - open": 49.074074074074076,
+  "open - open range": [
+   38.333333333333336,
+   59.44444444444444
+  ]
+ },
+ "4|learned": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 19.185185185185187,
+  "per_seed_pct": [
+   18.88888888888889,
+   11.0,
+   27.666666666666668
+  ],
+  "same quadrant": 22.962962962962962,
+  "same quadrant range": [
+   20.0,
+   25.555555555555557
+  ],
+  "adjacent quadrants": 5.555555555555555,
+  "adjacent quadrants range": [
+   0.0,
+   10.0
+  ],
+  "diagonal quadrants": 0.5555555555555556,
+  "diagonal quadrants range": [
+   0.0,
+   1.6666666666666667
+  ],
+  "quadrant - open": 10.74074074074074,
+  "quadrant - open range": [
+   6.666666666666667,
+   13.88888888888889
+  ],
+  "open - open": 56.111111111111114,
+  "open - open range": [
+   25.0,
+   95.0
+  ]
+ },
+ "4|warp + scaling": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 26.51851851851852,
+  "per_seed_pct": [
+   31.333333333333332,
+   21.444444444444443,
+   26.77777777777778
+  ],
+  "same quadrant": 22.59259259259259,
+  "same quadrant range": [
+   18.333333333333332,
+   27.77777777777778
+  ],
+  "adjacent quadrants": 8.148148148148149,
+  "adjacent quadrants range": [
+   6.666666666666667,
+   9.444444444444445
+  ],
+  "diagonal quadrants": 6.666666666666667,
+  "diagonal quadrants range": [
+   3.3333333333333335,
+   8.333333333333334
+  ],
+  "quadrant - open": 22.962962962962962,
+  "quadrant - open range": [
+   20.555555555555557,
+   27.22222222222222
+  ],
+  "open - open": 72.22222222222223,
+  "open - open range": [
+   51.666666666666664,
+   90.0
+  ]
+ },
+ "4|README warp": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 27.62962962962963,
+  "per_seed_pct": [
+   26.88888888888889,
+   28.666666666666668,
+   27.333333333333332
+  ],
+  "same quadrant": 18.703703703703702,
+  "same quadrant range": [
+   15.555555555555555,
+   21.666666666666668
+  ],
+  "adjacent quadrants": 6.111111111111111,
+  "adjacent quadrants range": [
+   3.3333333333333335,
+   8.333333333333334
+  ],
+  "diagonal quadrants": 6.111111111111111,
+  "diagonal quadrants range": [
+   5.0,
+   7.222222222222222
+  ],
+  "quadrant - open": 11.296296296296296,
+  "quadrant - open range": [
+   10.0,
+   12.222222222222221
+  ],
+  "open - open": 95.92592592592592,
+  "open - open range": [
+   95.0,
+   96.66666666666667
+  ]
+ },
+ "8|ntrl-demo": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 25.925925925925927,
+  "per_seed_pct": [
+   26.333333333333332,
+   26.444444444444443,
+   25.0
+  ],
+  "same quadrant": 12.222222222222221,
+  "same quadrant range": [
+   11.666666666666666,
+   12.777777777777779
+  ],
+  "adjacent quadrants": 2.7777777777777777,
+  "adjacent quadrants range": [
+   1.6666666666666667,
+   3.3333333333333335
+  ],
+  "diagonal quadrants": 2.037037037037037,
+  "diagonal quadrants range": [
+   0.0,
+   3.3333333333333335
+  ],
+  "quadrant - open": 12.592592592592593,
+  "quadrant - open range": [
+   11.666666666666666,
+   13.333333333333334
+  ],
+  "open - open": 100.0,
+  "open - open range": [
+   100.0,
+   100.0
+  ]
+ },
+ "8|uniform": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 7.148148148148148,
+  "per_seed_pct": [
+   4.888888888888889,
+   3.888888888888889,
+   12.666666666666666
+  ],
+  "same quadrant": 23.88888888888889,
+  "same quadrant range": [
+   19.444444444444443,
+   27.77777777777778
+  ],
+  "adjacent quadrants": 0.0,
+  "adjacent quadrants range": [
+   0.0,
+   0.0
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 1.2962962962962963,
+  "quadrant - open range": [
+   0.0,
+   3.888888888888889
+  ],
+  "open - open": 10.555555555555555,
+  "open - open range": [
+   0.0,
+   31.666666666666668
+  ]
+ },
+ "8|constructed": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 10.185185185185185,
+  "per_seed_pct": [
+   11.333333333333334,
+   7.666666666666667,
+   11.555555555555555
+  ],
+  "same quadrant": 25.555555555555557,
+  "same quadrant range": [
+   21.666666666666668,
+   28.333333333333332
+  ],
+  "adjacent quadrants": 0.5555555555555556,
+  "adjacent quadrants range": [
+   0.0,
+   1.6666666666666667
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 3.1481481481481484,
+  "quadrant - open range": [
+   1.6666666666666667,
+   5.0
+  ],
+  "open - open": 21.666666666666668,
+  "open - open range": [
+   10.0,
+   31.666666666666668
+  ]
+ },
+ "8|learned": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 3.3703703703703702,
+  "per_seed_pct": [
+   3.5555555555555554,
+   2.3333333333333335,
+   4.222222222222222
+  ],
+  "same quadrant": 16.296296296296298,
+  "same quadrant range": [
+   11.666666666666666,
+   19.444444444444443
+  ],
+  "adjacent quadrants": 0.0,
+  "adjacent quadrants range": [
+   0.0,
+   0.0
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 0.0,
+  "quadrant - open range": [
+   0.0,
+   0.0
+  ],
+  "open - open": 0.5555555555555556,
+  "open - open range": [
+   0.0,
+   1.6666666666666667
+  ]
+ },
+ "8|warp + scaling": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 15.62962962962963,
+  "per_seed_pct": [
+   19.11111111111111,
+   8.555555555555555,
+   19.22222222222222
+  ],
+  "same quadrant": 25.37037037037037,
+  "same quadrant range": [
+   21.666666666666668,
+   27.77777777777778
+  ],
+  "adjacent quadrants": 2.037037037037037,
+  "adjacent quadrants range": [
+   0.0,
+   4.444444444444445
+  ],
+  "diagonal quadrants": 2.2222222222222223,
+  "diagonal quadrants range": [
+   0.0,
+   6.666666666666667
+  ],
+  "quadrant - open": 6.666666666666667,
+  "quadrant - open range": [
+   0.0,
+   11.666666666666666
+  ],
+  "open - open": 41.851851851851855,
+  "open - open range": [
+   15.0,
+   59.44444444444444
+  ]
+ },
+ "8|README warp": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 24.25925925925926,
+  "per_seed_pct": [
+   27.0,
+   22.333333333333332,
+   23.444444444444443
+  ],
+  "same quadrant": 14.444444444444445,
+  "same quadrant range": [
+   11.666666666666666,
+   18.333333333333332
+  ],
+  "adjacent quadrants": 1.1111111111111112,
+  "adjacent quadrants range": [
+   0.0,
+   1.6666666666666667
+  ],
+  "diagonal quadrants": 1.1111111111111112,
+  "diagonal quadrants range": [
+   0.0,
+   1.6666666666666667
+  ],
+  "quadrant - open": 9.814814814814815,
+  "quadrant - open range": [
+   5.555555555555555,
+   15.0
+  ],
+  "open - open": 94.81481481481481,
+  "open - open range": [
+   92.77777777777777,
+   98.33333333333333
+  ]
+ },
+ "8|learned, constructed start": {
+  "seeds": [
+   87358
+  ],
+  "total": 12.555555555555555,
+  "per_seed_pct": [
+   12.555555555555555
+  ],
+  "same quadrant": 32.77777777777778,
+  "same quadrant range": [
+   32.77777777777778,
+   32.77777777777778
+  ],
+  "adjacent quadrants": 0.0,
+  "adjacent quadrants range": [
+   0.0,
+   0.0
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 5.0,
+  "quadrant - open range": [
+   5.0,
+   5.0
+  ],
+  "open - open": 25.0,
+  "open - open range": [
+   25.0,
+   25.0
+  ]
+ },
+ "8|constructed, heading \u00d71": {
+  "seeds": [
+   87358
+  ],
+  "total": 17.77777777777778,
+  "per_seed_pct": [
+   17.77777777777778
+  ],
+  "same quadrant": 31.666666666666668,
+  "same quadrant range": [
+   31.666666666666668,
+   31.666666666666668
+  ],
+  "adjacent quadrants": 0.5555555555555556,
+  "adjacent quadrants range": [
+   0.5555555555555556,
+   0.5555555555555556
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 11.666666666666666,
+  "quadrant - open range": [
+   11.666666666666666,
+   11.666666666666666
+  ],
+  "open - open": 45.0,
+  "open - open range": [
+   45.0,
+   45.0
+  ]
+ },
+ "8|ntrl-demo, heading \u00d7m": {
+  "seeds": [
+   87358
+  ],
+  "total": 26.22222222222222,
+  "per_seed_pct": [
+   26.22222222222222
+  ],
+  "same quadrant": 12.777777777777779,
+  "same quadrant range": [
+   12.777777777777779,
+   12.777777777777779
+  ],
+  "adjacent quadrants": 1.6666666666666667,
+  "adjacent quadrants range": [
+   1.6666666666666667,
+   1.6666666666666667
+  ],
+  "diagonal quadrants": 3.3333333333333335,
+  "diagonal quadrants range": [
+   3.3333333333333335,
+   3.3333333333333335
+  ],
+  "quadrant - open": 13.333333333333334,
+  "quadrant - open range": [
+   13.333333333333334,
+   13.333333333333334
+  ],
+  "open - open": 100.0,
+  "open - open range": [
+   100.0,
+   100.0
+  ]
+ },
+ "8|constructed + lower bound": {
+  "seeds": [
+   87358
+  ],
+  "total": 16.555555555555557,
+  "per_seed_pct": [
+   16.555555555555557
+  ],
+  "same quadrant": 31.11111111111111,
+  "same quadrant range": [
+   31.11111111111111,
+   31.11111111111111
+  ],
+  "adjacent quadrants": 0.0,
+  "adjacent quadrants range": [
+   0.0,
+   0.0
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 1.6666666666666667,
+  "quadrant - open range": [
+   1.6666666666666667,
+   1.6666666666666667
+  ],
+  "open - open": 50.0,
+  "open - open range": [
+   50.0,
+   50.0
+  ]
+ },
+ "8|ntrl-demo + lower bound": {
+  "seeds": [
+   87358
+  ],
+  "total": 26.333333333333332,
+  "per_seed_pct": [
+   26.333333333333332
+  ],
+  "same quadrant": 15.0,
+  "same quadrant range": [
+   15.0,
+   15.0
+  ],
+  "adjacent quadrants": 3.3333333333333335,
+  "adjacent quadrants range": [
+   3.3333333333333335,
+   3.3333333333333335
+  ],
+  "diagonal quadrants": 0.5555555555555556,
+  "diagonal quadrants range": [
+   0.5555555555555556,
+   0.5555555555555556
+  ],
+  "quadrant - open": 12.777777777777779,
+  "quadrant - open range": [
+   12.777777777777779,
+   12.777777777777779
+  ],
+  "open - open": 100.0,
+  "open - open range": [
+   100.0,
+   100.0
+  ]
+ },
+ "8|constructed + line of sight": {
+  "seeds": [
+   87358
+  ],
+  "total": 10.555555555555555,
+  "per_seed_pct": [
+   10.555555555555555
+  ],
+  "same quadrant": 21.11111111111111,
+  "same quadrant range": [
+   21.11111111111111,
+   21.11111111111111
+  ],
+  "adjacent quadrants": 0.0,
+  "adjacent quadrants range": [
+   0.0,
+   0.0
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 0.0,
+  "quadrant - open range": [
+   0.0,
+   0.0
+  ],
+  "open - open": 31.666666666666668,
+  "open - open range": [
+   31.666666666666668,
+   31.666666666666668
+  ]
+ },
+ "8|ntrl-demo + line of sight": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 25.48148148148148,
+  "per_seed_pct": [
+   26.333333333333332,
+   26.0,
+   24.11111111111111
+  ],
+  "same quadrant": 11.481481481481481,
+  "same quadrant range": [
+   6.666666666666667,
+   13.88888888888889
+  ],
+  "adjacent quadrants": 2.5925925925925926,
+  "adjacent quadrants range": [
+   1.6666666666666667,
+   3.3333333333333335
+  ],
+  "diagonal quadrants": 1.6666666666666667,
+  "diagonal quadrants range": [
+   0.5555555555555556,
+   3.3333333333333335
+  ],
+  "quadrant - open": 11.666666666666666,
+  "quadrant - open range": [
+   11.666666666666666,
+   11.666666666666666
+  ],
+  "open - open": 100.0,
+  "open - open range": [
+   100.0,
+   100.0
+  ]
+ },
+ "8|warp + scaling + line of sight": {
+  "seeds": [
+   87358
+  ],
+  "total": 25.88888888888889,
+  "per_seed_pct": [
+   25.88888888888889
+  ],
+  "same quadrant": 26.11111111111111,
+  "same quadrant range": [
+   26.11111111111111,
+   26.11111111111111
+  ],
+  "adjacent quadrants": 1.6666666666666667,
+  "adjacent quadrants range": [
+   1.6666666666666667,
+   1.6666666666666667
+  ],
+  "diagonal quadrants": 6.666666666666667,
+  "diagonal quadrants range": [
+   6.666666666666667,
+   6.666666666666667
+  ],
+  "quadrant - open": 13.333333333333334,
+  "quadrant - open range": [
+   13.333333333333334,
+   13.333333333333334
+  ],
+  "open - open": 81.66666666666667,
+  "open - open range": [
+   81.66666666666667,
+   81.66666666666667
+  ]
+ },
+ "8|constructed, heading \u00d71 + line of sight": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 19.925925925925927,
+  "per_seed_pct": [
+   28.333333333333332,
+   16.444444444444443,
+   15.0
+  ],
+  "same quadrant": 29.444444444444443,
+  "same quadrant range": [
+   26.666666666666668,
+   31.666666666666668
+  ],
+  "adjacent quadrants": 0.5555555555555556,
+  "adjacent quadrants range": [
+   0.0,
+   1.6666666666666667
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 8.703703703703704,
+  "quadrant - open range": [
+   1.6666666666666667,
+   20.0
+  ],
+  "open - open": 60.925925925925924,
+  "open - open range": [
+   46.666666666666664,
+   88.33333333333333
+  ]
+ },
+ "8|ntrl-demo, TD step 0.66 cells": {
+  "seeds": [
+   87358
+  ],
+  "total": 27.0,
+  "per_seed_pct": [
+   27.0
+  ],
+  "same quadrant": 15.0,
+  "same quadrant range": [
+   15.0,
+   15.0
+  ],
+  "adjacent quadrants": 3.3333333333333335,
+  "adjacent quadrants range": [
+   3.3333333333333335,
+   3.3333333333333335
+  ],
+  "diagonal quadrants": 3.3333333333333335,
+  "diagonal quadrants range": [
+   3.3333333333333335,
+   3.3333333333333335
+  ],
+  "quadrant - open": 13.333333333333334,
+  "quadrant - open range": [
+   13.333333333333334,
+   13.333333333333334
+  ],
+  "open - open": 100.0,
+  "open - open range": [
+   100.0,
+   100.0
+  ]
+ },
+ "8|constructed, TD step 0.66 cells": {
+  "seeds": [
+   87358
+  ],
+  "total": 15.11111111111111,
+  "per_seed_pct": [
+   15.11111111111111
+  ],
+  "same quadrant": 38.888888888888886,
+  "same quadrant range": [
+   38.888888888888886,
+   38.888888888888886
+  ],
+  "adjacent quadrants": 0.0,
+  "adjacent quadrants range": [
+   0.0,
+   0.0
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 6.666666666666667,
+  "quadrant - open range": [
+   6.666666666666667,
+   6.666666666666667
+  ],
+  "open - open": 30.0,
+  "open - open range": [
+   30.0,
+   30.0
+  ]
+ },
+ "8|warp + scaling + line of sight + TD step": {
+  "seeds": [
+   87358
+  ],
+  "total": 13.666666666666666,
+  "per_seed_pct": [
+   13.666666666666666
+  ],
+  "same quadrant": 34.44444444444444,
+  "same quadrant range": [
+   34.44444444444444,
+   34.44444444444444
+  ],
+  "adjacent quadrants": 1.6666666666666667,
+  "adjacent quadrants range": [
+   1.6666666666666667,
+   1.6666666666666667
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 8.333333333333334,
+  "quadrant - open range": [
+   8.333333333333334,
+   8.333333333333334
+  ],
+  "open - open": 23.88888888888889,
+  "open - open range": [
+   23.88888888888889,
+   23.88888888888889
+  ]
+ },
+ "8|ntrl-demo + line of sight + TD step": {
+  "seeds": [
+   87358
+  ],
+  "total": 26.444444444444443,
+  "per_seed_pct": [
+   26.444444444444443
+  ],
+  "same quadrant": 13.88888888888889,
+  "same quadrant range": [
+   13.88888888888889,
+   13.88888888888889
+  ],
+  "adjacent quadrants": 2.2222222222222223,
+  "adjacent quadrants range": [
+   2.2222222222222223,
+   2.2222222222222223
+  ],
+  "diagonal quadrants": 2.7777777777777777,
+  "diagonal quadrants range": [
+   2.7777777777777777,
+   2.7777777777777777
+  ],
+  "quadrant - open": 13.333333333333334,
+  "quadrant - open range": [
+   13.333333333333334,
+   13.333333333333334
+  ],
+  "open - open": 100.0,
+  "open - open range": [
+   100.0,
+   100.0
+  ]
+ },
+ "8|constructed, heading \u00d71 + line of sight + TD step": {
+  "seeds": [
+   87358
+  ],
+  "total": 26.666666666666668,
+  "per_seed_pct": [
+   26.666666666666668
+  ],
+  "same quadrant": 33.333333333333336,
+  "same quadrant range": [
+   33.333333333333336,
+   33.333333333333336
+  ],
+  "adjacent quadrants": 0.0,
+  "adjacent quadrants range": [
+   0.0,
+   0.0
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 12.777777777777779,
+  "quadrant - open range": [
+   12.777777777777779,
+   12.777777777777779
+  ],
+  "open - open": 87.22222222222223,
+  "open - open range": [
+   87.22222222222223,
+   87.22222222222223
+  ]
+ },
+ "8|ntrl-demo + open pairs": {
+  "seeds": [
+   87358
+  ],
+  "total": 24.88888888888889,
+  "per_seed_pct": [
+   24.88888888888889
+  ],
+  "same quadrant": 10.0,
+  "same quadrant range": [
+   10.0,
+   10.0
+  ],
+  "adjacent quadrants": 1.6666666666666667,
+  "adjacent quadrants range": [
+   1.6666666666666667,
+   1.6666666666666667
+  ],
+  "diagonal quadrants": 1.6666666666666667,
+  "diagonal quadrants range": [
+   1.6666666666666667,
+   1.6666666666666667
+  ],
+  "quadrant - open": 11.666666666666666,
+  "quadrant - open range": [
+   11.666666666666666,
+   11.666666666666666
+  ],
+  "open - open": 99.44444444444444,
+  "open - open range": [
+   99.44444444444444,
+   99.44444444444444
+  ]
+ },
+ "8|constructed + open pairs": {
+  "seeds": [
+   87358
+  ],
+  "total": 11.666666666666666,
+  "per_seed_pct": [
+   11.666666666666666
+  ],
+  "same quadrant": 26.666666666666668,
+  "same quadrant range": [
+   26.666666666666668,
+   26.666666666666668
+  ],
+  "adjacent quadrants": 0.0,
+  "adjacent quadrants range": [
+   0.0,
+   0.0
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 0.0,
+  "quadrant - open range": [
+   0.0,
+   0.0
+  ],
+  "open - open": 31.666666666666668,
+  "open - open range": [
+   31.666666666666668,
+   31.666666666666668
+  ]
+ },
+ "8|warp + scaling + open pairs": {
+  "seeds": [
+   87358
+  ],
+  "total": 16.666666666666668,
+  "per_seed_pct": [
+   16.666666666666668
+  ],
+  "same quadrant": 20.0,
+  "same quadrant range": [
+   20.0,
+   20.0
+  ],
+  "adjacent quadrants": 1.6666666666666667,
+  "adjacent quadrants range": [
+   1.6666666666666667,
+   1.6666666666666667
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 3.888888888888889,
+  "quadrant - open range": [
+   3.888888888888889,
+   3.888888888888889
+  ],
+  "open - open": 57.77777777777778,
+  "open - open range": [
+   57.77777777777778,
+   57.77777777777778
+  ]
+ },
+ "8|learned, constructed start + open pairs": {
+  "seeds": [
+   87358
+  ],
+  "total": 7.666666666666667,
+  "per_seed_pct": [
+   7.666666666666667
+  ],
+  "same quadrant": 25.0,
+  "same quadrant range": [
+   25.0,
+   25.0
+  ],
+  "adjacent quadrants": 0.0,
+  "adjacent quadrants range": [
+   0.0,
+   0.0
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 0.0,
+  "quadrant - open range": [
+   0.0,
+   0.0
+  ],
+  "open - open": 13.333333333333334,
+  "open - open range": [
+   13.333333333333334,
+   13.333333333333334
+  ]
+ },
+ "8|ntrl-demo + local pairs": {
+  "seeds": [
+   87358
+  ],
+  "total": 26.333333333333332,
+  "per_seed_pct": [
+   26.333333333333332
+  ],
+  "same quadrant": 11.666666666666666,
+  "same quadrant range": [
+   11.666666666666666,
+   11.666666666666666
+  ],
+  "adjacent quadrants": 1.6666666666666667,
+  "adjacent quadrants range": [
+   1.6666666666666667,
+   1.6666666666666667
+  ],
+  "diagonal quadrants": 3.3333333333333335,
+  "diagonal quadrants range": [
+   3.3333333333333335,
+   3.3333333333333335
+  ],
+  "quadrant - open": 15.0,
+  "quadrant - open range": [
+   15.0,
+   15.0
+  ],
+  "open - open": 100.0,
+  "open - open range": [
+   100.0,
+   100.0
+  ]
+ },
+ "8|constructed + local pairs": {
+  "seeds": [
+   87358
+  ],
+  "total": 10.333333333333334,
+  "per_seed_pct": [
+   10.333333333333334
+  ],
+  "same quadrant": 26.666666666666668,
+  "same quadrant range": [
+   26.666666666666668,
+   26.666666666666668
+  ],
+  "adjacent quadrants": 0.0,
+  "adjacent quadrants range": [
+   0.0,
+   0.0
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 3.3333333333333335,
+  "quadrant - open range": [
+   3.3333333333333335,
+   3.3333333333333335
+  ],
+  "open - open": 21.666666666666668,
+  "open - open range": [
+   21.666666666666668,
+   21.666666666666668
+  ]
+ },
+ "8|ntrl-demo + open + local pairs": {
+  "seeds": [
+   87358
+  ],
+  "total": 26.0,
+  "per_seed_pct": [
+   26.0
+  ],
+  "same quadrant": 13.333333333333334,
+  "same quadrant range": [
+   13.333333333333334,
+   13.333333333333334
+  ],
+  "adjacent quadrants": 1.6666666666666667,
+  "adjacent quadrants range": [
+   1.6666666666666667,
+   1.6666666666666667
+  ],
+  "diagonal quadrants": 3.3333333333333335,
+  "diagonal quadrants range": [
+   3.3333333333333335,
+   3.3333333333333335
+  ],
+  "quadrant - open": 11.666666666666666,
+  "quadrant - open range": [
+   11.666666666666666,
+   11.666666666666666
+  ],
+  "open - open": 100.0,
+  "open - open range": [
+   100.0,
+   100.0
+  ]
+ },
+ "8|constructed + open + local pairs": {
+  "seeds": [
+   87358
+  ],
+  "total": 9.666666666666666,
+  "per_seed_pct": [
+   9.666666666666666
+  ],
+  "same quadrant": 16.666666666666668,
+  "same quadrant range": [
+   16.666666666666668,
+   16.666666666666668
+  ],
+  "adjacent quadrants": 0.0,
+  "adjacent quadrants range": [
+   0.0,
+   0.0
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 1.6666666666666667,
+  "quadrant - open range": [
+   1.6666666666666667,
+   1.6666666666666667
+  ],
+  "open - open": 30.0,
+  "open - open range": [
+   30.0,
+   30.0
+  ]
+ },
+ "12|ntrl-demo": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 24.185185185185187,
+  "per_seed_pct": [
+   24.22222222222222,
+   24.444444444444443,
+   23.88888888888889
+  ],
+  "same quadrant": 13.88888888888889,
+  "same quadrant range": [
+   13.333333333333334,
+   14.444444444444445
+  ],
+  "adjacent quadrants": 0.0,
+  "adjacent quadrants range": [
+   0.0,
+   0.0
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 7.037037037037037,
+  "quadrant - open range": [
+   5.0,
+   8.333333333333334
+  ],
+  "open - open": 100.0,
+  "open - open range": [
+   100.0,
+   100.0
+  ]
+ },
+ "12|uniform": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 3.4444444444444446,
+  "per_seed_pct": [
+   3.4444444444444446,
+   3.5555555555555554,
+   3.3333333333333335
+  ],
+  "same quadrant": 17.22222222222222,
+  "same quadrant range": [
+   16.666666666666668,
+   17.77777777777778
+  ],
+  "adjacent quadrants": 0.0,
+  "adjacent quadrants range": [
+   0.0,
+   0.0
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 0.0,
+  "quadrant - open range": [
+   0.0,
+   0.0
+  ],
+  "open - open": 0.0,
+  "open - open range": [
+   0.0,
+   0.0
+  ]
+ },
+ "12|constructed": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 9.777777777777779,
+  "per_seed_pct": [
+   10.0,
+   7.333333333333333,
+   12.0
+  ],
+  "same quadrant": 19.444444444444443,
+  "same quadrant range": [
+   18.333333333333332,
+   21.666666666666668
+  ],
+  "adjacent quadrants": 0.0,
+  "adjacent quadrants range": [
+   0.0,
+   0.0
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 0.5555555555555556,
+  "quadrant - open range": [
+   0.0,
+   1.6666666666666667
+  ],
+  "open - open": 28.88888888888889,
+  "open - open range": [
+   18.333333333333332,
+   38.333333333333336
+  ]
+ },
+ "12|learned": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 3.1481481481481484,
+  "per_seed_pct": [
+   3.111111111111111,
+   3.3333333333333335,
+   3.0
+  ],
+  "same quadrant": 15.74074074074074,
+  "same quadrant range": [
+   15.0,
+   16.666666666666668
+  ],
+  "adjacent quadrants": 0.0,
+  "adjacent quadrants range": [
+   0.0,
+   0.0
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 0.0,
+  "quadrant - open range": [
+   0.0,
+   0.0
+  ],
+  "open - open": 0.0,
+  "open - open range": [
+   0.0,
+   0.0
+  ]
+ },
+ "12|warp + scaling": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 8.851851851851851,
+  "per_seed_pct": [
+   11.666666666666666,
+   3.888888888888889,
+   11.0
+  ],
+  "same quadrant": 15.555555555555555,
+  "same quadrant range": [
+   15.0,
+   16.666666666666668
+  ],
+  "adjacent quadrants": 0.0,
+  "adjacent quadrants range": [
+   0.0,
+   0.0
+  ],
+  "diagonal quadrants": 1.1111111111111112,
+  "diagonal quadrants range": [
+   0.0,
+   2.7777777777777777
+  ],
+  "quadrant - open": 3.1481481481481484,
+  "quadrant - open range": [
+   1.1111111111111112,
+   5.555555555555555
+  ],
+  "open - open": 24.444444444444443,
+  "open - open range": [
+   1.6666666666666667,
+   36.666666666666664
+  ]
+ },
+ "12|README warp": {
+  "seeds": [
+   87358,
+   1,
+   2
+  ],
+  "total": 22.51851851851852,
+  "per_seed_pct": [
+   22.666666666666668,
+   22.22222222222222,
+   22.666666666666668
+  ],
+  "same quadrant": 13.333333333333334,
+  "same quadrant range": [
+   13.333333333333334,
+   13.333333333333334
+  ],
+  "adjacent quadrants": 0.7407407407407407,
+  "adjacent quadrants range": [
+   0.0,
+   2.2222222222222223
+  ],
+  "diagonal quadrants": 1.2962962962962963,
+  "diagonal quadrants range": [
+   0.0,
+   2.2222222222222223
+  ],
+  "quadrant - open": 2.2222222222222223,
+  "quadrant - open range": [
+   1.1111111111111112,
+   3.888888888888889
+  ],
+  "open - open": 95.0,
+  "open - open range": [
+   90.0,
+   98.33333333333333
+  ]
+ },
+ "12|ntrl-demo + line of sight": {
+  "seeds": [
+   87358
+  ],
+  "total": 25.0,
+  "per_seed_pct": [
+   25.0
+  ],
+  "same quadrant": 13.333333333333334,
+  "same quadrant range": [
+   13.333333333333334,
+   13.333333333333334
+  ],
+  "adjacent quadrants": 1.6666666666666667,
+  "adjacent quadrants range": [
+   1.6666666666666667,
+   1.6666666666666667
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 10.0,
+  "quadrant - open range": [
+   10.0,
+   10.0
+  ],
+  "open - open": 100.0,
+  "open - open range": [
+   100.0,
+   100.0
+  ]
+ },
+ "12|warp + scaling + line of sight": {
+  "seeds": [
+   87358
+  ],
+  "total": 19.666666666666668,
+  "per_seed_pct": [
+   19.666666666666668
+  ],
+  "same quadrant": 16.666666666666668,
+  "same quadrant range": [
+   16.666666666666668,
+   16.666666666666668
+  ],
+  "adjacent quadrants": 0.0,
+  "adjacent quadrants range": [
+   0.0,
+   0.0
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 0.0,
+  "quadrant - open range": [
+   0.0,
+   0.0
+  ],
+  "open - open": 81.66666666666667,
+  "open - open range": [
+   81.66666666666667,
+   81.66666666666667
+  ]
+ },
+ "12|constructed, heading \u00d71 + line of sight": {
+  "seeds": [
+   87358
+  ],
+  "total": 23.666666666666668,
+  "per_seed_pct": [
+   23.666666666666668
+  ],
+  "same quadrant": 16.666666666666668,
+  "same quadrant range": [
+   16.666666666666668,
+   16.666666666666668
+  ],
+  "adjacent quadrants": 0.0,
+  "adjacent quadrants range": [
+   0.0,
+   0.0
+  ],
+  "diagonal quadrants": 1.6666666666666667,
+  "diagonal quadrants range": [
+   1.6666666666666667,
+   1.6666666666666667
+  ],
+  "quadrant - open": 8.333333333333334,
+  "quadrant - open range": [
+   8.333333333333334,
+   8.333333333333334
+  ],
+  "open - open": 91.66666666666667,
+  "open - open range": [
+   91.66666666666667,
+   91.66666666666667
+  ]
+ },
+ "12|warp + scaling + line of sight + TD step": {
+  "seeds": [
+   87358
+  ],
+  "total": 9.333333333333334,
+  "per_seed_pct": [
+   9.333333333333334
+  ],
+  "same quadrant": 18.333333333333332,
+  "same quadrant range": [
+   18.333333333333332,
+   18.333333333333332
+  ],
+  "adjacent quadrants": 0.0,
+  "adjacent quadrants range": [
+   0.0,
+   0.0
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 0.0,
+  "quadrant - open range": [
+   0.0,
+   0.0
+  ],
+  "open - open": 28.333333333333332,
+  "open - open range": [
+   28.333333333333332,
+   28.333333333333332
+  ]
+ },
+ "12|ntrl-demo + line of sight + TD step": {
+  "seeds": [
+   87358
+  ],
+  "total": 24.22222222222222,
+  "per_seed_pct": [
+   24.22222222222222
+  ],
+  "same quadrant": 13.333333333333334,
+  "same quadrant range": [
+   13.333333333333334,
+   13.333333333333334
+  ],
+  "adjacent quadrants": 0.0,
+  "adjacent quadrants range": [
+   0.0,
+   0.0
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 7.777777777777778,
+  "quadrant - open range": [
+   7.777777777777778,
+   7.777777777777778
+  ],
+  "open - open": 100.0,
+  "open - open range": [
+   100.0,
+   100.0
+  ]
+ },
+ "12|constructed, heading \u00d71 + line of sight + TD step": {
+  "seeds": [
+   87358
+  ],
+  "total": 19.444444444444443,
+  "per_seed_pct": [
+   19.444444444444443
+  ],
+  "same quadrant": 25.555555555555557,
+  "same quadrant range": [
+   25.555555555555557,
+   25.555555555555557
+  ],
+  "adjacent quadrants": 0.0,
+  "adjacent quadrants range": [
+   0.0,
+   0.0
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 3.3333333333333335,
+  "quadrant - open range": [
+   3.3333333333333335,
+   3.3333333333333335
+  ],
+  "open - open": 68.33333333333333,
+  "open - open range": [
+   68.33333333333333,
+   68.33333333333333
+  ]
+ },
+ "12|ntrl-demo + open pairs": {
+  "seeds": [
+   87358
+  ],
+  "total": 26.11111111111111,
+  "per_seed_pct": [
+   26.11111111111111
+  ],
+  "same quadrant": 15.555555555555555,
+  "same quadrant range": [
+   15.555555555555555,
+   15.555555555555555
+  ],
+  "adjacent quadrants": 1.6666666666666667,
+  "adjacent quadrants range": [
+   1.6666666666666667,
+   1.6666666666666667
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 13.333333333333334,
+  "quadrant - open range": [
+   13.333333333333334,
+   13.333333333333334
+  ],
+  "open - open": 100.0,
+  "open - open range": [
+   100.0,
+   100.0
+  ]
+ },
+ "12|constructed + open pairs": {
+  "seeds": [
+   87358
+  ],
+  "total": 8.777777777777779,
+  "per_seed_pct": [
+   8.777777777777779
+  ],
+  "same quadrant": 18.333333333333332,
+  "same quadrant range": [
+   18.333333333333332,
+   18.333333333333332
+  ],
+  "adjacent quadrants": 0.0,
+  "adjacent quadrants range": [
+   0.0,
+   0.0
+  ],
+  "diagonal quadrants": 0.0,
+  "diagonal quadrants range": [
+   0.0,
+   0.0
+  ],
+  "quadrant - open": 0.0,
+  "quadrant - open range": [
+   0.0,
+   0.0
+  ],
+  "open - open": 25.555555555555557,
+  "open - open range": [
+   25.555555555555557,
+   25.555555555555557
+  ]
+ },
+ "12|warp + scaling + open pairs": {
+  "seeds": [
+   87358
+  ],
+  "total": 13.666666666666666,
+  "per_seed_pct": [
+   13.666666666666666
+  ],
+  "same quadrant": 12.777777777777779,
+  "same quadrant range": [
+   12.777777777777779,
+   12.777777777777779
+  ],
+  "adjacent quadrants": 0.0,
+  "adjacent quadrants range": [
+   0.0,
+   0.0
+  ],
+  "diagonal quadrants": 0.5555555555555556,
+  "diagonal quadrants range": [
+   0.5555555555555556,
+   0.5555555555555556
+  ],
+  "quadrant - open": 6.666666666666667,
+  "quadrant - open range": [
+   6.666666666666667,
+   6.666666666666667
+  ],
+  "open - open": 48.333333333333336,
+  "open - open range": [
+   48.333333333333336,
+   48.333333333333336
+  ]
+ }
+}

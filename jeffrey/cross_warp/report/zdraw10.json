@@ -1,0 +1,8384 @@
+{
+ "fields": {
+  "c22/12": {
+   "pmzw": {
+    "87358": {
+     "_id": "20261105T070717Z-0cb70093",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       478,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        138,
+        180
+       ],
+       "adjacent quadrants": [
+        42,
+        180
+       ],
+       "diagonal quadrants": [
+        31,
+        180
+       ],
+       "quadrant - open": [
+        87,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 124,
+      "not_arrived": 298
+     },
+     "final_loss": 0.0009051899105543271,
+     "rollbacks": 7,
+     "train_seconds": 328.60919642448425,
+     "t_scale": 23.915470123291016,
+     "failures": {
+      "collision": 414,
+      "stalled": 298,
+      "stalled_no_collision": 8,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       519,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        138,
+        180
+       ],
+       "adjacent quadrants": [
+        52,
+        180
+       ],
+       "diagonal quadrants": [
+        27,
+        180
+       ],
+       "quadrant - open": [
+        122,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T071502Z-3ddbb782",
+      "time_ratio_median": 1.113742559164512,
+      "collision": 381,
+      "stalled": 0,
+      "arrived_wall": 142,
+      "not_arrived": 239
+     },
+     "inverse_roundtrip_max": 4.410743713378906e-06
+    },
+    "1": {
+     "_id": "20261105T081641Z-9b26b9a9",
+     "seed": 1,
+     "x": {
+      "success_total": [
+       451,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        120,
+        180
+       ],
+       "adjacent quadrants": [
+        38,
+        180
+       ],
+       "diagonal quadrants": [
+        18,
+        180
+       ],
+       "quadrant - open": [
+        95,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 133,
+      "not_arrived": 316
+     },
+     "final_loss": 0.0009524628840154037,
+     "rollbacks": 0,
+     "train_seconds": 483.64554381370544,
+     "t_scale": 23.915470123291016,
+     "failures": {
+      "collision": 438,
+      "stalled": 316,
+      "stalled_no_collision": 11,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       494,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        120,
+        180
+       ],
+       "adjacent quadrants": [
+        43,
+        180
+       ],
+       "diagonal quadrants": [
+        28,
+        180
+       ],
+       "quadrant - open": [
+        123,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T083015Z-7ca06e00",
+      "time_ratio_median": 1.1010385679015728,
+      "collision": 406,
+      "stalled": 0,
+      "arrived_wall": 140,
+      "not_arrived": 266
+     },
+     "inverse_roundtrip_max": 4.410743713378906e-06
+    },
+    "2": {
+     "_id": "20261105T083109Z-a93a2dd4",
+     "seed": 2,
+     "x": {
+      "success_total": [
+       541,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        143,
+        180
+       ],
+       "adjacent quadrants": [
+        71,
+        180
+       ],
+       "diagonal quadrants": [
+        38,
+        180
+       ],
+       "quadrant - open": [
+        111,
+        180
+       ],
+       "open - open": [
+        178,
+        180
+       ]
+      },
+      "arrived_wall": 134,
+      "not_arrived": 225
+     },
+     "final_loss": 0.0008651856624055654,
+     "rollbacks": 1,
+     "train_seconds": 463.62190771102905,
+     "t_scale": 23.915470123291016,
+     "failures": {
+      "collision": 355,
+      "stalled": 225,
+      "stalled_no_collision": 4,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       554,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        143,
+        180
+       ],
+       "adjacent quadrants": [
+        75,
+        180
+       ],
+       "diagonal quadrants": [
+        39,
+        180
+       ],
+       "quadrant - open": [
+        117,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T084240Z-0b1240bd",
+      "time_ratio_median": 1.0982610988523591,
+      "collision": 346,
+      "stalled": 0,
+      "arrived_wall": 153,
+      "not_arrived": 193
+     },
+     "inverse_roundtrip_max": 4.470348358154297e-06
+    }
+   },
+   "idw": {
+    "87358": {
+     "_id": "20261105T084331Z-03fb8d5a",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       227,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        24,
+        180
+       ],
+       "adjacent quadrants": [
+        2,
+        180
+       ],
+       "diagonal quadrants": [
+        3,
+        180
+       ],
+       "quadrant - open": [
+        18,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 667,
+      "not_arrived": 6
+     },
+     "final_loss": 0.002807192096952349,
+     "rollbacks": 0,
+     "train_seconds": 435.5942792892456,
+     "t_scale": null,
+     "failures": {
+      "collision": 673,
+      "stalled": 6,
+      "stalled_no_collision": 0,
+      "runs": 900
+     }
+    }
+   },
+   "pmw": {
+    "87358": {
+     "_id": "20261105T085221Z-0adb49c2",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       158,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        41,
+        180
+       ],
+       "adjacent quadrants": [
+        3,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        18,
+        180
+       ],
+       "open - open": [
+        96,
+        180
+       ]
+      },
+      "arrived_wall": 28,
+      "not_arrived": 714
+     },
+     "final_loss": 0.0032299647573381662,
+     "rollbacks": 8,
+     "train_seconds": 525.1568126678467,
+     "t_scale": null,
+     "failures": {
+      "collision": 643,
+      "stalled": 714,
+      "stalled_no_collision": 99,
+      "runs": 900
+     }
+    }
+   },
+   "pmzs": {
+    "87358": {
+     "_id": "20261105T092739Z-35cd64d2",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       123,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        120,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        2,
+        180
+       ],
+       "open - open": [
+        1,
+        180
+       ]
+      },
+      "arrived_wall": 46,
+      "not_arrived": 731
+     },
+     "final_loss": 0.000985695602139458,
+     "rollbacks": 2,
+     "train_seconds": 462.0627055168152,
+     "t_scale": 23.915470123291016,
+     "failures": {
+      "collision": 535,
+      "stalled": 731,
+      "stalled_no_collision": 242,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       571,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        121,
+        180
+       ],
+       "adjacent quadrants": [
+        68,
+        180
+       ],
+       "diagonal quadrants": [
+        46,
+        180
+       ],
+       "quadrant - open": [
+        156,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T093927Z-f5223cda",
+      "time_ratio_median": 1.1150626352459223,
+      "collision": 329,
+      "stalled": 0,
+      "arrived_wall": 102,
+      "not_arrived": 227
+     },
+     "inverse_roundtrip_max": 4.5299530029296875e-06
+    }
+   },
+   "pmzp": {
+    "87358": {
+     "_id": "20261105T100207Z-ce4581be",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       453,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        118,
+        180
+       ],
+       "adjacent quadrants": [
+        47,
+        180
+       ],
+       "diagonal quadrants": [
+        11,
+        180
+       ],
+       "quadrant - open": [
+        102,
+        180
+       ],
+       "open - open": [
+        175,
+        180
+       ]
+      },
+      "arrived_wall": 101,
+      "not_arrived": 346
+     },
+     "final_loss": 0.001003835874143988,
+     "rollbacks": 0,
+     "train_seconds": 424.90033531188965,
+     "t_scale": 23.915470123291016,
+     "failures": {
+      "collision": 439,
+      "stalled": 346,
+      "stalled_no_collision": 8,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       478,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        118,
+        180
+       ],
+       "adjacent quadrants": [
+        58,
+        180
+       ],
+       "diagonal quadrants": [
+        10,
+        180
+       ],
+       "quadrant - open": [
+        120,
+        180
+       ],
+       "open - open": [
+        172,
+        180
+       ]
+      },
+      "zq": "20261105T101250Z-de74aef6",
+      "time_ratio_median": 1.1175272241038383,
+      "collision": 414,
+      "stalled": 8,
+      "arrived_wall": 116,
+      "not_arrived": 306
+     },
+     "inverse_roundtrip_max": 4.410743713378906e-06
+    }
+   },
+   "pmzg": {
+    "87358": {
+     "_id": "20261105T101344Z-b6ea4a7f",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       133,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        127,
+        180
+       ],
+       "adjacent quadrants": [
+        2,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        3,
+        180
+       ],
+       "open - open": [
+        1,
+        180
+       ]
+      },
+      "arrived_wall": 42,
+      "not_arrived": 725
+     },
+     "final_loss": 0.0009186754323309287,
+     "rollbacks": 4,
+     "train_seconds": 454.28061747550964,
+     "t_scale": 23.915470123291016,
+     "failures": {
+      "collision": 522,
+      "stalled": 725,
+      "stalled_no_collision": 245,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       567,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        127,
+        180
+       ],
+       "adjacent quadrants": [
+        68,
+        180
+       ],
+       "diagonal quadrants": [
+        48,
+        180
+       ],
+       "quadrant - open": [
+        144,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T102452Z-1e96231e",
+      "time_ratio_median": 1.1121676380922874,
+      "collision": 333,
+      "stalled": 0,
+      "arrived_wall": 114,
+      "not_arrived": 219
+     },
+     "inverse_roundtrip_max": 4.5299530029296875e-06
+    }
+   }
+  },
+  "c22/1": {
+   "pmzw": {
+    "87358": {
+     "_id": "20261105T071535Z-0404fd14",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       508,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        104,
+        180
+       ],
+       "adjacent quadrants": [
+        58,
+        180
+       ],
+       "diagonal quadrants": [
+        44,
+        180
+       ],
+       "quadrant - open": [
+        122,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 179,
+      "not_arrived": 213
+     },
+     "final_loss": 0.000992563524050638,
+     "rollbacks": 1,
+     "train_seconds": 325.6583843231201,
+     "t_scale": 5.999505519866943,
+     "failures": {
+      "collision": 389,
+      "stalled": 213,
+      "stalled_no_collision": 3,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       520,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        104,
+        180
+       ],
+       "adjacent quadrants": [
+        55,
+        180
+       ],
+       "diagonal quadrants": [
+        57,
+        180
+       ],
+       "quadrant - open": [
+        124,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T072128Z-99132dc6",
+      "time_ratio_median": 1.0941151013543498,
+      "collision": 377,
+      "stalled": 3,
+      "arrived_wall": 160,
+      "not_arrived": 220
+     },
+     "inverse_roundtrip_max": 1.5497207641601562e-06
+    },
+    "1": {
+     "_id": "20261105T104818Z-a4bcbe07",
+     "seed": 1,
+     "x": {
+      "success_total": [
+       589,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        146,
+        180
+       ],
+       "adjacent quadrants": [
+        65,
+        180
+       ],
+       "diagonal quadrants": [
+        72,
+        180
+       ],
+       "quadrant - open": [
+        126,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 86,
+      "not_arrived": 225
+     },
+     "final_loss": 0.0009822424763115123,
+     "rollbacks": 0,
+     "train_seconds": 454.2427806854248,
+     "t_scale": 5.999505519866943,
+     "failures": {
+      "collision": 311,
+      "stalled": 225,
+      "stalled_no_collision": 0,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       576,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        146,
+        180
+       ],
+       "adjacent quadrants": [
+        57,
+        180
+       ],
+       "diagonal quadrants": [
+        72,
+        180
+       ],
+       "quadrant - open": [
+        121,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T105640Z-c336e3eb",
+      "time_ratio_median": 1.1088358232234552,
+      "collision": 324,
+      "stalled": 0,
+      "arrived_wall": 89,
+      "not_arrived": 235
+     },
+     "inverse_roundtrip_max": 1.5497207641601562e-06
+    },
+    "2": {
+     "_id": "20261105T105726Z-649082a8",
+     "seed": 2,
+     "x": {
+      "success_total": [
+       576,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        137,
+        180
+       ],
+       "adjacent quadrants": [
+        82,
+        180
+       ],
+       "diagonal quadrants": [
+        44,
+        180
+       ],
+       "quadrant - open": [
+        133,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 158,
+      "not_arrived": 166
+     },
+     "final_loss": 0.0009733842744026333,
+     "rollbacks": 0,
+     "train_seconds": 420.4947283267975,
+     "t_scale": 5.999505519866943,
+     "failures": {
+      "collision": 324,
+      "stalled": 166,
+      "stalled_no_collision": 0,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       576,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        137,
+        180
+       ],
+       "adjacent quadrants": [
+        80,
+        180
+       ],
+       "diagonal quadrants": [
+        57,
+        180
+       ],
+       "quadrant - open": [
+        131,
+        180
+       ],
+       "open - open": [
+        171,
+        180
+       ]
+      },
+      "zq": "20261105T110514Z-f6c347ec",
+      "time_ratio_median": 1.08688392865774,
+      "collision": 324,
+      "stalled": 0,
+      "arrived_wall": 156,
+      "not_arrived": 168
+     },
+     "inverse_roundtrip_max": 1.5497207641601562e-06
+    }
+   },
+   "idw": {
+    "87358": {
+     "_id": "20261105T191014Z-f9700192",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       449,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        58,
+        180
+       ],
+       "adjacent quadrants": [
+        64,
+        180
+       ],
+       "diagonal quadrants": [
+        61,
+        180
+       ],
+       "quadrant - open": [
+        90,
+        180
+       ],
+       "open - open": [
+        176,
+        180
+       ]
+      },
+      "arrived_wall": 289,
+      "not_arrived": 162
+     },
+     "final_loss": 0.002685832849238068,
+     "rollbacks": 5,
+     "train_seconds": 330.16874289512634,
+     "t_scale": null,
+     "failures": {
+      "collision": 438,
+      "stalled": 162,
+      "stalled_no_collision": 13,
+      "runs": 900
+     }
+    }
+   }
+  },
+  "m10/1": {
+   "id": {
+    "87358": {
+     "_id": "20261105T072157Z-9f276654",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       632,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        110,
+        180
+       ],
+       "adjacent quadrants": [
+        112,
+        180
+       ],
+       "diagonal quadrants": [
+        117,
+        180
+       ],
+       "quadrant - open": [
+        122,
+        180
+       ],
+       "open - open": [
+        171,
+        180
+       ]
+      },
+      "arrived_wall": 220,
+      "not_arrived": 48
+     },
+     "final_loss": 0.0020643678726628423,
+     "rollbacks": 1,
+     "train_seconds": 337.14436078071594,
+     "t_scale": null,
+     "failures": {
+      "collision": 254,
+      "stalled": 48,
+      "stalled_no_collision": 14,
+      "runs": 900
+     }
+    },
+    "1": {
+     "_id": "20261105T134235Z-e7dccf69",
+     "seed": 1,
+     "x": {
+      "success_total": [
+       566,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        101,
+        180
+       ],
+       "adjacent quadrants": [
+        112,
+        180
+       ],
+       "diagonal quadrants": [
+        92,
+        180
+       ],
+       "quadrant - open": [
+        85,
+        180
+       ],
+       "open - open": [
+        176,
+        180
+       ]
+      },
+      "arrived_wall": 216,
+      "not_arrived": 118
+     },
+     "final_loss": 0.0018288591818418354,
+     "rollbacks": 8,
+     "train_seconds": 509.4915895462036,
+     "t_scale": null,
+     "failures": {
+      "collision": 328,
+      "stalled": 118,
+      "stalled_no_collision": 6,
+      "runs": 900
+     }
+    },
+    "2": {
+     "_id": "20261105T165054Z-76203de6",
+     "seed": 2,
+     "x": {
+      "success_total": [
+       650,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        122,
+        180
+       ],
+       "adjacent quadrants": [
+        114,
+        180
+       ],
+       "diagonal quadrants": [
+        123,
+        180
+       ],
+       "quadrant - open": [
+        114,
+        180
+       ],
+       "open - open": [
+        177,
+        180
+       ]
+      },
+      "arrived_wall": 172,
+      "not_arrived": 78
+     },
+     "final_loss": 0.0018299517396371812,
+     "rollbacks": 10,
+     "train_seconds": 461.7335228919983,
+     "t_scale": null,
+     "failures": {
+      "collision": 250,
+      "stalled": 78,
+      "stalled_no_collision": 0,
+      "runs": 900
+     }
+    }
+   },
+   "pmzw": {
+    "87358": {
+     "_id": "20261105T073554Z-ab03c22d",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       840,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        179,
+        180
+       ],
+       "adjacent quadrants": [
+        151,
+        180
+       ],
+       "diagonal quadrants": [
+        150,
+        180
+       ],
+       "quadrant - open": [
+        180,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 28,
+      "not_arrived": 32
+     },
+     "final_loss": 0.0008134726376738399,
+     "rollbacks": 0,
+     "train_seconds": 457.2899491786957,
+     "t_scale": 4.370212554931641,
+     "failures": {
+      "collision": 60,
+      "stalled": 32,
+      "stalled_no_collision": 0,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       829,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        179,
+        180
+       ],
+       "adjacent quadrants": [
+        151,
+        180
+       ],
+       "diagonal quadrants": [
+        145,
+        180
+       ],
+       "quadrant - open": [
+        177,
+        180
+       ],
+       "open - open": [
+        177,
+        180
+       ]
+      },
+      "zq": "20261105T074405Z-04afc680",
+      "time_ratio_median": 1.0521631891553602,
+      "collision": 71,
+      "stalled": 0,
+      "arrived_wall": 36,
+      "not_arrived": 35
+     },
+     "inverse_roundtrip_max": 6.109476089477539e-07
+    },
+    "1": {
+     "_id": "20261105T144706Z-ad62784b",
+     "seed": 1,
+     "x": {
+      "success_total": [
+       828,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        171,
+        180
+       ],
+       "adjacent quadrants": [
+        151,
+        180
+       ],
+       "diagonal quadrants": [
+        155,
+        180
+       ],
+       "quadrant - open": [
+        171,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 21,
+      "not_arrived": 51
+     },
+     "final_loss": 0.0007920660573290661,
+     "rollbacks": 0,
+     "train_seconds": 451.4450304508209,
+     "t_scale": 4.370212554931641,
+     "failures": {
+      "collision": 72,
+      "stalled": 51,
+      "stalled_no_collision": 0,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       828,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        171,
+        180
+       ],
+       "adjacent quadrants": [
+        148,
+        180
+       ],
+       "diagonal quadrants": [
+        155,
+        180
+       ],
+       "quadrant - open": [
+        174,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T151312Z-bbbc9fd9",
+      "time_ratio_median": 1.0575179619265715,
+      "collision": 72,
+      "stalled": 0,
+      "arrived_wall": 23,
+      "not_arrived": 49
+     },
+     "inverse_roundtrip_max": 5.960464477539062e-07
+    },
+    "2": {
+     "_id": "20261105T172501Z-c1c04cd9",
+     "seed": 2,
+     "x": {
+      "success_total": [
+       834,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        175,
+        180
+       ],
+       "adjacent quadrants": [
+        149,
+        180
+       ],
+       "diagonal quadrants": [
+        154,
+        180
+       ],
+       "quadrant - open": [
+        176,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 25,
+      "not_arrived": 41
+     },
+     "final_loss": 0.0008124536980176345,
+     "rollbacks": 0,
+     "train_seconds": 310.40867495536804,
+     "t_scale": 4.370212554931641,
+     "failures": {
+      "collision": 66,
+      "stalled": 41,
+      "stalled_no_collision": 0,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       836,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        175,
+        180
+       ],
+       "adjacent quadrants": [
+        151,
+        180
+       ],
+       "diagonal quadrants": [
+        154,
+        180
+       ],
+       "quadrant - open": [
+        176,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T173031Z-2fce376a",
+      "time_ratio_median": 1.0448499781570226,
+      "collision": 64,
+      "stalled": 0,
+      "arrived_wall": 23,
+      "not_arrived": 41
+     },
+     "inverse_roundtrip_max": 5.960464477539062e-07
+    }
+   },
+   "pmz": {
+    "87358": {
+     "_id": "20261105T075532Z-babd80d1",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       805,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        169,
+        180
+       ],
+       "adjacent quadrants": [
+        137,
+        180
+       ],
+       "diagonal quadrants": [
+        149,
+        180
+       ],
+       "quadrant - open": [
+        170,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 30,
+      "not_arrived": 65
+     },
+     "final_loss": 0.0007636643713340163,
+     "rollbacks": 0,
+     "train_seconds": 458.43290734291077,
+     "t_scale": 4.370212554931641,
+     "failures": {
+      "collision": 95,
+      "stalled": 65,
+      "stalled_no_collision": 0,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       818,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        169,
+        180
+       ],
+       "adjacent quadrants": [
+        136,
+        180
+       ],
+       "diagonal quadrants": [
+        153,
+        180
+       ],
+       "quadrant - open": [
+        180,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T080344Z-9815260d",
+      "time_ratio_median": 1.0502755991571395,
+      "collision": 82,
+      "stalled": 0,
+      "arrived_wall": 17,
+      "not_arrived": 65
+     },
+     "inverse_roundtrip_max": 6.109476089477539e-07
+    },
+    "1": {
+     "_id": "20261105T174548Z-0457ca4f",
+     "seed": 1,
+     "x": {
+      "success_total": [
+       817,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        163,
+        180
+       ],
+       "adjacent quadrants": [
+        144,
+        180
+       ],
+       "diagonal quadrants": [
+        159,
+        180
+       ],
+       "quadrant - open": [
+        171,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 25,
+      "not_arrived": 58
+     },
+     "final_loss": 0.0007214878860395402,
+     "rollbacks": 0,
+     "train_seconds": 314.4778482913971,
+     "t_scale": 4.370212554931641,
+     "failures": {
+      "collision": 83,
+      "stalled": 58,
+      "stalled_no_collision": 0,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       801,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        163,
+        180
+       ],
+       "adjacent quadrants": [
+        144,
+        180
+       ],
+       "diagonal quadrants": [
+        151,
+        180
+       ],
+       "quadrant - open": [
+        163,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T175122Z-0aaa3dd4",
+      "time_ratio_median": 1.0572505407867934,
+      "collision": 99,
+      "stalled": 0,
+      "arrived_wall": 33,
+      "not_arrived": 66
+     },
+     "inverse_roundtrip_max": 6.109476089477539e-07
+    },
+    "2": {
+     "_id": "20261105T180712Z-2bf68a0b",
+     "seed": 2,
+     "x": {
+      "success_total": [
+       815,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        176,
+        180
+       ],
+       "adjacent quadrants": [
+        137,
+        180
+       ],
+       "diagonal quadrants": [
+        156,
+        180
+       ],
+       "quadrant - open": [
+        166,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 49,
+      "not_arrived": 36
+     },
+     "final_loss": 0.000727691876818426,
+     "rollbacks": 0,
+     "train_seconds": 322.5120892524719,
+     "t_scale": 4.370212554931641,
+     "failures": {
+      "collision": 85,
+      "stalled": 36,
+      "stalled_no_collision": 0,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       811,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        176,
+        180
+       ],
+       "adjacent quadrants": [
+        135,
+        180
+       ],
+       "diagonal quadrants": [
+        155,
+        180
+       ],
+       "quadrant - open": [
+        165,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T181254Z-ae6c2dc2",
+      "time_ratio_median": 1.0497065410786581,
+      "collision": 89,
+      "stalled": 0,
+      "arrived_wall": 53,
+      "not_arrived": 36
+     },
+     "inverse_roundtrip_max": 6.109476089477539e-07
+    }
+   },
+   "pm": {
+    "87358": {
+     "_id": "20261105T124823Z-ae86fcae",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       777,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        165,
+        180
+       ],
+       "adjacent quadrants": [
+        124,
+        180
+       ],
+       "diagonal quadrants": [
+        141,
+        180
+       ],
+       "quadrant - open": [
+        167,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 27,
+      "not_arrived": 96
+     },
+     "final_loss": 0.0011489155876915902,
+     "rollbacks": 9,
+     "train_seconds": 512.5289964675903,
+     "t_scale": null,
+     "failures": {
+      "collision": 117,
+      "stalled": 96,
+      "stalled_no_collision": 6,
+      "runs": 900
+     }
+    }
+   },
+   "idw": {
+    "87358": {
+     "_id": "20261105T191734Z-752cddaa",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       657,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        125,
+        180
+       ],
+       "adjacent quadrants": [
+        99,
+        180
+       ],
+       "diagonal quadrants": [
+        124,
+        180
+       ],
+       "quadrant - open": [
+        129,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 211,
+      "not_arrived": 32
+     },
+     "final_loss": 0.0017906192224472761,
+     "rollbacks": 1,
+     "train_seconds": 328.41617918014526,
+     "t_scale": null,
+     "failures": {
+      "collision": 227,
+      "stalled": 32,
+      "stalled_no_collision": 16,
+      "runs": 900
+     }
+    }
+   }
+  },
+  "m10/12": {
+   "id": {
+    "87358": {
+     "_id": "20261105T072800Z-d07a3b3c",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       244,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        25,
+        180
+       ],
+       "adjacent quadrants": [
+        3,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        36,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 656,
+      "not_arrived": 0
+     },
+     "final_loss": 0.0016267629398498684,
+     "rollbacks": 0,
+     "train_seconds": 390.3724911212921,
+     "t_scale": null,
+     "failures": {
+      "collision": 656,
+      "stalled": 0,
+      "stalled_no_collision": 0,
+      "runs": 900
+     }
+    },
+    "1": {
+     "_id": "20261105T143209Z-eaf41e2c",
+     "seed": 1,
+     "x": {
+      "success_total": [
+       236,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        20,
+        180
+       ],
+       "adjacent quadrants": [
+        3,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        33,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 664,
+      "not_arrived": 0
+     },
+     "final_loss": 0.0016804059268906713,
+     "rollbacks": 0,
+     "train_seconds": 452.2582495212555,
+     "t_scale": null,
+     "failures": {
+      "collision": 664,
+      "stalled": 0,
+      "stalled_no_collision": 0,
+      "runs": 900
+     }
+    },
+    "2": {
+     "_id": "20261105T171507Z-e351705c",
+     "seed": 2,
+     "x": {
+      "success_total": [
+       242,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        23,
+        180
+       ],
+       "adjacent quadrants": [
+        3,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        36,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 658,
+      "not_arrived": 0
+     },
+     "final_loss": 0.0016630794561933726,
+     "rollbacks": 0,
+     "train_seconds": 387.84773874282837,
+     "t_scale": null,
+     "failures": {
+      "collision": 658,
+      "stalled": 0,
+      "stalled_no_collision": 0,
+      "runs": 900
+     }
+    }
+   },
+   "pmzw": {
+    "87358": {
+     "_id": "20261105T074439Z-f7d1a423",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       755,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        170,
+        180
+       ],
+       "adjacent quadrants": [
+        141,
+        180
+       ],
+       "diagonal quadrants": [
+        91,
+        180
+       ],
+       "quadrant - open": [
+        173,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 67,
+      "not_arrived": 78
+     },
+     "final_loss": 0.0007475359307136387,
+     "rollbacks": 0,
+     "train_seconds": 436.1233494281769,
+     "t_scale": 22.283790588378906,
+     "failures": {
+      "collision": 145,
+      "stalled": 78,
+      "stalled_no_collision": 0,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       761,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        170,
+        180
+       ],
+       "adjacent quadrants": [
+        141,
+        180
+       ],
+       "diagonal quadrants": [
+        91,
+        180
+       ],
+       "quadrant - open": [
+        179,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T075453Z-2528a2c0",
+      "time_ratio_median": 1.0451701263710642,
+      "collision": 139,
+      "stalled": 0,
+      "arrived_wall": 66,
+      "not_arrived": 73
+     },
+     "inverse_roundtrip_max": 2.86102294921875e-06
+    },
+    "1": {
+     "_id": "20261105T155736Z-8414752c",
+     "seed": 1,
+     "x": {
+      "success_total": [
+       708,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        164,
+        180
+       ],
+       "adjacent quadrants": [
+        111,
+        180
+       ],
+       "diagonal quadrants": [
+        97,
+        180
+       ],
+       "quadrant - open": [
+        163,
+        180
+       ],
+       "open - open": [
+        173,
+        180
+       ]
+      },
+      "arrived_wall": 71,
+      "not_arrived": 121
+     },
+     "final_loss": 0.0007525572727899998,
+     "rollbacks": 0,
+     "train_seconds": 447.9119219779968,
+     "t_scale": 22.283790588378906,
+     "failures": {
+      "collision": 185,
+      "stalled": 121,
+      "stalled_no_collision": 7,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       739,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        164,
+        180
+       ],
+       "adjacent quadrants": [
+        109,
+        180
+       ],
+       "diagonal quadrants": [
+        115,
+        180
+       ],
+       "quadrant - open": [
+        171,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T165029Z-a547ca16",
+      "time_ratio_median": 1.0526891480908815,
+      "collision": 160,
+      "stalled": 1,
+      "arrived_wall": 68,
+      "not_arrived": 93
+     },
+     "inverse_roundtrip_max": 2.86102294921875e-06
+    },
+    "2": {
+     "_id": "20261105T173052Z-5bdb58b0",
+     "seed": 2,
+     "x": {
+      "success_total": [
+       806,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        159,
+        180
+       ],
+       "adjacent quadrants": [
+        151,
+        180
+       ],
+       "diagonal quadrants": [
+        143,
+        180
+       ],
+       "quadrant - open": [
+        173,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 63,
+      "not_arrived": 31
+     },
+     "final_loss": 0.000711168599082157,
+     "rollbacks": 0,
+     "train_seconds": 312.35326766967773,
+     "t_scale": 22.283790588378906,
+     "failures": {
+      "collision": 93,
+      "stalled": 31,
+      "stalled_no_collision": 1,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       799,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        159,
+        180
+       ],
+       "adjacent quadrants": [
+        144,
+        180
+       ],
+       "diagonal quadrants": [
+        142,
+        180
+       ],
+       "quadrant - open": [
+        174,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T173803Z-e274789d",
+      "time_ratio_median": 1.0546471647046394,
+      "collision": 100,
+      "stalled": 1,
+      "arrived_wall": 69,
+      "not_arrived": 32
+     },
+     "inverse_roundtrip_max": 2.7418136596679688e-06
+    }
+   },
+   "pmz": {
+    "87358": {
+     "_id": "20261105T080419Z-aca0abb1",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       334,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        120,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        46,
+        180
+       ],
+       "open - open": [
+        168,
+        180
+       ]
+      },
+      "arrived_wall": 53,
+      "not_arrived": 513
+     },
+     "final_loss": 0.00026318258460378274,
+     "rollbacks": 7,
+     "train_seconds": 466.21531677246094,
+     "t_scale": 22.283790588378906,
+     "failures": {
+      "collision": 506,
+      "stalled": 513,
+      "stalled_no_collision": 60,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       401,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        120,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        107,
+        180
+       ],
+       "open - open": [
+        174,
+        180
+       ]
+      },
+      "zq": "20261105T081552Z-661be8b5",
+      "time_ratio_median": 1.0583655792853779,
+      "collision": 478,
+      "stalled": 21,
+      "arrived_wall": 59,
+      "not_arrived": 440
+     },
+     "inverse_roundtrip_max": 2.86102294921875e-06
+    },
+    "1": {
+     "_id": "20261105T175144Z-0e32316c",
+     "seed": 1,
+     "x": {
+      "success_total": [
+       301,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        128,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        15,
+        180
+       ],
+       "open - open": [
+        158,
+        180
+       ]
+      },
+      "arrived_wall": 40,
+      "not_arrived": 559
+     },
+     "final_loss": 0.0002910620823968202,
+     "rollbacks": 2,
+     "train_seconds": 319.4836869239807,
+     "t_scale": 22.283790588378906,
+     "failures": {
+      "collision": 528,
+      "stalled": 559,
+      "stalled_no_collision": 71,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       364,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        128,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        68,
+        180
+       ],
+       "open - open": [
+        168,
+        180
+       ]
+      },
+      "zq": "20261105T175921Z-476b51d4",
+      "time_ratio_median": 1.0506607504043832,
+      "collision": 499,
+      "stalled": 37,
+      "arrived_wall": 47,
+      "not_arrived": 489
+     },
+     "inverse_roundtrip_max": 2.86102294921875e-06
+    },
+    "2": {
+     "_id": "20261105T181316Z-72a28ab8",
+     "seed": 2,
+     "x": {
+      "success_total": [
+       364,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        119,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        81,
+        180
+       ],
+       "open - open": [
+        164,
+        180
+       ]
+      },
+      "arrived_wall": 57,
+      "not_arrived": 479
+     },
+     "final_loss": 0.0002466500081936829,
+     "rollbacks": 2,
+     "train_seconds": 324.02564692497253,
+     "t_scale": 22.283790588378906,
+     "failures": {
+      "collision": 486,
+      "stalled": 479,
+      "stalled_no_collision": 50,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       391,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        119,
+        180
+       ],
+       "adjacent quadrants": [
+        1,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        103,
+        180
+       ],
+       "open - open": [
+        168,
+        180
+       ]
+      },
+      "zq": "20261105T182057Z-93889946",
+      "time_ratio_median": 1.051077770837772,
+      "collision": 479,
+      "stalled": 30,
+      "arrived_wall": 90,
+      "not_arrived": 419
+     },
+     "inverse_roundtrip_max": 2.86102294921875e-06
+    }
+   },
+   "idw": {
+    "87358": {
+     "_id": "20261105T090459Z-e8022f37",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       242,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        45,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        1,
+        180
+       ],
+       "quadrant - open": [
+        16,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 120,
+      "not_arrived": 538
+     },
+     "final_loss": 0.00250147155020386,
+     "rollbacks": 0,
+     "train_seconds": 440.7050111293793,
+     "t_scale": null,
+     "failures": {
+      "collision": 648,
+      "stalled": 538,
+      "stalled_no_collision": 10,
+      "runs": 900
+     }
+    }
+   },
+   "pmw": {
+    "87358": {
+     "_id": "20261105T091532Z-a62e52ef",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       153,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        75,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        21,
+        180
+       ],
+       "open - open": [
+        57,
+        180
+       ]
+      },
+      "arrived_wall": 92,
+      "not_arrived": 655
+     },
+     "final_loss": 0.07098662108182907,
+     "rollbacks": 3,
+     "train_seconds": 519.6033067703247,
+     "t_scale": null,
+     "failures": {
+      "collision": 608,
+      "stalled": 655,
+      "stalled_no_collision": 139,
+      "runs": 900
+     }
+    }
+   },
+   "pmzs": {
+    "87358": {
+     "_id": "20261105T094021Z-b9fe4477",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       197,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        179,
+        180
+       ],
+       "adjacent quadrants": [
+        10,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        3,
+        180
+       ],
+       "open - open": [
+        5,
+        180
+       ]
+      },
+      "arrived_wall": 0,
+      "not_arrived": 703
+     },
+     "final_loss": 0.000834234495414421,
+     "rollbacks": 0,
+     "train_seconds": 421.47251534461975,
+     "t_scale": 22.283790588378906,
+     "failures": {
+      "collision": 426,
+      "stalled": 703,
+      "stalled_no_collision": 277,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       830,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        179,
+        180
+       ],
+       "adjacent quadrants": [
+        139,
+        180
+       ],
+       "diagonal quadrants": [
+        152,
+        180
+       ],
+       "quadrant - open": [
+        180,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T095114Z-da3e19ef",
+      "time_ratio_median": 1.061383040942235,
+      "collision": 70,
+      "stalled": 0,
+      "arrived_wall": 36,
+      "not_arrived": 34
+     },
+     "inverse_roundtrip_max": 2.86102294921875e-06
+    }
+   },
+   "pmzp": {
+    "87358": {
+     "_id": "20261105T102541Z-ada34e9e",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       775,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        176,
+        180
+       ],
+       "adjacent quadrants": [
+        128,
+        180
+       ],
+       "diagonal quadrants": [
+        116,
+        180
+       ],
+       "quadrant - open": [
+        175,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 17,
+      "not_arrived": 108
+     },
+     "final_loss": 0.0008475249924231321,
+     "rollbacks": 0,
+     "train_seconds": 446.51408195495605,
+     "t_scale": 22.283790588378906,
+     "failures": {
+      "collision": 125,
+      "stalled": 108,
+      "stalled_no_collision": 0,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       793,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        176,
+        180
+       ],
+       "adjacent quadrants": [
+        144,
+        180
+       ],
+       "diagonal quadrants": [
+        116,
+        180
+       ],
+       "quadrant - open": [
+        177,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T103616Z-ecbdedf6",
+      "time_ratio_median": 1.047120458983719,
+      "collision": 107,
+      "stalled": 0,
+      "arrived_wall": 22,
+      "not_arrived": 85
+     },
+     "inverse_roundtrip_max": 2.7418136596679688e-06
+    }
+   },
+   "pmzg": {
+    "87358": {
+     "_id": "20261105T103655Z-0d2134ba",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       181,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        178,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        0,
+        180
+       ],
+       "open - open": [
+        3,
+        180
+       ]
+      },
+      "arrived_wall": 2,
+      "not_arrived": 717
+     },
+     "final_loss": 0.0007419804751407355,
+     "rollbacks": 0,
+     "train_seconds": 414.91935086250305,
+     "t_scale": 22.283790588378906,
+     "failures": {
+      "collision": 448,
+      "stalled": 717,
+      "stalled_no_collision": 271,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       830,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        178,
+        180
+       ],
+       "adjacent quadrants": [
+        142,
+        180
+       ],
+       "diagonal quadrants": [
+        150,
+        180
+       ],
+       "quadrant - open": [
+        180,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T104743Z-005f5d2e",
+      "time_ratio_median": 1.0763858111224702,
+      "collision": 70,
+      "stalled": 0,
+      "arrived_wall": 29,
+      "not_arrived": 41
+     },
+     "inverse_roundtrip_max": 2.86102294921875e-06
+    }
+   },
+   "pm": {
+    "87358": {
+     "_id": "20261105T125730Z-7a79e701",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       161,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        62,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        15,
+        180
+       ],
+       "open - open": [
+        84,
+        180
+       ]
+      },
+      "arrived_wall": 3,
+      "not_arrived": 736
+     },
+     "final_loss": 0.0006457539420807734,
+     "rollbacks": 825,
+     "train_seconds": 620.882884979248,
+     "t_scale": null,
+     "failures": {
+      "collision": 604,
+      "stalled": 736,
+      "stalled_no_collision": 135,
+      "runs": 900
+     }
+    }
+   }
+  },
+  "c22/8": {
+   "pmzw": {
+    "87358": {
+     "_id": "20261105T095149Z-bd248c8e",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       520,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        131,
+        180
+       ],
+       "adjacent quadrants": [
+        64,
+        180
+       ],
+       "diagonal quadrants": [
+        39,
+        180
+       ],
+       "quadrant - open": [
+        109,
+        180
+       ],
+       "open - open": [
+        177,
+        180
+       ]
+      },
+      "arrived_wall": 114,
+      "not_arrived": 266
+     },
+     "final_loss": 0.0009190232667606324,
+     "rollbacks": 3,
+     "train_seconds": 456.12788128852844,
+     "t_scale": 17.40038299560547,
+     "failures": {
+      "collision": 376,
+      "stalled": 266,
+      "stalled_no_collision": 4,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       528,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        132,
+        180
+       ],
+       "adjacent quadrants": [
+        64,
+        180
+       ],
+       "diagonal quadrants": [
+        34,
+        180
+       ],
+       "quadrant - open": [
+        121,
+        180
+       ],
+       "open - open": [
+        177,
+        180
+       ]
+      },
+      "zq": "20261105T110558Z-049d6f06",
+      "time_ratio_median": 1.1355507649028713,
+      "collision": 369,
+      "stalled": 3,
+      "arrived_wall": 129,
+      "not_arrived": 243
+     },
+     "inverse_roundtrip_max": 4.172325134277344e-06
+    },
+    "1": {
+     "_id": "20261105T173827Z-70c94fb1",
+     "seed": 1,
+     "x": {
+      "success_total": [
+       511,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        133,
+        180
+       ],
+       "adjacent quadrants": [
+        54,
+        180
+       ],
+       "diagonal quadrants": [
+        37,
+        180
+       ],
+       "quadrant - open": [
+        107,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 112,
+      "not_arrived": 277
+     },
+     "final_loss": 0.0009328470332548022,
+     "rollbacks": 0,
+     "train_seconds": 314.2777485847473,
+     "t_scale": 17.40038299560547,
+     "failures": {
+      "collision": 388,
+      "stalled": 277,
+      "stalled_no_collision": 1,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       511,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        133,
+        180
+       ],
+       "adjacent quadrants": [
+        45,
+        180
+       ],
+       "diagonal quadrants": [
+        37,
+        180
+       ],
+       "quadrant - open": [
+        116,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T174515Z-3a65f08e",
+      "time_ratio_median": 1.156411173438998,
+      "collision": 389,
+      "stalled": 0,
+      "arrived_wall": 143,
+      "not_arrived": 246
+     },
+     "inverse_roundtrip_max": 4.172325134277344e-06
+    },
+    "2": {
+     "_id": "20261105T175953Z-366fd7aa",
+     "seed": 2,
+     "x": {
+      "success_total": [
+       531,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        132,
+        180
+       ],
+       "adjacent quadrants": [
+        48,
+        180
+       ],
+       "diagonal quadrants": [
+        56,
+        180
+       ],
+       "quadrant - open": [
+        115,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 174,
+      "not_arrived": 195
+     },
+     "final_loss": 0.0008918462262954563,
+     "rollbacks": 0,
+     "train_seconds": 319.83104276657104,
+     "t_scale": 17.40038299560547,
+     "failures": {
+      "collision": 369,
+      "stalled": 195,
+      "stalled_no_collision": 0,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       547,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        132,
+        180
+       ],
+       "adjacent quadrants": [
+        51,
+        180
+       ],
+       "diagonal quadrants": [
+        55,
+        180
+       ],
+       "quadrant - open": [
+        129,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T180643Z-c81db3b0",
+      "time_ratio_median": 1.1328875213198473,
+      "collision": 353,
+      "stalled": 0,
+      "arrived_wall": 182,
+      "not_arrived": 171
+     },
+     "inverse_roundtrip_max": 4.172325134277344e-06
+    }
+   },
+   "idw": {
+    "87358": {
+     "_id": "20261105T195416Z-973bf79f",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       246,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        33,
+        180
+       ],
+       "adjacent quadrants": [
+        3,
+        180
+       ],
+       "diagonal quadrants": [
+        15,
+        180
+       ],
+       "quadrant - open": [
+        15,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 423,
+      "not_arrived": 231
+     },
+     "final_loss": 0.0027287323027849197,
+     "rollbacks": 0,
+     "train_seconds": 330.29002046585083,
+     "t_scale": null,
+     "failures": {
+      "collision": 651,
+      "stalled": 231,
+      "stalled_no_collision": 3,
+      "runs": 900
+     }
+    }
+   }
+  },
+  "c22/2": {
+   "pmzw": {
+    "87358": {
+     "_id": "20261105T110650Z-dc9e2eb0",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       535,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        129,
+        180
+       ],
+       "adjacent quadrants": [
+        61,
+        180
+       ],
+       "diagonal quadrants": [
+        38,
+        180
+       ],
+       "quadrant - open": [
+        127,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 131,
+      "not_arrived": 234
+     },
+     "final_loss": 0.0010045253002317622,
+     "rollbacks": 1,
+     "train_seconds": 452.69350934028625,
+     "t_scale": 7.628202438354492,
+     "failures": {
+      "collision": 365,
+      "stalled": 234,
+      "stalled_no_collision": 0,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       529,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        129,
+        180
+       ],
+       "adjacent quadrants": [
+        59,
+        180
+       ],
+       "diagonal quadrants": [
+        40,
+        180
+       ],
+       "quadrant - open": [
+        121,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T111525Z-42600f64",
+      "time_ratio_median": 1.1139313309574739,
+      "collision": 371,
+      "stalled": 0,
+      "arrived_wall": 143,
+      "not_arrived": 228
+     },
+     "inverse_roundtrip_max": 1.430511474609375e-06
+    }
+   },
+   "idw": {
+    "87358": {
+     "_id": "20261105T192412Z-1cb6a55a",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       367,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        46,
+        180
+       ],
+       "adjacent quadrants": [
+        24,
+        180
+       ],
+       "diagonal quadrants": [
+        44,
+        180
+       ],
+       "quadrant - open": [
+        73,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 286,
+      "not_arrived": 247
+     },
+     "final_loss": 0.0024868178297765553,
+     "rollbacks": 5,
+     "train_seconds": 335.184490442276,
+     "t_scale": null,
+     "failures": {
+      "collision": 533,
+      "stalled": 247,
+      "stalled_no_collision": 0,
+      "runs": 900
+     }
+    }
+   }
+  },
+  "c22/4": {
+   "pmzw": {
+    "87358": {
+     "_id": "20261105T111612Z-503aa6cf",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       568,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        111,
+        180
+       ],
+       "adjacent quadrants": [
+        82,
+        180
+       ],
+       "diagonal quadrants": [
+        58,
+        180
+       ],
+       "quadrant - open": [
+        137,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 95,
+      "not_arrived": 237
+     },
+     "final_loss": 0.0009715398628031835,
+     "rollbacks": 1,
+     "train_seconds": 417.10603523254395,
+     "t_scale": 10.88559627532959,
+     "failures": {
+      "collision": 332,
+      "stalled": 237,
+      "stalled_no_collision": 0,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       541,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        111,
+        180
+       ],
+       "adjacent quadrants": [
+        80,
+        180
+       ],
+       "diagonal quadrants": [
+        50,
+        180
+       ],
+       "quadrant - open": [
+        120,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T112437Z-5c97535c",
+      "time_ratio_median": 1.1362614920344518,
+      "collision": 359,
+      "stalled": 0,
+      "arrived_wall": 124,
+      "not_arrived": 235
+     },
+     "inverse_roundtrip_max": 4.0531158447265625e-06
+    }
+   },
+   "idw": {
+    "87358": {
+     "_id": "20261105T193900Z-51804883",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       281,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        31,
+        180
+       ],
+       "adjacent quadrants": [
+        27,
+        180
+       ],
+       "diagonal quadrants": [
+        12,
+        180
+       ],
+       "quadrant - open": [
+        31,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 302,
+      "not_arrived": 317
+     },
+     "final_loss": 0.0026359655894339085,
+     "rollbacks": 0,
+     "train_seconds": 326.3501949310303,
+     "t_scale": null,
+     "failures": {
+      "collision": 619,
+      "stalled": 317,
+      "stalled_no_collision": 0,
+      "runs": 900
+     }
+    }
+   }
+  },
+  "m10/2": {
+   "id": {
+    "87358": {
+     "_id": "20261105T112525Z-cbd8e3f1",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       468,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        93,
+        180
+       ],
+       "adjacent quadrants": [
+        41,
+        180
+       ],
+       "diagonal quadrants": [
+        64,
+        180
+       ],
+       "quadrant - open": [
+        90,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 236,
+      "not_arrived": 196
+     },
+     "final_loss": 0.0018978401785716414,
+     "rollbacks": 5,
+     "train_seconds": 470.0839173793793,
+     "t_scale": null,
+     "failures": {
+      "collision": 419,
+      "stalled": 196,
+      "stalled_no_collision": 13,
+      "runs": 900
+     }
+    }
+   },
+   "pmzw": {
+    "87358": {
+     "_id": "20261105T113359Z-59177f24",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       793,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        169,
+        180
+       ],
+       "adjacent quadrants": [
+        121,
+        180
+       ],
+       "diagonal quadrants": [
+        149,
+        180
+       ],
+       "quadrant - open": [
+        174,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 41,
+      "not_arrived": 66
+     },
+     "final_loss": 0.0007518072525272146,
+     "rollbacks": 0,
+     "train_seconds": 420.46800446510315,
+     "t_scale": 5.9983134269714355,
+     "failures": {
+      "collision": 107,
+      "stalled": 66,
+      "stalled_no_collision": 0,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       779,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        169,
+        180
+       ],
+       "adjacent quadrants": [
+        128,
+        180
+       ],
+       "diagonal quadrants": [
+        134,
+        180
+       ],
+       "quadrant - open": [
+        168,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T114139Z-89e3a889",
+      "time_ratio_median": 1.0647673440628682,
+      "collision": 121,
+      "stalled": 0,
+      "arrived_wall": 54,
+      "not_arrived": 67
+     },
+     "inverse_roundtrip_max": 1.6689300537109375e-06
+    }
+   },
+   "pmz": {
+    "87358": {
+     "_id": "20261105T114216Z-3159dc0e",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       709,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        163,
+        180
+       ],
+       "adjacent quadrants": [
+        101,
+        180
+       ],
+       "diagonal quadrants": [
+        102,
+        180
+       ],
+       "quadrant - open": [
+        163,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 68,
+      "not_arrived": 123
+     },
+     "final_loss": 0.000591067764617037,
+     "rollbacks": 3,
+     "train_seconds": 451.9747941493988,
+     "t_scale": 5.9983134269714355,
+     "failures": {
+      "collision": 191,
+      "stalled": 123,
+      "stalled_no_collision": 0,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       728,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        163,
+        180
+       ],
+       "adjacent quadrants": [
+        110,
+        180
+       ],
+       "diagonal quadrants": [
+        107,
+        180
+       ],
+       "quadrant - open": [
+        168,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T115037Z-a0cfcf95",
+      "time_ratio_median": 1.0627736387752633,
+      "collision": 172,
+      "stalled": 0,
+      "arrived_wall": 56,
+      "not_arrived": 116
+     },
+     "inverse_roundtrip_max": 1.6689300537109375e-06
+    }
+   },
+   "pm": {
+    "87358": {
+     "_id": "20261105T131140Z-ec7b3fbc",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       617,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        140,
+        180
+       ],
+       "adjacent quadrants": [
+        62,
+        180
+       ],
+       "diagonal quadrants": [
+        94,
+        180
+       ],
+       "quadrant - open": [
+        144,
+        180
+       ],
+       "open - open": [
+        177,
+        180
+       ]
+      },
+      "arrived_wall": 66,
+      "not_arrived": 217
+     },
+     "final_loss": 0.0010769095679279417,
+     "rollbacks": 20,
+     "train_seconds": 495.03249764442444,
+     "t_scale": null,
+     "failures": {
+      "collision": 283,
+      "stalled": 217,
+      "stalled_no_collision": 0,
+      "runs": 900
+     }
+    }
+   },
+   "idw": {
+    "87358": {
+     "_id": "20261105T193154Z-594e02d4",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       565,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        97,
+        180
+       ],
+       "adjacent quadrants": [
+        86,
+        180
+       ],
+       "diagonal quadrants": [
+        82,
+        180
+       ],
+       "quadrant - open": [
+        123,
+        180
+       ],
+       "open - open": [
+        177,
+        180
+       ]
+      },
+      "arrived_wall": 155,
+      "not_arrived": 180
+     },
+     "final_loss": 0.0019489438855089247,
+     "rollbacks": 12,
+     "train_seconds": 325.34572768211365,
+     "t_scale": null,
+     "failures": {
+      "collision": 303,
+      "stalled": 180,
+      "stalled_no_collision": 32,
+      "runs": 900
+     }
+    }
+   }
+  },
+  "m10/4": {
+   "id": {
+    "87358": {
+     "_id": "20261105T115115Z-6d708636",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       288,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        54,
+        180
+       ],
+       "adjacent quadrants": [
+        17,
+        180
+       ],
+       "diagonal quadrants": [
+        14,
+        180
+       ],
+       "quadrant - open": [
+        26,
+        180
+       ],
+       "open - open": [
+        177,
+        180
+       ]
+      },
+      "arrived_wall": 244,
+      "not_arrived": 368
+     },
+     "final_loss": 0.0016129662690218538,
+     "rollbacks": 0,
+     "train_seconds": 449.8495979309082,
+     "t_scale": null,
+     "failures": {
+      "collision": 609,
+      "stalled": 368,
+      "stalled_no_collision": 3,
+      "runs": 900
+     }
+    }
+   },
+   "pmzw": {
+    "87358": {
+     "_id": "20261105T115937Z-6075cda2",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       774,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        164,
+        180
+       ],
+       "adjacent quadrants": [
+        138,
+        180
+       ],
+       "diagonal quadrants": [
+        113,
+        180
+       ],
+       "quadrant - open": [
+        179,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 55,
+      "not_arrived": 71
+     },
+     "final_loss": 0.000767376521253027,
+     "rollbacks": 0,
+     "train_seconds": 444.25611209869385,
+     "t_scale": 9.25600528717041,
+     "failures": {
+      "collision": 126,
+      "stalled": 71,
+      "stalled_no_collision": 0,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       763,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        163,
+        180
+       ],
+       "adjacent quadrants": [
+        141,
+        180
+       ],
+       "diagonal quadrants": [
+        100,
+        180
+       ],
+       "quadrant - open": [
+        179,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T120811Z-c7775995",
+      "time_ratio_median": 1.0570326632528408,
+      "collision": 137,
+      "stalled": 0,
+      "arrived_wall": 64,
+      "not_arrived": 73
+     },
+     "inverse_roundtrip_max": 1.4901161193847656e-06
+    }
+   },
+   "pmz": {
+    "87358": {
+     "_id": "20261105T120848Z-38fa7f6f",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       582,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        161,
+        180
+       ],
+       "adjacent quadrants": [
+        41,
+        180
+       ],
+       "diagonal quadrants": [
+        30,
+        180
+       ],
+       "quadrant - open": [
+        170,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 37,
+      "not_arrived": 281
+     },
+     "final_loss": 0.0004923123997286893,
+     "rollbacks": 2,
+     "train_seconds": 442.0140652656555,
+     "t_scale": 9.25600528717041,
+     "failures": {
+      "collision": 301,
+      "stalled": 281,
+      "stalled_no_collision": 17,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       584,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        161,
+        180
+       ],
+       "adjacent quadrants": [
+        43,
+        180
+       ],
+       "diagonal quadrants": [
+        30,
+        180
+       ],
+       "quadrant - open": [
+        170,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T121733Z-7f2a9d41",
+      "time_ratio_median": 1.077115622373142,
+      "collision": 299,
+      "stalled": 17,
+      "arrived_wall": 40,
+      "not_arrived": 276
+     },
+     "inverse_roundtrip_max": 1.4603137969970703e-06
+    }
+   },
+   "pm": {
+    "87358": {
+     "_id": "20261105T132043Z-f9c959ae",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       257,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        103,
+        180
+       ],
+       "adjacent quadrants": [
+        20,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        43,
+        180
+       ],
+       "open - open": [
+        91,
+        180
+       ]
+      },
+      "arrived_wall": 32,
+      "not_arrived": 611
+     },
+     "final_loss": 0.001074324405635707,
+     "rollbacks": 48,
+     "train_seconds": 530.4892244338989,
+     "t_scale": null,
+     "failures": {
+      "collision": 520,
+      "stalled": 611,
+      "stalled_no_collision": 123,
+      "runs": 900
+     }
+    }
+   },
+   "idw": {
+    "87358": {
+     "_id": "20261105T194652Z-158b26bb",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       381,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        69,
+        180
+       ],
+       "adjacent quadrants": [
+        19,
+        180
+       ],
+       "diagonal quadrants": [
+        43,
+        180
+       ],
+       "quadrant - open": [
+        73,
+        180
+       ],
+       "open - open": [
+        177,
+        180
+       ]
+      },
+      "arrived_wall": 197,
+      "not_arrived": 322
+     },
+     "final_loss": 0.0019955468305852264,
+     "rollbacks": 5,
+     "train_seconds": 323.16802525520325,
+     "t_scale": null,
+     "failures": {
+      "collision": 504,
+      "stalled": 322,
+      "stalled_no_collision": 15,
+      "runs": 900
+     }
+    }
+   }
+  },
+  "m10/8": {
+   "id": {
+    "87358": {
+     "_id": "20261105T121809Z-9c38bcdc",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       226,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        34,
+        180
+       ],
+       "adjacent quadrants": [
+        6,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        6,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 475,
+      "not_arrived": 199
+     },
+     "final_loss": 0.001740392908686772,
+     "rollbacks": 0,
+     "train_seconds": 451.97507762908936,
+     "t_scale": null,
+     "failures": {
+      "collision": 674,
+      "stalled": 199,
+      "stalled_no_collision": 0,
+      "runs": 900
+     }
+    }
+   },
+   "pmzw": {
+    "87358": {
+     "_id": "20261105T122724Z-e7e249a2",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       723,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        153,
+        180
+       ],
+       "adjacent quadrants": [
+        123,
+        180
+       ],
+       "diagonal quadrants": [
+        102,
+        180
+       ],
+       "quadrant - open": [
+        165,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 61,
+      "not_arrived": 116
+     },
+     "final_loss": 0.0007560693193227053,
+     "rollbacks": 0,
+     "train_seconds": 458.86810278892517,
+     "t_scale": 15.770196914672852,
+     "failures": {
+      "collision": 177,
+      "stalled": 116,
+      "stalled_no_collision": 0,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       731,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        153,
+        180
+       ],
+       "adjacent quadrants": [
+        130,
+        180
+       ],
+       "diagonal quadrants": [
+        98,
+        180
+       ],
+       "quadrant - open": [
+        170,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T123702Z-fa694698",
+      "time_ratio_median": 1.060242183693566,
+      "collision": 169,
+      "stalled": 0,
+      "arrived_wall": 61,
+      "not_arrived": 108
+     },
+     "inverse_roundtrip_max": 2.0265579223632812e-06
+    }
+   },
+   "pmz": {
+    "87358": {
+     "_id": "20261105T123727Z-7f7bd461",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       407,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        124,
+        180
+       ],
+       "adjacent quadrants": [
+        8,
+        180
+       ],
+       "diagonal quadrants": [
+        3,
+        180
+       ],
+       "quadrant - open": [
+        92,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 68,
+      "not_arrived": 425
+     },
+     "final_loss": 0.0003742281114682555,
+     "rollbacks": 3,
+     "train_seconds": 451.5728409290314,
+     "t_scale": 15.770196914672852,
+     "failures": {
+      "collision": 469,
+      "stalled": 425,
+      "stalled_no_collision": 24,
+      "runs": 900
+     },
+     "z": {
+      "success_total": [
+       402,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        124,
+        180
+       ],
+       "adjacent quadrants": [
+        4,
+        180
+       ],
+       "diagonal quadrants": [
+        3,
+        180
+       ],
+       "quadrant - open": [
+        91,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "zq": "20261105T124734Z-482cdb9f",
+      "time_ratio_median": 1.0822693945704924,
+      "collision": 478,
+      "stalled": 20,
+      "arrived_wall": 79,
+      "not_arrived": 419
+     },
+     "inverse_roundtrip_max": 2.086162567138672e-06
+    }
+   },
+   "pm": {
+    "87358": {
+     "_id": "20261105T133105Z-f4ae9820",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       150,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        51,
+        180
+       ],
+       "adjacent quadrants": [
+        3,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        3,
+        180
+       ],
+       "open - open": [
+        93,
+        180
+       ]
+      },
+      "arrived_wall": 13,
+      "not_arrived": 737
+     },
+     "final_loss": 0.0005880598037037998,
+     "rollbacks": 21,
+     "train_seconds": 527.6841304302216,
+     "t_scale": null,
+     "failures": {
+      "collision": 634,
+      "stalled": 737,
+      "stalled_no_collision": 116,
+      "runs": 900
+     }
+    }
+   },
+   "idw": {
+    "87358": {
+     "_id": "20261105T200245Z-f88f1b4d",
+     "seed": 87358,
+     "x": {
+      "success_total": [
+       225,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        36,
+        180
+       ],
+       "adjacent quadrants": [
+        3,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        6,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      },
+      "arrived_wall": 69,
+      "not_arrived": 606
+     },
+     "final_loss": 0.002227361750556156,
+     "rollbacks": 1,
+     "train_seconds": 336.65389227867126,
+     "t_scale": null,
+     "failures": {
+      "collision": 656,
+      "stalled": 606,
+      "stalled_no_collision": 19,
+      "runs": 900
+     }
+    }
+   }
+  }
+ },
+ "pairs": {
+  "c22/1/real": {
+   "x0_quadrant": 0.833468,
+   "x1_quadrant": 0.473304,
+   "both_quadrants": 0.423288,
+   "same_quadrant": 0.341974,
+   "kinds": {
+    "same quadrant": 0.341974,
+    "adjacent quadrants": 0.056494,
+    "diagonal quadrants": 0.02482,
+    "quadrant - open": 0.460196,
+    "open - open": 0.116516
+   },
+   "run": "registered_20261102T042454Z-62864e61"
+  },
+  "c22/1/warped": {
+   "x0_quadrant": 0.851068,
+   "x1_quadrant": 0.605724,
+   "both_quadrants": 0.541822,
+   "same_quadrant": 0.40454,
+   "kinds": {
+    "same quadrant": 0.40454,
+    "adjacent quadrants": 0.098634,
+    "diagonal quadrants": 0.038648,
+    "quadrant - open": 0.373148,
+    "open - open": 0.08503
+   },
+   "run": "registered_20261105T070347Z-9293df88"
+  },
+  "c22/2/real": {
+   "x0_quadrant": 0.797672,
+   "x1_quadrant": 0.339114,
+   "both_quadrants": 0.301316,
+   "same_quadrant": 0.26488,
+   "kinds": {
+    "same quadrant": 0.26488,
+    "adjacent quadrants": 0.024336,
+    "diagonal quadrants": 0.0121,
+    "quadrant - open": 0.534154,
+    "open - open": 0.16453
+   },
+   "run": "registered_20261103T232925Z-119e9a37"
+  },
+  "c22/2/warped": {
+   "x0_quadrant": 0.847104,
+   "x1_quadrant": 0.565862,
+   "both_quadrants": 0.506568,
+   "same_quadrant": 0.386622,
+   "kinds": {
+    "same quadrant": 0.386622,
+    "adjacent quadrants": 0.08535,
+    "diagonal quadrants": 0.034596,
+    "quadrant - open": 0.39983,
+    "open - open": 0.093602
+   },
+   "run": "registered_20261105T070351Z-cb170cc0"
+  },
+  "c22/4/real": {
+   "x0_quadrant": 0.731288,
+   "x1_quadrant": 0.222454,
+   "both_quadrants": 0.19528,
+   "same_quadrant": 0.18176,
+   "kinds": {
+    "same quadrant": 0.18176,
+    "adjacent quadrants": 0.008582,
+    "diagonal quadrants": 0.004938,
+    "quadrant - open": 0.563182,
+    "open - open": 0.241538
+   },
+   "run": "registered_20261103T233057Z-2c83639d"
+  },
+  "c22/4/warped": {
+   "x0_quadrant": 0.842676,
+   "x1_quadrant": 0.530822,
+   "both_quadrants": 0.475012,
+   "same_quadrant": 0.370388,
+   "kinds": {
+    "same quadrant": 0.370388,
+    "adjacent quadrants": 0.073664,
+    "diagonal quadrants": 0.03096,
+    "quadrant - open": 0.423474,
+    "open - open": 0.101514
+   },
+   "run": "registered_20261105T070355Z-2d877603"
+  },
+  "c22/8/real": {
+   "x0_quadrant": 0.620034,
+   "x1_quadrant": 0.126118,
+   "both_quadrants": 0.109056,
+   "same_quadrant": 0.105114,
+   "kinds": {
+    "same quadrant": 0.105114,
+    "adjacent quadrants": 0.002466,
+    "diagonal quadrants": 0.001476,
+    "quadrant - open": 0.52804,
+    "open - open": 0.362904
+   },
+   "run": "registered_20261103T233625Z-021c8182"
+  },
+  "c22/8/warped": {
+   "x0_quadrant": 0.838664,
+   "x1_quadrant": 0.504558,
+   "both_quadrants": 0.451294,
+   "same_quadrant": 0.357622,
+   "kinds": {
+    "same quadrant": 0.357622,
+    "adjacent quadrants": 0.065446,
+    "diagonal quadrants": 0.028226,
+    "quadrant - open": 0.440634,
+    "open - open": 0.108072
+   },
+   "run": "registered_20261105T070359Z-6d7cc189"
+  },
+  "c22/12/real": {
+   "x0_quadrant": 0.535772,
+   "x1_quadrant": 0.084328,
+   "both_quadrants": 0.072204,
+   "same_quadrant": 0.07041,
+   "kinds": {
+    "same quadrant": 0.07041,
+    "adjacent quadrants": 0.001062,
+    "diagonal quadrants": 0.000732,
+    "quadrant - open": 0.475692,
+    "open - open": 0.452104
+   },
+   "run": "registered_20261103T233747Z-3c48b7dc"
+  },
+  "c22/12/warped": {
+   "x0_quadrant": 0.837162,
+   "x1_quadrant": 0.493824,
+   "both_quadrants": 0.441478,
+   "same_quadrant": 0.35248,
+   "kinds": {
+    "same quadrant": 0.35248,
+    "adjacent quadrants": 0.062058,
+    "diagonal quadrants": 0.02694,
+    "quadrant - open": 0.44803,
+    "open - open": 0.110492
+   },
+   "run": "registered_20261105T070343Z-fda24e40"
+  },
+  "c22/12/shrunk": {
+   "x0_quadrant": 0.851092,
+   "x1_quadrant": 0.606078,
+   "both_quadrants": 0.54209,
+   "same_quadrant": 0.404676,
+   "kinds": {
+    "same quadrant": 0.404676,
+    "adjacent quadrants": 0.098746,
+    "diagonal quadrants": 0.038668,
+    "quadrant - open": 0.37299,
+    "open - open": 0.08492
+   },
+   "run": "registered_20261105T092735Z-046f1bf7"
+  },
+  "m10/1/real": {
+   "x0_quadrant": 0.716782,
+   "x1_quadrant": 0.361124,
+   "both_quadrants": 0.304518,
+   "same_quadrant": 0.262454,
+   "kinds": {
+    "same quadrant": 0.262454,
+    "adjacent quadrants": 0.02824,
+    "diagonal quadrants": 0.013824,
+    "quadrant - open": 0.46887,
+    "open - open": 0.226612
+   },
+   "run": "registered_20261105T070523Z-5877176f"
+  },
+  "m10/1/warped": {
+   "x0_quadrant": 0.74991,
+   "x1_quadrant": 0.475604,
+   "both_quadrants": 0.401702,
+   "same_quadrant": 0.324998,
+   "kinds": {
+    "same quadrant": 0.324998,
+    "adjacent quadrants": 0.053032,
+    "diagonal quadrants": 0.023672,
+    "quadrant - open": 0.42211,
+    "open - open": 0.176188
+   },
+   "run": "registered_20261105T070701Z-016c399f"
+  },
+  "m10/2/real": {
+   "x0_quadrant": 0.647872,
+   "x1_quadrant": 0.237,
+   "both_quadrants": 0.197284,
+   "same_quadrant": 0.181408,
+   "kinds": {
+    "same quadrant": 0.181408,
+    "adjacent quadrants": 0.010338,
+    "diagonal quadrants": 0.005538,
+    "quadrant - open": 0.490304,
+    "open - open": 0.312412
+   },
+   "run": "registered_20261105T070535Z-01c9f536"
+  },
+  "m10/2/warped": {
+   "x0_quadrant": 0.738526,
+   "x1_quadrant": 0.432404,
+   "both_quadrants": 0.364686,
+   "same_quadrant": 0.301738,
+   "kinds": {
+    "same quadrant": 0.301738,
+    "adjacent quadrants": 0.043072,
+    "diagonal quadrants": 0.019876,
+    "quadrant - open": 0.441558,
+    "open - open": 0.193756
+   },
+   "run": "registered_20261105T070705Z-4824ee5c"
+  },
+  "m10/4/real": {
+   "x0_quadrant": 0.535822,
+   "x1_quadrant": 0.135138,
+   "both_quadrants": 0.110016,
+   "same_quadrant": 0.105316,
+   "kinds": {
+    "same quadrant": 0.105316,
+    "adjacent quadrants": 0.002896,
+    "diagonal quadrants": 0.001804,
+    "quadrant - open": 0.450928,
+    "open - open": 0.439056
+   },
+   "run": "registered_20261105T070549Z-25e73d68"
+  },
+  "m10/4/warped": {
+   "x0_quadrant": 0.729494,
+   "x1_quadrant": 0.399556,
+   "both_quadrants": 0.336458,
+   "same_quadrant": 0.283868,
+   "kinds": {
+    "same quadrant": 0.283868,
+    "adjacent quadrants": 0.035606,
+    "diagonal quadrants": 0.016984,
+    "quadrant - open": 0.456134,
+    "open - open": 0.207408
+   },
+   "run": "registered_20261105T070709Z-0edca351"
+  },
+  "m10/8/real": {
+   "x0_quadrant": 0.392266,
+   "x1_quadrant": 0.063646,
+   "both_quadrants": 0.050432,
+   "same_quadrant": 0.049304,
+   "kinds": {
+    "same quadrant": 0.049304,
+    "adjacent quadrants": 0.000712,
+    "diagonal quadrants": 0.000416,
+    "quadrant - open": 0.355048,
+    "open - open": 0.59452
+   },
+   "run": "registered_20261105T070611Z-cf3b0b02"
+  },
+  "m10/8/warped": {
+   "x0_quadrant": 0.722448,
+   "x1_quadrant": 0.379632,
+   "both_quadrants": 0.319278,
+   "same_quadrant": 0.27245,
+   "kinds": {
+    "same quadrant": 0.27245,
+    "adjacent quadrants": 0.031544,
+    "diagonal quadrants": 0.015284,
+    "quadrant - open": 0.463524,
+    "open - open": 0.217198
+   },
+   "run": "registered_20261105T070713Z-453df9cc"
+  },
+  "m10/12/real": {
+   "x0_quadrant": 0.307384,
+   "x1_quadrant": 0.037606,
+   "both_quadrants": 0.02928,
+   "same_quadrant": 0.028842,
+   "kinds": {
+    "same quadrant": 0.028842,
+    "adjacent quadrants": 0.000266,
+    "diagonal quadrants": 0.000172,
+    "quadrant - open": 0.28643,
+    "open - open": 0.68429
+   },
+   "run": "registered_20261105T070402Z-98f3cab7"
+  },
+  "m10/12/warped": {
+   "x0_quadrant": 0.720534,
+   "x1_quadrant": 0.371972,
+   "both_quadrants": 0.313682,
+   "same_quadrant": 0.268816,
+   "kinds": {
+    "same quadrant": 0.268816,
+    "adjacent quadrants": 0.029972,
+    "diagonal quadrants": 0.014894,
+    "quadrant - open": 0.465142,
+    "open - open": 0.221176
+   },
+   "run": "registered_20261105T070657Z-4ef430ba"
+  },
+  "m10/12/shrunk": {
+   "x0_quadrant": 0.74994,
+   "x1_quadrant": 0.475778,
+   "both_quadrants": 0.401888,
+   "same_quadrant": 0.32513,
+   "kinds": {
+    "same quadrant": 0.32513,
+    "adjacent quadrants": 0.053058,
+    "diagonal quadrants": 0.0237,
+    "quadrant - open": 0.421942,
+    "open - open": 0.17617
+   },
+   "run": "registered_20261105T094016Z-4ef380f1"
+  }
+ },
+ "controls": {
+  "12": {
+   "n": 82,
+   "oracle": {
+    "same quadrant": [
+     60,
+     60
+    ],
+    "adjacent quadrants": [
+     60,
+     60
+    ],
+    "diagonal quadrants": [
+     60,
+     60
+    ],
+    "quadrant - open": [
+     60,
+     60
+    ],
+    "open - open": [
+     60,
+     60
+    ]
+   },
+   "straight": {
+    "same quadrant": [
+     7,
+     60
+    ],
+    "adjacent quadrants": [
+     3,
+     60
+    ],
+    "diagonal quadrants": [
+     1,
+     60
+    ],
+    "quadrant - open": [
+     8,
+     60
+    ],
+    "open - open": [
+     60,
+     60
+    ]
+   },
+   "queries": {
+    "same quadrant": 60,
+    "adjacent quadrants": 60,
+    "diagonal quadrants": 60,
+    "quadrant - open": 60,
+    "open - open": 60
+   },
+   "walls": 415
+  },
+  "1": {
+   "n": 16,
+   "oracle": {
+    "same quadrant": [
+     60,
+     60
+    ],
+    "adjacent quadrants": [
+     60,
+     60
+    ],
+    "diagonal quadrants": [
+     60,
+     60
+    ],
+    "quadrant - open": [
+     60,
+     60
+    ],
+    "open - open": [
+     60,
+     60
+    ]
+   },
+   "straight": {
+    "same quadrant": [
+     11,
+     60
+    ],
+    "adjacent quadrants": [
+     4,
+     60
+    ],
+    "diagonal quadrants": [
+     0,
+     60
+    ],
+    "quadrant - open": [
+     5,
+     60
+    ],
+    "open - open": [
+     45,
+     60
+    ]
+   },
+   "queries": {
+    "same quadrant": 60,
+    "adjacent quadrants": 60,
+    "diagonal quadrants": 60,
+    "quadrant - open": 60,
+    "open - open": 60
+   },
+   "walls": 151
+  },
+  "2": {
+   "n": 22,
+   "oracle": {
+    "same quadrant": [
+     60,
+     60
+    ],
+    "adjacent quadrants": [
+     60,
+     60
+    ],
+    "diagonal quadrants": [
+     60,
+     60
+    ],
+    "quadrant - open": [
+     60,
+     60
+    ],
+    "open - open": [
+     60,
+     60
+    ]
+   },
+   "straight": {
+    "same quadrant": [
+     10,
+     60
+    ],
+    "adjacent quadrants": [
+     4,
+     60
+    ],
+    "diagonal quadrants": [
+     1,
+     60
+    ],
+    "quadrant - open": [
+     13,
+     60
+    ],
+    "open - open": [
+     59,
+     60
+    ]
+   },
+   "queries": {
+    "same quadrant": 60,
+    "adjacent quadrants": 60,
+    "diagonal quadrants": 60,
+    "quadrant - open": 60,
+    "open - open": 60
+   },
+   "walls": 175
+  },
+  "4": {
+   "n": 34,
+   "oracle": {
+    "same quadrant": [
+     60,
+     60
+    ],
+    "adjacent quadrants": [
+     60,
+     60
+    ],
+    "diagonal quadrants": [
+     60,
+     60
+    ],
+    "quadrant - open": [
+     60,
+     60
+    ],
+    "open - open": [
+     60,
+     60
+    ]
+   },
+   "straight": {
+    "same quadrant": [
+     9,
+     60
+    ],
+    "adjacent quadrants": [
+     5,
+     60
+    ],
+    "diagonal quadrants": [
+     3,
+     60
+    ],
+    "quadrant - open": [
+     4,
+     60
+    ],
+    "open - open": [
+     60,
+     60
+    ]
+   },
+   "queries": {
+    "same quadrant": 60,
+    "adjacent quadrants": 60,
+    "diagonal quadrants": 60,
+    "quadrant - open": 60,
+    "open - open": 60
+   },
+   "walls": 223
+  },
+  "8": {
+   "n": 58,
+   "oracle": {
+    "same quadrant": [
+     60,
+     60
+    ],
+    "adjacent quadrants": [
+     60,
+     60
+    ],
+    "diagonal quadrants": [
+     60,
+     60
+    ],
+    "quadrant - open": [
+     60,
+     60
+    ],
+    "open - open": [
+     60,
+     60
+    ]
+   },
+   "straight": {
+    "same quadrant": [
+     11,
+     60
+    ],
+    "adjacent quadrants": [
+     2,
+     60
+    ],
+    "diagonal quadrants": [
+     0,
+     60
+    ],
+    "quadrant - open": [
+     2,
+     60
+    ],
+    "open - open": [
+     60,
+     60
+    ]
+   },
+   "queries": {
+    "same quadrant": 60,
+    "adjacent quadrants": 60,
+    "diagonal quadrants": 60,
+    "quadrant - open": 60,
+    "open - open": 60
+   },
+   "walls": 319
+  }
+ },
+ "c22_study": {
+  "1": {
+   "id": {
+    "87358": {
+     "x": {
+      "success_total": [
+       367,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        59,
+        180
+       ],
+       "adjacent quadrants": [
+        48,
+        180
+       ],
+       "diagonal quadrants": [
+        33,
+        180
+       ],
+       "quadrant - open": [
+        59,
+        180
+       ],
+       "open - open": [
+        168,
+        180
+       ]
+      }
+     }
+    },
+    "1": {
+     "x": {
+      "success_total": [
+       364,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        45,
+        180
+       ],
+       "adjacent quadrants": [
+        35,
+        180
+       ],
+       "diagonal quadrants": [
+        32,
+        180
+       ],
+       "quadrant - open": [
+        75,
+        180
+       ],
+       "open - open": [
+        177,
+        180
+       ]
+      }
+     }
+    },
+    "2": {
+     "x": {
+      "success_total": [
+       452,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        72,
+        180
+       ],
+       "adjacent quadrants": [
+        50,
+        180
+       ],
+       "diagonal quadrants": [
+        58,
+        180
+       ],
+       "quadrant - open": [
+        97,
+        180
+       ],
+       "open - open": [
+        175,
+        180
+       ]
+      }
+     }
+    }
+   },
+   "pm": {
+    "87358": {
+     "x": {
+      "success_total": [
+       598,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        107,
+        180
+       ],
+       "adjacent quadrants": [
+        101,
+        180
+       ],
+       "diagonal quadrants": [
+        97,
+        180
+       ],
+       "quadrant - open": [
+        122,
+        180
+       ],
+       "open - open": [
+        171,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       584,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        107,
+        180
+       ],
+       "adjacent quadrants": [
+        99,
+        180
+       ],
+       "diagonal quadrants": [
+        80,
+        180
+       ],
+       "quadrant - open": [
+        127,
+        180
+       ],
+       "open - open": [
+        171,
+        180
+       ]
+      }
+     }
+    },
+    "2": {
+     "x": {
+      "success_total": [
+       530,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        107,
+        180
+       ],
+       "adjacent quadrants": [
+        66,
+        180
+       ],
+       "diagonal quadrants": [
+        75,
+        180
+       ],
+       "quadrant - open": [
+        102,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       529,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        107,
+        180
+       ],
+       "adjacent quadrants": [
+        62,
+        180
+       ],
+       "diagonal quadrants": [
+        75,
+        180
+       ],
+       "quadrant - open": [
+        105,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      }
+     }
+    },
+    "1": {
+     "x": {
+      "success_total": [
+       614,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        129,
+        180
+       ],
+       "adjacent quadrants": [
+        102,
+        180
+       ],
+       "diagonal quadrants": [
+        87,
+        180
+       ],
+       "quadrant - open": [
+        122,
+        180
+       ],
+       "open - open": [
+        174,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       607,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        129,
+        180
+       ],
+       "adjacent quadrants": [
+        94,
+        180
+       ],
+       "diagonal quadrants": [
+        86,
+        180
+       ],
+       "quadrant - open": [
+        128,
+        180
+       ],
+       "open - open": [
+        170,
+        180
+       ]
+      }
+     }
+    }
+   },
+   "pmz": {
+    "87358": {
+     "x": {
+      "success_total": [
+       556,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        141,
+        180
+       ],
+       "adjacent quadrants": [
+        71,
+        180
+       ],
+       "diagonal quadrants": [
+        52,
+        180
+       ],
+       "quadrant - open": [
+        114,
+        180
+       ],
+       "open - open": [
+        178,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       549,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        141,
+        180
+       ],
+       "adjacent quadrants": [
+        63,
+        180
+       ],
+       "diagonal quadrants": [
+        50,
+        180
+       ],
+       "quadrant - open": [
+        118,
+        180
+       ],
+       "open - open": [
+        177,
+        180
+       ]
+      }
+     }
+    },
+    "1": {
+     "x": {
+      "success_total": [
+       526,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        122,
+        180
+       ],
+       "adjacent quadrants": [
+        39,
+        180
+       ],
+       "diagonal quadrants": [
+        44,
+        180
+       ],
+       "quadrant - open": [
+        141,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       528,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        122,
+        180
+       ],
+       "adjacent quadrants": [
+        42,
+        180
+       ],
+       "diagonal quadrants": [
+        45,
+        180
+       ],
+       "quadrant - open": [
+        139,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      }
+     }
+    },
+    "2": {
+     "x": {
+      "success_total": [
+       575,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        148,
+        180
+       ],
+       "adjacent quadrants": [
+        58,
+        180
+       ],
+       "diagonal quadrants": [
+        60,
+        180
+       ],
+       "quadrant - open": [
+        131,
+        180
+       ],
+       "open - open": [
+        178,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       586,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        149,
+        180
+       ],
+       "adjacent quadrants": [
+        64,
+        180
+       ],
+       "diagonal quadrants": [
+        62,
+        180
+       ],
+       "quadrant - open": [
+        138,
+        180
+       ],
+       "open - open": [
+        173,
+        180
+       ]
+      }
+     }
+    }
+   }
+  },
+  "2": {
+   "id": {
+    "87358": {
+     "x": {
+      "success_total": [
+       313,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        48,
+        180
+       ],
+       "adjacent quadrants": [
+        15,
+        180
+       ],
+       "diagonal quadrants": [
+        19,
+        180
+       ],
+       "quadrant - open": [
+        54,
+        180
+       ],
+       "open - open": [
+        177,
+        180
+       ]
+      }
+     }
+    },
+    "1": {
+     "x": {
+      "success_total": [
+       268,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        33,
+        180
+       ],
+       "adjacent quadrants": [
+        20,
+        180
+       ],
+       "diagonal quadrants": [
+        6,
+        180
+       ],
+       "quadrant - open": [
+        35,
+        180
+       ],
+       "open - open": [
+        174,
+        180
+       ]
+      }
+     }
+    },
+    "2": {
+     "x": {
+      "success_total": [
+       291,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        36,
+        180
+       ],
+       "adjacent quadrants": [
+        21,
+        180
+       ],
+       "diagonal quadrants": [
+        16,
+        180
+       ],
+       "quadrant - open": [
+        47,
+        180
+       ],
+       "open - open": [
+        171,
+        180
+       ]
+      }
+     }
+    }
+   },
+   "pm": {
+    "87358": {
+     "x": {
+      "success_total": [
+       456,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        87,
+        180
+       ],
+       "adjacent quadrants": [
+        70,
+        180
+       ],
+       "diagonal quadrants": [
+        27,
+        180
+       ],
+       "quadrant - open": [
+        92,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       456,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        87,
+        180
+       ],
+       "adjacent quadrants": [
+        64,
+        180
+       ],
+       "diagonal quadrants": [
+        29,
+        180
+       ],
+       "quadrant - open": [
+        99,
+        180
+       ],
+       "open - open": [
+        177,
+        180
+       ]
+      }
+     }
+    },
+    "1": {
+     "x": {
+      "success_total": [
+       324,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        86,
+        180
+       ],
+       "adjacent quadrants": [
+        16,
+        180
+       ],
+       "diagonal quadrants": [
+        22,
+        180
+       ],
+       "quadrant - open": [
+        59,
+        180
+       ],
+       "open - open": [
+        141,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       316,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        86,
+        180
+       ],
+       "adjacent quadrants": [
+        21,
+        180
+       ],
+       "diagonal quadrants": [
+        6,
+        180
+       ],
+       "quadrant - open": [
+        63,
+        180
+       ],
+       "open - open": [
+        140,
+        180
+       ]
+      }
+     }
+    },
+    "2": {
+     "x": {
+      "success_total": [
+       348,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        54,
+        180
+       ],
+       "adjacent quadrants": [
+        30,
+        180
+       ],
+       "diagonal quadrants": [
+        35,
+        180
+       ],
+       "quadrant - open": [
+        58,
+        180
+       ],
+       "open - open": [
+        171,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       357,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        54,
+        180
+       ],
+       "adjacent quadrants": [
+        36,
+        180
+       ],
+       "diagonal quadrants": [
+        33,
+        180
+       ],
+       "quadrant - open": [
+        66,
+        180
+       ],
+       "open - open": [
+        168,
+        180
+       ]
+      }
+     }
+    }
+   },
+   "pmz": {
+    "87358": {
+     "x": {
+      "success_total": [
+       531,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        126,
+        180
+       ],
+       "adjacent quadrants": [
+        75,
+        180
+       ],
+       "diagonal quadrants": [
+        27,
+        180
+       ],
+       "quadrant - open": [
+        123,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       513,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        126,
+        180
+       ],
+       "adjacent quadrants": [
+        65,
+        180
+       ],
+       "diagonal quadrants": [
+        25,
+        180
+       ],
+       "quadrant - open": [
+        117,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      }
+     }
+    }
+   }
+  },
+  "4": {
+   "id": {
+    "87358": {
+     "x": {
+      "success_total": [
+       234,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        23,
+        180
+       ],
+       "adjacent quadrants": [
+        15,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        21,
+        180
+       ],
+       "open - open": [
+        175,
+        180
+       ]
+      }
+     }
+    },
+    "1": {
+     "x": {
+      "success_total": [
+       240,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        30,
+        180
+       ],
+       "adjacent quadrants": [
+        15,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        18,
+        180
+       ],
+       "open - open": [
+        177,
+        180
+       ]
+      }
+     }
+    },
+    "2": {
+     "x": {
+      "success_total": [
+       250,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        28,
+        180
+       ],
+       "adjacent quadrants": [
+        17,
+        180
+       ],
+       "diagonal quadrants": [
+        2,
+        180
+       ],
+       "quadrant - open": [
+        26,
+        180
+       ],
+       "open - open": [
+        177,
+        180
+       ]
+      }
+     }
+    }
+   },
+   "pm": {
+    "87358": {
+     "x": {
+      "success_total": [
+       226,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        68,
+        180
+       ],
+       "adjacent quadrants": [
+        1,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        50,
+        180
+       ],
+       "open - open": [
+        107,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       229,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        68,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        47,
+        180
+       ],
+       "open - open": [
+        114,
+        180
+       ]
+      }
+     }
+    },
+    "1": {
+     "x": {
+      "success_total": [
+       198,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        91,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        38,
+        180
+       ],
+       "open - open": [
+        69,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       198,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        91,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        38,
+        180
+       ],
+       "open - open": [
+        69,
+        180
+       ]
+      }
+     }
+    },
+    "2": {
+     "x": {
+      "success_total": [
+       145,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        35,
+        180
+       ],
+       "adjacent quadrants": [
+        6,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        15,
+        180
+       ],
+       "open - open": [
+        89,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       135,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        35,
+        180
+       ],
+       "adjacent quadrants": [
+        7,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        6,
+        180
+       ],
+       "open - open": [
+        87,
+        180
+       ]
+      }
+     }
+    }
+   },
+   "pmz": {
+    "87358": {
+     "x": {
+      "success_total": [
+       411,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        90,
+        180
+       ],
+       "adjacent quadrants": [
+        23,
+        180
+       ],
+       "diagonal quadrants": [
+        10,
+        180
+       ],
+       "quadrant - open": [
+        108,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       419,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        90,
+        180
+       ],
+       "adjacent quadrants": [
+        31,
+        180
+       ],
+       "diagonal quadrants": [
+        15,
+        180
+       ],
+       "quadrant - open": [
+        103,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      }
+     }
+    }
+   }
+  },
+  "8": {
+   "id": {
+    "87358": {
+     "x": {
+      "success_total": [
+       237,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        22,
+        180
+       ],
+       "adjacent quadrants": [
+        6,
+        180
+       ],
+       "diagonal quadrants": [
+        5,
+        180
+       ],
+       "quadrant - open": [
+        24,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      }
+     }
+    },
+    "1": {
+     "x": {
+      "success_total": [
+       238,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        23,
+        180
+       ],
+       "adjacent quadrants": [
+        6,
+        180
+       ],
+       "diagonal quadrants": [
+        6,
+        180
+       ],
+       "quadrant - open": [
+        23,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      }
+     }
+    },
+    "2": {
+     "x": {
+      "success_total": [
+       225,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        21,
+        180
+       ],
+       "adjacent quadrants": [
+        3,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        21,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      }
+     }
+    }
+   },
+   "pm": {
+    "87358": {
+     "x": {
+      "success_total": [
+       102,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        51,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        9,
+        180
+       ],
+       "open - open": [
+        42,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       98,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        51,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        0,
+        180
+       ],
+       "open - open": [
+        47,
+        180
+       ]
+      }
+     }
+    },
+    "1": {
+     "x": {
+      "success_total": [
+       69,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        48,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        3,
+        180
+       ],
+       "open - open": [
+        18,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       68,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        48,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        3,
+        180
+       ],
+       "open - open": [
+        17,
+        180
+       ]
+      }
+     }
+    },
+    "2": {
+     "x": {
+      "success_total": [
+       104,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        39,
+        180
+       ],
+       "adjacent quadrants": [
+        3,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        5,
+        180
+       ],
+       "open - open": [
+        57,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       108,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        39,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        0,
+        180
+       ],
+       "open - open": [
+        69,
+        180
+       ]
+      }
+     }
+    }
+   },
+   "pmz": {
+    "87358": {
+     "x": {
+      "success_total": [
+       316,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        99,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        47,
+        180
+       ],
+       "open - open": [
+        170,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       334,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        98,
+        180
+       ],
+       "adjacent quadrants": [
+        3,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        66,
+        180
+       ],
+       "open - open": [
+        167,
+        180
+       ]
+      }
+     }
+    },
+    "1": {
+     "x": {
+      "success_total": [
+       256,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        95,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        27,
+        180
+       ],
+       "open - open": [
+        134,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       282,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        95,
+        180
+       ],
+       "adjacent quadrants": [
+        3,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        35,
+        180
+       ],
+       "open - open": [
+        149,
+        180
+       ]
+      }
+     }
+    },
+    "2": {
+     "x": {
+      "success_total": [
+       360,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        97,
+        180
+       ],
+       "adjacent quadrants": [
+        15,
+        180
+       ],
+       "diagonal quadrants": [
+        5,
+        180
+       ],
+       "quadrant - open": [
+        84,
+        180
+       ],
+       "open - open": [
+        159,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       377,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        97,
+        180
+       ],
+       "adjacent quadrants": [
+        21,
+        180
+       ],
+       "diagonal quadrants": [
+        17,
+        180
+       ],
+       "quadrant - open": [
+        77,
+        180
+       ],
+       "open - open": [
+        165,
+        180
+       ]
+      }
+     }
+    }
+   }
+  },
+  "12": {
+   "id": {
+    "87358": {
+     "x": {
+      "success_total": [
+       218,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        24,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        14,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      }
+     }
+    },
+    "1": {
+     "x": {
+      "success_total": [
+       220,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        25,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        15,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      }
+     }
+    },
+    "2": {
+     "x": {
+      "success_total": [
+       215,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        26,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        9,
+        180
+       ],
+       "open - open": [
+        180,
+        180
+       ]
+      }
+     }
+    }
+   },
+   "pm": {
+    "87358": {
+     "x": {
+      "success_total": [
+       90,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        33,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        3,
+        180
+       ],
+       "open - open": [
+        54,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       92,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        33,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        5,
+        180
+       ],
+       "open - open": [
+        54,
+        180
+       ]
+      }
+     }
+    },
+    "1": {
+     "x": {
+      "success_total": [
+       66,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        33,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        0,
+        180
+       ],
+       "open - open": [
+        33,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       84,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        33,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        3,
+        180
+       ],
+       "open - open": [
+        48,
+        180
+       ]
+      }
+     }
+    },
+    "2": {
+     "x": {
+      "success_total": [
+       108,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        39,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        0,
+        180
+       ],
+       "open - open": [
+        69,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       147,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        39,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        6,
+        180
+       ],
+       "open - open": [
+        102,
+        180
+       ]
+      }
+     }
+    }
+   },
+   "pmz": {
+    "87358": {
+     "x": {
+      "success_total": [
+       236,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        69,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        21,
+        180
+       ],
+       "open - open": [
+        146,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       272,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        70,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        43,
+        180
+       ],
+       "open - open": [
+        159,
+        180
+       ]
+      }
+     }
+    },
+    "1": {
+     "x": {
+      "success_total": [
+       202,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        60,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        17,
+        180
+       ],
+       "open - open": [
+        125,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       232,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        61,
+        180
+       ],
+       "adjacent quadrants": [
+        0,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        21,
+        180
+       ],
+       "open - open": [
+        150,
+        180
+       ]
+      }
+     }
+    },
+    "2": {
+     "x": {
+      "success_total": [
+       242,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        87,
+        180
+       ],
+       "adjacent quadrants": [
+        4,
+        180
+       ],
+       "diagonal quadrants": [
+        0,
+        180
+       ],
+       "quadrant - open": [
+        21,
+        180
+       ],
+       "open - open": [
+        130,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       284,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        87,
+        180
+       ],
+       "adjacent quadrants": [
+        2,
+        180
+       ],
+       "diagonal quadrants": [
+        3,
+        180
+       ],
+       "quadrant - open": [
+        33,
+        180
+       ],
+       "open - open": [
+        159,
+        180
+       ]
+      }
+     }
+    }
+   },
+   "pmzd": {
+    "87358": {
+     "x": {
+      "success_total": [
+       372,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        104,
+        180
+       ],
+       "adjacent quadrants": [
+        24,
+        180
+       ],
+       "diagonal quadrants": [
+        12,
+        180
+       ],
+       "quadrant - open": [
+        70,
+        180
+       ],
+       "open - open": [
+        162,
+        180
+       ]
+      }
+     },
+     "z": {
+      "success_total": [
+       414,
+       900
+      ],
+      "by_category": {
+       "same quadrant": [
+        105,
+        180
+       ],
+       "adjacent quadrants": [
+        32,
+        180
+       ],
+       "diagonal quadrants": [
+        16,
+        180
+       ],
+       "quadrant - open": [
+        88,
+        180
+       ],
+       "open - open": [
+        173,
+        180
+       ]
+      }
+     }
+    }
+   }
+  }
+ },
+ "planwarp": {
+  "20261104T004407Z-e1930a37": {
+   "success_total": [
+    204,
+    900
+   ],
+   "by_category": {
+    "same quadrant": [
+     24,
+     180
+    ],
+    "adjacent quadrants": [
+     0,
+     180
+    ],
+    "diagonal quadrants": [
+     2,
+     180
+    ],
+    "quadrant - open": [
+     3,
+     180
+    ],
+    "open - open": [
+     175,
+     180
+    ]
+   },
+   "zq": "20261105T185440Z-8bba277d",
+   "time_ratio_median": 1.1653978356377985,
+   "collision": 691,
+   "stalled": 5,
+   "arrived_wall": 691,
+   "not_arrived": 5,
+   "quadrant_stretch": 23.915470123291016
+  },
+  "20261105T084331Z-03fb8d5a": {
+   "success_total": [
+    218,
+    900
+   ],
+   "by_category": {
+    "same quadrant": [
+     24,
+     180
+    ],
+    "adjacent quadrants": [
+     3,
+     180
+    ],
+    "diagonal quadrants": [
+     0,
+     180
+    ],
+    "quadrant - open": [
+     13,
+     180
+    ],
+    "open - open": [
+     178,
+     180
+    ]
+   },
+   "zq": "20261105T185440Z-8bba277d",
+   "time_ratio_median": 1.1728584927904588,
+   "collision": 680,
+   "stalled": 2,
+   "arrived_wall": 662,
+   "not_arrived": 20,
+   "quadrant_stretch": 23.915470123291016
+  },
+  "20261105T072800Z-d07a3b3c": {
+   "success_total": [
+    203,
+    900
+   ],
+   "by_category": {
+    "same quadrant": [
+     25,
+     180
+    ],
+    "adjacent quadrants": [
+     0,
+     180
+    ],
+    "diagonal quadrants": [
+     0,
+     180
+    ],
+    "quadrant - open": [
+     9,
+     180
+    ],
+    "open - open": [
+     169,
+     180
+    ]
+   },
+   "zq": "20261105T185652Z-651ccc88",
+   "time_ratio_median": 1.1300151051000926,
+   "collision": 686,
+   "stalled": 11,
+   "arrived_wall": 686,
+   "not_arrived": 11,
+   "quadrant_stretch": 22.28319549560547
+  },
+  "20261105T090459Z-e8022f37": {
+   "success_total": [
+    221,
+    900
+   ],
+   "by_category": {
+    "same quadrant": [
+     45,
+     180
+    ],
+    "adjacent quadrants": [
+     0,
+     180
+    ],
+    "diagonal quadrants": [
+     0,
+     180
+    ],
+    "quadrant - open": [
+     3,
+     180
+    ],
+    "open - open": [
+     173,
+     180
+    ]
+   },
+   "zq": "20261105T185652Z-651ccc88",
+   "time_ratio_median": 1.1629096094716747,
+   "collision": 659,
+   "stalled": 20,
+   "arrived_wall": 126,
+   "not_arrived": 553,
+   "quadrant_stretch": 22.28319549560547
+  },
+  "20261102T060517Z-0df939ae": {
+   "success_total": [
+    354,
+    900
+   ],
+   "by_category": {
+    "same quadrant": [
+     59,
+     180
+    ],
+    "adjacent quadrants": [
+     51,
+     180
+    ],
+    "diagonal quadrants": [
+     24,
+     180
+    ],
+    "quadrant - open": [
+     52,
+     180
+    ],
+    "open - open": [
+     168,
+     180
+    ]
+   },
+   "zq": "20261105T185855Z-a85187a8",
+   "time_ratio_median": 1.1386824986492616,
+   "collision": 543,
+   "stalled": 3,
+   "arrived_wall": 392,
+   "not_arrived": 154,
+   "quadrant_stretch": 5.999505519866943
+  },
+  "20261105T072157Z-9f276654": {
+   "success_total": [
+    644,
+    900
+   ],
+   "by_category": {
+    "same quadrant": [
+     111,
+     180
+    ],
+    "adjacent quadrants": [
+     111,
+     180
+    ],
+    "diagonal quadrants": [
+     120,
+     180
+    ],
+    "quadrant - open": [
+     132,
+     180
+    ],
+    "open - open": [
+     170,
+     180
+    ]
+   },
+   "zq": "20261105T190020Z-939203f8",
+   "time_ratio_median": 1.143978897336683,
+   "collision": 242,
+   "stalled": 14,
+   "arrived_wall": 212,
+   "not_arrived": 44,
+   "quadrant_stretch": 4.370212554931641
+  },
+  "20261103T234822Z-01f10400": {
+   "success_total": [
+    317,
+    900
+   ],
+   "by_category": {
+    "same quadrant": [
+     48,
+     180
+    ],
+    "adjacent quadrants": [
+     21,
+     180
+    ],
+    "diagonal quadrants": [
+     24,
+     180
+    ],
+    "quadrant - open": [
+     47,
+     180
+    ],
+    "open - open": [
+     177,
+     180
+    ]
+   },
+   "zq": "20261105T190124Z-c765d894",
+   "time_ratio_median": 1.2023120917718422,
+   "collision": 580,
+   "stalled": 3,
+   "arrived_wall": 246,
+   "not_arrived": 337,
+   "quadrant_stretch": 7.628202438354492
+  },
+  "20261105T112525Z-cbd8e3f1": {
+   "success_total": [
+    489,
+    900
+   ],
+   "by_category": {
+    "same quadrant": [
+     93,
+     180
+    ],
+    "adjacent quadrants": [
+     64,
+     180
+    ],
+    "diagonal quadrants": [
+     57,
+     180
+    ],
+    "quadrant - open": [
+     100,
+     180
+    ],
+    "open - open": [
+     175,
+     180
+    ]
+   },
+   "zq": "20261105T190301Z-47333d17",
+   "time_ratio_median": 1.1777890147271346,
+   "collision": 393,
+   "stalled": 18,
+   "arrived_wall": 209,
+   "not_arrived": 202,
+   "quadrant_stretch": 5.9983134269714355
+  },
+  "20261104T000005Z-10f76571": {
+   "success_total": [
+    205,
+    900
+   ],
+   "by_category": {
+    "same quadrant": [
+     23,
+     180
+    ],
+    "adjacent quadrants": [
+     6,
+     180
+    ],
+    "diagonal quadrants": [
+     5,
+     180
+    ],
+    "quadrant - open": [
+     1,
+     180
+    ],
+    "open - open": [
+     170,
+     180
+    ]
+   },
+   "zq": "20261105T190417Z-2bd74039",
+   "time_ratio_median": 1.2234385859919468,
+   "collision": 691,
+   "stalled": 4,
+   "arrived_wall": 450,
+   "not_arrived": 245,
+   "quadrant_stretch": 10.88559627532959
+  },
+  "20261105T115115Z-6d708636": {
+   "success_total": [
+    268,
+    900
+   ],
+   "by_category": {
+    "same quadrant": [
+     54,
+     180
+    ],
+    "adjacent quadrants": [
+     9,
+     180
+    ],
+    "diagonal quadrants": [
+     9,
+     180
+    ],
+    "quadrant - open": [
+     21,
+     180
+    ],
+    "open - open": [
+     175,
+     180
+    ]
+   },
+   "zq": "20261105T190552Z-d9a6e66d",
+   "time_ratio_median": 1.1299584841910493,
+   "collision": 625,
+   "stalled": 7,
+   "arrived_wall": 239,
+   "not_arrived": 393,
+   "quadrant_stretch": 9.255409240722656
+  },
+  "20261104T002837Z-2df7f1bf": {
+   "success_total": [
+    194,
+    900
+   ],
+   "by_category": {
+    "same quadrant": [
+     22,
+     180
+    ],
+    "adjacent quadrants": [
+     0,
+     180
+    ],
+    "diagonal quadrants": [
+     0,
+     180
+    ],
+    "quadrant - open": [
+     0,
+     180
+    ],
+    "open - open": [
+     172,
+     180
+    ]
+   },
+   "zq": "20261105T190714Z-1ee15c35",
+   "time_ratio_median": 1.230887504039301,
+   "collision": 698,
+   "stalled": 8,
+   "arrived_wall": 669,
+   "not_arrived": 37,
+   "quadrant_stretch": 17.4003849029541
+  },
+  "20261105T121809Z-9c38bcdc": {
+   "success_total": [
+    215,
+    900
+   ],
+   "by_category": {
+    "same quadrant": [
+     34,
+     180
+    ],
+    "adjacent quadrants": [
+     0,
+     180
+    ],
+    "diagonal quadrants": [
+     0,
+     180
+    ],
+    "quadrant - open": [
+     3,
+     180
+    ],
+    "open - open": [
+     178,
+     180
+    ]
+   },
+   "zq": "20261105T190848Z-92042ebf",
+   "time_ratio_median": 1.1599641735988615,
+   "collision": 683,
+   "stalled": 2,
+   "arrived_wall": 462,
+   "not_arrived": 223,
+   "quadrant_stretch": 15.769899368286133
+  },
+  "20261105T191014Z-f9700192": {
+   "success_total": [
+    439,
+    900
+   ],
+   "by_category": {
+    "same quadrant": [
+     58,
+     180
+    ],
+    "adjacent quadrants": [
+     58,
+     180
+    ],
+    "diagonal quadrants": [
+     58,
+     180
+    ],
+    "quadrant - open": [
+     89,
+     180
+    ],
+    "open - open": [
+     176,
+     180
+    ]
+   },
+   "zq": "20261105T191606Z-6bba3f8f",
+   "time_ratio_median": 1.1450394530228067,
+   "collision": 449,
+   "stalled": 12,
+   "arrived_wall": 301,
+   "not_arrived": 160,
+   "quadrant_stretch": 5.999505519866943
+  },
+  "20261105T191734Z-752cddaa": {
+   "success_total": [
+    658,
+    900
+   ],
+   "by_category": {
+    "same quadrant": [
+     125,
+     180
+    ],
+    "adjacent quadrants": [
+     98,
+     180
+    ],
+    "diagonal quadrants": [
+     124,
+     180
+    ],
+    "quadrant - open": [
+     134,
+     180
+    ],
+    "open - open": [
+     177,
+     180
+    ]
+   },
+   "zq": "20261105T192318Z-524ee565",
+   "time_ratio_median": 1.1254178707973512,
+   "collision": 226,
+   "stalled": 16,
+   "arrived_wall": 206,
+   "not_arrived": 36,
+   "quadrant_stretch": 4.370212554931641
+  },
+  "20261105T192412Z-1cb6a55a": {
+   "success_total": [
+    359,
+    900
+   ],
+   "by_category": {
+    "same quadrant": [
+     45,
+     180
+    ],
+    "adjacent quadrants": [
+     21,
+     180
+    ],
+    "diagonal quadrants": [
+     44,
+     180
+    ],
+    "quadrant - open": [
+     72,
+     180
+    ],
+    "open - open": [
+     177,
+     180
+    ]
+   },
+   "zq": "20261105T193017Z-6cb5e565",
+   "time_ratio_median": 1.2317259921489971,
+   "collision": 541,
+   "stalled": 0,
+   "arrived_wall": 283,
+   "not_arrived": 258,
+   "quadrant_stretch": 7.628202438354492
+  },
+  "20261105T193154Z-594e02d4": {
+   "success_total": [
+    558,
+    900
+   ],
+   "by_category": {
+    "same quadrant": [
+     97,
+     180
+    ],
+    "adjacent quadrants": [
+     79,
+     180
+    ],
+    "diagonal quadrants": [
+     80,
+     180
+    ],
+    "quadrant - open": [
+     125,
+     180
+    ],
+    "open - open": [
+     177,
+     180
+    ]
+   },
+   "zq": "20261105T193744Z-cce66d69",
+   "time_ratio_median": 1.1816394905140966,
+   "collision": 309,
+   "stalled": 33,
+   "arrived_wall": 151,
+   "not_arrived": 191,
+   "quadrant_stretch": 5.9983134269714355
+  },
+  "20261105T193900Z-51804883": {
+   "success_total": [
+    238,
+    900
+   ],
+   "by_category": {
+    "same quadrant": [
+     31,
+     180
+    ],
+    "adjacent quadrants": [
+     7,
+     180
+    ],
+    "diagonal quadrants": [
+     8,
+     180
+    ],
+    "quadrant - open": [
+     21,
+     180
+    ],
+    "open - open": [
+     171,
+     180
+    ]
+   },
+   "zq": "20261105T194513Z-708f4e82",
+   "time_ratio_median": 1.2877096824175855,
+   "collision": 662,
+   "stalled": 0,
+   "arrived_wall": 307,
+   "not_arrived": 355,
+   "quadrant_stretch": 10.88559627532959
+  },
+  "20261105T194652Z-158b26bb": {
+   "success_total": [
+    368,
+    900
+   ],
+   "by_category": {
+    "same quadrant": [
+     69,
+     180
+    ],
+    "adjacent quadrants": [
+     29,
+     180
+    ],
+    "diagonal quadrants": [
+     31,
+     180
+    ],
+    "quadrant - open": [
+     64,
+     180
+    ],
+    "open - open": [
+     175,
+     180
+    ]
+   },
+   "zq": "20261105T195254Z-6ba09941",
+   "time_ratio_median": 1.133361093525909,
+   "collision": 515,
+   "stalled": 17,
+   "arrived_wall": 181,
+   "not_arrived": 351,
+   "quadrant_stretch": 9.255409240722656
+  },
+  "20261105T195416Z-973bf79f": {
+   "success_total": [
+    210,
+    900
+   ],
+   "by_category": {
+    "same quadrant": [
+     33,
+     180
+    ],
+    "adjacent quadrants": [
+     2,
+     180
+    ],
+    "diagonal quadrants": [
+     0,
+     180
+    ],
+    "quadrant - open": [
+     1,
+     180
+    ],
+    "open - open": [
+     174,
+     180
+    ]
+   },
+   "zq": "20261105T200056Z-55ef5ee4",
+   "time_ratio_median": 1.2872918293450166,
+   "collision": 672,
+   "stalled": 18,
+   "arrived_wall": 406,
+   "not_arrived": 284,
+   "quadrant_stretch": 17.4003849029541
+  },
+  "20261105T200245Z-f88f1b4d": {
+   "success_total": [
+    219,
+    900
+   ],
+   "by_category": {
+    "same quadrant": [
+     36,
+     180
+    ],
+    "adjacent quadrants": [
+     4,
+     180
+    ],
+    "diagonal quadrants": [
+     0,
+     180
+    ],
+    "quadrant - open": [
+     0,
+     180
+    ],
+    "open - open": [
+     179,
+     180
+    ]
+   },
+   "zq": "20261105T200948Z-62abca04",
+   "time_ratio_median": 1.1239190498768432,
+   "collision": 661,
+   "stalled": 20,
+   "arrived_wall": 70,
+   "not_arrived": 611,
+   "quadrant_stretch": 15.769899368286133
+  }
+ },
+ "id22": {
+  "2": {
+   "87358": "20261103T234822Z-01f10400",
+   "1": "20261104T043955Z-95601b71",
+   "2": "20261104T063539Z-f8846560"
+  },
+  "4": {
+   "87358": "20261104T000005Z-10f76571",
+   "1": "20261104T045012Z-a9333984",
+   "2": "20261104T071459Z-122a61ac"
+  },
+  "8": {
+   "87358": "20261104T002837Z-2df7f1bf",
+   "1": "20261104T052156Z-8bd8a4a0",
+   "2": "20261104T074553Z-081d3e7a"
+  },
+  "12": {
+   "87358": "20261104T004407Z-e1930a37",
+   "1": "20261104T053413Z-f52a2144",
+   "2": "20261104T083547Z-a13350df"
+  },
+  "1": {
+   "87358": "20261102T060517Z-0df939ae",
+   "1": "20261102T062426Z-ed343a1b",
+   "2": "20261102T063128Z-542b25dd"
+  }
+ },
+ "id22_arrival": {
+  "2": {
+   "87358": {
+    "arrived_wall": 245,
+    "not_arrived": 342
+   },
+   "1": {
+    "arrived_wall": 263,
+    "not_arrived": 369
+   },
+   "2": {
+    "arrived_wall": 280,
+    "not_arrived": 329
+   }
+  },
+  "4": {
+   "87358": {
+    "arrived_wall": 419,
+    "not_arrived": 247
+   },
+   "1": {
+    "arrived_wall": 304,
+    "not_arrived": 356
+   },
+   "2": {
+    "arrived_wall": 260,
+    "not_arrived": 390
+   }
+  },
+  "8": {
+   "87358": {
+    "arrived_wall": 647,
+    "not_arrived": 16
+   },
+   "1": {
+    "arrived_wall": 662,
+    "not_arrived": 0
+   },
+   "2": {
+    "arrived_wall": 675,
+    "not_arrived": 0
+   }
+  },
+  "12": {
+   "87358": {
+    "arrived_wall": 682,
+    "not_arrived": 0
+   },
+   "1": {
+    "arrived_wall": 680,
+    "not_arrived": 0
+   },
+   "2": {
+    "arrived_wall": 685,
+    "not_arrived": 0
+   }
+  }
+ },
+ "prepares": {
+  "c22_main": {
+   "1": "registered_20261103T233014Z-ae84b379",
+   "2": "registered_20261103T232925Z-119e9a37",
+   "4": "registered_20261103T233057Z-2c83639d",
+   "8": "registered_20261103T233625Z-021c8182",
+   "12": "registered_20261103T233747Z-3c48b7dc"
+  },
+  "c22_zdraw": {
+   "12": "registered_20261105T070343Z-fda24e40",
+   "1": "registered_20261105T070347Z-9293df88",
+   "2": "registered_20261105T070351Z-cb170cc0",
+   "4": "registered_20261105T070355Z-2d877603",
+   "8": "registered_20261105T070359Z-6d7cc189"
+  },
+  "m10_main": {
+   "12": "registered_20261105T070402Z-98f3cab7",
+   "1": "registered_20261105T070523Z-5877176f",
+   "2": "registered_20261105T070535Z-01c9f536",
+   "4": "registered_20261105T070549Z-25e73d68",
+   "8": "registered_20261105T070611Z-cf3b0b02"
+  },
+  "m10_zdraw": {
+   "12": "registered_20261105T070657Z-4ef430ba",
+   "1": "registered_20261105T070701Z-016c399f",
+   "2": "registered_20261105T070705Z-4824ee5c",
+   "4": "registered_20261105T070709Z-0edca351",
+   "8": "registered_20261105T070713Z-453df9cc"
+  },
+  "c22_shrunk": {
+   "12": "registered_20261105T092735Z-046f1bf7"
+  },
+  "m10_shrunk": {
+   "12": "registered_20261105T094016Z-4ef380f1"
+  }
+ },
+ "planwarp_runs": {
+  "c22/1/idw": {
+   "same quadrant": {
+    "runs": 180,
+    "x": 58,
+    "z": 58,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "adjacent quadrants": {
+    "runs": 180,
+    "x": 64,
+    "z": 58,
+    "lost": 10,
+    "lost_wall": 10,
+    "lost_stall": 0,
+    "gained": 4
+   },
+   "diagonal quadrants": {
+    "runs": 180,
+    "x": 61,
+    "z": 58,
+    "lost": 5,
+    "lost_wall": 5,
+    "lost_stall": 0,
+    "gained": 2
+   },
+   "quadrant - open": {
+    "runs": 180,
+    "x": 90,
+    "z": 89,
+    "lost": 1,
+    "lost_wall": 1,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "open - open": {
+    "runs": 180,
+    "x": 176,
+    "z": 176,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   }
+  },
+  "c22/2/id": {
+   "same quadrant": {
+    "runs": 180,
+    "x": 48,
+    "z": 48,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "adjacent quadrants": {
+    "runs": 180,
+    "x": 15,
+    "z": 21,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 6
+   },
+   "diagonal quadrants": {
+    "runs": 180,
+    "x": 19,
+    "z": 24,
+    "lost": 4,
+    "lost_wall": 0,
+    "lost_stall": 4,
+    "gained": 9
+   },
+   "quadrant - open": {
+    "runs": 180,
+    "x": 54,
+    "z": 47,
+    "lost": 10,
+    "lost_wall": 10,
+    "lost_stall": 0,
+    "gained": 3
+   },
+   "open - open": {
+    "runs": 180,
+    "x": 177,
+    "z": 177,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   }
+  },
+  "c22/2/idw": {
+   "same quadrant": {
+    "runs": 180,
+    "x": 46,
+    "z": 45,
+    "lost": 1,
+    "lost_wall": 1,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "adjacent quadrants": {
+    "runs": 180,
+    "x": 24,
+    "z": 21,
+    "lost": 3,
+    "lost_wall": 0,
+    "lost_stall": 3,
+    "gained": 0
+   },
+   "diagonal quadrants": {
+    "runs": 180,
+    "x": 44,
+    "z": 44,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "quadrant - open": {
+    "runs": 180,
+    "x": 73,
+    "z": 72,
+    "lost": 3,
+    "lost_wall": 3,
+    "lost_stall": 0,
+    "gained": 2
+   },
+   "open - open": {
+    "runs": 180,
+    "x": 180,
+    "z": 177,
+    "lost": 3,
+    "lost_wall": 3,
+    "lost_stall": 0,
+    "gained": 0
+   }
+  },
+  "c22/4/id": {
+   "same quadrant": {
+    "runs": 180,
+    "x": 23,
+    "z": 23,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "adjacent quadrants": {
+    "runs": 180,
+    "x": 15,
+    "z": 6,
+    "lost": 12,
+    "lost_wall": 12,
+    "lost_stall": 0,
+    "gained": 3
+   },
+   "diagonal quadrants": {
+    "runs": 180,
+    "x": 0,
+    "z": 5,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 5
+   },
+   "quadrant - open": {
+    "runs": 180,
+    "x": 21,
+    "z": 1,
+    "lost": 20,
+    "lost_wall": 20,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "open - open": {
+    "runs": 180,
+    "x": 175,
+    "z": 170,
+    "lost": 5,
+    "lost_wall": 1,
+    "lost_stall": 4,
+    "gained": 0
+   }
+  },
+  "c22/4/idw": {
+   "same quadrant": {
+    "runs": 180,
+    "x": 31,
+    "z": 31,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "adjacent quadrants": {
+    "runs": 180,
+    "x": 27,
+    "z": 7,
+    "lost": 20,
+    "lost_wall": 19,
+    "lost_stall": 1,
+    "gained": 0
+   },
+   "diagonal quadrants": {
+    "runs": 180,
+    "x": 12,
+    "z": 8,
+    "lost": 8,
+    "lost_wall": 7,
+    "lost_stall": 1,
+    "gained": 4
+   },
+   "quadrant - open": {
+    "runs": 180,
+    "x": 31,
+    "z": 21,
+    "lost": 14,
+    "lost_wall": 10,
+    "lost_stall": 4,
+    "gained": 4
+   },
+   "open - open": {
+    "runs": 180,
+    "x": 180,
+    "z": 171,
+    "lost": 9,
+    "lost_wall": 6,
+    "lost_stall": 3,
+    "gained": 0
+   }
+  },
+  "c22/8/id": {
+   "same quadrant": {
+    "runs": 180,
+    "x": 22,
+    "z": 22,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "adjacent quadrants": {
+    "runs": 180,
+    "x": 6,
+    "z": 0,
+    "lost": 6,
+    "lost_wall": 6,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "diagonal quadrants": {
+    "runs": 180,
+    "x": 5,
+    "z": 0,
+    "lost": 5,
+    "lost_wall": 5,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "quadrant - open": {
+    "runs": 180,
+    "x": 24,
+    "z": 0,
+    "lost": 24,
+    "lost_wall": 24,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "open - open": {
+    "runs": 180,
+    "x": 180,
+    "z": 172,
+    "lost": 8,
+    "lost_wall": 0,
+    "lost_stall": 8,
+    "gained": 0
+   }
+  },
+  "c22/8/idw": {
+   "same quadrant": {
+    "runs": 180,
+    "x": 33,
+    "z": 33,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "adjacent quadrants": {
+    "runs": 180,
+    "x": 3,
+    "z": 2,
+    "lost": 3,
+    "lost_wall": 3,
+    "lost_stall": 0,
+    "gained": 2
+   },
+   "diagonal quadrants": {
+    "runs": 180,
+    "x": 15,
+    "z": 0,
+    "lost": 15,
+    "lost_wall": 12,
+    "lost_stall": 3,
+    "gained": 0
+   },
+   "quadrant - open": {
+    "runs": 180,
+    "x": 15,
+    "z": 1,
+    "lost": 15,
+    "lost_wall": 9,
+    "lost_stall": 6,
+    "gained": 1
+   },
+   "open - open": {
+    "runs": 180,
+    "x": 180,
+    "z": 174,
+    "lost": 6,
+    "lost_wall": 0,
+    "lost_stall": 6,
+    "gained": 0
+   }
+  },
+  "c22/12/id": {
+   "same quadrant": {
+    "runs": 180,
+    "x": 24,
+    "z": 24,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "adjacent quadrants": {
+    "runs": 180,
+    "x": 0,
+    "z": 0,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "diagonal quadrants": {
+    "runs": 180,
+    "x": 0,
+    "z": 2,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 2
+   },
+   "quadrant - open": {
+    "runs": 180,
+    "x": 14,
+    "z": 3,
+    "lost": 11,
+    "lost_wall": 11,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "open - open": {
+    "runs": 180,
+    "x": 180,
+    "z": 175,
+    "lost": 5,
+    "lost_wall": 0,
+    "lost_stall": 5,
+    "gained": 0
+   }
+  },
+  "c22/12/idw": {
+   "same quadrant": {
+    "runs": 180,
+    "x": 24,
+    "z": 24,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "adjacent quadrants": {
+    "runs": 180,
+    "x": 2,
+    "z": 3,
+    "lost": 1,
+    "lost_wall": 1,
+    "lost_stall": 0,
+    "gained": 2
+   },
+   "diagonal quadrants": {
+    "runs": 180,
+    "x": 3,
+    "z": 0,
+    "lost": 3,
+    "lost_wall": 3,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "quadrant - open": {
+    "runs": 180,
+    "x": 18,
+    "z": 13,
+    "lost": 7,
+    "lost_wall": 7,
+    "lost_stall": 0,
+    "gained": 2
+   },
+   "open - open": {
+    "runs": 180,
+    "x": 180,
+    "z": 178,
+    "lost": 2,
+    "lost_wall": 0,
+    "lost_stall": 2,
+    "gained": 0
+   }
+  },
+  "m10/1/id": {
+   "same quadrant": {
+    "runs": 180,
+    "x": 110,
+    "z": 111,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 1
+   },
+   "adjacent quadrants": {
+    "runs": 180,
+    "x": 112,
+    "z": 111,
+    "lost": 3,
+    "lost_wall": 3,
+    "lost_stall": 0,
+    "gained": 2
+   },
+   "diagonal quadrants": {
+    "runs": 180,
+    "x": 117,
+    "z": 120,
+    "lost": 9,
+    "lost_wall": 8,
+    "lost_stall": 1,
+    "gained": 12
+   },
+   "quadrant - open": {
+    "runs": 180,
+    "x": 122,
+    "z": 132,
+    "lost": 3,
+    "lost_wall": 3,
+    "lost_stall": 0,
+    "gained": 13
+   },
+   "open - open": {
+    "runs": 180,
+    "x": 171,
+    "z": 170,
+    "lost": 1,
+    "lost_wall": 1,
+    "lost_stall": 0,
+    "gained": 0
+   }
+  },
+  "m10/1/idw": {
+   "same quadrant": {
+    "runs": 180,
+    "x": 125,
+    "z": 125,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "adjacent quadrants": {
+    "runs": 180,
+    "x": 99,
+    "z": 98,
+    "lost": 11,
+    "lost_wall": 11,
+    "lost_stall": 0,
+    "gained": 10
+   },
+   "diagonal quadrants": {
+    "runs": 180,
+    "x": 124,
+    "z": 124,
+    "lost": 21,
+    "lost_wall": 21,
+    "lost_stall": 0,
+    "gained": 21
+   },
+   "quadrant - open": {
+    "runs": 180,
+    "x": 129,
+    "z": 134,
+    "lost": 4,
+    "lost_wall": 4,
+    "lost_stall": 0,
+    "gained": 9
+   },
+   "open - open": {
+    "runs": 180,
+    "x": 180,
+    "z": 177,
+    "lost": 3,
+    "lost_wall": 0,
+    "lost_stall": 3,
+    "gained": 0
+   }
+  },
+  "m10/2/id": {
+   "same quadrant": {
+    "runs": 180,
+    "x": 93,
+    "z": 93,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "adjacent quadrants": {
+    "runs": 180,
+    "x": 41,
+    "z": 64,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 23
+   },
+   "diagonal quadrants": {
+    "runs": 180,
+    "x": 64,
+    "z": 57,
+    "lost": 12,
+    "lost_wall": 6,
+    "lost_stall": 6,
+    "gained": 5
+   },
+   "quadrant - open": {
+    "runs": 180,
+    "x": 90,
+    "z": 100,
+    "lost": 9,
+    "lost_wall": 6,
+    "lost_stall": 3,
+    "gained": 19
+   },
+   "open - open": {
+    "runs": 180,
+    "x": 180,
+    "z": 175,
+    "lost": 5,
+    "lost_wall": 0,
+    "lost_stall": 5,
+    "gained": 0
+   }
+  },
+  "m10/2/idw": {
+   "same quadrant": {
+    "runs": 180,
+    "x": 97,
+    "z": 97,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "adjacent quadrants": {
+    "runs": 180,
+    "x": 86,
+    "z": 79,
+    "lost": 11,
+    "lost_wall": 4,
+    "lost_stall": 7,
+    "gained": 4
+   },
+   "diagonal quadrants": {
+    "runs": 180,
+    "x": 82,
+    "z": 80,
+    "lost": 9,
+    "lost_wall": 3,
+    "lost_stall": 6,
+    "gained": 7
+   },
+   "quadrant - open": {
+    "runs": 180,
+    "x": 123,
+    "z": 125,
+    "lost": 2,
+    "lost_wall": 2,
+    "lost_stall": 0,
+    "gained": 4
+   },
+   "open - open": {
+    "runs": 180,
+    "x": 177,
+    "z": 177,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   }
+  },
+  "m10/4/id": {
+   "same quadrant": {
+    "runs": 180,
+    "x": 54,
+    "z": 54,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "adjacent quadrants": {
+    "runs": 180,
+    "x": 17,
+    "z": 9,
+    "lost": 13,
+    "lost_wall": 7,
+    "lost_stall": 6,
+    "gained": 5
+   },
+   "diagonal quadrants": {
+    "runs": 180,
+    "x": 14,
+    "z": 9,
+    "lost": 6,
+    "lost_wall": 0,
+    "lost_stall": 6,
+    "gained": 1
+   },
+   "quadrant - open": {
+    "runs": 180,
+    "x": 26,
+    "z": 21,
+    "lost": 8,
+    "lost_wall": 4,
+    "lost_stall": 4,
+    "gained": 3
+   },
+   "open - open": {
+    "runs": 180,
+    "x": 177,
+    "z": 175,
+    "lost": 4,
+    "lost_wall": 0,
+    "lost_stall": 4,
+    "gained": 2
+   }
+  },
+  "m10/4/idw": {
+   "same quadrant": {
+    "runs": 180,
+    "x": 69,
+    "z": 69,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "adjacent quadrants": {
+    "runs": 180,
+    "x": 19,
+    "z": 29,
+    "lost": 4,
+    "lost_wall": 4,
+    "lost_stall": 0,
+    "gained": 14
+   },
+   "diagonal quadrants": {
+    "runs": 180,
+    "x": 43,
+    "z": 31,
+    "lost": 14,
+    "lost_wall": 14,
+    "lost_stall": 0,
+    "gained": 2
+   },
+   "quadrant - open": {
+    "runs": 180,
+    "x": 73,
+    "z": 64,
+    "lost": 16,
+    "lost_wall": 5,
+    "lost_stall": 11,
+    "gained": 7
+   },
+   "open - open": {
+    "runs": 180,
+    "x": 177,
+    "z": 175,
+    "lost": 2,
+    "lost_wall": 0,
+    "lost_stall": 2,
+    "gained": 0
+   }
+  },
+  "m10/8/id": {
+   "same quadrant": {
+    "runs": 180,
+    "x": 34,
+    "z": 34,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "adjacent quadrants": {
+    "runs": 180,
+    "x": 6,
+    "z": 0,
+    "lost": 6,
+    "lost_wall": 6,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "diagonal quadrants": {
+    "runs": 180,
+    "x": 0,
+    "z": 0,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "quadrant - open": {
+    "runs": 180,
+    "x": 6,
+    "z": 3,
+    "lost": 6,
+    "lost_wall": 6,
+    "lost_stall": 0,
+    "gained": 3
+   },
+   "open - open": {
+    "runs": 180,
+    "x": 180,
+    "z": 178,
+    "lost": 2,
+    "lost_wall": 0,
+    "lost_stall": 2,
+    "gained": 0
+   }
+  },
+  "m10/8/idw": {
+   "same quadrant": {
+    "runs": 180,
+    "x": 36,
+    "z": 36,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "adjacent quadrants": {
+    "runs": 180,
+    "x": 3,
+    "z": 4,
+    "lost": 1,
+    "lost_wall": 1,
+    "lost_stall": 0,
+    "gained": 2
+   },
+   "diagonal quadrants": {
+    "runs": 180,
+    "x": 0,
+    "z": 0,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "quadrant - open": {
+    "runs": 180,
+    "x": 6,
+    "z": 0,
+    "lost": 6,
+    "lost_wall": 0,
+    "lost_stall": 6,
+    "gained": 0
+   },
+   "open - open": {
+    "runs": 180,
+    "x": 180,
+    "z": 179,
+    "lost": 1,
+    "lost_wall": 0,
+    "lost_stall": 1,
+    "gained": 0
+   }
+  },
+  "m10/12/id": {
+   "same quadrant": {
+    "runs": 180,
+    "x": 25,
+    "z": 25,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "adjacent quadrants": {
+    "runs": 180,
+    "x": 3,
+    "z": 0,
+    "lost": 3,
+    "lost_wall": 3,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "diagonal quadrants": {
+    "runs": 180,
+    "x": 0,
+    "z": 0,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "quadrant - open": {
+    "runs": 180,
+    "x": 36,
+    "z": 9,
+    "lost": 27,
+    "lost_wall": 27,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "open - open": {
+    "runs": 180,
+    "x": 180,
+    "z": 169,
+    "lost": 11,
+    "lost_wall": 0,
+    "lost_stall": 11,
+    "gained": 0
+   }
+  },
+  "m10/12/idw": {
+   "same quadrant": {
+    "runs": 180,
+    "x": 45,
+    "z": 45,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "adjacent quadrants": {
+    "runs": 180,
+    "x": 0,
+    "z": 0,
+    "lost": 0,
+    "lost_wall": 0,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "diagonal quadrants": {
+    "runs": 180,
+    "x": 1,
+    "z": 0,
+    "lost": 1,
+    "lost_wall": 0,
+    "lost_stall": 1,
+    "gained": 0
+   },
+   "quadrant - open": {
+    "runs": 180,
+    "x": 16,
+    "z": 3,
+    "lost": 13,
+    "lost_wall": 13,
+    "lost_stall": 0,
+    "gained": 0
+   },
+   "open - open": {
+    "runs": 180,
+    "x": 180,
+    "z": 173,
+    "lost": 7,
+    "lost_wall": 0,
+    "lost_stall": 7,
+    "gained": 0
+   }
+  }
+ }
+}

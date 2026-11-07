@@ -1,0 +1,77 @@
+{
+ "10|ntrl-demo": {
+  "success": 1583,
+  "runs": 1800,
+  "seeds": 3
+ },
+ "10|control": {
+  "success": 1661,
+  "runs": 1800,
+  "seeds": 3
+ },
+ "10|safe, min leaves, tree + sub-paths": {
+  "success": 1766,
+  "runs": 1800,
+  "seeds": 3
+ },
+ "10|ntrl-demo B\u00d73": {
+  "success": 1712,
+  "runs": 1800,
+  "seeds": 3
+ },
+ "10|safe, min leaves, tree + sub-paths on B\u00d73": {
+  "success": 1780,
+  "runs": 1800,
+  "seeds": 3
+ },
+ "13|ntrl-demo": {
+  "success": 1060,
+  "runs": 1800,
+  "seeds": 3
+ },
+ "13|control": {
+  "success": 1079,
+  "runs": 1800,
+  "seeds": 3
+ },
+ "13|safe, min leaves, tree + sub-paths": {
+  "success": 1638,
+  "runs": 1800,
+  "seeds": 3
+ },
+ "13|ntrl-demo B\u00d73": {
+  "success": 1620,
+  "runs": 1800,
+  "seeds": 3
+ },
+ "13|safe, min leaves, tree + sub-paths on B\u00d73": {
+  "success": 1690,
+  "runs": 1800,
+  "seeds": 3
+ },
+ "22|ntrl-demo": {
+  "success": 505,
+  "runs": 2160,
+  "seeds": 3
+ },
+ "22|control": {
+  "success": 511,
+  "runs": 2160,
+  "seeds": 3
+ },
+ "22|safe, min leaves, tree + sub-paths": {
+  "success": 820,
+  "runs": 2160,
+  "seeds": 3
+ },
+ "22|ntrl-demo B\u00d76": {
+  "success": 926,
+  "runs": 2160,
+  "seeds": 3
+ },
+ "22|safe, min leaves, tree + sub-paths on B\u00d76": {
+  "success": 1267,
+  "runs": 2160,
+  "seeds": 3
+ }
+}

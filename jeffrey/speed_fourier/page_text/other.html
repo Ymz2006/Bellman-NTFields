@@ -1,0 +1,10 @@
+<h2>Other forms I tried</h2>
+<p>No other form beat its flipped twin by more than seed noise, so the result does not hinge on one design. These are mostly one seed, so treat small gaps as noise.</p>
+<ul>
+<li><b>Many speed rows.</b> 64 octaves + 128 line rows: {{mix13}} % on 13×13 and {{mix22}} % on 22×22, against {{half13}} % and {{half22}} % with those 128 slots empty. Flipped: {{mixflip13}} % and {{mixflip22}} %. Most of this cost looks like near-copies, since high-fit rows are almost identical: at 5 terms, where they differ more, 13×13 recovers to {{mix513}} %.</li>
+<li><b>Rows that keep their differences.</b> Ridge-regularised rows have a low per-row fit but high rank: {{ridge13}} % and {{ridge22}} %, flipped {{ridgeflip13}} % and {{ridgeflip22}} %. These lift 22×22 above the {{half22}} % empty case, but so do their flipped twins, so the gain is from extra position-like features, not speed.</li>
+<li><b>Speed rows only.</b> {{pure13}} % and {{pure22}} %. Speed fit stays good, but T collapses to about a tenth of the true time. Position is nearly unreadable linearly from these rows (R² {{coord_pure13}}), though a random layer recovers it (R² {{coordl_pure13}}).</li>
+<li><b>Plain sin/cos at the maze's own peak frequencies.</b> {{plain13}} % and {{plain22}} %, well below octaves. Learning the frequencies from the spectrum did not help either.</li>
+<li><b>The speed map in all 128 slots.</b> {{map13}} % on 13×13.</li>
+<li><b>Single sin/cos terms as rows,</b> rather than sums: {{terms13}} % on 13×13, flipped {{termsflip13}} %.</li>
+</ul>

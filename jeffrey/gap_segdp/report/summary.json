@@ -1,0 +1,1054 @@
+{
+ "1": {
+  "ntrl-demo": {
+   "per_seed": {
+    "87358": [
+     367,
+     900
+    ],
+    "1": [
+     364,
+     900
+    ],
+    "2": [
+     452,
+     900
+    ]
+   },
+   "pooled": [
+    1183,
+    2700
+   ],
+   "by_category": {
+    "same quadrant": [
+     176,
+     540
+    ],
+    "adjacent quadrants": [
+     133,
+     540
+    ],
+    "diagonal quadrants": [
+     123,
+     540
+    ],
+    "quadrant - open": [
+     231,
+     540
+    ],
+    "open - open": [
+     520,
+     540
+    ]
+   }
+  },
+  "segment DP + wall term 0.3": {
+   "per_seed": {
+    "87358": [
+     494,
+     900
+    ],
+    "1": [
+     506,
+     900
+    ],
+    "2": [
+     571,
+     900
+    ]
+   },
+   "pooled": [
+    1571,
+    2700
+   ],
+   "by_category": {
+    "same quadrant": [
+     306,
+     540
+    ],
+    "adjacent quadrants": [
+     160,
+     540
+    ],
+    "diagonal quadrants": [
+     238,
+     540
+    ],
+    "quadrant - open": [
+     333,
+     540
+    ],
+    "open - open": [
+     534,
+     540
+    ]
+   }
+  },
+  "constructed": {
+   "per_seed": {
+    "87358": [
+     598,
+     900
+    ],
+    "2": [
+     530,
+     900
+    ],
+    "1": [
+     614,
+     900
+    ]
+   },
+   "pooled": [
+    1742,
+    2700
+   ],
+   "by_category": {
+    "same quadrant": [
+     343,
+     540
+    ],
+    "adjacent quadrants": [
+     269,
+     540
+    ],
+    "diagonal quadrants": [
+     259,
+     540
+    ],
+    "quadrant - open": [
+     346,
+     540
+    ],
+    "open - open": [
+     525,
+     540
+    ]
+   }
+  },
+  "warp + scaling": {
+   "per_seed": {
+    "87358": [
+     525,
+     900
+    ],
+    "1": [
+     543,
+     900
+    ],
+    "2": [
+     512,
+     900
+    ]
+   },
+   "pooled": [
+    1580,
+    2700
+   ],
+   "by_category": {
+    "same quadrant": [
+     298,
+     540
+    ],
+    "adjacent quadrants": [
+     226,
+     540
+    ],
+    "diagonal quadrants": [
+     233,
+     540
+    ],
+    "quadrant - open": [
+     306,
+     540
+    ],
+    "open - open": [
+     517,
+     540
+    ]
+   }
+  },
+  "README warp": {
+   "per_seed": {
+    "87358": [
+     445,
+     900
+    ],
+    "2": [
+     393,
+     900
+    ],
+    "1": [
+     411,
+     900
+    ]
+   },
+   "pooled": [
+    1249,
+    2700
+   ],
+   "by_category": {
+    "same quadrant": [
+     156,
+     540
+    ],
+    "adjacent quadrants": [
+     111,
+     540
+    ],
+    "diagonal quadrants": [
+     198,
+     540
+    ],
+    "quadrant - open": [
+     262,
+     540
+    ],
+    "open - open": [
+     522,
+     540
+    ]
+   }
+  }
+ },
+ "2": {
+  "ntrl-demo": {
+   "per_seed": {
+    "87358": [
+     313,
+     900
+    ],
+    "1": [
+     268,
+     900
+    ],
+    "2": [
+     291,
+     900
+    ]
+   },
+   "pooled": [
+    872,
+    2700
+   ],
+   "by_category": {
+    "same quadrant": [
+     117,
+     540
+    ],
+    "adjacent quadrants": [
+     56,
+     540
+    ],
+    "diagonal quadrants": [
+     41,
+     540
+    ],
+    "quadrant - open": [
+     136,
+     540
+    ],
+    "open - open": [
+     522,
+     540
+    ]
+   }
+  },
+  "segment DP + wall term 0.3": {
+   "per_seed": {
+    "87358": [
+     357,
+     900
+    ],
+    "1": [
+     324,
+     900
+    ],
+    "2": [
+     346,
+     900
+    ]
+   },
+   "pooled": [
+    1027,
+    2700
+   ],
+   "by_category": {
+    "same quadrant": [
+     174,
+     540
+    ],
+    "adjacent quadrants": [
+     35,
+     540
+    ],
+    "diagonal quadrants": [
+     104,
+     540
+    ],
+    "quadrant - open": [
+     192,
+     540
+    ],
+    "open - open": [
+     522,
+     540
+    ]
+   }
+  },
+  "constructed": {
+   "per_seed": {
+    "87358": [
+     456,
+     900
+    ],
+    "1": [
+     324,
+     900
+    ],
+    "2": [
+     348,
+     900
+    ]
+   },
+   "pooled": [
+    1128,
+    2700
+   ],
+   "by_category": {
+    "same quadrant": [
+     227,
+     540
+    ],
+    "adjacent quadrants": [
+     116,
+     540
+    ],
+    "diagonal quadrants": [
+     84,
+     540
+    ],
+    "quadrant - open": [
+     209,
+     540
+    ],
+    "open - open": [
+     492,
+     540
+    ]
+   }
+  },
+  "warp + scaling": {
+   "per_seed": {
+    "87358": [
+     339,
+     900
+    ],
+    "1": [
+     363,
+     900
+    ],
+    "2": [
+     287,
+     900
+    ]
+   },
+   "pooled": [
+    989,
+    2700
+   ],
+   "by_category": {
+    "same quadrant": [
+     184,
+     540
+    ],
+    "adjacent quadrants": [
+     83,
+     540
+    ],
+    "diagonal quadrants": [
+     97,
+     540
+    ],
+    "quadrant - open": [
+     163,
+     540
+    ],
+    "open - open": [
+     462,
+     540
+    ]
+   }
+  },
+  "README warp": {
+   "per_seed": {
+    "87358": [
+     282,
+     900
+    ],
+    "1": [
+     365,
+     900
+    ],
+    "2": [
+     370,
+     900
+    ]
+   },
+   "pooled": [
+    1017,
+    2700
+   ],
+   "by_category": {
+    "same quadrant": [
+     142,
+     540
+    ],
+    "adjacent quadrants": [
+     60,
+     540
+    ],
+    "diagonal quadrants": [
+     101,
+     540
+    ],
+    "quadrant - open": [
+     186,
+     540
+    ],
+    "open - open": [
+     528,
+     540
+    ]
+   }
+  }
+ },
+ "4": {
+  "ntrl-demo": {
+   "per_seed": {
+    "87358": [
+     234,
+     900
+    ],
+    "1": [
+     240,
+     900
+    ],
+    "2": [
+     250,
+     900
+    ]
+   },
+   "pooled": [
+    724,
+    2700
+   ],
+   "by_category": {
+    "same quadrant": [
+     81,
+     540
+    ],
+    "adjacent quadrants": [
+     47,
+     540
+    ],
+    "diagonal quadrants": [
+     2,
+     540
+    ],
+    "quadrant - open": [
+     65,
+     540
+    ],
+    "open - open": [
+     529,
+     540
+    ]
+   }
+  },
+  "segment DP + wall term 0.3": {
+   "per_seed": {
+    "87358": [
+     241,
+     900
+    ],
+    "1": [
+     256,
+     900
+    ],
+    "2": [
+     256,
+     900
+    ]
+   },
+   "pooled": [
+    753,
+    2700
+   ],
+   "by_category": {
+    "same quadrant": [
+     93,
+     540
+    ],
+    "adjacent quadrants": [
+     30,
+     540
+    ],
+    "diagonal quadrants": [
+     13,
+     540
+    ],
+    "quadrant - open": [
+     92,
+     540
+    ],
+    "open - open": [
+     525,
+     540
+    ]
+   }
+  },
+  "constructed": {
+   "per_seed": {
+    "87358": [
+     226,
+     900
+    ],
+    "1": [
+     198,
+     900
+    ],
+    "2": [
+     145,
+     900
+    ]
+   },
+   "pooled": [
+    569,
+    2700
+   ],
+   "by_category": {
+    "same quadrant": [
+     194,
+     540
+    ],
+    "adjacent quadrants": [
+     7,
+     540
+    ],
+    "diagonal quadrants": [
+     0,
+     540
+    ],
+    "quadrant - open": [
+     103,
+     540
+    ],
+    "open - open": [
+     265,
+     540
+    ]
+   }
+  },
+  "warp + scaling": {
+   "per_seed": {
+    "87358": [
+     282,
+     900
+    ],
+    "1": [
+     193,
+     900
+    ],
+    "2": [
+     241,
+     900
+    ]
+   },
+   "pooled": [
+    716,
+    2700
+   ],
+   "by_category": {
+    "same quadrant": [
+     122,
+     540
+    ],
+    "adjacent quadrants": [
+     44,
+     540
+    ],
+    "diagonal quadrants": [
+     36,
+     540
+    ],
+    "quadrant - open": [
+     124,
+     540
+    ],
+    "open - open": [
+     390,
+     540
+    ]
+   }
+  },
+  "README warp": {
+   "per_seed": {
+    "87358": [
+     242,
+     900
+    ],
+    "1": [
+     258,
+     900
+    ],
+    "2": [
+     246,
+     900
+    ]
+   },
+   "pooled": [
+    746,
+    2700
+   ],
+   "by_category": {
+    "same quadrant": [
+     101,
+     540
+    ],
+    "adjacent quadrants": [
+     33,
+     540
+    ],
+    "diagonal quadrants": [
+     33,
+     540
+    ],
+    "quadrant - open": [
+     61,
+     540
+    ],
+    "open - open": [
+     518,
+     540
+    ]
+   }
+  }
+ },
+ "8": {
+  "ntrl-demo": {
+   "per_seed": {
+    "87358": [
+     237,
+     900
+    ],
+    "1": [
+     238,
+     900
+    ],
+    "2": [
+     225,
+     900
+    ]
+   },
+   "pooled": [
+    700,
+    2700
+   ],
+   "by_category": {
+    "same quadrant": [
+     66,
+     540
+    ],
+    "adjacent quadrants": [
+     15,
+     540
+    ],
+    "diagonal quadrants": [
+     11,
+     540
+    ],
+    "quadrant - open": [
+     68,
+     540
+    ],
+    "open - open": [
+     540,
+     540
+    ]
+   }
+  },
+  "segment DP + wall term 0.3": {
+   "per_seed": {
+    "87358": [
+     185,
+     900
+    ],
+    "1": [
+     180,
+     900
+    ]
+   },
+   "pooled": [
+    365,
+    1800
+   ],
+   "by_category": {
+    "same quadrant": [
+     40,
+     360
+    ],
+    "adjacent quadrants": [
+     0,
+     360
+    ],
+    "diagonal quadrants": [
+     0,
+     360
+    ],
+    "quadrant - open": [
+     19,
+     360
+    ],
+    "open - open": [
+     306,
+     360
+    ]
+   }
+  },
+  "constructed": {
+   "per_seed": {
+    "87358": [
+     102,
+     900
+    ],
+    "1": [
+     69,
+     900
+    ],
+    "2": [
+     104,
+     900
+    ]
+   },
+   "pooled": [
+    275,
+    2700
+   ],
+   "by_category": {
+    "same quadrant": [
+     138,
+     540
+    ],
+    "adjacent quadrants": [
+     3,
+     540
+    ],
+    "diagonal quadrants": [
+     0,
+     540
+    ],
+    "quadrant - open": [
+     17,
+     540
+    ],
+    "open - open": [
+     117,
+     540
+    ]
+   }
+  },
+  "warp + scaling": {
+   "per_seed": {
+    "87358": [
+     172,
+     900
+    ],
+    "1": [
+     77,
+     900
+    ],
+    "2": [
+     173,
+     900
+    ]
+   },
+   "pooled": [
+    422,
+    2700
+   ],
+   "by_category": {
+    "same quadrant": [
+     137,
+     540
+    ],
+    "adjacent quadrants": [
+     11,
+     540
+    ],
+    "diagonal quadrants": [
+     12,
+     540
+    ],
+    "quadrant - open": [
+     36,
+     540
+    ],
+    "open - open": [
+     226,
+     540
+    ]
+   }
+  },
+  "README warp": {
+   "per_seed": {
+    "87358": [
+     243,
+     900
+    ],
+    "1": [
+     201,
+     900
+    ],
+    "2": [
+     211,
+     900
+    ]
+   },
+   "pooled": [
+    655,
+    2700
+   ],
+   "by_category": {
+    "same quadrant": [
+     78,
+     540
+    ],
+    "adjacent quadrants": [
+     6,
+     540
+    ],
+    "diagonal quadrants": [
+     6,
+     540
+    ],
+    "quadrant - open": [
+     53,
+     540
+    ],
+    "open - open": [
+     512,
+     540
+    ]
+   }
+  }
+ },
+ "12": {
+  "ntrl-demo": {
+   "per_seed": {
+    "87358": [
+     218,
+     900
+    ],
+    "1": [
+     220,
+     900
+    ],
+    "2": [
+     215,
+     900
+    ]
+   },
+   "pooled": [
+    653,
+    2700
+   ],
+   "by_category": {
+    "same quadrant": [
+     75,
+     540
+    ],
+    "adjacent quadrants": [
+     0,
+     540
+    ],
+    "diagonal quadrants": [
+     0,
+     540
+    ],
+    "quadrant - open": [
+     38,
+     540
+    ],
+    "open - open": [
+     540,
+     540
+    ]
+   }
+  },
+  "segment DP + wall term 0.3": {
+   "per_seed": {
+    "87358": [
+     166,
+     900
+    ],
+    "1": [
+     158,
+     900
+    ]
+   },
+   "pooled": [
+    324,
+    1800
+   ],
+   "by_category": {
+    "same quadrant": [
+     21,
+     360
+    ],
+    "adjacent quadrants": [
+     0,
+     360
+    ],
+    "diagonal quadrants": [
+     0,
+     360
+    ],
+    "quadrant - open": [
+     0,
+     360
+    ],
+    "open - open": [
+     303,
+     360
+    ]
+   }
+  },
+  "constructed": {
+   "per_seed": {
+    "87358": [
+     90,
+     900
+    ],
+    "1": [
+     66,
+     900
+    ],
+    "2": [
+     108,
+     900
+    ]
+   },
+   "pooled": [
+    264,
+    2700
+   ],
+   "by_category": {
+    "same quadrant": [
+     105,
+     540
+    ],
+    "adjacent quadrants": [
+     0,
+     540
+    ],
+    "diagonal quadrants": [
+     0,
+     540
+    ],
+    "quadrant - open": [
+     3,
+     540
+    ],
+    "open - open": [
+     156,
+     540
+    ]
+   }
+  },
+  "warp + scaling": {
+   "per_seed": {
+    "87358": [
+     105,
+     900
+    ],
+    "1": [
+     35,
+     900
+    ],
+    "2": [
+     99,
+     900
+    ]
+   },
+   "pooled": [
+    239,
+    2700
+   ],
+   "by_category": {
+    "same quadrant": [
+     84,
+     540
+    ],
+    "adjacent quadrants": [
+     0,
+     540
+    ],
+    "diagonal quadrants": [
+     6,
+     540
+    ],
+    "quadrant - open": [
+     17,
+     540
+    ],
+    "open - open": [
+     132,
+     540
+    ]
+   }
+  },
+  "README warp": {
+   "per_seed": {
+    "87358": [
+     204,
+     900
+    ],
+    "1": [
+     200,
+     900
+    ],
+    "2": [
+     204,
+     900
+    ]
+   },
+   "pooled": [
+    608,
+    2700
+   ],
+   "by_category": {
+    "same quadrant": [
+     72,
+     540
+    ],
+    "adjacent quadrants": [
+     4,
+     540
+    ],
+    "diagonal quadrants": [
+     7,
+     540
+    ],
+    "quadrant - open": [
+     12,
+     540
+    ],
+    "open - open": [
+     513,
+     540
+    ]
+   }
+  }
+ }
+}

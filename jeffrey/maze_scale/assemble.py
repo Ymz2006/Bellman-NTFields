@@ -81,6 +81,8 @@ def main():
     src = src.replace('<!--TABLE2-->', '\n'.join(l for l in wall if l.startswith('|')))
     src = src.replace('<!--TABLE3-->', 'MPPI success (%) by true travel distance, per training seed (3 planning seeds each):\n\n' + table3(prep, ntrl, seg, zoom, labs))
     src = src.replace('<!--RUNS-->', runs_table(prep, ntrl, seg, zoom))
+    extras = R.OUT / 'extras.md'                                   # follow-up tables (extras.py)
+    src = src.replace('<!--EXTRAS-->', extras.read_text().strip() if extras.exists() else '')
     seeds = (HERE / 'report' / 'seeds.md')
     src = src.replace(' <!--SEEDS-->', (' ' + seeds.read_text().strip()) if seeds.exists() else '')
     (HERE / 'README.md').write_text(src)

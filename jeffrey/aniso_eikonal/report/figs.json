@@ -1,0 +1,63 @@
+{
+ "indicatrix": {
+  "k": 1,
+  "base": "cross22",
+  "m_hi": 6.000000000000001,
+  "circle_radius_cells": 0.36
+ },
+ "paths": {
+  "key": "c22_k12",
+  "queries": [
+   250,
+   134,
+   164,
+   242
+  ],
+  "ratios": [
+   1.371867549849482,
+   1.341646505705294,
+   1.332866423257156,
+   1.3153326141903154
+  ]
+ },
+ "deficit": {
+  "k": 12,
+  "base": "cross22",
+  "m_hi": 23.918552036199088,
+  "u_total_cells": 66.55550829167329,
+  "kept_cells": 21.544491708326703
+ },
+ "fields": {
+  "k": 4,
+  "base": "c22",
+  "goal_index": 30,
+  "runs": [
+   "20261106T062643Z-c0cda140",
+   "20261106T060135Z-9e785069",
+   "20261106T073259Z-8b410dc9",
+   "20261106T091629Z-aca75921"
+  ],
+  "vmax": 1.2091087102890015
+ },
+ "wallsfar": {
+  "k": 12,
+  "base": "m10",
+  "goal_cells": [
+   79.19227600097656,
+   2.4594764709472656
+  ],
+  "runs": [
+   "20261106T092609Z-4986c876",
+   "20261106T072102Z-ac00a91d",
+   "20261106T090701Z-62ca6da7"
+  ],
+  "cuts": 6,
+  "ends": 12,
+  "rising_ends": {
+   "true travel time": 12,
+   "stretched space (reference)": 9,
+   "inner product, one field (recipe)": 6,
+   "two-part field": 10
+  }
+ }
+}

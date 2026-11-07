@@ -1,0 +1,287 @@
+  <section id="explorer">
+    <style>
+      /* Explorer: maze map on the left (click picks the pose), three line charts on the right; stacks on phones. */
+      .ex-wrap { display: grid; grid-template-columns: minmax(240px, 340px) minmax(0, 1fr); gap: 16px; align-items: start; }
+      @media (max-width: 760px) { .ex-wrap { grid-template-columns: minmax(0, 1fr); } }
+      .ex-side { display: grid; gap: 10px; min-width: 0; }
+      .ex-map { position: relative; background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 8px; }
+      .ex-map canvas { display: block; width: 100%; height: auto; aspect-ratio: 1; max-width: 100%; cursor: crosshair; touch-action: manipulation; }
+      .ex-map canvas:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+      .ex-readout { font: 400 13px/1.5 var(--f-body); color: var(--ink2); }
+      .ex-readout b { font: 500 13px var(--f-mono); color: var(--ink); font-variant-numeric: tabular-nums; }
+      .ex-charts { display: grid; gap: 12px; min-width: 0; }
+      .ex-charts .panel { padding-bottom: 8px; }
+      .ex-charts .panel h4 { flex-wrap: wrap; row-gap: 0; }
+      .chip[disabled] { opacity: 0.4; cursor: not-allowed; }
+      .ex-status { font: 500 12px var(--f-mono); color: var(--muted); min-height: 1.5em; }
+      .ex-band { fill: var(--muted); }
+      .ex-zb { display: inline-flex; gap: 4px; margin-left: auto; }
+      .ex-zb button { font: 500 12px/1.2 var(--f-mono); color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 2px 8px; cursor: pointer; }
+      .ex-zb button:hover { background: var(--wash); }
+      .ex-zb button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+      .ex-zb button[disabled] { opacity: 0.4; cursor: default; }
+      .ex-sel { fill: var(--accent); fill-opacity: 0.12; stroke: var(--accent); stroke-width: 1; }
+      .ex-src { stroke: var(--ink); stroke-width: 1; stroke-dasharray: 3 3; }
+      .ex-cross { stroke: var(--muted); stroke-width: 1; }
+      .axis .ex-axlab { fill: var(--ink2); font: 10px var(--f-mono); }
+    </style>
+    <div class="col">
+      <h2>Travel-time explorer</h2>
+      <p>Pick a pose in a maze: click a cell on the map (or focus the map and use the arrow keys), and choose the robot&rsquo;s heading. The charts show the travel time from that pose to every grid point on the same line: along x (the cell&rsquo;s row), along y (its column) and along the heading axis at the same spot. The black line is the true travel time from the grid solver; the coloured lines are the learned fields (training seed 87358). Times are in cells at full speed (the time to drive that many cells with nothing slowing the robot). Drag across a chart to zoom into that stretch (or use + and &minus;); double-click it or press Reset to zoom back out. Each chart is scaled to the poses the robot can occupy, so peaks inside a wall may run off the top; hover to read them. Shaded bands mark where the robot, held at the picked heading, is slowed by a wall: the darker the band, the slower it moves there, and the darkest means it is touching the wall.</p>
+    </div>
+    <div class="controls" role="group" aria-label="Maze"><span class="lab">maze</span><span id="ex-mazes" class="controls"></span></div>
+    <div class="controls" role="group" aria-label="Heading at the picked pose"><span class="lab">heading</span><span id="ex-heads" class="controls"></span></div>
+    <div class="controls" role="group" aria-label="Lines shown"><span class="lab">show</span><span id="ex-series" class="controls"></span></div>
+    <div class="ex-wrap">
+      <div class="ex-side">
+        <div class="ex-map"><canvas id="ex-canvas" width="680" height="680" tabindex="0" aria-label="Maze map: click a cell to pick the pose"></canvas></div>
+        <div class="ex-readout" id="ex-readout"></div>
+        <div class="ex-status" id="ex-status" role="status"></div>
+      </div>
+      <div class="ex-charts" id="ex-charts"></div>
+    </div>
+    <script>
+    (() => {
+      const M = /*EXMETA*/null;
+      const SER = [
+        {name: 'truth', label: 'true travel time', css: '--ink', w: 2.2},
+        {name: 'ntrl-demo', label: 'ntrl-demo', css: '--s-ntrl', w: 1.8},
+        {name: 'segment DP', label: 'segment DP', css: '--s-dp', w: 1.8},
+        {name: 'segment DP + wall term (weight 0.3)', label: 'segment DP + wall term (weight 0.3)', css: '--s-wall', w: 1.8},
+      ];
+      const on = {truth: true, 'ntrl-demo': true, 'segment DP': true, 'segment DP + wall term (weight 0.3)': true};
+      const sizes = Object.keys(M).map(Number).sort((a, b) => a - b);
+      const st = {n: sizes.includes(13) ? 13 : sizes[0], head: 0, i: 0, j: 0, hover: null, zoom: {}};
+      const cache = {}, pending = {};
+      const NS = 'http://www.w3.org/2000/svg';
+      const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+      const hx = (tag, cls, text, parent) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; if (parent) parent.appendChild(e); return e; };
+      const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+      const H2F = (() => { const t = new Float32Array(65536); for (let h = 0; h < 65536; h++) { const s = h & 0x8000 ? -1 : 1, e = (h >> 10) & 31, f = h & 1023; t[h] = e === 0 ? s * Math.pow(2, -14) * f / 1024 : e === 31 ? (f ? NaN : s * Infinity) : s * Math.pow(2, e - 15) * (1 + f / 1024); } return t; })();
+      const bytes = txt => { const b = atob(txt.trim()); const u = new Uint8Array(b.length); for (let k = 0; k < b.length; k++) u[k] = b.charCodeAt(k); return u; };
+      const status = document.getElementById('ex-status');
+
+      function load(n, head) {
+        const key = `${n}|${head}`;
+        if (cache[key]) return Promise.resolve(cache[key]);
+        if (pending[key]) return pending[key];
+        const get = f => fetch(`explorer/${f}`).then(r => { if (!r.ok) throw new Error(`${f}: HTTP ${r.status}`); return r.text(); });
+        const sp = cache[`${n}|speed`] ? Promise.resolve(null) : get(`m${n}_speed.b64.txt`);
+        pending[key] = Promise.all([get(`m${n}_h${head}.b64.txt`), sp]).then(([t, s]) => {
+          const u = bytes(t); const raw = new Uint16Array(u.buffer, 0, u.length >> 1);
+          const v = new Float32Array(raw.length); for (let k = 0; k < raw.length; k++) v[k] = H2F[raw[k]];
+          if (s) cache[`${n}|speed`] = bytes(s);
+          cache[key] = v; delete pending[key]; return v;
+        });
+        return pending[key];
+      }
+
+      // one source's lines: {truth: {x, y, t}, <field>: {x, y, t}}
+      function lines(n, head) {
+        const m = M[n], v = cache[`${n}|${head}`]; if (!v) return null;
+        const nx = m.nx, nt = m.nt, nl = m.theta_learned.length, F = m.fields.length;
+        const row = 2 * nx + nt + F * (2 * nx + nl), base = (st.i * n + st.j) * row;
+        const out = {truth: {x: v.subarray(base, base + nx), y: v.subarray(base + nx, base + 2 * nx), t: v.subarray(base + 2 * nx, base + 2 * nx + nt)}};
+        let o = base + 2 * nx + nt;
+        m.fields.forEach(f => { out[f.name] = {x: v.subarray(o, o + nx), y: v.subarray(o + nx, o + 2 * nx), t: v.subarray(o + 2 * nx, o + 2 * nx + nl)}; o += 2 * nx + nl; });
+        return out;
+      }
+      function speedLine(n, head, axis) {     // true unit speed (0..1) along the row (axis 'x') or column ('y') through the pose
+        const s = cache[`${n}|speed`]; if (!s) return null;
+        const m = M[n], h = m.headings.indexOf(head), nx = m.nx;
+        const which = axis === 'x' ? 0 : 1, cell = axis === 'x' ? st.j : st.i;
+        const o = ((h * 2 + which) * n + cell) * nx;
+        return s.subarray(o, o + nx);
+      }
+
+      // ---- controls
+      function chips(box, items, isOn, click) {
+        box.textContent = '';
+        items.forEach(it => {
+          const b = hx('button', 'chip', null, box); b.type = 'button'; b.id = it.id;
+          if (it.key) { const k = hx('span', 'key', null, b); k.style.color = `var(${it.key})`; }
+          b.append(it.text);
+          b.setAttribute('aria-pressed', String(isOn(it)));
+          if (it.disabled) { b.disabled = true; b.title = it.disabled; }
+          b.addEventListener('click', () => click(it));
+        });
+      }
+      function drawControls() {
+        chips(document.getElementById('ex-mazes'), sizes.map(n => ({id: `ex-m${n}`, n, text: `${n}×${n}`})), it => it.n === st.n, it => { if (it.n !== st.n) { st.n = it.n; st.i = st.j = Math.floor(it.n / 2); st.hover = null; st.zoom = {}; refresh(); } });
+        chips(document.getElementById('ex-heads'), M[st.n].headings.map(h => ({id: `ex-h${h}`, h, text: `${h}°`})), it => it.h === st.head, it => { st.head = it.h; refresh(); });
+        const have = new Set(M[st.n].fields.map(f => f.name));
+        chips(document.getElementById('ex-series'), SER.map(s => ({id: `ex-s${SER.indexOf(s)}`, s, key: s.css, text: s.label, disabled: s.name === 'truth' || have.has(s.name) ? null : `no run of this field on the ${st.n}×${st.n} maze`})),
+          it => on[it.s.name] && (it.s.name === 'truth' || have.has(it.s.name)), it => { on[it.s.name] = !on[it.s.name]; drawControls(); draw(); });
+      }
+
+      // ---- map
+      const cv = document.getElementById('ex-canvas');
+      function geom() { const n = st.n, W = cv.width, pad = 14, s = (W - 2 * pad) / n; return {n, W, pad, s, X: x => pad + x * s, Y: y => W - pad - y * s}; }
+      function drawMap() {
+        const g = geom(), m = M[st.n], c = cv.getContext('2d');
+        const ink = css('--ink'), rule = css('--rule'), acc = css('--accent'), surf = css('--surface'), wash = css('--wash');
+        c.clearRect(0, 0, g.W, g.W); c.fillStyle = surf; c.fillRect(0, 0, g.W, g.W);
+        const xc = m.xs[m.cells[st.i]], yc = m.xs[m.cells[st.j]];
+        c.fillStyle = wash;                                   // the picked row and column
+        c.fillRect(g.X(0), g.Y(st.j + 1), g.n * g.s, g.s); c.fillRect(g.X(st.i), g.Y(g.n), g.s, g.n * g.s);
+        c.strokeStyle = acc; c.lineWidth = 1.5; c.setLineDash([6, 5]);
+        c.beginPath(); c.moveTo(g.X(0), g.Y(yc)); c.lineTo(g.X(g.n), g.Y(yc)); c.moveTo(g.X(xc), g.Y(0)); c.lineTo(g.X(xc), g.Y(g.n)); c.stroke(); c.setLineDash([]);
+        c.strokeStyle = ink; c.lineCap = 'square'; c.lineWidth = Math.max(2, 0.1 * g.s);
+        c.beginPath();
+        m.V.forEach((col, i) => col.forEach((w, j) => { if (w) { c.moveTo(g.X(i), g.Y(j)); c.lineTo(g.X(i), g.Y(j + 1)); } }));
+        m.H.forEach((col, i) => col.forEach((w, j) => { if (w) { c.moveTo(g.X(i), g.Y(j)); c.lineTo(g.X(i + 1), g.Y(j)); } }));
+        c.stroke();
+        const robot = (x, y, deg, fill, alpha) => {           // the 0.5 x 0.2-cell robot
+          c.save(); c.globalAlpha = alpha; c.translate(g.X(x), g.Y(y)); c.rotate(-deg * Math.PI / 180);
+          c.fillStyle = fill; c.fillRect(-0.25 * g.s, -0.1 * g.s, 0.5 * g.s, 0.2 * g.s);
+          c.fillStyle = surf; c.beginPath(); c.arc(0.17 * g.s, 0, Math.max(1.5, 0.035 * g.s), 0, 2 * Math.PI); c.fill(); c.restore();
+        };
+        if (st.hover) robot(st.hover.x, st.hover.y, st.hover.deg, css('--muted'), 0.75);
+        robot(xc, yc, st.head, acc, 1);
+      }
+      function pick(ev) {
+        const r = cv.getBoundingClientRect(), g = geom();
+        const px = (ev.clientX - r.left) * cv.width / r.width, py = (ev.clientY - r.top) * cv.height / r.height;
+        const i = Math.floor((px - g.pad) / g.s), j = Math.floor((g.W - g.pad - py) / g.s);
+        if (i >= 0 && i < g.n && j >= 0 && j < g.n && (i !== st.i || j !== st.j)) { st.i = i; st.j = j; st.hover = null; refresh(); }
+      }
+      cv.addEventListener('click', pick);
+      cv.addEventListener('keydown', ev => {
+        const d = {ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, 1], ArrowDown: [0, -1]}[ev.key]; if (!d) return;
+        ev.preventDefault();
+        st.i = Math.min(st.n - 1, Math.max(0, st.i + d[0])); st.j = Math.min(st.n - 1, Math.max(0, st.j + d[1])); st.hover = null; refresh();
+      });
+
+      // ---- charts
+      function niceMax(v) { if (!(v > 0)) return 1; const p = Math.pow(10, Math.floor(Math.log10(v))); for (const k of [1, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10]) if (k * p >= v) return k * p; return 10 * p; }
+      function ticks(lo, hi, count) { const span = hi - lo, raw = span / count, p = Math.pow(10, Math.floor(Math.log10(raw))); const step = [1, 2, 2.5, 5, 10].map(k => k * p).find(s => s >= raw); const out = []; for (let v = Math.ceil(lo / step) * step; v <= hi + 1e-9; v += step) out.push(+v.toFixed(6)); return out; }
+      let clipId = 0;
+      const fmt = v => v == null || !isFinite(v) ? '–' : v < 10 ? v.toFixed(2) : v.toFixed(1);
+
+      function chart(box, spec) {
+        // spec: {title, sub, xs (truth), xl (learned), unit, xlab, series: [{s, ys, xs}], src, band, pose(x)}
+        const p = hx('div', 'panel', null, box);
+        const h4 = hx('h4', null, spec.title, p); hx('span', null, spec.sub, h4);
+        const key = spec.unit, full = [spec.lo, spec.hi], minW = key === 'heading' ? 10 : 0.5;
+        const z = st.zoom[key] || full;
+        const setZoom = (a, b) => {                           // clamp to the full range, keep at least minW wide
+          let w = Math.max(minW, b - a); if (w >= full[1] - full[0]) { delete st.zoom[key]; draw(); return; }
+          let c = (a + b) / 2; a = c - w / 2; b = c + w / 2;
+          if (a < full[0]) { b += full[0] - a; a = full[0]; } if (b > full[1]) { a -= b - full[1]; b = full[1]; }
+          st.zoom[key] = [a, b]; draw();
+        };
+        const zb = hx('span', 'ex-zb', null, h4);
+        const zbtn = (label, title, fn, dis) => { const b = hx('button', null, label, zb); b.type = 'button'; b.title = title; b.setAttribute('aria-label', title); b.disabled = !!dis; b.addEventListener('click', fn); };
+        const zoomed = !!st.zoom[key];
+        zbtn('+', `Zoom in on ${spec.title.toLowerCase()}`, () => { const c = Math.min(Math.max(spec.src, z[0]), z[1]); const w = (z[1] - z[0]) / 2; setZoom(c - w / 2, c + w / 2); }, z[1] - z[0] <= minW + 1e-9);
+        zbtn('\u2212', `Zoom out on ${spec.title.toLowerCase()}`, () => { const c = (z[0] + z[1]) / 2, w = (z[1] - z[0]) * 2; setZoom(c - w / 2, c + w / 2); }, !zoomed);
+        zbtn('Reset', `Show the whole line ${spec.title.toLowerCase()}`, () => { delete st.zoom[key]; draw(); }, !zoomed);
+        const W = box.clientWidth && box.clientWidth < 520 ? 420 : 640, H = (spec.h || 210) * (W < 640 ? 0.85 : 1), L = 54, R = 12, T = 10, B = 36;
+        const svg = mk('svg', {viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': `${spec.title}: ${spec.sub}`}, p);
+        const x0 = z[0], x1 = z[1];
+        // scale to poses the robot can occupy (true unit speed above its floor); peaks inside walls run off the top
+        const free = (r, k) => !spec.band || r.xs !== spec.xs || spec.band[k] > 26;
+        const inView = (r, k) => r.xs[k] >= x0 - 1e-9 && r.xs[k] <= x1 + 1e-9;
+        let ymax = 0; spec.series.forEach(r => r.ys.forEach((v, k) => { if (isFinite(v) && v > ymax && free(r, k) && inView(r, k)) ymax = v; }));
+        ymax = niceMax(ymax * 1.04);
+        const cid = `ex-clip-${++clipId}`;
+        mk('rect', {x: L, y: T - 2, width: W - L - R, height: H - T - B + 4}, mk('clipPath', {id: cid}, mk('defs', {}, svg)));
+        const X = v => L + (v - x0) / (x1 - x0) * (W - L - R), Y = v => T + (1 - v / ymax) * (H - T - B);
+        const bandG = mk('g', {'clip-path': `url(#${cid})`}, svg);
+        if (spec.band) {                                       // slowed-by-wall bands: opacity grows as the true speed falls
+          const xs = spec.xs, sp = spec.band, lvl = k => sp[k] >= 254 ? 0 : sp[k] > 26 ? Math.min(3, 1 + Math.floor((1 - sp[k] / 255) * 3)) : 4;
+          const edge = k => k <= 0 ? xs[0] : k >= xs.length ? xs[xs.length - 1] : (xs[k - 1] + xs[k]) / 2;
+          for (let k = 0; k < xs.length;) {                  // merge runs of one slowness level into one rect (no seams)
+            const l = lvl(k); let e = k + 1; while (e < xs.length && lvl(e) === l) e++;
+            if (l) mk('rect', {x: X(edge(k)), y: T, width: Math.max(0.6, X(edge(e)) - X(edge(k))), height: H - T - B, class: 'ex-band', 'fill-opacity': [0, 0.1, 0.17, 0.24, 0.34][l]}, bandG);
+            k = e;
+          }
+        }
+        const ax = mk('g', {class: 'axis'}, svg);
+        ticks(0, ymax, 4).forEach(v => { mk('line', {x1: L, x2: W - R, y1: Y(v), y2: Y(v), class: 'gridline'}, svg); mk('text', {x: L - 6, y: Y(v) + 3, 'text-anchor': 'end'}, ax).textContent = v; });
+        (zoomed || !spec.xticks ? ticks(x0, x1, W < 640 ? 5 : 8) : spec.xticks).forEach(v => { mk('text', {x: X(v), y: H - B + 14, 'text-anchor': 'middle'}, ax).textContent = v; });
+        mk('text', {x: (L + W - R) / 2, y: H - 5, 'text-anchor': 'middle', class: 'ex-axlab'}, ax).textContent = spec.xlab;
+        mk('text', {x: 0, y: 0, transform: `translate(11 ${(T + H - B) / 2}) rotate(-90)`, 'text-anchor': 'middle', class: 'ex-axlab'}, ax).textContent = 'travel time (cells)';
+        const plot = mk('g', {'clip-path': `url(#${cid})`}, svg);
+        mk('line', {x1: X(spec.src), x2: X(spec.src), y1: T, y2: H - B, class: 'ex-src'}, plot);
+        spec.series.forEach(r => {
+          let d = '', pen = false;
+          r.xs.forEach((xv, k) => { const v = r.ys[k]; if (isFinite(v)) { d += `${pen ? 'L' : 'M'}${X(xv).toFixed(1)},${Y(v).toFixed(1)}`; pen = true; } else pen = false; });
+          mk('path', {d, fill: 'none', stroke: `var(${r.s.css})`, 'stroke-width': r.s.w, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, plot);
+          if (r.dots) r.xs.forEach((xv, k) => { if (isFinite(r.ys[k])) mk('circle', {cx: X(xv), cy: Y(r.ys[k]), r: 3, fill: `var(${r.s.css})`, stroke: 'var(--surface)', 'stroke-width': 1.5}, plot); });
+        });
+        if (spec.src >= x0 && spec.src <= x1) mk('circle', {cx: X(spec.src), cy: Y(0), r: 4.5, fill: 'var(--accent)', stroke: 'var(--surface)', 'stroke-width': 2}, svg);
+        // hover: crosshair + tooltip + ghost robot on the map
+        const cross = mk('line', {y1: T, y2: H - B, class: 'ex-cross', visibility: 'hidden'}, svg);
+        const sel = mk('rect', {y: T, height: H - T - B, width: 0, class: 'ex-sel', visibility: 'hidden'}, svg);
+        const hit = mk('rect', {x: L, y: T, width: W - L - R, height: H - T - B, fill: 'transparent', style: 'touch-action: pan-y; cursor: col-resize'}, svg);
+        const toV = ev => { const r = svg.getBoundingClientRect(), sx = (ev.clientX - r.left) * W / r.width; return {sx: Math.min(W - R, Math.max(L, sx)), v: x0 + (Math.min(W - R, Math.max(L, sx)) - L) / (W - L - R) * (x1 - x0)}; };
+        let drag = null;
+        hit.addEventListener('pointerdown', ev => { if (ev.button !== 0) return; drag = toV(ev); try { hit.setPointerCapture(ev.pointerId); } catch (e) {} });
+        hit.addEventListener('pointerup', ev => {
+          if (!drag) return; const a = drag, b = toV(ev); drag = null; sel.setAttribute('visibility', 'hidden');
+          if (Math.abs(b.sx - a.sx) >= 6) setZoom(Math.min(a.v, b.v), Math.max(a.v, b.v));
+        });
+        hit.addEventListener('pointercancel', () => { drag = null; sel.setAttribute('visibility', 'hidden'); });
+        hit.addEventListener('dblclick', () => { if (st.zoom[key]) { delete st.zoom[key]; draw(); } });
+        const tip = hx('div', 'tip', null, p); tip.hidden = true;
+        const nearest = (xs, v) => { let b = 0; for (let k = 1; k < xs.length; k++) if (Math.abs(xs[k] - v) < Math.abs(xs[b] - v)) b = k; return b; };
+        const move = ev => {
+          if (drag) { const b = toV(ev); sel.setAttribute('x', Math.min(drag.sx, b.sx)); sel.setAttribute('width', Math.abs(b.sx - drag.sx)); sel.setAttribute('visibility', 'visible'); }
+          const r = svg.getBoundingClientRect(), sx = (ev.clientX - r.left) * W / r.width;
+          const v = x0 + (sx - L) / (W - L - R) * (x1 - x0); if (v < x0 - 0.01 * (x1 - x0) || v > x1 + 0.01 * (x1 - x0)) return leave();
+          cross.setAttribute('x1', X(v)); cross.setAttribute('x2', X(v)); cross.setAttribute('visibility', 'visible');
+          tip.textContent = ''; hx('div', 'h', `${spec.unit} ${v.toFixed(spec.unit === 'heading' ? (x1 - x0 < 30 ? 1 : 0) : (x1 - x0 < 2 ? 3 : 2))}${spec.unit === 'heading' ? '°' : ''}`, tip);
+          spec.series.forEach(rw => { const k = nearest(rw.xs, v); const row = hx('div', 'r', null, tip); const kk = hx('span', 'key', null, row); kk.style.color = `var(${rw.s.css})`; hx('i', null, rw.s.label, row); hx('b', null, fmt(rw.ys[k]), row); });
+          if (spec.band) { const k = nearest(spec.xs, v); hx('div', 'h', `true speed here ${(spec.band[k] / 255).toFixed(2)}`, tip); }
+          tip.hidden = false;
+          const pr = p.getBoundingClientRect(), left = ev.clientX - pr.left + 14;
+          tip.style.left = `${Math.min(left, pr.width - tip.offsetWidth - 6)}px`; tip.style.top = `${ev.clientY - pr.top + 12}px`;
+          st.hover = spec.pose(v); drawMap();
+        };
+        const leave = () => { tip.hidden = true; cross.setAttribute('visibility', 'hidden'); if (st.hover) { st.hover = null; drawMap(); } };
+        hit.addEventListener('pointermove', move); hit.addEventListener('pointerleave', leave);
+      }
+
+      function draw() {
+        drawMap();
+        const box = document.getElementById('ex-charts'); box.textContent = '';
+        const m = M[st.n], ln = lines(st.n, st.head), readout = document.getElementById('ex-readout');
+        const xc = m.xs[m.cells[st.i]], yc = m.xs[m.cells[st.j]];
+        readout.innerHTML = '';
+        readout.append('Picked pose: cell ('); hx('b', null, `${st.i}, ${st.j}`, readout); readout.append('), x '); hx('b', null, xc.toFixed(2), readout);
+        readout.append(', y '); hx('b', null, yc.toFixed(2), readout); readout.append(' cells, heading '); hx('b', null, `${st.head}°`, readout); readout.append('.');
+        if (!ln) { hx('div', 'note', 'Loading travel times…', box); return; }
+        const shown = SER.filter(s => on[s.name] && ln[s.name]);
+        const ratio = shown.filter(s => s.name !== 'truth').map(s => {      // median learned / true over both lines, beyond half a cell
+          const r = []; ['x', 'y'].forEach(a => ln.truth[a].forEach((t, k) => { if (t > 0.5 && isFinite(ln[s.name][a][k])) r.push(ln[s.name][a][k] / t); }));
+          r.sort((a, b) => a - b); return `${s.label} ${r.length ? r[r.length >> 1].toFixed(2) : '–'}`;
+        });
+        if (ratio.length) { const d = hx('div', null, null, readout); d.append(`Median learned / true time along both lines: ${ratio.join(' · ')}.`); }
+        const xsT = Array.from(m.xs), thT = m.theta_truth, thL = m.theta_learned;
+        const xt = ticks(0, st.n, Math.min(st.n, 11));
+        chart(box, {title: 'Along x', sub: `row through the pose, y = ${yc.toFixed(2)}, heading ${st.head}°`, xs: xsT, lo: xsT[0], hi: xsT[xsT.length - 1], xticks: xt, unit: 'x', xlab: 'x (cells)', src: xc,
+          band: speedLine(st.n, st.head, 'x'), series: shown.map(s => ({s, xs: xsT, ys: ln[s.name].x})), pose: v => ({x: v, y: yc, deg: st.head})});
+        chart(box, {title: 'Along y', sub: `column through the pose, x = ${xc.toFixed(2)}, heading ${st.head}°`, xs: xsT, lo: xsT[0], hi: xsT[xsT.length - 1], xticks: xt, unit: 'y', xlab: 'y (cells)', src: yc,
+          band: speedLine(st.n, st.head, 'y'), series: shown.map(s => ({s, xs: xsT, ys: ln[s.name].y})), pose: v => ({x: xc, y: v, deg: st.head})});
+        chart(box, {title: 'Along heading', sub: `turning in place at (${xc.toFixed(2)}, ${yc.toFixed(2)})`, h: 180, xs: thT, lo: -90, hi: 90, xticks: [-90, -60, -30, 0, 30, 60, 90], unit: 'heading', xlab: 'heading (degrees) · truth on the 13 grid headings', src: st.head,
+          series: shown.map(s => s.name === 'truth' ? {s, xs: thT, ys: ln.truth.t, dots: true} : {s, xs: thL, ys: ln[s.name].t}), pose: v => ({x: xc, y: yc, deg: v})});
+      }
+      function refresh() {
+        drawControls(); draw();
+        const n = st.n, head = st.head;
+        if (!cache[`${n}|${head}`]) {
+          status.textContent = `Loading the ${n}×${n} maze at ${head}°…`;
+          load(n, head).then(() => { status.textContent = ''; if (st.n === n && st.head === head) draw(); })
+            .catch(e => { status.textContent = `Could not load the travel times (${e.message}). Reload the page to try again.`; });
+        }
+      }
+      st.i = st.j = Math.floor(st.n / 2);
+      refresh();
+      const mq = window.matchMedia('(prefers-color-scheme: dark)'); if (mq.addEventListener) mq.addEventListener('change', drawMap);
+      let rz, lastW = 0; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { const w = document.getElementById('ex-charts').clientWidth < 520; if (w !== lastW) { lastW = w; draw(); } }, 150); });
+      lastW = document.getElementById('ex-charts').clientWidth < 520;
+      new MutationObserver(drawMap).observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
+    })();
+    </script>
+  </section>

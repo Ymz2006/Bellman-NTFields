@@ -1,0 +1,341 @@
+<title><!--TITLE--></title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;650;750&family=Public+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: the maze-scale family's reading column (~70ch) with full-width figure bands. Hue = field: no warp grey, hand-built warps violet, the learned warp orange. */
+:root {
+  --bg: #f5f6f8; --surface: #ffffff; --ink: #15181d; --ink2: #4b525c; --muted: #737b86; --rule: #dde1e6; --wash: #eef1f5;
+  --accent: #eb6834; --gridline: #c9ced6;
+  --s-id: #8b929b; --s-uni: #2a78d6; --s-learn: #eb6834; --s-con: #6250d6; --s-con2: #1baf7a;
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+    --accent: #d95926; --gridline: #4a515b;
+    --s-id: #7d858f; --s-uni: #3987e5; --s-learn: #d95926; --s-con: #9085e9; --s-con2: #199e70;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+  --accent: #d95926; --gridline: #4a515b;
+  --s-id: #7d858f; --s-uni: #3987e5; --s-learn: #d95926; --s-con: #9085e9; --s-con2: #199e70;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 15.5px/1.6 var(--f-body); margin: 0; }
+.page { max-width: 1120px; margin: 0 auto; padding-block: 40px 72px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 44px; }
+.col { max-width: 70ch; min-width: 0; }
+header { display: grid; gap: 14px; }
+.eyebrow { font: 500 12px/1.4 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 750 clamp(30px, 5vw, 46px)/1.05 var(--f-display); letter-spacing: -0.015em; margin: 0; text-wrap: balance; }
+h2 { font: 650 23px/1.2 var(--f-display); margin: 0 0 10px; text-wrap: balance; }
+h3 { font: 650 16px/1.3 var(--f-display); margin: 18px 0 6px; }
+p { margin: 0 0 12px; }
+.lede { font-size: 17.5px; line-height: 1.55; }
+p strong, li strong { font-weight: 600; }
+section { display: grid; gap: 14px; min-width: 0; }
+figure { margin: 0; background: #ffffff; border: 1px solid var(--rule); border-radius: 6px; padding: 10px; overflow-x: auto; }
+figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+figure.narrow img { max-width: min(100%, 760px); }
+figcaption { color: #4b525c; font-size: 13px; margin-top: 6px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+.tile { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 12px 14px; display: grid; gap: 4px; align-content: start; }
+.tile .k { font: 500 12px/1.3 var(--f-mono); color: var(--muted); }
+.tile .v { font: 650 26px/1.15 var(--f-display); color: var(--ink); font-variant-numeric: tabular-nums; }
+.tile .v small { font: 500 13px var(--f-mono); color: var(--muted); }
+.tile .s { font-size: 13px; color: var(--ink2); }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.controls .lab { font: 500 12px var(--f-mono); color: var(--muted); margin-right: 4px; }
+.chip { display: inline-flex; align-items: center; gap: 7px; font: 500 13px var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 999px; padding: 5px 11px; cursor: pointer; }
+.chip[aria-pressed="false"] { color: var(--muted); background: transparent; }
+.chip[aria-pressed="false"] .key { opacity: 0.35; }
+.chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.key { width: 18px; height: 0; border-top: 3px solid currentColor; border-radius: 2px; display: inline-block; }
+.key.dash { border-top-style: dashed; border-top-width: 2px; }
+.key.blob { width: 9px; height: 9px; border: 0; border-radius: 50%; background: currentColor; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+.grid.two { grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); }
+.grid.two > .panel:only-child { max-width: 560px; }
+.slot { min-width: 0; display: grid; gap: 12px; align-content: start; }
+.panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 10px 4px; position: relative; min-width: 0; }
+.panel h4 { font: 650 14px var(--f-display); margin: 0 0 2px 4px; display: flex; justify-content: space-between; gap: 8px; }
+.panel h4 span { font: 400 12px var(--f-mono); color: var(--muted); text-align: right; }
+.panel svg { display: block; width: 100%; height: auto; overflow: visible; }
+.axis text { fill: var(--muted); font: 9.5px var(--f-mono); }
+.axis .lab { fill: var(--ink2); font: 10px var(--f-mono); }
+.gridline { stroke: var(--rule); stroke-width: 1; }
+.tip { position: absolute; z-index: 5; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--rule); border-radius: 6px; padding: 8px 10px; box-shadow: 0 4px 14px rgba(0,0,0,0.12); font-size: 12.5px; min-width: 220px; }
+.tip .h { font: 500 11.5px var(--f-mono); color: var(--muted); margin-bottom: 4px; }
+.tip .r { display: grid; grid-template-columns: 18px auto 1fr; gap: 6px; align-items: center; }
+.tip .r b { font: 500 13px var(--f-mono); font-variant-numeric: tabular-nums; text-align: right; }
+.tip .r i { font-style: normal; color: var(--ink2); white-space: nowrap; }
+details { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 14px; }
+details > summary + * { margin-top: 10px; }
+summary { cursor: pointer; font: 600 14px var(--f-body); }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; font-size: 13px; min-width: 560px; }
+th, td { padding: 6px 9px; border-bottom: 1px solid var(--rule); text-align: right; vertical-align: top; }
+th:first-child, td:first-child { text-align: left; }
+thead th { font: 600 12px var(--f-mono); color: var(--muted); white-space: nowrap; }
+td.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+th.txt, td.txt { text-align: left; }
+td.txt { color: var(--ink2); }
+td b { font-weight: 600; }
+tbody tr:hover { background: var(--wash); }
+.note { font-size: 13.5px; color: var(--ink2); }
+.mute { color: var(--muted); font-size: 11.5px; }
+ul.tight { margin: 0 0 12px; padding-left: 20px; display: grid; gap: 6px; }
+code { font: 13px var(--f-mono); background: var(--wash); padding: 1px 4px; border-radius: 4px; }
+.eq { font: 15px/1.7 var(--f-mono); background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 14px; overflow-x: auto; }
+.eq .c { color: var(--muted); display: block; font-size: 13px; line-height: 1.5; }
+@media (prefers-reduced-motion: no-preference) { .chip { transition: background-color 120ms, color 120ms; } }
+</style>
+
+<div class="page">
+  <header class="col">
+    <div class="eyebrow">jeffrey/line_warp · a warp learned from the obstacle geometry alone, on the plus and gap mazes · <!--DATE--></div>
+    <h1><!--H1--></h1>
+    <p class="lede"><!--LEDE--></p>
+  </header>
+
+  <section><div class="tiles"><!--TILES--></div></section>
+
+  <section>
+    <div class="col"><h2>The loss</h2><!--LOSSTEXT--></div>
+    <figure><img src="steps.png" alt="Six step-function graphs of free and obstacle space along three rows of the plus maze: the left column in the maze, where the band is one very long free run, the right column in the warped space, where the band run is much shorter, though still the longest."><figcaption><!--STEPCAP--></figcaption></figure>
+    <div class="col"><!--LOSSTEXT2--></div>
+  </section>
+
+  <section>
+    <div class="col"><h2>What the loss does when left alone</h2><!--STRIPETEXT--></div>
+    <figure><img src="gallery.png" alt="Six warped copies of the plus maze. The two free residual networks have turned the walls into long parallel stripes; the bounded network is curved but recognisable; the separable and triangular maps keep straight walls with the plus reduced to a narrow cross."><figcaption><!--GALLERYCAP--></figcaption></figure>
+    <div class="col"><!--STRIPETEXT2--></div>
+    <div class="grid two" id="scatter-panels"></div>
+    <div class="col"><!--STRIPETEXT3--></div>
+  </section>
+
+  <section>
+    <div class="col"><h2>What made it work</h2><!--FIXTEXT--></div>
+    <figure><img src="density.png" alt="Stretch along x for four learned warps against the hand-built warp. With only a bound the stretch spikes from column to column; with low-pass features it wiggles; with total variation it is flat with two sharp edges, and the dilation moves those edges one cell away from the walls."><figcaption><!--DENSCAP--></figcaption></figure>
+    <div class="col"><!--FIXTEXT2--></div>
+    <div class="grid two"><div class="slot" id="tv-panels"></div><div class="slot" id="bound-panels"></div></div>
+    <div class="col"><!--FIXTEXT3--></div>
+  </section>
+
+  <section>
+    <div class="col"><h2>What each part is worth</h2><!--LOOTEXT--></div>
+    <div class="grid two" id="loo-panels"></div>
+    <div class="col"><!--LOOTEXT2--></div>
+    <div class="grid two" id="window-panels"></div>
+    <div class="col"><!--FAILTEXT--></div>
+    <div class="grid two" id="fail-panels"></div>
+    <div class="col"><!--FAILTEXT1--></div>
+    <figure class="narrow"><img src="tilt.png" alt="Stretch across the first quadrant and the start of the band at gap x12, as a multiple of the quadrant's median. With total variation and with a bound at the same range the line is flat at 1 until the band; with a loose bound and no total variation it falls in steps across the quadrant, from about 3.5 times the median to about half."><figcaption><!--TILTCAP--></figcaption></figure>
+    <div class="col"><!--FAILTEXT2--></div>
+    <details><summary>Every cell at gap ×12 (table)</summary><div class="tablewrap"><!--CELLTABLE--></div></details>
+  </section>
+
+  <section>
+    <div class="col"><h2>The plus maze</h2><!--PLUSTEXT--></div>
+    <div class="grid two" id="plus-panels"></div>
+    <div class="col"><!--PLUSTEXT2--></div>
+    <details><summary>Every field on the plus maze (table)</summary><div class="tablewrap"><!--PLUSTABLE--></div></details>
+  </section>
+
+  <section>
+    <div class="col"><h2>Wider gaps</h2><!--GAPTEXT--></div>
+    <figure><img src="gaps.png" alt="The gap mazes at three band widths, in the real maze and in the warped space learned from each. However wide the band, the warped maze looks the same: four quadrants filling the box around a narrow cross."><figcaption><!--GAPSCAP--></figcaption></figure>
+    <div class="controls" id="gap-legend" role="group" aria-label="Fields shown in the gap charts"><span class="lab">show</span></div>
+    <div class="grid two" id="gap-panels"></div>
+    <div class="col"><!--GAPTEXT2--></div>
+    <div class="controls" id="cat-legend" role="group" aria-label="Fields shown in the query-kind charts"><span class="lab">show</span></div>
+    <div class="grid two" id="cat-panels"></div>
+    <div class="col"><!--GAPTEXT3--></div>
+    <details><summary>Every gap, both bases (table)</summary><div class="tablewrap"><!--GAPTABLE--></div></details>
+  </section>
+
+  <section>
+    <div class="col"><h2>Which network</h2><!--ARCHTEXT--></div>
+    <figure class="narrow"><img src="star.png" alt="The residual network's warp of the gap x4 maze: a star, with the plus collapsed to a small hub and the four quadrants fanned out around it."><figcaption><!--STARCAP--></figcaption></figure>
+    <details><summary>Measurements of every fitted warp (table)</summary><div class="tablewrap"><!--FITTABLE--></div></details>
+  </section>
+
+  <section>
+    <div class="col"><h2>What this does not show</h2><!--LIMITS--></div>
+    <details><summary>Setup and how to run it</summary><div class="col"><!--SETUP--></div></details>
+    <details><summary>Registered runs</summary><div class="tablewrap"><!--RUNTABLE--></div></details>
+  </section>
+</div>
+
+<script>
+(() => {
+  const D = /*DATA*/;
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+  const h = (t, c, txt, p) => { const e = document.createElement(t); if (c) e.className = c; if (txt != null) e.textContent = txt; if (p) p.appendChild(e); return e; };
+  const place = (tip, p, ev) => { const pr = p.getBoundingClientRect(); let left = ev.clientX - pr.left + 14;
+    if (left + tip.offsetWidth > pr.width - 4) left = ev.clientX - pr.left - tip.offsetWidth - 14;
+    tip.style.left = `${Math.max(4, left)}px`; tip.style.top = `${Math.max(4, ev.clientY - pr.top - 20)}px`; };
+
+  // line panels: TD = {fields, label, css, dash, xs (tick labels), xlabel, ylabel, ymax, panels: [{title, sub, series: {field: [[v, lo, hi, text] | null, ...]}}]}
+  const linePanels = (TD, legendId, boxId) => {
+    if (!TD) return;
+    const ON = {}; TD.fields.forEach(f => { ON[f] = !(TD.off || []).includes(f); });
+    const leg = legendId ? document.getElementById(legendId) : null, box = document.getElementById(boxId);
+    const keyCls = f => 'key' + (TD.dash[f] ? ' dash' : '');
+    const legend = () => {
+      if (!leg) return;
+      leg.querySelectorAll('.chip').forEach(c => c.remove());
+      TD.fields.forEach((f, i) => {
+        const b = h('button', 'chip', null, leg); b.type = 'button'; b.id = `${legendId}-${i}`;
+        const k = h('span', keyCls(f), null, b); k.style.color = `var(${TD.css[f]})`;
+        b.append(TD.label[f]); b.setAttribute('aria-pressed', String(ON[f]));
+        b.addEventListener('click', () => { ON[f] = !ON[f]; legend(); all(); });
+      });
+    };
+    const panel = P => {
+      const p = h('div', 'panel', null, box);
+      const h4 = h('h4', null, P.title, p); h('span', null, P.sub, h4);
+      const W = 420, H = 250, L = 38, R = 12, T = 12, B = 40, xs = TD.xs, ymax = TD.ymax || 100;
+      const svg = mk('svg', {viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': `${TD.ylabel}, ${P.title}, ${P.sub}`}, p);
+      const X0 = i => L + (i + 0.5) / xs.length * (W - L - R), X = X0;
+      const Y = v => T + (1 - Math.min(v, ymax) / ymax) * (H - T - B);
+      const ax = mk('g', {class: 'axis'}, svg);
+      [0, 0.25, 0.5, 0.75, 1].forEach(t => { const v = t * ymax; mk('line', {x1: L, x2: W - R, y1: Y(v), y2: Y(v), class: 'gridline'}, svg); mk('text', {x: L - 6, y: Y(v) + 3, 'text-anchor': 'end'}, ax).textContent = v; });
+      xs.forEach((k, i) => { mk('text', {x: X(i), y: H - B + 14, 'text-anchor': 'middle'}, ax).textContent = k; });
+      mk('text', {x: (L + W - R) / 2, y: H - 6, 'text-anchor': 'middle', class: 'lab'}, ax).textContent = TD.xlabel;
+      if (TD.ref != null) { mk('line', {x1: L, x2: W - R, y1: Y(TD.ref), y2: Y(TD.ref), stroke: 'var(--muted)', 'stroke-width': 1, 'stroke-dasharray': '3 3'}, svg);
+        mk('text', {x: L + 4, y: Y(TD.ref) + 12, 'text-anchor': 'start'}, ax).textContent = TD.reflabel || ''; }
+      const series = TD.fields.filter(f => ON[f] && P.series[f]);
+      series.forEach((f, si) => {
+        const css = `var(${TD.css[f]})`, vals = P.series[f];
+        const X = i => X0(i) + (si - (series.length - 1) / 2) * 3.2;
+        vals.forEach((v, i) => { if (v && v[1] != null && v[2] > v[1]) mk('line', {x1: X(i), x2: X(i), y1: Y(v[1]), y2: Y(v[2]), stroke: css, 'stroke-width': 1.3, 'stroke-opacity': 0.6}, svg); });
+        let d = '', pen = false;
+        vals.forEach((v, i) => { if (v) { d += `${pen ? 'L' : 'M'}${X(i).toFixed(1)},${Y(v[0]).toFixed(1)}`; pen = true; } else pen = false; });
+        mk('path', {d, fill: 'none', stroke: css, 'stroke-width': 2, 'stroke-dasharray': TD.dash[f] || '', 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
+        if (!(TD.nodots || []).includes(f)) vals.forEach((v, i) => { if (v) mk('circle', {cx: X(i), cy: Y(v[0]), r: 4, fill: TD.dash[f] ? 'var(--surface)' : css, stroke: TD.dash[f] ? css : 'var(--surface)', 'stroke-width': 2}, svg); });
+      });
+      const tip = h('div', 'tip', null, p); tip.hidden = true;
+      const cross = mk('line', {y1: T, y2: H - B, stroke: 'var(--muted)', 'stroke-width': 1, visibility: 'hidden'}, svg);
+      const hit = mk('rect', {x: L, y: T, width: W - L - R, height: H - T - B, fill: 'transparent', style: 'touch-action: pan-y'}, svg);
+      const show = ev => {
+        const rc = svg.getBoundingClientRect(), sx = (ev.clientX - rc.left) * W / rc.width;
+        const i = Math.max(0, Math.min(xs.length - 1, Math.floor((sx - L) / (W - L - R) * xs.length)));
+        cross.setAttribute('x1', X(i)); cross.setAttribute('x2', X(i)); cross.setAttribute('visibility', 'visible');
+        tip.textContent = ''; h('div', 'h', `${P.title} · ${TD.xname} ${xs[i]}`, tip);
+        series.forEach(f => { const v = P.series[f][i]; if (!v) return; const row = h('div', 'r', null, tip);
+          const kk = h('span', keyCls(f), null, row); kk.style.color = `var(${TD.css[f]})`;
+          h('i', null, TD.label[f], row); h('b', null, v[3], row); });
+        tip.hidden = false; place(tip, p, ev);
+      };
+      hit.addEventListener('pointermove', show); hit.addEventListener('pointerdown', show);
+      hit.addEventListener('pointerleave', () => { tip.hidden = true; cross.setAttribute('visibility', 'hidden'); });
+      if (!leg) { const lg = h('div', 'controls', null, p); lg.style.margin = '2px 4px 8px'; TD.fields.forEach(f => { const c = h('span', 'note', null, lg); const k = h('span', keyCls(f), null, c); k.style.color = `var(${TD.css[f]})`; k.style.marginRight = '6px'; c.append(TD.label[f]); }); }
+    };
+    const all = () => { box.textContent = ''; TD.panels.forEach(panel); };
+    legend(); all();
+  };
+  // range panels: PD = [{title, sub, xlabel, min, max, log, ref, ticks, css, rows: [{name, lo, mid, hi, text}]}]
+  const rangePanels = (PD, boxId) => {
+    if (!PD) return;
+    const box = document.getElementById(boxId);
+    PD.forEach(P => {
+      const p = h('div', 'panel', null, box);
+      const h4 = h('h4', null, P.title, p); h('span', null, P.sub, h4);
+      const W = 420, rowH = 30, L = 132, R = 16, T = 10, B = 36, H = T + B + rowH * P.rows.length;
+      const svg = mk('svg', {viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': `${P.title}: ${P.sub}`}, p);
+      const f = v => P.log ? Math.log(v) : v;
+      const X = v => L + (f(Math.max(P.min, Math.min(P.max, v))) - f(P.min)) / (f(P.max) - f(P.min)) * (W - L - R);
+      const ax = mk('g', {class: 'axis'}, svg);
+      P.ticks.forEach(v => { mk('line', {x1: X(v), x2: X(v), y1: T, y2: H - B, class: 'gridline'}, svg); mk('text', {x: X(v), y: H - B + 14, 'text-anchor': 'middle'}, ax).textContent = v; });
+      mk('line', {x1: X(P.ref), x2: X(P.ref), y1: T, y2: H - B, stroke: 'var(--muted)', 'stroke-width': 1, 'stroke-dasharray': '4 3'}, svg);
+      mk('text', {x: (L + W - R) / 2, y: H - 6, 'text-anchor': 'middle', class: 'lab'}, ax).textContent = P.xlabel;
+      const tip = h('div', 'tip', null, p); tip.hidden = true;
+      P.rows.forEach((r, i) => {
+        const y = T + rowH * (i + 0.5);
+        mk('text', {x: L - 8, y: y + 3.5, 'text-anchor': 'end', class: 'lab'}, ax).textContent = r.name;
+        mk('line', {x1: X(r.lo), x2: X(r.hi), y1: y, y2: y, stroke: `var(${r.css || P.css})`, 'stroke-width': 4, 'stroke-linecap': 'round', 'stroke-opacity': 0.45}, svg);
+        mk('circle', {cx: X(r.mid), cy: y, r: 5, fill: `var(${r.css || P.css})`, stroke: 'var(--surface)', 'stroke-width': 2}, svg);
+        const hit = mk('rect', {x: 0, y: y - rowH / 2, width: W, height: rowH, fill: 'transparent', style: 'touch-action: pan-y'}, svg);
+        const show = ev => { tip.textContent = ''; h('div', 'h', `${P.title} \u00b7 ${r.name}`, tip); r.text.forEach(([a, b]) => { const row = h('div', 'r', null, tip); h('span', null, '', row); h('i', null, a, row); h('b', null, b, row); }); tip.hidden = false; place(tip, p, ev); };
+        hit.addEventListener('pointermove', show); hit.addEventListener('pointerdown', show);
+        hit.addEventListener('pointerleave', () => { tip.hidden = true; });
+      });
+    });
+  };
+  // scatter panel: SD = {title, sub, xlabel, xmin, xmax, logx, ymin, ymax, xticks, yticks, groups: [[label, css]], points: [{x, y, g (group index), name, text, label}]}
+  const scatterPanel = (SD, boxId) => {
+    if (!SD) return;
+    const p = h('div', 'panel', null, document.getElementById(boxId));
+    const h4 = h('h4', null, SD.title, p); h('span', null, SD.sub, h4);
+    const W = 420, H = 250, L = 38, R = 12, T = 12, B = 40;
+    const svg = mk('svg', {viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': `${SD.title}: ${SD.sub}`}, p);
+    const fx = v => SD.logx ? Math.log10(v) : v;
+    const X = v => L + (fx(v) - fx(SD.xmin)) / (fx(SD.xmax) - fx(SD.xmin)) * (W - L - R), Y = v => T + (1 - (v - SD.ymin) / (SD.ymax - SD.ymin)) * (H - T - B);
+    const ax = mk('g', {class: 'axis'}, svg);
+    SD.yticks.forEach(v => { mk('line', {x1: L, x2: W - R, y1: Y(v), y2: Y(v), class: 'gridline'}, svg); mk('text', {x: L - 6, y: Y(v) + 3, 'text-anchor': 'end'}, ax).textContent = v; });
+    SD.xticks.forEach(v => { mk('text', {x: X(v), y: H - B + 14, 'text-anchor': 'middle'}, ax).textContent = v; });
+    mk('text', {x: (L + W - R) / 2, y: H - 6, 'text-anchor': 'middle', class: 'lab'}, ax).textContent = SD.xlabel;
+    const tip = h('div', 'tip', null, p); tip.hidden = true;
+    SD.points.forEach(q => {
+      const css = `var(${SD.groups[q.g][1]})`;
+      mk('circle', {cx: X(q.x), cy: Y(q.y), r: 4.5, fill: css, stroke: 'var(--surface)', 'stroke-width': 2}, svg);
+      if (q.label) mk('text', {x: X(q.x) + (q.dx ?? 8), y: Y(q.y) + (q.dy ?? 3.5), 'text-anchor': q.anchor || 'start', class: 'lab'}, ax).textContent = q.label;
+    });
+    SD.points.forEach(q => {
+      const hit = mk('circle', {cx: X(q.x), cy: Y(q.y), r: 11, fill: 'transparent', style: 'touch-action: pan-y'}, svg);
+      const show = ev => { tip.textContent = ''; h('div', 'h', q.name, tip); q.text.forEach(([a, b]) => { const row = h('div', 'r', null, tip); h('span', null, '', row); h('i', null, a, row); h('b', null, b, row); }); tip.hidden = false; place(tip, p, ev); };
+      hit.addEventListener('pointermove', show); hit.addEventListener('pointerdown', show);
+      hit.addEventListener('pointerleave', () => { tip.hidden = true; });
+    });
+    const leg = h('div', 'controls', null, p); leg.style.margin = '2px 4px 8px';
+    SD.groups.forEach(([a, css]) => { const c = h('span', 'note', null, leg); const k = h('span', 'key blob', null, c); k.style.color = `var(${css})`; k.style.marginRight = '6px'; c.append(a); });
+  };
+  // stacked bars: FD = {parts: [[label, css]], panels: [{title, sub, rows: [{name, parts: [share ...], note}]}]}
+  const stackPanels = (FD, boxId) => {
+    if (!FD) return;
+    FD.panels.forEach(P => {
+      const p = h('div', 'panel', null, document.getElementById(boxId));
+      const h4 = h('h4', null, P.title, p); h('span', null, P.sub, h4);
+      const W = 420, rowH = 30, L = 132, R = 16, T = 10, B = 26, H = T + B + rowH * P.rows.length;
+      const svg = mk('svg', {viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': `${P.title}: ${P.sub}`}, p);
+      const X = v => L + v / 100 * (W - L - R);
+      const ax = mk('g', {class: 'axis'}, svg);
+      [0, 25, 50, 75, 100].forEach(v => { mk('line', {x1: X(v), x2: X(v), y1: T, y2: H - B, class: 'gridline'}, svg); mk('text', {x: X(v), y: H - B + 14, 'text-anchor': 'middle'}, ax).textContent = v; });
+      const tip = h('div', 'tip', null, p); tip.hidden = true;
+      P.rows.forEach((r, i) => {
+        const y = T + rowH * (i + 0.5);
+        mk('text', {x: L - 8, y: y + 3.5, 'text-anchor': 'end', class: 'lab'}, ax).textContent = r.name;
+        let at = 0;
+        r.parts.forEach((v, k) => {
+          const w = v / 100 * (W - L - R);
+          if (w > 0.5) mk('rect', {x: X(at) + (at > 0 ? 1 : 0), y: y - 8, width: Math.max(w - (at > 0 ? 1 : 0), 0.5), height: 16, rx: 2, fill: `var(${FD.parts[k][1]})`}, svg);
+          at += v;
+        });
+        const hit = mk('rect', {x: 0, y: y - rowH / 2, width: W, height: rowH, fill: 'transparent', style: 'touch-action: pan-y'}, svg);
+        const show = ev => { tip.textContent = ''; h('div', 'h', `${P.title} \u00b7 ${r.name} (${r.note})`, tip); FD.parts.forEach(([a, css], k) => { const row = h('div', 'r', null, tip); const kk = h('span', 'key blob', null, row); kk.style.color = `var(${css})`; h('i', null, a, row); h('b', null, `${r.parts[k].toFixed(1)} %`, row); }); tip.hidden = false; place(tip, p, ev); };
+        hit.addEventListener('pointermove', show); hit.addEventListener('pointerdown', show);
+        hit.addEventListener('pointerleave', () => { tip.hidden = true; });
+      });
+      const leg = h('div', 'controls', null, p); leg.style.margin = '2px 4px 8px';
+      FD.parts.forEach(([a, css]) => { const c = h('span', 'note', null, leg); const k = h('span', 'key blob', null, c); k.style.color = `var(${css})`; k.style.marginRight = '6px'; c.append(a); });
+    });
+  };
+  linePanels(D.tv, null, 'tv-panels');
+  linePanels(D.bound, null, 'bound-panels');
+  D.scatter.forEach(sd => scatterPanel(sd, 'scatter-panels'));
+  rangePanels(D.loo, 'loo-panels');
+  linePanels(D.window, null, 'window-panels');
+  stackPanels(D.fail, 'fail-panels');
+  rangePanels(D.plus, 'plus-panels');
+  linePanels(D.gap, 'gap-legend', 'gap-panels');
+  linePanels(D.cats, 'cat-legend', 'cat-panels');
+})();
+</script>

@@ -1,0 +1,306 @@
+{
+ "id": "20261106T062643Z-c0cda140",
+ "base": "cross22",
+ "k": 4,
+ "mode": "ziso",
+ "planner": "z",
+ "feel": {
+  "same quadrant": {
+   "0.02-0.06": {
+    "poses": 5266,
+    "speed_median": 2.314255714416504,
+    "rises": 0.7077478161792632,
+    "normal_quantiles": [
+     -0.38349035382270813,
+     -0.052357316948473454,
+     0.1853027567267418,
+     0.49874918907880783,
+     0.8954664468765259
+    ]
+   },
+   "0.06-0.12": {
+    "poses": 6000,
+    "speed_median": 0.9819955825805664,
+    "rises": 0.6821666666666667,
+    "normal_quantiles": [
+     -0.6900999546051025,
+     -0.1902158372104168,
+     0.37167875468730927,
+     0.8190998286008835,
+     1.2898583173751834
+    ]
+   },
+   "0.12-0.175": {
+    "poses": 6000,
+    "speed_median": 0.7701087594032288,
+    "rises": 0.6303333333333333,
+    "normal_quantiles": [
+     -0.6134000062942505,
+     -0.21546032652258873,
+     0.20721998810768127,
+     0.6604164242744446,
+     1.0381182074546813
+    ]
+   },
+   "beyond the margin": {
+    "poses": 6000,
+    "speed_median": 0.8334832191467285,
+    "rises": 0.5466666666666666,
+    "normal_quantiles": [
+     -0.6632216393947601,
+     -0.3406018689274788,
+     0.07800684496760368,
+     0.5171426832675934,
+     0.8455891847610476
+    ]
+   }
+  },
+  "adjacent quadrant": {
+   "0.02-0.06": {
+    "poses": 5266,
+    "speed_median": 2.551342725753784,
+    "rises": 0.6785036080516521,
+    "normal_quantiles": [
+     -0.3798226863145828,
+     -0.0724520143121481,
+     0.14382868260145187,
+     0.45315033942461014,
+     0.8504348993301392
+    ]
+   },
+   "0.06-0.12": {
+    "poses": 6000,
+    "speed_median": 1.0342168807983398,
+    "rises": 0.669,
+    "normal_quantiles": [
+     -0.6896175384521485,
+     -0.2021527849137783,
+     0.3393305838108063,
+     0.810351699590683,
+     1.2812910199165346
+    ]
+   },
+   "0.12-0.175": {
+    "poses": 6000,
+    "speed_median": 0.8208674788475037,
+    "rises": 0.6193333333333333,
+    "normal_quantiles": [
+     -0.6564159691333771,
+     -0.253931924700737,
+     0.1958160176873207,
+     0.6512705236673355,
+     1.0700568675994875
+    ]
+   },
+   "beyond the margin": {
+    "poses": 6000,
+    "speed_median": 0.8705270290374756,
+    "rises": 0.5636666666666666,
+    "normal_quantiles": [
+     -0.6818357050418854,
+     -0.3185175061225891,
+     0.0971405915915966,
+     0.5397084802389145,
+     0.8843022882938391
+    ]
+   }
+  },
+  "diagonal quadrant": {
+   "0.02-0.06": {
+    "poses": 5266,
+    "speed_median": 2.711315631866455,
+    "rises": 0.6186859096088112,
+    "normal_quantiles": [
+     -0.44979165494441986,
+     -0.12710808217525482,
+     0.08651450276374817,
+     0.35340043157339096,
+     0.7044799625873566
+    ]
+   },
+   "0.06-0.12": {
+    "poses": 6000,
+    "speed_median": 1.0601372718811035,
+    "rises": 0.6215,
+    "normal_quantiles": [
+     -0.7823138415813446,
+     -0.29453669488430023,
+     0.23607999831438065,
+     0.7032176703214645,
+     1.1597077488899232
+    ]
+   },
+   "0.12-0.175": {
+    "poses": 6000,
+    "speed_median": 0.8174901008605957,
+    "rises": 0.585,
+    "normal_quantiles": [
+     -0.7378617584705354,
+     -0.3289898410439491,
+     0.15709927678108215,
+     0.6248442679643631,
+     1.0365392923355103
+    ]
+   },
+   "beyond the margin": {
+    "poses": 6000,
+    "speed_median": 0.8876147270202637,
+    "rises": 0.57,
+    "normal_quantiles": [
+     -0.638822877407074,
+     -0.3012867942452431,
+     0.12311659380793571,
+     0.5423270612955093,
+     0.8748891532421115
+    ]
+   }
+  },
+  "open band": {
+   "0.02-0.06": {
+    "poses": 5266,
+    "speed_median": 2.2857420444488525,
+    "rises": 0.6940751993923281,
+    "normal_quantiles": [
+     -0.4209764152765274,
+     -0.06957481987774372,
+     0.180205337703228,
+     0.4845465421676636,
+     0.8729102909564972
+    ]
+   },
+   "0.06-0.12": {
+    "poses": 6000,
+    "speed_median": 0.9847446084022522,
+    "rises": 0.6731666666666667,
+    "normal_quantiles": [
+     -0.736970067024231,
+     -0.2029479630291462,
+     0.37965166568756104,
+     0.8215989619493484,
+     1.2416113615036013
+    ]
+   },
+   "0.12-0.175": {
+    "poses": 6000,
+    "speed_median": 0.7856408357620239,
+    "rises": 0.6208333333333333,
+    "normal_quantiles": [
+     -0.6259491324424744,
+     -0.24230064451694489,
+     0.2002197653055191,
+     0.6324688494205475,
+     1.033589851856232
+    ]
+   },
+   "beyond the margin": {
+    "poses": 6000,
+    "speed_median": 0.8253172039985657,
+    "rises": 0.5835,
+    "normal_quantiles": [
+     -0.6339634954929352,
+     -0.29254962503910065,
+     0.12534009665250778,
+     0.5437579452991486,
+     0.8583637416362764
+    ]
+   }
+  }
+ },
+ "fail_where": {
+  "same quadrant": {
+   "queries": 60,
+   "solved": 17,
+   "first_contact": {
+    "start quadrant": 38,
+    "band": 2,
+    "goal quadrant": 0,
+    "other quadrant": 0
+   },
+   "stalled": {
+    "start quadrant": 2,
+    "band": 1,
+    "goal quadrant": 0,
+    "other quadrant": 0
+   },
+   "contact_only_in_last_jump": 0
+  },
+  "adjacent quadrants": {
+   "queries": 60,
+   "solved": 9,
+   "first_contact": {
+    "start quadrant": 37,
+    "band": 4,
+    "goal quadrant": 1,
+    "other quadrant": 0
+   },
+   "stalled": {
+    "start quadrant": 8,
+    "band": 1,
+    "goal quadrant": 0,
+    "other quadrant": 0
+   },
+   "contact_only_in_last_jump": 0
+  },
+  "diagonal quadrants": {
+   "queries": 60,
+   "solved": 1,
+   "first_contact": {
+    "start quadrant": 48,
+    "band": 5,
+    "goal quadrant": 3,
+    "other quadrant": 0
+   },
+   "stalled": {
+    "start quadrant": 2,
+    "band": 1,
+    "goal quadrant": 0,
+    "other quadrant": 0
+   },
+   "contact_only_in_last_jump": 0
+  },
+  "quadrant - open": {
+   "queries": 60,
+   "solved": 24,
+   "first_contact": {
+    "start quadrant": 4,
+    "band": 15,
+    "goal quadrant": 16,
+    "other quadrant": 0
+   },
+   "stalled": {
+    "start quadrant": 0,
+    "band": 1,
+    "goal quadrant": 0,
+    "other quadrant": 0
+   },
+   "contact_only_in_last_jump": 0
+  },
+  "open - open": {
+   "queries": 60,
+   "solved": 60,
+   "first_contact": {
+    "start quadrant": 0,
+    "band": 0,
+    "goal quadrant": 0,
+    "other quadrant": 0
+   },
+   "stalled": {
+    "start quadrant": 0,
+    "band": 0,
+    "goal quadrant": 0,
+    "other quadrant": 0
+   },
+   "contact_only_in_last_jump": 0
+  }
+ },
+ "arrival": {
+  "z": {
+   "queries": 56,
+   "reached": 55,
+   "median_cells": 1.4580843983833982,
+   "p75_cells": 2.622963247956862,
+   "solved_seed0": 24
+  }
+ },
+ "note": "feel: poses inside the quadrant mazes by clearance bin (cells) and goal class; fail_where: planning seed 0, first wall contact by stage of the trip"
+}

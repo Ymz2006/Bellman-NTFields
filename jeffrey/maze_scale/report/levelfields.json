@@ -1,0 +1,248 @@
+{
+ "13": [
+  {
+   "bin": "0.5-2",
+   "query": 5,
+   "travel": 1.1274056434631348,
+   "gap": 1.1118268102407456,
+   "theta": -0.0049961715228845315,
+   "level": 3,
+   "band": [
+    0.8656875491142273,
+    1.2916969060897827
+   ],
+   "window_cells": 3.1999998092651367,
+   "contour_step": 0.1,
+   "plain": {
+    "success": true,
+    "converged": true
+   },
+   "scaled": {
+    "success": true,
+    "converged": true
+   }
+  },
+  {
+   "bin": "2-4",
+   "query": 44,
+   "travel": 2.710235357284546,
+   "gap": 2.3850980907678605,
+   "theta": 0.019984686091538126,
+   "level": 6,
+   "band": [
+    2.129915952682495,
+    3.178058624267578
+   ],
+   "window_cells": 6.864606857299805,
+   "contour_step": 1,
+   "plain": {
+    "success": true,
+    "converged": true
+   },
+   "scaled": {
+    "success": true,
+    "converged": true
+   }
+  },
+  {
+   "bin": "4-8",
+   "query": 106,
+   "travel": 5.172985076904297,
+   "gap": 4.367869260907173,
+   "theta": 0.024980857614422654,
+   "level": 8,
+   "band": [
+    3.8817715644836426,
+    5.792011737823486
+   ],
+   "window_cells": 10.35045337677002,
+   "contour_step": 2,
+   "plain": {
+    "success": false,
+    "converged": true
+   },
+   "scaled": {
+    "success": true,
+    "converged": true
+   }
+  },
+  {
+   "bin": "8-16",
+   "query": 134,
+   "travel": 10.646286010742188,
+   "gap": 6.832572036981582,
+   "theta": -0.019984686091538126,
+   "level": 9,
+   "band": [
+    5.240391731262207,
+    7.819215774536133
+   ],
+   "window_cells": 12.997505187988281,
+   "contour_step": 1,
+   "plain": {
+    "success": true,
+    "converged": true
+   },
+   "scaled": {
+    "success": true,
+    "converged": true
+   }
+  },
+  {
+   "bin": "16-32",
+   "query": 169,
+   "travel": 18.290172576904297,
+   "gap": 10.389816910028458,
+   "theta": -0.014988514568653594,
+   "level": 11,
+   "band": [
+    9.550614356994629,
+    14.250520706176758
+   ],
+   "window_cells": 13.1,
+   "contour_step": 1,
+   "plain": {
+    "success": false,
+    "converged": false
+   },
+   "scaled": {
+    "success": true,
+    "converged": true
+   }
+  }
+ ],
+ "22": [
+  {
+   "bin": "0.5-2",
+   "query": 18,
+   "travel": 1.721914291381836,
+   "gap": 1.2717534478753805,
+   "theta": -0.014807657680947365,
+   "level": 4,
+   "band": [
+    1.1686781644821167,
+    1.7437907457351685
+   ],
+   "window_cells": 3.766587972640991,
+   "contour_step": 1,
+   "plain": {
+    "success": true,
+    "converged": true
+   },
+   "scaled": {
+    "success": false,
+    "converged": true
+   }
+  },
+  {
+   "bin": "2-4",
+   "query": 54,
+   "travel": 3.4411425590515137,
+   "gap": 2.7737810373306275,
+   "theta": 0.008884594608568417,
+   "level": 6,
+   "band": [
+    2.129915952682495,
+    3.178058385848999
+   ],
+   "window_cells": 6.864605903625488,
+   "contour_step": 1,
+   "plain": {
+    "success": false,
+    "converged": true
+   },
+   "scaled": {
+    "success": false,
+    "converged": false
+   }
+  },
+  {
+   "bin": "4-8",
+   "query": 80,
+   "travel": 5.69895076751709,
+   "gap": 4.596364739537239,
+   "theta": -0.008884594608568419,
+   "level": 8,
+   "band": [
+    3.881772041320801,
+    5.792011737823486
+   ],
+   "window_cells": 12.51074504852295,
+   "contour_step": 1,
+   "plain": {
+    "success": false,
+    "converged": false
+   },
+   "scaled": {
+    "success": true,
+    "converged": true
+   }
+  },
+  {
+   "bin": "8-16",
+   "query": 124,
+   "travel": 12.75341796875,
+   "gap": 8.72073319554329,
+   "theta": 0.017769189217136837,
+   "level": 10,
+   "band": [
+    7.07452917098999,
+    10.555941581726074
+   ],
+   "window_cells": 21.968441009521484,
+   "contour_step": 2,
+   "plain": {
+    "success": false,
+    "converged": false
+   },
+   "scaled": {
+    "success": false,
+    "converged": false
+   }
+  },
+  {
+   "bin": "16-32",
+   "query": 176,
+   "travel": 26.302227020263672,
+   "gap": 14.080726289749146,
+   "theta": -0.014807657680947365,
+   "level": 12,
+   "band": [
+    12.893329620361328,
+    19.238203048706055
+   ],
+   "window_cells": 22.1,
+   "contour_step": 1,
+   "plain": {
+    "success": false,
+    "converged": false
+   },
+   "scaled": {
+    "success": false,
+    "converged": false
+   }
+  },
+  {
+   "bin": "32-64",
+   "query": 221,
+   "travel": 34.047279357910156,
+   "gap": 16.308138394355776,
+   "theta": -0.011846126144757892,
+   "level": 12,
+   "band": [
+    12.893329620361328,
+    19.238203048706055
+   ],
+   "window_cells": 22.1,
+   "contour_step": 1,
+   "plain": {
+    "success": false,
+    "converged": false
+   },
+   "scaled": {
+    "success": false,
+    "converged": false
+   }
+  }
+ ]
+}

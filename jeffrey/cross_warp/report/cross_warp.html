@@ -1,0 +1,337 @@
+<title>2026-11-03 Cross Warp</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;650;750&family=Public+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: the maze-scale family's reading column (~70ch) with full-width figure bands; two chart panels (the two query sets) share one legend. */
+:root {
+  --bg: #f5f6f8; --surface: #ffffff; --ink: #15181d; --ink2: #4b525c; --muted: #737b86; --rule: #dde1e6; --wash: #eef1f5;
+  --accent: #eb6834; --gridline: #c9ced6;
+  --s-ntrl: #2a78d6; --s-u4: #6250d6; --s-u6: #a99be8; --s-pm: #eb6834; --s-la: #1baf7a; --s-lf: #eda100; --s-id: #8b929b;
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+    --accent: #d95926; --gridline: #4a515b;
+    --s-ntrl: #3987e5; --s-u4: #9085e9; --s-u6: #6c5fc7; --s-pm: #d95926; --s-la: #199e70; --s-lf: #c98500; --s-id: #7d858f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121418; --surface: #1a1d22; --ink: #eef0f3; --ink2: #b6bcc5; --muted: #8b939d; --rule: #2d3239; --wash: #20242a;
+  --accent: #d95926; --gridline: #4a515b;
+  --s-ntrl: #3987e5; --s-u4: #9085e9; --s-u6: #6c5fc7; --s-pm: #d95926; --s-la: #199e70; --s-lf: #c98500; --s-id: #7d858f;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 15.5px/1.6 var(--f-body); margin: 0; }
+.page { max-width: 1120px; margin: 0 auto; padding-block: 40px 72px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 44px; }
+.col { max-width: 70ch; min-width: 0; }
+header { display: grid; gap: 14px; }
+.eyebrow { font: 500 12px/1.4 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 750 clamp(30px, 5vw, 46px)/1.05 var(--f-display); letter-spacing: -0.015em; margin: 0; text-wrap: balance; }
+h2 { font: 650 23px/1.2 var(--f-display); margin: 0 0 10px; text-wrap: balance; }
+h3 { font: 650 16px/1.3 var(--f-display); margin: 18px 0 6px; }
+p { margin: 0 0 12px; }
+.lede { font-size: 17.5px; line-height: 1.55; }
+p strong, li strong { font-weight: 600; }
+section { display: grid; gap: 14px; min-width: 0; }
+figure { margin: 0; background: #ffffff; border: 1px solid var(--rule); border-radius: 6px; padding: 10px; overflow-x: auto; }
+figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+figcaption { color: #4b525c; font-size: 13px; margin-top: 6px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+.tile { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 12px 14px; display: grid; gap: 4px; align-content: start; }
+.tile .k { font: 500 12px/1.3 var(--f-mono); color: var(--muted); }
+.tile .v { font: 650 26px/1.15 var(--f-display); color: var(--ink); font-variant-numeric: tabular-nums; }
+.tile .v small { font: 500 13px var(--f-mono); color: var(--muted); }
+.tile .s { font-size: 13px; color: var(--ink2); }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.controls .lab { font: 500 12px var(--f-mono); color: var(--muted); margin-right: 4px; }
+.chip { display: inline-flex; align-items: center; gap: 7px; font: 500 13px var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 999px; padding: 5px 11px; cursor: pointer; }
+.chip[aria-pressed="false"] { color: var(--muted); background: transparent; }
+.chip[aria-pressed="false"] .key { opacity: 0.35; }
+.chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.key { width: 18px; height: 0; border-top: 3px solid currentColor; border-radius: 2px; display: inline-block; }
+.key.dash { border-top-style: dashed; border-top-width: 2px; }
+.key.dot { border-top-style: dotted; border-top-width: 3px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+.panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 10px 4px; position: relative; min-width: 0; }
+.panel h4 { font: 650 14px var(--f-display); margin: 0 0 2px 4px; display: flex; justify-content: space-between; gap: 8px; }
+.panel h4 span { font: 400 12px var(--f-mono); color: var(--muted); }
+.panel svg { display: block; width: 100%; height: auto; overflow: visible; }
+.axis text { fill: var(--muted); font: 9.5px var(--f-mono); }
+.axis .lab { fill: var(--ink2); font: 10px var(--f-mono); }
+.gridline { stroke: var(--rule); stroke-width: 1; }
+.tip { position: absolute; z-index: 5; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--rule); border-radius: 6px; padding: 8px 10px; box-shadow: 0 4px 14px rgba(0,0,0,0.12); font-size: 12.5px; min-width: 230px; }
+.tip .h { font: 500 11.5px var(--f-mono); color: var(--muted); margin-bottom: 4px; }
+.tip .r { display: grid; grid-template-columns: 18px auto 1fr; gap: 6px; align-items: center; }
+.tip .r b { font: 500 13px var(--f-mono); font-variant-numeric: tabular-nums; text-align: right; }
+.tip .r i { font-style: normal; color: var(--ink2); white-space: nowrap; }
+details { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 14px; }
+summary { cursor: pointer; font: 600 14px var(--f-body); }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; font-size: 13px; min-width: 560px; }
+th, td { padding: 6px 9px; border-bottom: 1px solid var(--rule); text-align: right; vertical-align: top; }
+th:first-child, td:first-child { text-align: left; }
+table.named th:first-child, table.named td:first-child { min-width: 210px; }
+thead th { font: 600 12px var(--f-mono); color: var(--muted); white-space: nowrap; }
+td.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+td b { font-weight: 600; }
+.mute { color: var(--muted); font-size: 11.5px; }
+tbody tr:hover { background: var(--wash); }
+.note { font-size: 13.5px; color: var(--ink2); }
+ul.tight { margin: 0 0 12px; padding-left: 20px; display: grid; gap: 6px; }
+code { font: 13px var(--f-mono); background: var(--wash); padding: 1px 4px; border-radius: 4px; }
+.diagram { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 12px; overflow-x: auto; }
+.diagram svg { display: block; width: 100%; max-width: 760px; min-width: 540px; height: auto; margin: 0 auto; }
+@media (prefers-reduced-motion: no-preference) { .chip { transition: background-color 120ms, color 120ms; } }
+</style>
+
+<div class="page">
+  <header class="col">
+    <div class="eyebrow">jeffrey/cross_warp · ntrl-demo on the 22 × 22 cross maze · 3 Nov 2026</div>
+    <h1>Cross Warp</h1>
+    <p class="lede">On the 22&times;22 cross maze, a warp of the robot&rsquo;s configuration space placed in front of ntrl-demo&rsquo;s Fourier encoder, magnifying the maze six-fold and leaving the open + at its own scale, lifts ntrl-demo from <strong>66.5&nbsp;% to 84.5&nbsp;%</strong> of planning runs (three training seeds: 468 / 479 / 490 &rarr; 580 / 619 / 627 of 720) and from 63.8&nbsp;% to 80.1&nbsp;% on 1,200 new queries. Raising the input frequency everywhere helps too, but stops paying past ×4 (75.1&nbsp;% at ×4, 72.1&nbsp;% at ×6 on the new queries); the warp spends ×6 on the maze only and beats every uniform stretch on every seed there. The warp as first proposed, learned and confined to the box, learns to squeeze the + but cannot magnify the maze enough to matter (71.2&nbsp;%); learned without that limit it reaches 79.1&nbsp;%.</p>
+  </header>
+
+  <section>
+    <div class="tiles"><div class="tile"><span class="k">ntrl-demo</span><span class="v">66.5&nbsp;%</span><span class="s">baseline, 3 training seeds; 63.8&nbsp;% on the 1,200 new queries</span></div>
+<div class="tile"><span class="k">uniform stretch ×4</span><span class="v">81.1&nbsp;%</span><span class="s">best uniform stretch of the input; 75.1&nbsp;% on the 1,200 new queries</span></div>
+<div class="tile"><span class="k">designed warp ×6 / ×1</span><span class="v">84.5&nbsp;%</span><span class="s">maze ×6, open + ×1; 80.1&nbsp;% on the 1,200 new queries</span></div>
+<div class="tile"><span class="k">learned warp</span><span class="v">79.1&nbsp;%</span><span class="s">shape learned from the losses; 74.9&nbsp;% on the 1,200 new queries</span></div></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>The idea</h2>
+      <p>ntrl-demo learns a travel time T(x<sub>0</sub>, x<sub>1</sub>) between two robot poses with a network that first maps each pose to Fourier features sin/cos(2&pi;Bq). The features have fixed frequencies, so the network can only change so fast per unit of input. On the 22&times;22 maze a cell is 1/22 of the unit box: walls fade out of the field, and the robot drives into them.</p><p><code>README_warp.md</code> proposes to put a diffeomorphism &phi; between the pose and the encoder, T = H(&phi;(x<sub>0</sub>), &phi;(x<sub>1</sub>)). By the chain rule &nabla;<sub>x</sub>T = J<sub>&phi;</sub><sup>T</sup>&nabla;<sub>u</sub>H: where &phi; stretches by &sigma;, the same encoder can make the field &sigma; times sharper; where it compresses, the field is smoother. Stretch next to obstacles, compress open space, bound the Jacobian, learn &phi; with the field&rsquo;s losses and a term that pulls in free space. The cross maze is the natural test: 47&nbsp;% of it is one open + and the rest is four 8&times;8 mazes.</p><p>Every warp here is a diffeomorphism by construction (monotone 1-D maps or coupling steps of positive densities), applied inside ntrl-demo&rsquo;s input mapping, so its loss, training loop and planner are untouched; with the identity warp the trainer reproduces ntrl-demo bit for bit. A uniform stretch &phi;(q) = s q is exactly ntrl-demo with its Fourier matrix multiplied by s (B&nbsp;&times;&nbsp;s), the control for every result.</p>
+    </div>
+    <figure><img src="warps.png" alt="Four panels: the cross maze as ntrl-demo's encoder sees it under the identity, the uniform six-fold stretch, the designed warp and the learned warp; the maze quadrants are magnified, the open plus is not." width="1471" height="591"><figcaption>The cross maze as the encoder sees it: the image of a regular grid under &phi; (divided by its overall scale), walls in red. Uniform stretch magnifies everything alike; the warps magnify the four maze quadrants six-fold and keep the open + at its own scale (designed: ×6 / ×1; learned: the same shape found by training).</figcaption></figure>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Results</h2>
+      <p><strong>The designed warp beats ntrl-demo on every seed and every distance.</strong> 580 / 619 / 627 vs 468 / 479 / 490 runs of 720; on the 1,200 new queries 957 / 979 / 949 vs 755 / 747 / 795 of 1,200. ntrl-demo&rsquo;s own trainer with the identity warp gives 505 / 479 / 486, the same level.</p><p><strong>It also beats every uniform stretch.</strong> Multiplying ntrl-demo&rsquo;s Fourier matrix (a uniform stretch of the input) is the control: ×4 gives 81.1&nbsp;% and 75.1&nbsp;% on the two query sets, ×6 76.2&nbsp;% and 72.1&nbsp;%. On the 1,200 new queries, the larger set, the warp wins on every training seed (957 / 979 / 949 against 878 / 943 / 883 at ×4 and 874 / 875 / 846 at ×6), in every distance bin, and most where queries enter the maze from the + or cross it: one end in the + 78 vs 71 / 70&nbsp;%, neither end 45 vs 31 / 19&nbsp;%.</p>
+    </div>
+    <div class="tablewrap"><table class="named"><thead><tr><th>field</th><th>seeds</th><th>runs solved per seed (of 720)</th><th>success %</th><th>&le; 32 cells %</th><th>escape route, per seed</th><th>1,200 new queries %</th><th>wall attraction</th></tr></thead><tbody>
+<tr><td>ntrl-demo</td><td class="num">3</td><td class="num">468 / 479 / 490</td><td class="num"><b>66.5</b></td><td class="num">79.8</td><td class="num">0 / 0 / 0 <span class="mute">of 120</span></td><td class="num">63.8</td><td class="num">0.106</td></tr>
+<tr><td>identity warp (= ntrl-demo)</td><td class="num">3</td><td class="num">505 / 479 / 486</td><td class="num"><b>68.1</b></td><td class="num">81.0</td><td class="num">0 / 0 / 12 <span class="mute">of 120</span></td><td class="num">64.6</td><td class="num">0.092</td></tr>
+<tr><td>README warp (learned, box-preserving)</td><td class="num">3</td><td class="num">565 / 501 / 472</td><td class="num"><b>71.2</b></td><td class="num">80.7</td><td class="num">64 / 22 / 0 <span class="mute">of 120</span></td><td class="num">65.1</td><td class="num">0.095</td></tr>
+<tr><td>uniform stretch ×2 (B × 2)</td><td class="num">3</td><td class="num">567 / 542 / 584</td><td class="num"><b>78.4</b></td><td class="num">85.8</td><td class="num">48 / 21 / 79 <span class="mute">of 120</span></td><td class="num">70.3</td><td class="num">0.075</td></tr>
+<tr><td>uniform stretch ×4 (B × 4)</td><td class="num">3</td><td class="num">616 / 600 / 535</td><td class="num"><b>81.1</b></td><td class="num">86.4</td><td class="num">101 / 71 / 24 <span class="mute">of 120</span></td><td class="num">75.1</td><td class="num">0.044</td></tr>
+<tr><td>uniform stretch ×6 (B × 6)</td><td class="num">3</td><td class="num">528 / 545 / 573</td><td class="num"><b>76.2</b></td><td class="num">90.3</td><td class="num">0 / 0 / 21 <span class="mute">of 120</span></td><td class="num">72.1</td><td class="num">0.034</td></tr>
+<tr><td>designed warp ×4 / ×1</td><td class="num">3</td><td class="num">542 / 535 / 533</td><td class="num"><b>74.5</b></td><td class="num">88.3</td><td class="num">18 / 0 / 2 <span class="mute">of 120</span></td><td class="num">73.1</td><td class="num">0.041</td></tr>
+<tr><td>designed warp ×6 / ×1</td><td class="num">3</td><td class="num">580 / 619 / 627</td><td class="num"><b>84.5</b></td><td class="num">90.6</td><td class="num">29 / 68 / 98 <span class="mute">of 120</span></td><td class="num">80.1</td><td class="num">0.033</td></tr>
+<tr><td>designed warp ×6 / ×1, no inset</td><td class="num">3</td><td class="num">563 / 556 / 634</td><td class="num"><b>81.2</b></td><td class="num">90.9</td><td class="num">8 / 2 / 107 <span class="mute">of 120</span></td><td class="num">74.2</td><td class="num">0.030</td></tr>
+<tr><td>designed warp ×10 / ×1</td><td class="num">1</td><td class="num">366</td><td class="num"><b>50.8</b></td><td class="num">61.0</td><td class="num">0 <span class="mute">of 120</span></td><td class="num">45.4</td><td class="num">0.027</td></tr>
+<tr><td>learned warp, bounded ×1..×6</td><td class="num">3</td><td class="num">591 / 522 / 596</td><td class="num"><b>79.1</b></td><td class="num">88.2</td><td class="num">55 / 0 / 67 <span class="mute">of 120</span></td><td class="num">74.9</td><td class="num">0.030</td></tr></tbody></table><h3>Paired, run by run</h3><table class="named"><thead><tr><th>comparison</th><th>seeds</th><th>runs only the first solves</th><th>runs only the second solves</th><th>McNemar p</th></tr></thead><tbody>
+<tr><td>designed warp ×6 / ×1 vs ntrl-demo</td><td class="num">3</td><td class="num">+425</td><td class="num">&minus;36</td><td class="num">2e-85</td></tr>
+<tr><td>designed warp ×6 / ×1 vs uniform stretch ×4 (B × 4)</td><td class="num">3</td><td class="num">+248</td><td class="num">&minus;173</td><td class="num">0.0003</td></tr>
+<tr><td>designed warp ×6 / ×1 vs uniform stretch ×6 (B × 6)</td><td class="num">3</td><td class="num">+273</td><td class="num">&minus;93</td><td class="num">1e-21</td></tr>
+<tr><td>learned warp, bounded ×1..×6 vs ntrl-demo</td><td class="num">3</td><td class="num">+326</td><td class="num">&minus;54</td><td class="num">2e-48</td></tr>
+<tr><td>README warp (learned, box-preserving) vs ntrl-demo</td><td class="num">3</td><td class="num">+206</td><td class="num">&minus;105</td><td class="num">1e-08</td></tr>
+<tr><td>uniform stretch ×4 (B × 4) vs ntrl-demo</td><td class="num">3</td><td class="num">+391</td><td class="num">&minus;77</td><td class="num">1e-51</td></tr>
+<tr><td>uniform stretch ×6 (B × 6) vs ntrl-demo</td><td class="num">3</td><td class="num">+266</td><td class="num">&minus;57</td><td class="num">2e-33</td></tr></tbody></table></div>
+    <div class="col"><p class="note">Success: MPPI runs that reach the goal without the robot touching a wall, planning seeds 0/1/2, pooled over training seeds 87358 / 1 / 2. &le; 32 cells: the five shorter bins. Escape route: the 40 queries of the 32&ndash;64-cell bin, which all leave one dead-end pocket. 1,200 new queries: planning seed 0 (in brackets: training seeds evaluated there when fewer). Wall attraction: share of held-out near-wall poses where the field&rsquo;s descent direction points into the wall (mean over seeds). Paired: the same query, planning seed and training seed; McNemar&rsquo;s p treats runs as independent, but a query&rsquo;s three planning seeds nearly always agree and the training seed is the larger source of variance, so p overstates; compare the per-seed counts (the README warp, for example, wins on two seeds through the escape route and ties up to 32 cells).</p></div>
+    <div class="controls" id="legend" role="group" aria-label="Fields shown in the charts"><span class="lab">show</span></div>
+    <div class="grid" id="panels"></div>
+    <div class="col"><p class="note">Success by true travel distance; each point pools the training seeds a field has, the whisker is their range. Left: the maze-scale study's 240 queries, planning seeds 0/1/2. Right: the 1,200-query set from 96 new goals, planning seed 0. Hover a panel for the numbers.</p></div>
+    <div class="col"><h3>A smaller cross</h3><p>On the 20&times;20 cross (204 of 400 cells open, prepare run 20261103T190009Z-01bd3aac) the same designed warp plans 533 / 548 / 538 runs against ntrl-demo&rsquo;s 443 / 449 / 466 (75.0 vs 62.9&nbsp;%). Uniform stretch reaches 74.2&nbsp;% at ×4 and 71.9&nbsp;% at ×6. The warp is ahead of ×4 on every seed, but only by 4&ndash;6 runs (89.9 vs 86.9&nbsp;% up to 32 cells), and ×6 everywhere is again below ×4. On the smaller maze the warp&rsquo;s margin over the best uniform stretch is small.</p></div><div class="tablewrap"><table class="named"><thead><tr><th>field</th><th>seeds</th><th>runs solved per seed (of 720)</th><th>success %</th><th>≤ 32 cells %</th><th>escape route, per seed (of 120)</th></tr></thead><tbody>
+<tr><td>ntrl-demo (identity warp)</td><td class="num">3</td><td class="num">443 / 449 / 466</td><td class="num">62.9</td><td class="num">75.4</td><td class="num">0 / 0 / 0</td></tr>
+<tr><td>uniform stretch ×4</td><td class="num">3</td><td class="num">527 / 544 / 532</td><td class="num">74.2</td><td class="num">86.9</td><td class="num">0 / 0 / 39</td></tr>
+<tr><td>uniform stretch ×6</td><td class="num">3</td><td class="num">555 / 522 / 476</td><td class="num">71.9</td><td class="num">86.3</td><td class="num">0 / 0 / 0</td></tr>
+<tr><td>designed warp ×6 / ×1</td><td class="num">3</td><td class="num">533 / 548 / 538</td><td class="num">75.0</td><td class="num">89.9</td><td class="num">0 / 0 / 1</td></tr></tbody></table></div><div class="col"></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Why the README warp as proposed does not help here</h2>
+      <p>The README&rsquo;s warp is the identity plus bounded increments, so over the scale of the maze it maps the box roughly onto itself. Implemented as coupling steps that map the box exactly onto itself and trained as proposed (ntrl-demo&rsquo;s loss through &phi;, free space pulled in to a quarter of its area, stretch bounded), <strong>it learns what it is asked</strong>: the open + shrinks to 0.52&times; per axis and the maze grows to 1.21&times;. <strong>Planning does not change</strong>: 565 / 501 / 472 runs, 80.7&nbsp;% up to 32 cells against ntrl-demo&rsquo;s 79.8&nbsp;%, and the walls leak as often.</p><p>Two facts of this maze cap what any box-preserving warp can do. The + is 47&nbsp;% of the area, so even squeezing it to nothing frees at most &radic;(1/0.53) = 1.37&times; per axis for the maze. And the robot is slowed by a wall over about 65&nbsp;% of every corridor&rsquo;s width (0.325 of 0.45 cells on each side for an aligned robot, everything broadside), so stretching &ldquo;near walls&rdquo; is stretching the maze, not a thin band inside it. ntrl-demo&rsquo;s failures are wall leaks: at 88&ndash;100&nbsp;% of first wall contacts the field&rsquo;s descent points into the wall, with a learned speed 3&ndash;5 times the label. They need four- to six-fold magnification (table above), which only a warp that is allowed to enlarge the maze can give. Variants confirm it: a near-wall expansion term, designed versions of the same redistribution (coupling and separable, one with every grid line stretched) and a heading-only stretch all stay at ntrl-demo&rsquo;s level.</p>
+    </div>
+    <div class="tablewrap"><table class="named"><thead><tr><th>field</th><th>seeds</th><th>runs solved per seed (of 720)</th><th>&le; 32 cells %</th><th>linear stretch: + / maze</th><th>wall attraction</th></tr></thead><tbody>
+<tr><td>ntrl-demo</td><td class="num">3</td><td class="num">468 / 479 / 490</td><td class="num">79.8</td><td class="num">1 / 1</td><td class="num">0.106</td></tr>
+<tr><td>README warp (learned, box-preserving)</td><td class="num">3</td><td class="num">565 / 501 / 472</td><td class="num">80.7</td><td class="num">0.52 / 1.21</td><td class="num">0.095</td></tr>
+<tr><td>README warp + near-wall expansion</td><td class="num">1</td><td class="num">462</td><td class="num">77.0</td><td class="num">0.53 / 1.21</td><td class="num">0.099</td></tr>
+<tr><td>designed box-preserving warp (ratio 3)</td><td class="num">1</td><td class="num">468</td><td class="num">78.0</td><td class="num">0.78 / 1.09</td><td class="num">0.085</td></tr>
+<tr><td>designed box-preserving warp (ratio 12)</td><td class="num">1</td><td class="num">468</td><td class="num">78.0</td><td class="num">0.61 / 1.11</td><td class="num">0.081</td></tr>
+<tr><td>designed grid-line stretch (box-preserving)</td><td class="num">1</td><td class="num">498</td><td class="num">83.0</td><td class="num">0.63 / 1.06</td><td class="num">0.085</td></tr>
+<tr><td>heading-only stretch ×6</td><td class="num">1</td><td class="num">449</td><td class="num">74.8</td><td class="num">1 / 1</td><td class="num">0.108</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Why a local stretch beats a uniform one</h2>
+      <p><strong>Short range is set by the walls.</strong> The share of near-wall poses whose descent points into the wall falls from 0.106 (ntrl-demo) to 0.044 at ×4 and 0.034 at ×6; the warp, ×6 in the maze, has 0.033. Success up to 32 cells rises with it, from 79.8&nbsp;% to 86.4 (×4), 90.3 (×6) and 90.6&nbsp;% (warp) on the 240 queries.</p><p><strong>Past ×4, uniform stretch stops paying, and the warp does not.</strong> ×6 everywhere draws sharper walls than ×4 but plans no better (76.2&nbsp;% vs 81.1&nbsp;%; 72.1&nbsp;% vs 75.1&nbsp;% on the new queries). The warp with ×6 on the maze and ×1 on the + is ahead of both. At ×4, where the uniform stretch is not yet too high, the same warp shape does not help (74.5&nbsp;% vs 81.1&nbsp;%; 73.1&nbsp;% vs 75.1&nbsp;% on the new queries), and at ×10 / ×1 it breaks (50.8&nbsp;%, stalls), as over-scaled Fourier matrices did in the maze-scale study. So the warp helps by letting the maze have a frequency that would already be too high for the open +.</p><p><strong>Where the magnification must go.</strong> On the 1,200 new queries, three training seeds each: the design, with the maze <em>and</em> the + band&rsquo;s edge cells (which carry the + outline walls) at ×6 and the open interior at ×1, plans 80.1&nbsp;%; the same warp without that one-cell inset, its outline walls on the ramp at about ×2&ndash;3, 74.2&nbsp;% (lower on every seed: 887 / 906 / 877 vs 957 / 979 / 949); ×6 everywhere 72.1&nbsp;%; ×4 everywhere 75.1&nbsp;%. Both mistakes cost the long queries that enter or cross the maze: the walls that bound the open area need the magnification as much as the maze does, and the open interior must not get it. This is the README&rsquo;s premise taken literally: stretch at every obstacle, compress open space.</p><p><strong>What ×6 spoils inside the open + is not settled.</strong> Its field there has no extra local minima (&le; 0.02 per long path for every field; almost all minima lie in the maze), no more slow patches and no worse near-wall leaks than the warp&rsquo;s. On the 240-query set the long bin is one route: all 40 queries of 32&ndash;64 cells start in a dead-end pocket at the top of the top-right quadrant (per seed, of 120: ×4 101 / 71 / 24, ×6 0 / 0 / 21, warp 29 / 68 / 98); it is erratic between fields, so the 1,200 new queries, whose long bins draw on 96 goals, are the firmer evidence.</p>
+    </div>
+    <div class="tablewrap"><table class="named"><thead><tr><th>field</th><th>seeds</th><th>&le; 32 cells %</th><th>escape route %</th><th>wall attraction</th><th>near-wall slope</th><th>local minima / long path</th></tr></thead><tbody>
+<tr><td>ntrl-demo</td><td class="num">3</td><td class="num">79.8</td><td class="num">0</td><td class="num">0.106</td><td class="num">0.30</td><td class="num">&ndash;</td></tr>
+<tr><td>uniform stretch ×2 (B × 2)</td><td class="num">3</td><td class="num">85.8</td><td class="num">41</td><td class="num">0.075</td><td class="num">0.35</td><td class="num">0.08</td></tr>
+<tr><td>uniform stretch ×4 (B × 4)</td><td class="num">3</td><td class="num">86.4</td><td class="num">54</td><td class="num">0.044</td><td class="num">0.47</td><td class="num">0.10</td></tr>
+<tr><td>uniform stretch ×6 (B × 6)</td><td class="num">3</td><td class="num">90.3</td><td class="num">6</td><td class="num">0.034</td><td class="num">0.54</td><td class="num">0.17</td></tr>
+<tr><td>designed warp ×4 / ×1</td><td class="num">3</td><td class="num">88.3</td><td class="num">6</td><td class="num">0.041</td><td class="num">0.45</td><td class="num">0.52</td></tr>
+<tr><td>designed warp ×6 / ×1</td><td class="num">3</td><td class="num">90.6</td><td class="num">54</td><td class="num">0.033</td><td class="num">0.56</td><td class="num">0.17</td></tr>
+<tr><td>designed warp ×10 / ×1</td><td class="num">1</td><td class="num">61.0</td><td class="num">0</td><td class="num">0.027</td><td class="num">0.66</td><td class="num">1.75</td></tr>
+<tr><td>learned warp, bounded ×1..×6</td><td class="num">3</td><td class="num">88.2</td><td class="num">34</td><td class="num">0.030</td><td class="num">0.57</td><td class="num">0.32</td></tr></tbody></table></div>
+    <figure><img src="speed.png" alt="Learned speed maps at heading 0 on the cross maze: truth, ntrl-demo, the uniform six-fold stretch, the designed warp and the learned warp." width="1749" height="392"><figcaption>Learned speed 1 / |&nabla;<sub>x</sub>T(x, goal)| at heading 0 towards the first prepared goal, training seed 87358; light = full speed, dark = slow. ntrl-demo blurs the maze quadrants; ×6 (uniform or warped) redraws them.</figcaption></figure>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>The learned warp</h2>
+      <p>Can the warp be learned instead of designed? Every learned variant below trains ntrl-demo&rsquo;s loss through &phi; together with the warp&rsquo;s own terms, from the first epoch. Three lessons, in the order they came up.</p><ul class="tight"><li><strong>Nothing in the loss asks for magnification.</strong> Started at a uniform ×4 with only the free-space term, the warp shrinks back to ×1.1 everywhere: compressing is always allowed, enlarging is never rewarded. It needs a near-wall term that asks for stretch.</li><li><strong>The warp must be smooth.</strong> With 8 grid nodes per cell the learned densities turn jagged (spikes up to ×28 at the outer walls, second differences ten times the design&rsquo;s); the field inherits the ripples and MPPI stalls. One node per cell and a small curvature penalty fix it.</li><li><strong>Stretch across the wall, not in area.</strong> An area target at near-wall poses forces the stretch onto whichever axis is free; at the ends of the + arms, where one axis is compressed, it spikes. Asking for |J n| &ge; 6 along the clearance normal n (README_warp, section 10) stretches each axis across the walls that block it.</li></ul><p>With these, the warp learns the designed shape on its own (figure): the + band compressed to ×1.00 across, the maze at ×6. The best learned variant, bounded to the design&rsquo;s own range (×1 to ×6), reaches the design&rsquo;s magnitudes exactly and plans 591 / 522 / 596 runs of 720 (79.1&nbsp;%; 74.9&nbsp;% on the 1,200 new queries): ten points above ntrl-demo, at the uniform stretch&rsquo;s level, below the design. Freezing a learned warp and training a new field on it from scratch changes nothing (tested on the unbounded variant), so the field adapting to a moving warp is not the problem.</p><p>The profiles differ at the + band&rsquo;s edges. The design keeps the band&rsquo;s outermost cells, which carry the + outline walls, at ×6 and ramps down one cell in; every learned warp ramps down at the band edge itself. A separable map gives a whole column one stretch, and those edge columns are open space inside the other arm of the +, where the free-space term compresses them. Control: the design without its one-cell inset, compressing the edge cells as the learned warps do, plans 563 / 556 / 634 runs (81.2&nbsp;%; 90.9&nbsp;% up to 32 cells against 90.6&nbsp;% with the inset). On the 1,200 new queries it plans 74.2&nbsp;%, against 80.1&nbsp;% for the design with the inset and 74.9&nbsp;% for the learned warp: compressing the edge cells costs the design what separates it from the learned warp, on the long queries that pass the outline walls. A row-dependent learned warp (coupling steps, <code>lc6b</code>), which could compress the arms without those columns, shears instead: where the compressed rows of an arm meet uncompressed maze rows its singular values reach 134, and it plans 486 / 474 runs (66.7&nbsp;%). A learned warp that keeps the outline walls magnified needs a shear bound or a different form.</p>
+    </div>
+    <figure><img src="density.png" alt="Local stretch along x across the cross maze for the designed warp and the learned warps; both compress the plus band and magnify the maze." width="1140" height="408"><figcaption>Local stretch along x across the maze (cell units; the + band shaded), training seed 87358: the design, the design without its one-cell inset, and two learned warps. The learned warps ramp down at the band edge itself, like the design without the inset; the unbounded one also overshoots next to the outer walls.</figcaption></figure>
+    <div class="tablewrap"><table class="named"><thead><tr><th>run</th><th>warp and terms</th><th>seeds</th><th>runs solved per seed</th><th>success %</th><th>&le; 32 cells %</th><th>linear stretch: + / maze</th><th>stalled runs per seed</th></tr></thead><tbody>
+<tr><td>lf</td><td class="num">coupling, box-preserving (README as proposed), free space pulled in</td><td class="num">3</td><td class="num">565 / 501 / 472</td><td class="num">71.2</td><td class="num">80.7</td><td class="num">0.52 / 1.21</td><td class="num">68</td></tr>
+<tr><td>lsep4</td><td class="num">free stretch starting at ×4, free space pulled in, 8 nodes / cell</td><td class="num">1</td><td class="num">484</td><td class="num">67.2</td><td class="num">80.7</td><td class="num">1.04 / 1.09</td><td class="num">64</td></tr>
+<tr><td>lsb6</td><td class="num">free stretch from ×6, + area target, near-wall area target, 8 nodes / cell</td><td class="num">1</td><td class="num">487</td><td class="num">67.6</td><td class="num">81.2</td><td class="num">2.44 / 6.85</td><td class="num">206</td></tr>
+<tr><td>lsb6s</td><td class="num">as above, strong curvature penalty</td><td class="num">1</td><td class="num">497</td><td class="num">69.0</td><td class="num">82.8</td><td class="num">2.48 / 6.94</td><td class="num">185</td></tr>
+<tr><td>lsb6c</td><td class="num">as above, 1 node / cell, small curvature penalty</td><td class="num">1</td><td class="num">538</td><td class="num">74.7</td><td class="num">89.2</td><td class="num">2.53 / 6.39</td><td class="num">146</td></tr>
+<tr><td>lsn5</td><td class="num">box-preserving separable × 5.1, free space pulled in</td><td class="num">1</td><td class="num">548</td><td class="num">76.1</td><td class="num">88.3</td><td class="num">0.46 / 1.15</td><td class="num">110</td></tr>
+<tr><td>la6</td><td class="num">free stretch from ×6, near-wall stretch along the wall normal, 1 node / cell; frozen at epoch 2,000</td><td class="num">1</td><td class="num">537</td><td class="num">74.6</td><td class="num">89.5</td><td class="num">2.51 / 5.80</td><td class="num">131</td></tr>
+<tr><td>la6n</td><td class="num">the same, learned to the end</td><td class="num">3</td><td class="num">580 / 537 / 479</td><td class="num">73.9</td><td class="num">85.8</td><td class="num">2.40 / 6.60</td><td class="num">160</td></tr>
+<tr><td>la7b</td><td class="num">the same, stretch bounded to ×1..×7, starting at ×2.65</td><td class="num">3</td><td class="num">567 / 565 / 489</td><td class="num">75.0</td><td class="num">85.4</td><td class="num">2.15 / 4.43</td><td class="num">120</td></tr>
+<tr><td>la6r</td><td class="num">la6n&amp;rsquo;s learned warp frozen, field trained again from scratch</td><td class="num">3</td><td class="num">547 / 527 / 541</td><td class="num">74.8</td><td class="num">85.9</td><td class="num">2.40 / 6.60</td><td class="num">145</td></tr>
+<tr><td>la6b</td><td class="num">separable, stretch bounded to ×1..×6, starting at ×5.9</td><td class="num">3</td><td class="num">591 / 522 / 596</td><td class="num">79.1</td><td class="num">88.2</td><td class="num">2.49 / 5.98</td><td class="num">118</td></tr>
+<tr><td>lc6b</td><td class="num">coupling (row-dependent stretch), bounded to ×1..×6, starting at ×5.9</td><td class="num">2</td><td class="num">486 / 474</td><td class="num">66.7</td><td class="num">80.0</td><td class="num">2.45 / 5.97</td><td class="num">179</td></tr></tbody></table></div>
+  </section>
+
+  <section class="col">
+    <h2>What this says</h2>
+    <ul class="tight"><li><strong>The idea works on the cross maze</strong>, once the warp may enlarge the maze: ×6 in the four maze quadrants and ×1 over the open + lifts ntrl-demo from 66.5&nbsp;% to 84.5&nbsp;% on every seed, and from 63.8&nbsp;% to 80.1&nbsp;% on 1,200 new queries.</li><li><strong>It beats raising the input frequency everywhere</strong> (best uniform stretch ×4: 81.1&nbsp;% / 75.1&nbsp;%), on every seed of the larger query set. It needs the + outline walls magnified with the maze: without its one-cell inset it falls to the uniform ×4 level, and ×6 that also covers the open interior does worse.</li><li><strong>Box-preserving warps cannot help here.</strong> The README&rsquo;s warp learns to squeeze the + but the maze gains at most 1.37&times;, and ntrl-demo&rsquo;s failures (leaks through walls) need four to six.</li><li><strong>The shape can be learned</strong> from ntrl-demo&rsquo;s loss, a free-space term and a stretch-across-walls term: the best learned variant reaches 79.1&nbsp;% / 74.9&nbsp;%, about the uniform stretch&rsquo;s level and well above ntrl-demo, below the design.</li><li>Too much magnification (×10) makes the field bumpy and MPPI stalls.</li><li>On a smaller cross (20&times;20) the warp beats ntrl-demo too (75.0&nbsp;% vs 62.9&nbsp;%, every seed) and edges out the best uniform stretch (74.2&nbsp;%).</li></ul>
+  </section>
+
+  <section class="col">
+    <h2>How it was measured</h2>
+    <ul class="tight"><li><strong>Maze and data</strong>: the maze-scale study&rsquo;s 22&times;22 plus maze (prepare run 20261102T042454Z-62864e61): 228 of 484 cells open, a 0.5 &times; 0.2-cell rectangle robot in SE(2), ntrl-demo&rsquo;s 500,000 training pairs.</li><li><strong>Training</strong>: ntrl-demo&rsquo;s <code>Model.train()</code> step for step (<code>trainer.py</code>), 5,000 epochs, training seeds 87358 / 1 / 2; with the identity warp it reproduces ntrl-demo&rsquo;s registered run bit for bit on the same GPU. Warp grids: their own AdamW group (lr 3e-3, no weight decay).</li><li><strong>Warps</strong>: monotone 1-D maps of x and y (densities on a node grid, integrated exactly) or coupling steps, so &phi; is a diffeomorphism by construction; heading scaled by the maze factor. Designed: ×m in the maze (quadrant columns and rows and the + band&rsquo;s edge cells), ×1 inside the band, one-cell ramps. Learned terms: free space (poses &ge; 1 cell from every wall) pulled to det J &le; 6, |J n| &ge; 6 along the clearance normal at ntrl-demo&rsquo;s near-wall poses, a curvature penalty 0.01, weights ramped in over 500 epochs.</li><li><strong>Planning</strong>: ntrl-demo&rsquo;s MPPI scaled per cell, planning seeds 0/1/2 (seed 0 on the 1,200-query set); success = reaching the goal without the robot touching a wall (exact clearance every 0.005 cells). The oracle MPPI on the true travel time solves every query of both sets.</li><li><strong>Diagnostics</strong>: wall attraction and near-wall slope on 50,000 held-out ntrl-demo pairs; local minima of T(x, goal) along true paths of queries over 8 cells.</li><li><strong>Caveats</strong>: one maze, three training seeds per field (the same seed differs by about &plusmn;20 runs between the two GPUs); the 32&ndash;64-cell bin is one pocket, so its share of the totals is lumpy; the designed warp uses the + geometry (from the clearance field); the heading factor equals the maze factor in every warp and was not varied on its own beyond one heading-only control.</li></ul>
+  </section>
+
+  <details class="col"><summary>Registered runs</summary><div class="tablewrap"><table class="named"><thead><tr><th>field</th><th>training seed</th><th>registered run</th><th>runs solved</th><th>GPU</th></tr></thead><tbody>
+<tr><td>designed box-preserving warp (ratio 12)</td><td class="num">87358</td><td class="num"><code>20261103T165706Z-425bec33</code></td><td class="num">468 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>designed box-preserving warp (ratio 3)</td><td class="num">87358</td><td class="num"><code>20261103T165658Z-ac1a66b4</code></td><td class="num">468 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>heading-only stretch ×6</td><td class="num">87358</td><td class="num"><code>20261103T170514Z-25769e53</code></td><td class="num">449 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>identity warp (= ntrl-demo)</td><td class="num">87358</td><td class="num"><code>20261103T163539Z-48369bc1</code></td><td class="num">505 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>identity warp (= ntrl-demo)</td><td class="num">1</td><td class="num"><code>20261103T171116Z-e9eb6c1d</code></td><td class="num">479 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>identity warp (= ntrl-demo)</td><td class="num">2</td><td class="num"><code>20261103T170442Z-1832e0eb</code></td><td class="num">486 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>learned warp, frozen at epoch 2,000</td><td class="num">87358</td><td class="num"><code>20261103T181513Z-43a78517</code></td><td class="num">537 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>learned warp, bounded ×1..×6</td><td class="num">87358</td><td class="num"><code>20261103T191129Z-0b3ade71</code></td><td class="num">591 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>learned warp, bounded ×1..×6</td><td class="num">1</td><td class="num"><code>20261103T190455Z-09087650</code></td><td class="num">522 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>learned warp, bounded ×1..×6</td><td class="num">2</td><td class="num"><code>20261103T193254Z-f38c0a35</code></td><td class="num">596 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>learned warp (unbounded)</td><td class="num">87358</td><td class="num"><code>20261103T181400Z-05cdbdf5</code></td><td class="num">580 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>learned warp (unbounded)</td><td class="num">1</td><td class="num"><code>20261103T182932Z-73fb045f</code></td><td class="num">537 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>learned warp (unbounded)</td><td class="num">2</td><td class="num"><code>20261103T183230Z-20d52546</code></td><td class="num">479 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>learned warp, frozen, field retrained</td><td class="num">87358</td><td class="num"><code>20261103T184433Z-7f9a2e52</code></td><td class="num">547 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>learned warp, frozen, field retrained</td><td class="num">1</td><td class="num"><code>20261103T184938Z-bfb6b0b0</code></td><td class="num">527 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>learned warp, frozen, field retrained</td><td class="num">2</td><td class="num"><code>20261103T185156Z-8b936a27</code></td><td class="num">541 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>learned warp, bounded ×1..×7</td><td class="num">87358</td><td class="num"><code>20261103T190209Z-f226f181</code></td><td class="num">567 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>learned warp, bounded ×1..×7</td><td class="num">1</td><td class="num"><code>20261103T184058Z-6552a936</code></td><td class="num">565 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>learned warp, bounded ×1..×7</td><td class="num">2</td><td class="num"><code>20261103T192134Z-a3fe8b48</code></td><td class="num">489 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>learned warp, row-dependent (coupling), bounded ×1..×6</td><td class="num">87358</td><td class="num"><code>20261103T201531Z-344bf770</code></td><td class="num">486 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>learned warp, row-dependent (coupling), bounded ×1..×6</td><td class="num">1</td><td class="num"><code>20261103T201009Z-9080ef2c</code></td><td class="num">474 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>README warp (learned, box-preserving)</td><td class="num">87358</td><td class="num"><code>20261103T164738Z-b2e69df3</code></td><td class="num">565 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>README warp (learned, box-preserving)</td><td class="num">1</td><td class="num"><code>20261103T182219Z-a857b734</code></td><td class="num">501 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>README warp (learned, box-preserving)</td><td class="num">2</td><td class="num"><code>20261103T172440Z-1bada8f2</code></td><td class="num">472 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>README warp + near-wall expansion</td><td class="num">87358</td><td class="num"><code>20261103T164658Z-20cb303a</code></td><td class="num">462 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>learned free stretch, 8 nodes / cell</td><td class="num">87358</td><td class="num"><code>20261103T174348Z-12dc4d4f</code></td><td class="num">487 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>learned free stretch, area target</td><td class="num">87358</td><td class="num"><code>20261103T175733Z-1c0bf9df</code></td><td class="num">538 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>learned free stretch, 8 nodes / cell, smoothed</td><td class="num">87358</td><td class="num"><code>20261103T180542Z-376eddf4</code></td><td class="num">497 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>learned free stretch from ×4 (no near-wall term)</td><td class="num">87358</td><td class="num"><code>20261103T171721Z-f2ce6077</code></td><td class="num">484 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>learned box-preserving × 5.1</td><td class="num">87358</td><td class="num"><code>20261103T180024Z-db897872</code></td><td class="num">548 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>ntrl-demo</td><td class="num">87358</td><td class="num"><code>20261102T060517Z-0df939ae</code></td><td class="num">468 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>ntrl-demo</td><td class="num">1</td><td class="num"><code>20261102T062426Z-ed343a1b</code></td><td class="num">479 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>ntrl-demo</td><td class="num">2</td><td class="num"><code>20261102T063128Z-542b25dd</code></td><td class="num">490 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>designed warp ×10 / ×1</td><td class="num">87358</td><td class="num"><code>20261103T182224Z-a4f4a21d</code></td><td class="num">366 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>designed warp ×4 / ×1</td><td class="num">87358</td><td class="num"><code>20261103T185723Z-06c0f1b2</code></td><td class="num">542 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>designed warp ×4 / ×1</td><td class="num">1</td><td class="num"><code>20261103T183742Z-43cf48cd</code></td><td class="num">535 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>designed warp ×4 / ×1</td><td class="num">2</td><td class="num"><code>20261103T191357Z-dbd310cb</code></td><td class="num">533 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>designed warp ×6 / ×1</td><td class="num">87358</td><td class="num"><code>20261103T171757Z-79906972</code></td><td class="num">580 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>designed warp ×6 / ×1</td><td class="num">1</td><td class="num"><code>20261103T173406Z-5a9640e4</code></td><td class="num">619 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>designed warp ×6 / ×1</td><td class="num">2</td><td class="num"><code>20261103T173057Z-c4de6c30</code></td><td class="num">627 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>designed warp ×6 / ×1, no inset</td><td class="num">87358</td><td class="num"><code>20261103T194223Z-f37ecc36</code></td><td class="num">563 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>designed warp ×6 / ×1, no inset</td><td class="num">1</td><td class="num"><code>20261103T193637Z-ffd10414</code></td><td class="num">556 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>designed warp ×6 / ×1, no inset</td><td class="num">2</td><td class="num"><code>20261103T195028Z-470d7a35</code></td><td class="num">634 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>designed grid-line stretch (box-preserving)</td><td class="num">87358</td><td class="num"><code>20261103T171027Z-3eb3bf10</code></td><td class="num">498 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>uniform stretch ×2 (B × 2)</td><td class="num">87358</td><td class="num"><code>20261103T163541Z-5e381b7f</code></td><td class="num">567 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>uniform stretch ×2 (B × 2)</td><td class="num">1</td><td class="num"><code>20261103T203944Z-f170dd2d</code></td><td class="num">542 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>uniform stretch ×2 (B × 2)</td><td class="num">2</td><td class="num"><code>20261103T204035Z-117922d4</code></td><td class="num">584 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>uniform ×3</td><td class="num">87358</td><td class="num"><code>20261103T164136Z-90040a28</code></td><td class="num">516 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>uniform stretch ×4 (B × 4)</td><td class="num">87358</td><td class="num"><code>20261103T172457Z-78235cd0</code></td><td class="num">616 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>uniform stretch ×4 (B × 4)</td><td class="num">1</td><td class="num"><code>20261103T180931Z-9b9b0029</code></td><td class="num">600 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>uniform stretch ×4 (B × 4)</td><td class="num">2</td><td class="num"><code>20261103T175150Z-253aed03</code></td><td class="num">535 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>uniform stretch ×6 (B × 6)</td><td class="num">87358</td><td class="num"><code>20261103T164117Z-ffab55da</code></td><td class="num">528 / 720</td><td class="num">RTX 5070</td></tr>
+<tr><td>uniform stretch ×6 (B × 6)</td><td class="num">1</td><td class="num"><code>20261103T173749Z-06713d33</code></td><td class="num">545 / 720</td><td class="num">RTX 3090</td></tr>
+<tr><td>uniform stretch ×6 (B × 6)</td><td class="num">2</td><td class="num"><code>20261103T174447Z-69c1c61f</code></td><td class="num">573 / 720</td><td class="num">RTX 5070</td></tr></tbody></table></div></details>
+</div>
+
+<script>
+(() => {
+  const D = {"fields": ["ntrl-demo", "u4", "u6", "pm6", "la6b", "lf", "pm6i0", "u2", "pm4", "pm10"], "sizes": ["prep", "q1200"], "label": {"ntrl-demo": "ntrl-demo", "id": "identity warp (= ntrl-demo)", "u2": "uniform stretch \u00d72 (B \u00d7 2)", "u3": "uniform \u00d73", "u4": "uniform stretch \u00d74 (B \u00d7 4)", "u6": "uniform stretch \u00d76 (B \u00d7 6)", "pm6": "designed warp \u00d76 / \u00d71", "pm4": "designed warp \u00d74 / \u00d71", "pm10": "designed warp \u00d710 / \u00d71", "pm6i0": "designed warp \u00d76 / \u00d71, no inset", "la6n": "learned warp (unbounded)", "lf": "README warp (learned, box-preserving)", "lf16": "README warp, stronger compression", "lfb": "README warp + near-wall expansion", "dz3": "designed box-preserving warp (ratio 3)", "dz12": "designed box-preserving warp (ratio 12)", "sg": "designed grid-line stretch (box-preserving)", "hp6": "heading-only stretch \u00d76", "lsep4": "learned free stretch from \u00d74 (no near-wall term)", "lsb6": "learned free stretch, 8 nodes / cell", "lsb6c": "learned free stretch, area target", "lsb6s": "learned free stretch, 8 nodes / cell, smoothed", "lsn5": "learned box-preserving \u00d7 5.1", "la6": "learned warp, frozen at epoch 2,000", "la6r": "learned warp, frozen, field retrained", "la7b": "learned warp, bounded \u00d71..\u00d77", "la6b": "learned warp, bounded \u00d71..\u00d76", "lc6b": "learned warp, row-dependent (coupling), bounded \u00d71..\u00d76", "sl": "learned separable, box-preserving", "lfs2": "README warp \u00d7 2", "lfb4": "README warp, 4 nodes / cell"}, "css": {"pm6i0": "--s-pm", "ntrl-demo": "--s-ntrl", "id": "--s-id", "u2": "--s-u6", "u4": "--s-u4", "u6": "--s-u6", "pm6": "--s-pm", "pm4": "--s-pm", "pm10": "--s-pm", "la6n": "--s-la", "lf": "--s-lf", "la6r": "--s-la", "la7b": "--s-la", "la6b": "--s-la", "lc6b": "--s-la"}, "dash": {"u2": "1.5 3.5", "pm4": "6 4", "pm10": "1.5 3.5", "pm6i0": "2 2"}, "on": ["ntrl-demo", "u4", "u6", "pm6", "la6b", "lf"], "bold": ["pm6", "la6b"], "title": {"prep": "240 queries (maze-scale set)", "q1200": "1,200 new queries"}, "series": {"prep": {"ntrl-demo": {"bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32", "32-64"], "rows": [[100.0, 100.0, 100.0, 3, 360, 360], [97.77777777777777, 95.83333333333333, 100.0, 3, 352, 360], [88.88888888888889, 87.5, 90.83333333333333, 3, 320, 360], [71.11111111111111, 65.0, 74.16666666666667, 3, 256, 360], [41.388888888888886, 36.666666666666664, 46.666666666666664, 3, 149, 360], [0.0, 0.0, 0.0, 3, 0, 360]]}, "u4": {"bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32", "32-64"], "rows": [[100.0, 100.0, 100.0, 3, 360, 360], [96.66666666666667, 95.0, 97.5, 3, 348, 360], [91.94444444444444, 88.33333333333333, 95.0, 3, 331, 360], [79.72222222222223, 76.66666666666667, 82.5, 3, 287, 360], [63.611111111111114, 55.833333333333336, 68.33333333333333, 3, 229, 360], [54.44444444444444, 20.0, 84.16666666666667, 3, 196, 360]]}, "u6": {"bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32", "32-64"], "rows": [[100.0, 100.0, 100.0, 3, 360, 360], [99.16666666666667, 97.5, 100.0, 3, 357, 360], [96.11111111111111, 94.16666666666667, 99.16666666666667, 3, 346, 360], [89.72222222222223, 83.33333333333333, 94.16666666666667, 3, 323, 360], [66.38888888888889, 63.333333333333336, 70.83333333333333, 3, 239, 360], [5.833333333333333, 0.0, 17.5, 3, 21, 360]]}, "pm6": {"bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32", "32-64"], "rows": [[100.0, 100.0, 100.0, 3, 360, 360], [98.33333333333333, 97.5, 100.0, 3, 354, 360], [97.5, 95.83333333333333, 98.33333333333333, 3, 351, 360], [91.94444444444444, 87.5, 96.66666666666667, 3, 331, 360], [65.27777777777777, 57.5, 71.66666666666667, 3, 235, 360], [54.166666666666664, 24.166666666666668, 81.66666666666667, 3, 195, 360]]}, "la6b": {"bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32", "32-64"], "rows": [[100.0, 100.0, 100.0, 3, 360, 360], [98.33333333333333, 95.0, 100.0, 3, 354, 360], [96.38888888888889, 95.0, 99.16666666666667, 3, 347, 360], [83.33333333333333, 80.0, 87.5, 3, 300, 360], [62.77777777777778, 55.833333333333336, 69.16666666666667, 3, 226, 360], [33.888888888888886, 0.0, 55.833333333333336, 3, 122, 360]]}, "lf": {"bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32", "32-64"], "rows": [[97.22222222222223, 95.0, 99.16666666666667, 3, 350, 360], [95.55555555555556, 95.0, 95.83333333333333, 3, 344, 360], [86.94444444444444, 85.83333333333333, 87.5, 3, 313, 360], [76.38888888888889, 73.33333333333333, 80.0, 3, 275, 360], [47.22222222222222, 36.666666666666664, 59.166666666666664, 3, 170, 360], [23.88888888888889, 0.0, 53.333333333333336, 3, 86, 360]]}, "pm6i0": {"bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32", "32-64"], "rows": [[100.0, 100.0, 100.0, 3, 360, 360], [99.16666666666667, 97.5, 100.0, 3, 357, 360], [95.55555555555556, 92.5, 100.0, 3, 344, 360], [90.0, 85.83333333333333, 97.5, 3, 324, 360], [69.72222222222223, 62.5, 75.83333333333333, 3, 251, 360], [32.5, 1.6666666666666667, 89.16666666666667, 3, 117, 360]]}, "u2": {"bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32", "32-64"], "rows": [[99.72222222222223, 99.16666666666667, 100.0, 3, 359, 360], [99.16666666666667, 97.5, 100.0, 3, 357, 360], [88.33333333333333, 87.5, 89.16666666666667, 3, 318, 360], [80.27777777777777, 76.66666666666667, 83.33333333333333, 3, 289, 360], [61.666666666666664, 51.666666666666664, 71.66666666666667, 3, 222, 360], [41.111111111111114, 17.5, 65.83333333333333, 3, 148, 360]]}, "pm4": {"bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32", "32-64"], "rows": [[100.0, 100.0, 100.0, 3, 360, 360], [99.16666666666667, 97.5, 100.0, 3, 357, 360], [91.66666666666667, 88.33333333333333, 95.0, 3, 330, 360], [84.72222222222223, 80.0, 87.5, 3, 305, 360], [66.11111111111111, 61.666666666666664, 72.5, 3, 238, 360], [5.555555555555555, 0.0, 15.0, 3, 20, 360]]}, "pm10": {"bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32", "32-64"], "rows": [[100.0, 100.0, 100.0, 1, 120, 120], [87.5, 87.5, 87.5, 1, 105, 120], [72.5, 72.5, 72.5, 1, 87, 120], [35.0, 35.0, 35.0, 1, 42, 120], [10.0, 10.0, 10.0, 1, 12, 120], [0.0, 0.0, 0.0, 1, 0, 120]]}}, "q1200": {"ntrl-demo": {"bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32", "32-64"], "rows": [[98.66666666666667, 98.5, 99.0, 3, 592, 600], [93.16666666666667, 92.0, 94.5, 3, 559, 600], [83.83333333333333, 81.5, 86.0, 3, 503, 600], [67.0, 63.0, 71.5, 3, 402, 600], [40.166666666666664, 35.0, 48.0, 3, 241, 600], [0.0, 0.0, 0.0, 3, 0, 600]]}, "u4": {"bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32", "32-64"], "rows": [[99.33333333333333, 99.0, 99.5, 3, 596, 600], [96.16666666666667, 96.0, 96.5, 3, 577, 600], [88.33333333333333, 87.5, 90.0, 3, 530, 600], [84.66666666666667, 78.0, 89.5, 3, 508, 600], [61.5, 61.0, 62.5, 3, 369, 600], [20.666666666666668, 11.0, 35.5, 3, 124, 600]]}, "u6": {"bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32", "32-64"], "rows": [[99.83333333333333, 99.5, 100.0, 3, 599, 600], [97.33333333333333, 96.5, 99.0, 3, 584, 600], [92.16666666666667, 90.5, 94.0, 3, 553, 600], [84.16666666666667, 75.5, 89.0, 3, 505, 600], [54.833333333333336, 48.5, 58.5, 3, 329, 600], [4.166666666666667, 0.0, 12.5, 3, 25, 600]]}, "pm6": {"bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32", "32-64"], "rows": [[100.0, 100.0, 100.0, 3, 600, 600], [98.16666666666667, 97.5, 99.0, 3, 589, 600], [92.66666666666667, 89.5, 95.0, 3, 556, 600], [82.66666666666667, 81.5, 84.0, 3, 496, 600], [69.16666666666667, 67.0, 71.0, 3, 415, 600], [38.166666666666664, 32.5, 43.5, 3, 229, 600]]}, "la6b": {"bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32", "32-64"], "rows": [[99.83333333333333, 99.5, 100.0, 3, 599, 600], [97.66666666666667, 97.0, 98.5, 3, 586, 600], [93.5, 92.0, 95.5, 3, 561, 600], [84.16666666666667, 81.0, 88.0, 3, 505, 600], [57.333333333333336, 47.0, 66.0, 3, 344, 600], [16.666666666666668, 7.0, 25.0, 3, 100, 600]]}, "lf": {"bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32", "32-64"], "rows": [[99.16666666666667, 98.5, 100.0, 3, 595, 600], [94.0, 93.0, 94.5, 3, 564, 600], [83.16666666666667, 81.5, 85.0, 3, 499, 600], [67.33333333333333, 64.5, 70.0, 3, 404, 600], [46.333333333333336, 40.0, 52.0, 3, 278, 600], [0.6666666666666666, 0.0, 1.0, 3, 4, 600]]}, "pm6i0": {"bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32", "32-64"], "rows": [[100.0, 100.0, 100.0, 3, 600, 600], [97.16666666666667, 96.5, 97.5, 3, 583, 600], [92.66666666666667, 89.0, 95.0, 3, 556, 600], [84.66666666666667, 76.5, 91.5, 3, 508, 600], [61.666666666666664, 51.5, 68.0, 3, 370, 600], [8.833333333333334, 0.5, 25.0, 3, 53, 600]]}, "u2": {"bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32", "32-64"], "rows": [[98.66666666666667, 98.5, 99.0, 3, 592, 600], [94.5, 93.5, 95.0, 3, 567, 600], [86.33333333333333, 84.5, 87.5, 3, 518, 600], [74.16666666666667, 73.0, 76.0, 3, 445, 600], [50.5, 48.0, 55.0, 3, 303, 600], [17.5, 17.0, 18.0, 3, 105, 600]]}, "pm4": {"bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32", "32-64"], "rows": [[99.5, 99.0, 100.0, 3, 597, 600], [97.66666666666667, 97.0, 98.0, 3, 586, 600], [91.33333333333333, 90.0, 93.0, 3, 548, 600], [81.5, 79.0, 84.5, 3, 489, 600], [59.166666666666664, 56.5, 61.0, 3, 355, 600], [9.166666666666666, 0.0, 19.0, 3, 55, 600]]}, "pm10": {"bins": ["0.5-2", "2-4", "4-8", "8-16", "16-32", "32-64"], "rows": [[99.5, 99.5, 99.5, 1, 199, 200], [81.5, 81.5, 81.5, 1, 163, 200], [58.0, 58.0, 58.0, 1, 116, 200], [28.0, 28.0, 28.0, 1, 56, 200], [5.5, 5.5, 5.5, 1, 11, 200], [0.0, 0.0, 0.0, 1, 0, 200]]}}}};
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+  const h = (t, c, txt, p) => { const e = document.createElement(t); if (c) e.className = c; if (txt != null) e.textContent = txt; if (p) p.appendChild(e); return e; };
+  // hue = field: ntrl-demo blue, uniform stretch violet (B x 4 dark, B x 6 light), designed warp orange, learned warp aqua, box-preserving README warp gold
+  const CSS = D.css;
+  const DASH = D.dash;
+  const present = D.fields.filter(f => D.sizes.some(n => D.series[n][f]));
+  const ON = {}; present.forEach(f => { ON[f] = D.on.includes(f); });
+  const legend = document.getElementById('legend');
+  function drawLegend() {
+    legend.querySelectorAll('.chip').forEach(c => c.remove());
+    present.forEach((f, i) => {
+      const b = h('button', 'chip', null, legend); b.type = 'button'; b.id = `chip-${i}`;
+      const k = h('span', 'key' + (DASH[f] ? (DASH[f].startsWith('1.5') ? ' dot' : ' dash') : ''), null, b); k.style.color = `var(${CSS[f]})`;
+      b.append(D.label[f]); b.setAttribute('aria-pressed', String(ON[f]));
+      b.addEventListener('click', () => { ON[f] = !ON[f]; drawLegend(); drawAll(); });
+    });
+  }
+  function panel(box, n) {
+    const m = D.series[n]; if (!m) return;
+    const p = h('div', 'panel', null, box);
+    const h4 = h('h4', null, D.title[n], p); h('span', null, 'MPPI success (%)', h4);
+    const W = 420, H = 250, L = 38, R = 12, T = 12, B = 40;
+    const svg = mk('svg', {viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': `MPPI success by distance, ${D.title[n]}`}, p);
+    const series = present.filter(f => ON[f] && m[f]).map(f => ({f, d: m[f]}));
+    const bins = (m['ntrl-demo'] || Object.values(m)[0]).bins;
+    const X = k => L + (k + 0.5) / bins.length * (W - L - R);
+    const Y = v => T + (1 - v / 100) * (H - T - B);
+    const ax = mk('g', {class: 'axis'}, svg);
+    [0, 25, 50, 75, 100].forEach(v => { mk('line', {x1: L, x2: W - R, y1: Y(v), y2: Y(v), class: 'gridline'}, svg); mk('text', {x: L - 6, y: Y(v) + 3, 'text-anchor': 'end'}, ax).textContent = v; });
+    bins.forEach((b, k) => { mk('text', {x: X(k), y: H - B + 14, 'text-anchor': 'middle'}, ax).textContent = b; });
+    mk('text', {x: (L + W - R) / 2, y: H - 6, 'text-anchor': 'middle', class: 'lab'}, ax).textContent = 'true travel distance (cells)';
+    series.forEach(r => {
+      const css = `var(${CSS[r.f]})`;
+      const vals = bins.map(b => { const k = r.d.bins.indexOf(b); return k < 0 ? null : r.d.rows[k][0]; });
+      bins.forEach((b, k) => { const j = r.d.bins.indexOf(b); if (j >= 0 && r.d.rows[j][3] > 1) mk('line', {x1: X(k), x2: X(k), y1: Y(r.d.rows[j][1]), y2: Y(r.d.rows[j][2]), stroke: css, 'stroke-width': 1.2, 'stroke-opacity': 0.55}, svg); });
+      let d = '', pen = false;
+      vals.forEach((v, k) => { if (v != null) { d += `${pen ? 'L' : 'M'}${X(k).toFixed(1)},${Y(v).toFixed(1)}`; pen = true; } else pen = false; });
+      mk('path', {d, fill: 'none', stroke: css, 'stroke-width': D.bold.includes(r.f) ? 2.6 : 2, 'stroke-dasharray': DASH[r.f] || '', 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
+      vals.forEach((v, k) => { if (v != null) mk('circle', {cx: X(k), cy: Y(v), r: 4, fill: css, stroke: 'var(--surface)', 'stroke-width': 2}, svg); });
+    });
+    const tip = h('div', 'tip', null, p); tip.hidden = true;
+    const cross = mk('line', {y1: T, y2: H - B, stroke: 'var(--muted)', 'stroke-width': 1, visibility: 'hidden'}, svg);
+    const hit = mk('rect', {x: L, y: T, width: W - L - R, height: H - T - B, fill: 'transparent', style: 'touch-action: pan-y'}, svg);
+    const show = ev => {
+      const rc = svg.getBoundingClientRect(), sx = (ev.clientX - rc.left) * W / rc.width;
+      const k = Math.max(0, Math.min(bins.length - 1, Math.floor((sx - L) / (W - L - R) * bins.length)));
+      cross.setAttribute('x1', X(k)); cross.setAttribute('x2', X(k)); cross.setAttribute('visibility', 'visible');
+      tip.textContent = ''; h('div', 'h', `${D.title[n]} · ${bins[k]} cells`, tip);
+      series.forEach(r => { const j = r.d.bins.indexOf(bins[k]); if (j < 0) return; const row = h('div', 'r', null, tip);
+        const kk = h('span', 'key' + (DASH[r.f] ? (DASH[r.f].startsWith('1.5') ? ' dot' : ' dash') : ''), null, row); kk.style.color = `var(${CSS[r.f]})`;
+        h('i', null, D.label[r.f], row); h('b', null, `${r.d.rows[j][0].toFixed(0)} %  (${r.d.rows[j][4]}/${r.d.rows[j][5]})`, row); });
+      tip.hidden = false;
+      const pr = p.getBoundingClientRect(); let left = ev.clientX - pr.left + 14;
+      if (left + tip.offsetWidth > pr.width - 4) left = ev.clientX - pr.left - tip.offsetWidth - 14;
+      tip.style.left = `${Math.max(4, left)}px`; tip.style.top = `${Math.max(4, ev.clientY - pr.top - 20)}px`;
+    };
+    hit.addEventListener('pointermove', show); hit.addEventListener('pointerdown', show);
+    hit.addEventListener('pointerleave', () => { tip.hidden = true; cross.setAttribute('visibility', 'hidden'); });
+  }
+  function drawAll() { const box = document.getElementById('panels'); box.textContent = ''; D.sizes.forEach(n => panel(box, n)); }
+  drawLegend(); drawAll();
+})();
+</script>
