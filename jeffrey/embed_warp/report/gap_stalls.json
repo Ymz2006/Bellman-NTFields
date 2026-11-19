@@ -1,0 +1,527 @@
+{
+ "20261112T214316Z-0aec5a5b": {
+  "gap": 4,
+  "label": "ntrl",
+  "stalls": 121,
+  "share": {
+   "same": 0.19008264462809918,
+   "start": 0.5206611570247934,
+   "band": 0.049586776859504134,
+   "goal": 0.2396694214876033,
+   "other": 0.0
+  },
+  "counts": {
+   "same": 23,
+   "start": 63,
+   "band": 6,
+   "goal": 29,
+   "other": 0
+  },
+  "goal_dist_median": 26.358851411854452,
+  "start_moved_median": 0.6866563184366027
+ },
+ "20261112T222826Z-2248f89a": {
+  "gap": 4,
+  "label": "geoc",
+  "stalls": 167,
+  "share": {
+   "same": 0.17964071856287425,
+   "start": 0.33532934131736525,
+   "band": 0.16167664670658682,
+   "goal": 0.32335329341317365,
+   "other": 0.0
+  },
+  "counts": {
+   "same": 30,
+   "start": 56,
+   "band": 27,
+   "goal": 54,
+   "other": 0
+  },
+  "goal_dist_median": 2.969464948828712,
+  "start_moved_median": 0.8663014138648706
+ },
+ "20261112T222916Z-68b01558": {
+  "gap": 4,
+  "label": "diffc",
+  "stalls": 176,
+  "share": {
+   "same": 0.1875,
+   "start": 0.35795454545454547,
+   "band": 0.1590909090909091,
+   "goal": 0.29545454545454547,
+   "other": 0.0
+  },
+  "counts": {
+   "same": 33,
+   "start": 63,
+   "band": 28,
+   "goal": 52,
+   "other": 0
+  },
+  "goal_dist_median": 2.8045779058667986,
+  "start_moved_median": 0.3792123066286518
+ },
+ "20261112T223006Z-387b56d7": {
+  "gap": 4,
+  "label": "learnc",
+  "stalls": 157,
+  "share": {
+   "same": 0.1910828025477707,
+   "start": 0.3821656050955414,
+   "band": 0.12101910828025478,
+   "goal": 0.3057324840764331,
+   "other": 0.0
+  },
+  "counts": {
+   "same": 30,
+   "start": 60,
+   "band": 19,
+   "goal": 48,
+   "other": 0
+  },
+  "goal_dist_median": 3.7589498475838283,
+  "start_moved_median": 0.8405372154236981
+ },
+ "20261112T223726Z-f9d09705": {
+  "gap": 4,
+  "label": "octc",
+  "stalls": 168,
+  "share": {
+   "same": 0.19642857142857142,
+   "start": 0.4523809523809524,
+   "band": 0.023809523809523808,
+   "goal": 0.3273809523809524,
+   "other": 0.0
+  },
+  "counts": {
+   "same": 33,
+   "start": 76,
+   "band": 4,
+   "goal": 55,
+   "other": 0
+  },
+  "goal_dist_median": 3.920820293366766,
+  "start_moved_median": 0.726616609104515
+ },
+ "20261112T214256Z-fb972319": {
+  "gap": 8,
+  "label": "ntrl",
+  "stalls": 67,
+  "share": {
+   "same": 0.13432835820895522,
+   "start": 0.47761194029850745,
+   "band": 0.014925373134328358,
+   "goal": 0.373134328358209,
+   "other": 0.0
+  },
+  "counts": {
+   "same": 9,
+   "start": 32,
+   "band": 1,
+   "goal": 25,
+   "other": 0
+  },
+  "goal_dist_median": 3.9777294145887376,
+  "start_moved_median": 0.7633934634467735
+ },
+ "20261112T221236Z-fc1a225c": {
+  "gap": 8,
+  "label": "geoc",
+  "stalls": 183,
+  "share": {
+   "same": 0.18579234972677597,
+   "start": 0.4918032786885246,
+   "band": 0.15846994535519127,
+   "goal": 0.16393442622950818,
+   "other": 0.0
+  },
+  "counts": {
+   "same": 34,
+   "start": 90,
+   "band": 29,
+   "goal": 30,
+   "other": 0
+  },
+  "goal_dist_median": 5.991888670059545,
+  "start_moved_median": 0.7260496268154335
+ },
+ "20261112T221326Z-af57827f": {
+  "gap": 8,
+  "label": "diffc",
+  "stalls": 201,
+  "share": {
+   "same": 0.1791044776119403,
+   "start": 0.42786069651741293,
+   "band": 0.21393034825870647,
+   "goal": 0.1791044776119403,
+   "other": 0.0
+  },
+  "counts": {
+   "same": 36,
+   "start": 86,
+   "band": 43,
+   "goal": 36,
+   "other": 0
+  },
+  "goal_dist_median": 4.397982285135673,
+  "start_moved_median": 0.5266338340000404
+ },
+ "20261112T221616Z-51ef6bc1": {
+  "gap": 8,
+  "label": "learnc",
+  "stalls": 187,
+  "share": {
+   "same": 0.15508021390374332,
+   "start": 0.45454545454545453,
+   "band": 0.20320855614973263,
+   "goal": 0.18716577540106952,
+   "other": 0.0
+  },
+  "counts": {
+   "same": 29,
+   "start": 85,
+   "band": 38,
+   "goal": 35,
+   "other": 0
+  },
+  "goal_dist_median": 5.296122190564761,
+  "start_moved_median": 0.4735716058145885
+ },
+ "20261112T222306Z-8618598e": {
+  "gap": 8,
+  "label": "octc",
+  "stalls": 193,
+  "share": {
+   "same": 0.17616580310880828,
+   "start": 0.44559585492227977,
+   "band": 0.26424870466321243,
+   "goal": 0.11398963730569948,
+   "other": 0.0
+  },
+  "counts": {
+   "same": 34,
+   "start": 86,
+   "band": 51,
+   "goal": 22,
+   "other": 0
+  },
+  "goal_dist_median": 4.725060832006001,
+  "start_moved_median": 0.4667596274018273
+ },
+ "20261112T214236Z-0e4bb802": {
+  "gap": 12,
+  "label": "ntrl",
+  "stalls": 0,
+  "share": {
+   "same": 0.0,
+   "start": 0.0,
+   "band": 0.0,
+   "goal": 0.0,
+   "other": 0.0
+  },
+  "counts": {
+   "same": 0,
+   "start": 0,
+   "band": 0,
+   "goal": 0,
+   "other": 0
+  },
+  "goal_dist_median": null,
+  "start_moved_median": null
+ },
+ "20261112T215416Z-b47dcf29": {
+  "gap": 12,
+  "label": "geoc",
+  "stalls": 191,
+  "share": {
+   "same": 0.19895287958115182,
+   "start": 0.4816753926701571,
+   "band": 0.18324607329842932,
+   "goal": 0.13612565445026178,
+   "other": 0.0
+  },
+  "counts": {
+   "same": 38,
+   "start": 92,
+   "band": 35,
+   "goal": 26,
+   "other": 0
+  },
+  "goal_dist_median": 5.2381080158764535,
+  "start_moved_median": 0.515552349559659
+ },
+ "20261112T215506Z-7c44bb5e": {
+  "gap": 12,
+  "label": "diffc",
+  "stalls": 201,
+  "share": {
+   "same": 0.18407960199004975,
+   "start": 0.472636815920398,
+   "band": 0.21890547263681592,
+   "goal": 0.12437810945273632,
+   "other": 0.0
+  },
+  "counts": {
+   "same": 37,
+   "start": 95,
+   "band": 44,
+   "goal": 25,
+   "other": 0
+  },
+  "goal_dist_median": 4.854371149790772,
+  "start_moved_median": 0.460852294791017
+ },
+ "20261112T220256Z-3aef7ceb": {
+  "gap": 12,
+  "label": "learnc",
+  "stalls": 197,
+  "share": {
+   "same": 0.19796954314720813,
+   "start": 0.4416243654822335,
+   "band": 0.23857868020304568,
+   "goal": 0.1218274111675127,
+   "other": 0.0
+  },
+  "counts": {
+   "same": 39,
+   "start": 87,
+   "band": 47,
+   "goal": 24,
+   "other": 0
+  },
+  "goal_dist_median": 4.332330309413043,
+  "start_moved_median": 0.5279421056405551
+ },
+ "20261112T220546Z-db2ba8d3": {
+  "gap": 12,
+  "label": "octc",
+  "stalls": 202,
+  "share": {
+   "same": 0.20297029702970298,
+   "start": 0.46534653465346537,
+   "band": 0.25742574257425743,
+   "goal": 0.07425742574257425,
+   "other": 0.0
+  },
+  "counts": {
+   "same": 41,
+   "start": 94,
+   "band": 52,
+   "goal": 15,
+   "other": 0
+  },
+  "goal_dist_median": 39.4634818143632,
+  "start_moved_median": 0.40335470772239324
+ },
+ "20261112T215356Z-224af993": {
+  "gap": 1,
+  "label": "ntrl",
+  "stalls": 14,
+  "share": {
+   "same": 0.35714285714285715,
+   "start": 0.35714285714285715,
+   "band": 0.07142857142857142,
+   "goal": 0.21428571428571427,
+   "other": 0.0
+  },
+  "counts": {
+   "same": 5,
+   "start": 5,
+   "band": 1,
+   "goal": 3,
+   "other": 0
+  },
+  "goal_dist_median": 3.66133948156966,
+  "start_moved_median": 1.0123877598797728
+ },
+ "20261112T234006Z-cb4a79cf": {
+  "gap": 1,
+  "label": "geo8",
+  "stalls": 56,
+  "share": {
+   "same": 0.23214285714285715,
+   "start": 0.16071428571428573,
+   "band": 0.17857142857142858,
+   "goal": 0.4107142857142857,
+   "other": 0.017857142857142856
+  },
+  "counts": {
+   "same": 13,
+   "start": 9,
+   "band": 10,
+   "goal": 23,
+   "other": 1
+  },
+  "goal_dist_median": 2.6445762017434626,
+  "start_moved_median": 0.7333881851656174
+ },
+ "20261112T234026Z-9d038d73": {
+  "gap": 1,
+  "label": "diff8",
+  "stalls": 58,
+  "share": {
+   "same": 0.2413793103448276,
+   "start": 0.1896551724137931,
+   "band": 0.1724137931034483,
+   "goal": 0.3620689655172414,
+   "other": 0.034482758620689655
+  },
+  "counts": {
+   "same": 14,
+   "start": 11,
+   "band": 10,
+   "goal": 21,
+   "other": 2
+  },
+  "goal_dist_median": 2.841977898913586,
+  "start_moved_median": 1.4522829985035595
+ },
+ "20261112T234116Z-d7419ef2": {
+  "gap": 1,
+  "label": "learn8",
+  "stalls": 72,
+  "share": {
+   "same": 0.19444444444444445,
+   "start": 0.18055555555555555,
+   "band": 0.08333333333333333,
+   "goal": 0.5416666666666666,
+   "other": 0.0
+  },
+  "counts": {
+   "same": 14,
+   "start": 13,
+   "band": 6,
+   "goal": 39,
+   "other": 0
+  },
+  "goal_dist_median": 3.226785707697121,
+  "start_moved_median": 0.5965406969836228
+ },
+ "20261112T234806Z-f42dd8f9": {
+  "gap": 1,
+  "label": "oct8",
+  "stalls": 67,
+  "share": {
+   "same": 0.1791044776119403,
+   "start": 0.14925373134328357,
+   "band": 0.19402985074626866,
+   "goal": 0.4626865671641791,
+   "other": 0.014925373134328358
+  },
+  "counts": {
+   "same": 12,
+   "start": 10,
+   "band": 13,
+   "goal": 31,
+   "other": 1
+  },
+  "goal_dist_median": 2.6389746410919495,
+  "start_moved_median": 0.9027512840825969
+ },
+ "20261112T214906Z-79f33600": {
+  "gap": 2,
+  "label": "ntrl",
+  "stalls": 111,
+  "share": {
+   "same": 0.14414414414414414,
+   "start": 0.2072072072072072,
+   "band": 0.13513513513513514,
+   "goal": 0.5135135135135135,
+   "other": 0.0
+  },
+  "counts": {
+   "same": 16,
+   "start": 23,
+   "band": 15,
+   "goal": 57,
+   "other": 0
+  },
+  "goal_dist_median": 2.500830656647609,
+  "start_moved_median": 1.0011390458320837
+ },
+ "20261112T232716Z-763279cc": {
+  "gap": 2,
+  "label": "geo8",
+  "stalls": 97,
+  "share": {
+   "same": 0.18556701030927836,
+   "start": 0.25773195876288657,
+   "band": 0.25773195876288657,
+   "goal": 0.29896907216494845,
+   "other": 0.0
+  },
+  "counts": {
+   "same": 18,
+   "start": 25,
+   "band": 25,
+   "goal": 29,
+   "other": 0
+  },
+  "goal_dist_median": 2.4237579866323022,
+  "start_moved_median": 0.6064435713898718
+ },
+ "20261112T232736Z-98965468": {
+  "gap": 2,
+  "label": "diff8",
+  "stalls": 104,
+  "share": {
+   "same": 0.18269230769230768,
+   "start": 0.3173076923076923,
+   "band": 0.20192307692307693,
+   "goal": 0.2980769230769231,
+   "other": 0.0
+  },
+  "counts": {
+   "same": 19,
+   "start": 33,
+   "band": 21,
+   "goal": 31,
+   "other": 0
+  },
+  "goal_dist_median": 2.2460087054527182,
+  "start_moved_median": 0.6836688061904326
+ },
+ "20261112T232826Z-9e625b7a": {
+  "gap": 2,
+  "label": "learn8",
+  "stalls": 106,
+  "share": {
+   "same": 0.19811320754716982,
+   "start": 0.2830188679245283,
+   "band": 0.2830188679245283,
+   "goal": 0.2358490566037736,
+   "other": 0.0
+  },
+  "counts": {
+   "same": 21,
+   "start": 30,
+   "band": 30,
+   "goal": 25,
+   "other": 0
+  },
+  "goal_dist_median": 2.4107255533519103,
+  "start_moved_median": 0.4004149153300792
+ },
+ "20261112T233516Z-74fd74a6": {
+  "gap": 2,
+  "label": "oct8",
+  "stalls": 83,
+  "share": {
+   "same": 0.20481927710843373,
+   "start": 0.3855421686746988,
+   "band": 0.24096385542168675,
+   "goal": 0.1686746987951807,
+   "other": 0.0
+  },
+  "counts": {
+   "same": 17,
+   "start": 32,
+   "band": 20,
+   "goal": 14,
+   "other": 0
+  },
+  "goal_dist_median": 2.7487911302944203,
+  "start_moved_median": 0.670073892048328
+ }
+}

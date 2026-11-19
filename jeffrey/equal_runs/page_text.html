@@ -1,0 +1,150 @@
+<header>
+  <div class="eyebrow">jeffrey/equal_runs · 2026-11-07 · both GPUs, {{N_RUNS}} registered runs · no NTField trained</div>
+  <h1>2026-11-07 Equal-Run Warp</h1>
+  <p class="lede col">You asked for a warp that reaches 3-D and C-space, using a new rule: every run on a line has the same length. Taken literally, that rule brings the stripes back. Your fallback worked once its limits took the right form: stiff near walls, only runs that are too long get pushed, and a bound on the stretch. That shear-capable line loss comes close to last study's best map on the ×12 mazes, and beats it on the walls inside the quadrants. A second form of the idea, which spreads the obstacle boundary evenly over the box, needs no training and does about as well there. That second form is the one that generalizes: it handles a turned maze where a separable map and the line loss both fail, and it runs unchanged on scanned floor plans and the (x, y, θ) C-space. Where a scene has no large unevenness it costs a little, and it did not help the 6-D arm.</p>
+  <p class="note col">Nothing here is a planning result. As you said, no NTField was trained. Maps are judged by geometry and by how well a small network learns the speed near walls, a score that ranks last study's maps close to their planning results. The new maps may still fail in ways these scores miss.</p>
+</header>
+
+<div class="tiles">
+  <div class="tile"><div class="k">×12 maze, speed learned near walls</div><div class="v">{{T_CARTO}}</div><div class="s">density form, no training; line loss with limits {{T_LINE}}; last study's best {{T_REC}}; no warp {{T_ID}}</div></div>
+  <div class="tile"><div class="k">turned ×12 maze, same score</div><div class="v">{{T_ROT}}</div><div class="s">density form; line loss {{T_ROT_LINE}}; separable map {{T_ROT_SEP}}</div></div>
+  <div class="tile"><div class="k">10×10 maze, same score</div><div class="v">{{T_P10}}</div><div class="s">density form; no warp {{T_P10_ID}}; every run equal {{T_P10_LIT}}</div></div>
+  <div class="tile"><div class="k">6-D arm, speed R²</div><div class="v">{{T_ARM}}</div><div class="s">no warp {{T_ARM_ID}}: no gain at any blur, worse at fine blur</div></div>
+</div>
+
+<section class="col">
+  <h2>How a line is read now</h2>
+  <p>The polylines of last study only exist in 2-D. This study reads a line through a collision oracle instead, so one piece of code serves a floor plan, a 3-D room, or a C-space. A line in the warped space z is mapped back to the scene, the oracle says free or obstacle along it, and each crossing is pinned down by root finding on the clearance. A run length is a difference of crossings, and its gradient comes from implicit differentiation, so the step function itself is never smoothed:</p>
+  <div class="eq">d t* = − n · dψ / (n · ∂ψ/∂t)<span class="c">t*: position of a crossing on the line; ψ: the map from z back to the scene; n: normal from the oracle. Checked against finite differences (correlation 0.98–0.999 over 300 crossings per map).</span></div>
+  <p>The maps are also new: a stack of monotone layers (“coupling”) and a many-step residual flow (“flow”). Both work in any dimension, can shear, and send the box onto itself. The first cannot fold by construction.</p>
+  <p><strong>How maps are judged without a field.</strong> Last study showed that a lower loss does not mean a better map, so the loss is not the score. A network of ntrl-demo's size regresses the speed through the map, then is tested on a fixed set of points near walls, the same points for every map. That “R² near walls” ranks last study's maps close to their planning results (last section). Next to it sits the wall zone: how much each wall's slow zone is stretched in z, where last study traced failures to zones that got too thin.</p>
+</section>
+
+<section>
+  <div class="col">
+    <h2>The equal-run loss on the 10×10 maze</h2>
+    <p>Asked for directly, the loss delivers: along the axes, the spread of runs inside a line falls from {{ID_CVL}} to {{LIT_CVL}}, and long runs from {{ID_LONG}} of the line length to {{LIT_LONG}}. But the map does it by turning the maze into herringbone stripes (second panel), and the speed near walls gets much harder to learn: {{ID_W}} with no warp, {{LIT_W}} through the stripes.</p>
+    <p><strong>Why stripes.</strong> If every run along an axis has length ℓ, then shifting any point by ℓ along that axis swaps free and obstacle. Only checkerboard-like patterns and diagonal stripes can do that, and a maze cannot become a checkerboard, because its free cells would touch only at corners. So diagonal stripes are close to the true minimum of the loss, and the warning in your message was right: this error is close to the old one.</p>
+    <p><strong>The runs are equal only along the axes.</strong> The chart reads the same maps along lines at every angle, which the fit never saw. The spread of run lengths halves along the axes and does not move at every angle. The map did not make the runs more equal. It turned the long runs away from the axes that the loss reads. Fourier rows at random angles have no preferred axis, so that turn buys the field nothing.</p>
+  </div>
+  <figure><img src="strip10.png" alt="Eight views of the 10×10 maze in warped space. No warp is a lattice. Every-run-equal and fixed-target maps are diagonal stripes. The every-angle map is rounded blobs. The old loss with shear is stripes. With stiffness near walls the maze stays recognizable but turned. The density form and the learned flow are nearly the unchanged maze."><figcaption>The same maze through each method, at one heading. Dark is obstacle, tint is the slow zone next to walls.</figcaption></figure>
+  <div class="grid two"><div class="slot" id="axes"></div><div class="slot" id="r210"></div></div>
+  <div class="col">
+    <p><strong>What changed the behaviour.</strong> A learning rate of 10⁻³ blew the map up within 100 steps, so everything here uses 10⁻⁴. A target that follows the batch chases the runs down to finer and finer stripes, so a fixed target stops that drift. Lines at every angle stop the stripes, because a stripe then pays for its long run along its own direction: the maze becomes rounded blobs, and anisotropy at every angle falls for the first time ({{ID_ANYT}} to {{ANY_ANYT}}). Near walls that map still scores only {{ANY_W}}.</p>
+    <p><strong>The 10×10 maze has little to gain.</strong> It is already nearly a lattice, so a warp can only spend what it has. By the rule I fixed before the first result, nothing passes, because no map that keeps the walls learnable makes the runs 30 % more equal. {{TURN_NOTE}}</p>
+  </div>
+  <details open><summary>The decision rule on the 10×10 maze</summary>{{RULE}}<p class="note">Rule, fixed in the README before the first result: runs at least 30 % more equal on three measures, no stripes, det J &gt; 0 at every test point, and the speed no harder to learn. After the first two results I tightened “no stripes” to include lines at every angle, because the axis-only index could not see diagonal stripes. “Walls as learnable” is the near-wall score, added later because R² over the box favours maps that give walls little room.</p></details>
+</section>
+
+<section>
+  <div class="col">
+    <h2>The fallback: shear and limits</h2>
+    <p>So I ran your fallback on the 10×10 quadrants pushed apart by a ×12 band, where a warp is really needed. The old largest-minus-smallest loss with a shear-capable map gives stripes again ({{OLD_W}} near walls, anisotropy {{OLD_AN}}). Then the limits, one at a time:</p>
+    <ul class="tight">
+      <li><strong>Limiting how fast the map changes did not stop the stripes.</strong> Capping each update gives {{TRUST_W}}, and holding the other runs still within an update gives {{ANCHOR_W}}. A limit on step size slows the fit without changing where it ends.</li>
+      <li><strong>Scaling the worst segment hardest did not stop them either.</strong> Weighting each line's worst run gives {{POW2_W}}, and pushing only the worst 5 % gives {{TOP_W}}.</li>
+      <li><strong>Stiffness near walls did.</strong> Penalizing shape change and uneven stretch where clearance is small keeps the quadrants as mazes. This is your idea in the form that works: it limits what may change instead of how fast it changes. With this limit even your equal-run loss makes clean maps, and it learns the quadrant walls as well as last study's recipe ({{EQ_Q}} against {{REC_Q}}).</li>
+    </ul>
+    <p><strong>One problem remained: the band vanished.</strong> Near the walls along the band the same map scores only {{EQ_B}}. There were two reasons. A line through a quadrant has about 13 runs, so at a target of 0.10 those alone fill the box, and pushing short runs up squeezes everything else. And runs along the band stay long however thin it gets, so the loss can only cut them by narrowing the band until few lines fall inside. Two more limits fixed that:</p>
+    <ul class="tight">
+      <li>Push only runs that are too long and leave short ones alone, with the target set from the scene itself: mean chord over mean runs per line at the identity, so a warp keeps about as many runs as the scene had. The force has to be the strong form, excess in units of the target. A log form is too weak, and the stiffness term then holds the map at the identity, the same dead zone as last study.</li>
+      <li>Bound the stretch at 8, which gives the band a floor.</li>
+    </ul>
+    <p>Together, over three fit seeds: <strong>{{LINE_W}} near walls</strong>, wall zones {{LINE_ZQ}} / {{LINE_ZM}}, anisotropy {{LINE_AN}}. Last study's separable recipe gets {{REC_W}} and {{REC_ZQ}} / {{REC_ZM}}. The split matters: on quadrant walls this map scores {{LINE_Q}}, above the recipe's {{REC_Q}} on every seed, and on band walls {{LINE_B}} against {{REC_B}}, below it on every seed. So it comes close without quite matching it. {{LINE_BOUND}}</p>
+  </div>
+  <figure><img src="strip12.png" alt="Eight views of the ×12 maze in warped space. No warp shows tiny quadrants in the corners. Line losses show zebra quadrants. With stiffness the quadrants become clean mazes but the band vanishes. Last study's recipe, the line loss with all its limits, and the density form show large clean quadrants and a moderate band."><figcaption>The ×12 maze through each method.</figcaption></figure>
+  <div class="grid two"><div class="slot" id="g12a"></div><div class="slot" id="g12b"></div></div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>A second form: spread the boundary evenly</h2>
+    <p>The line loss works here, but it needs several limits to keep it from fighting the scene: axes reward a turn, a crossing's gradient cannot see a wall the line has not touched yet, and nothing tells the map to leave a healthy region alone. Going back to your reason for the idea suggests another route.</p>
+    <p>On one line, “every run the same length” says the crossings are evenly spaced, which is histogram equalization of the crossings. Across all lines, by Crofton's formula, the crossing rate at a point is the density of obstacle boundary there. So the statement for a whole box, in any dimension, is: <strong>push the boundary density to uniform.</strong> That is your “speed evenly distributed”, and it is a known object, a density-equalizing map or cartogram (Gastner and Newman, 2004), with obstacle boundary in the role of population:</p>
+    <div class="eq">ρ(x, 0) = ε + blur_h(boundary density)<br>∂ρ/∂t = ∇²ρ,   dx/dt = −∇ρ / ρ<span class="c">Solved exactly mode by mode in a cosine (Fourier) basis. The boundary density comes from crossing points of random lines, so only the oracle is needed. h: blur, the finest structure the map reacts to. ε: share of open space.</span></div>
+    <p>It takes seconds, with no training. And what the line loss had to be forced into comes for free:</p>
+    <ul class="tight">
+      <li>A lattice is already uniform once blurred, so it stays near the identity.</li>
+      <li>The velocity is a gradient at every time, so there is no reward for turning the map.</li>
+      <li>The blur spreads density past each wall, so nothing is compressed right next to one. Last study needed a separate dilation step for that.</li>
+      <li>ε keeps a share of the box for open space, so the band cannot vanish.</li>
+      <li>A smooth flow cannot fold, and the box maps onto itself.</li>
+    </ul>
+    <p>One design choice has a control: crossings on the frame of the box are left out, because every line ends there anyway. With the frame left in, it takes the largest share of the z box: the median wall zone falls from {{CG_ZM}} to {{NF_ZM}}, and near quadrant walls the score falls from {{CG_Q}} to {{NF_Q}}.</p>
+  </div>
+  <figure class="narrow"><img src="density.png" alt="Three panels: the ×12 maze with tiny quadrants in the corners; its blurred boundary density, high in the corners; the warped maze with large quadrants."><figcaption>The ×12 maze, its boundary density, and the map that spreads that density evenly.</figcaption></figure>
+</section>
+
+<section>
+  <div class="col">
+    <h2>How the two forms compare with last study's best</h2>
+    <p>On the mazes last study was built for, both forms come close to the recipe. The line loss does best on quadrant walls, the density form needs no training, and neither beats the recipe overall on the 10×10 quadrants. All values in these tables use the same regression seed:</p>
+  </div>
+  {{COMPARE}}
+  <div class="col">
+    <p>One density setting, h = 2 cells and ε = 0.3, was the best of 12 on the ×12 maze and carries over to every other scene. It takes {{CG_MIN}}. <strong>It finds its own stretch.</strong> Last study's total-variation penalty adapted to the gap, and this map does too: its stretch grows with the gap and tracks the recipe's (chart), with no setting changed. The line loss needs its stretch bound: without one it gets {{KNONE_W}} near walls, and 6, 8 and 12 give {{K6_W}}, {{K8_W}} and {{K12_W}}. On six fresh mazes the density form stays within {{FRESH}} of no warp on R² over the box.</p>
+    <p><strong>Does the speed peak more periodically?</strong> Where the scene is uneven, yes. On the ×12 maze the spread of spacing between speed peaks falls from {{G12_SP_ID}} to {{G12_SP}} with the density form and {{LINE_SP}} with the line loss. The spread of crossings over the box falls from {{G12_CR_ID}} to {{G12_CR}}. On the plain 10×10 maze the density form leaves it unchanged ({{P10_SP_ID}} to {{P10_SP}}), because it was already even at that scale. Runs inside one line are still not equal, as the rule literally asks. That is the part a map cannot deliver without stripes.</p>
+  </div>
+  <div class="grid two" id="gaps"></div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Scenes a separable map cannot reach</h2>
+    <p>This is the test of your point that a no-shear map will not generalize. On the ×12 maze turned 30°, the band is oblique. <strong>The separable flow fails,</strong> as you said it would: its wall zone stays at {{ROT_SEP_ZM}}, and the regression sticks exactly as it does with no warp ({{ROT_SEP_W}} near walls). The density form reaches {{ROT_ZM}} and {{ROT_W}}. The line loss with limits also fails here ({{ROT_LINE_ZM}} and {{ROT_LINE_W}}): the dark corners outside the turned maze are long obstacle runs too, and the map spends itself reshaping them instead of growing the quadrants. {{ROT_ANY}}</p>
+    <p>In the whole C-space (x, y, θ) of the maze robot, the density form works with the same code and settings. The ×4 maze goes from {{SE4_ID}} near walls to {{SE4_W}}, and the ×12 maze from {{SE12_ID}} to {{SE12_W}}.</p>
+    <p>On the two scanned floor plans the map does what it should: walls and intricate areas grow, open rooms shrink, everything stays connected. Near walls the apartment goes from {{GIB1_ID}} to {{GIB1_W}} and the floor from {{GIB0_ID}} to {{GIB0_W}}. One warning: on the floor, 5 % of wall points are compressed about 4× (wall zone {{GIB0_ZQ}}), the kind of thin zone last study traced to walking into walls. Where a scene has no large unevenness the warp costs a little: near walls the 3-D room goes from {{ROOM_ID}} to {{ROOM_W}}, the 3-D apartment from {{GIB13_ID}} to {{GIB13_W}}, the plain 10×10 maze from {{P10_ID}} to {{P10_W}}. So it helps where open space dominates, and should not be applied blindly.</p>
+  </div>
+  <figure><img src="scenes.png" alt="Four pairs of images, scene and warp: the turned ×12 maze with its quadrants grown along the diagonal, a scanned apartment and a scanned floor with thickened walls and smaller rooms, and a slice of the (x, y, theta) C-space that barely changes."><figcaption>Scene and warp from the density form, for four kinds of scene, all from the same code.</figcaption></figure>
+  <div class="grid two"><div class="slot" id="scenes"></div></div>
+  <details><summary>All scenes</summary>{{SCENES}}</details>
+</section>
+
+<section class="col">
+  <h2>A Fourier network can learn the density form</h2>
+  <p>A grid cartogram cannot reach high dimensions, but the same map has a form that can. A map of the box pushes a density p to uniform exactly when p = |det J|, so the cartogram is the maximum-likelihood normalizing flow of the blurred boundary density. A Fourier-feature network learns it from crossing points alone, each moved by Gaussian noise of width h, with no grid and no line scan during training. A small term, E|φ(x) − x|², picks the map that moves points least.</p>
+  <p>On the 3-D room, the 3-D apartment, the floor plan and the small C-space it lands on nearly the same map as the grid version. The ×12 maze is harder. Over the box it gets R² {{FLOW_R2_LO}}–{{FLOW_R2_HI}} over three seeds, with wall zones {{FLOW_ZQ}} / {{FLOW_ZM}}, in {{FLOW_MIN}}. But near walls it scores {{FLOW_W}} against {{CG_W}} for the grid map, and most of that gap is on band walls ({{FLOW_B}} against {{CG_B}}). The network's map is slightly ragged next to walls. Without the transport term it spikes (largest stretch in the hundreds), and more capacity makes things worse, not better ({{FLOW_DEEP}} near walls with 10 layers at 256 wide).</p>
+  <p class="note">A correction: during the run I reported that this flow made stripes on the 10×10 maze, and built an explanation on it. It did not. Those two runs had been sent to the line-fit script by a routing bug, and the registry notes on them say so. The real flow leaves that maze nearly unchanged.</p>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Where it stops: the 6-D arm</h2>
+    <p>The UR5e among three cupboards, 6-D, read through the repository's own collision geometry at about 600,000 configurations per second. Everything runs, and the learned map is valid. It does not help. At coarse blur it stays near the identity, and at fine blur it makes the speed harder to learn: R² falls from {{ARM_ID}} to {{ARM_LO}} as anisotropy rises to {{ARM_AN}}. I only ran the learned density form here, not the line loss.</p>
+    <p>The reason fits the theory. This method fixes large-scale unevenness, like a band of open space, and the arm's joint box has little of it: the spread of crossings is {{ARM_CR}} with no warp, against {{G12_CR_ID}} on the ×12 maze. Whatever makes the arm hard is not that. The task also lives in a small part of the joint box, which a uniform density does not know about. Weighting crossings by where the task is would be the next thing to try. A quick rescaling of each joint axis changed nothing either (an unregistered scratch test, so not a result).</p>
+  </div>
+  <div class="grid two"><div class="slot" id="arm"></div></div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>How far to trust these scores</h2>
+    <p>I checked the near-wall score against last study's maps, whose planning results are known. Its rank correlation with planning is {{CAL_PLUS}} on the plus maze, {{CAL_M10}} and {{CAL_C22}} on the ×12 mazes, with no warp included.</p>
+    <ul class="tight">
+      <li><strong>Why not R² over the box?</strong> It was my first score and is shown throughout. It ranks a little worse ({{CALR_PLUS}}, {{CALR_M10}}, {{CALR_C22}}), and it missed a map that planned 18 % (R² 0.976). It favours maps that give walls little room, because it is measured uniformly in z.</li>
+      <li><strong>This score was chosen after seeing that.</strong> The rank correlations are on 9 to 15 maps from one study. Treat them as encouraging only.</li>
+      <li><strong>It cannot rank close maps.</strong> Last study's maps that planned 81–93 % on the ×12 maze all score 0.91–0.97, not in planning order.</li>
+      <li><strong>Its noise is small on good maps:</strong> standard deviation 0.001–0.007 over regression seeds near walls on the ×12 maze, up to 0.03 on the 22×22 quadrants and the plus maze, and 0.04 on the learned flow. Differences under about 0.03 on those mazes mean little. A value below zero with no warp means the regression stuck, not that the field is hopeless.</li>
+    </ul>
+  </div>
+  <div class="grid" id="calib"></div>
+  <details><summary>Calibration maps</summary>{{CAL}}</details>
+</section>
+
+<section class="col">
+  <h2>What this does not show</h2>
+  <ul class="tight">
+    <li><strong>No planning.</strong> “Close to last study's best” is a statement about geometry and a regression. A field may behave differently on these maps.</li>
+    <li><strong>Settings were chosen on the same scores.</strong> h, ε and the stretch bound were picked on the ×12 maze. The 22×22 quadrants, the plus maze, the turned maze, the scanned scenes and the C-spaces are held out from that choice.</li>
+    <li><strong>The line loss was tuned far more than the density form,</strong> and it still has one more scene-dependent setting, the stretch bound.</li>
+    <li><strong>A warped maze is not a straightened one.</strong> The density form evens out density. It does not make walls straight, and walls near the inner corners of the quadrants bow slightly.</li>
+    <li><strong>Few seeds in places.</strong> Repeats exist for the literal form and every-angle lines (2 seeds), equal runs with stiffness, the line loss with limits and the learned flow (3 seeds). The density form is nearly deterministic, and the rest are single runs, including the old loss with stiffness and every scene but the ×12 maze.</li>
+    <li><strong>One arm scene,</strong> with a uniform box, and only the learned density form. The negative result is about that setup.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="col"><h2>All runs</h2></div>
+  <details><summary>10×10 maze: every method</summary>{{ALL10}}</details>
+  <details><summary>×12 maze: every method</summary>{{ALL12}}</details>
+</section>

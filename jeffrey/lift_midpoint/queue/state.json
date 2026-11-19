@@ -1,0 +1,18 @@
+{
+ "done": {
+  "liftmid|plus22|87358|--lift time": "20261117T175835Z-8c936298",
+  "liftmid|Allensville|87358|--lift time": "20261117T182927Z-0a0eca6d",
+  "liftmid|plus40|87358|--lift time": "20261117T183848Z-fec23ff1",
+  "liftmid|Lakeville|87358|--lift time": "20261117T191038Z-55bb04e3",
+  "mid|plus22|87358|--lift none": "20261117T193157Z-04660c58",
+  "drive|plus22|87358|--lift time --driver /home/jeffrey/bellman-ntfield/results/registered_20261117T054519Z-9a3bc556/training/checkpoint.pt": "20261117T195718Z-0501b704",
+  "liftmid|maze22|87358|--lift time": "20261117T202828Z-666895f4",
+  "liftmid|Klickitat|87358|--lift time": "20261117T200908Z-309ea4ed",
+  "mid|Allensville|87358|--lift none": "20261117T205218Z-8f115b21",
+  "drive|Allensville|87358|--lift time --driver /home/jeffrey/bellman-ntfield/results/registered_20261117T121605Z-9c558da3/training/checkpoint.pt": "20261117T210608Z-44ad666e",
+  "liftmid|plus30|87358|--lift time": "20261117T214028Z-41832502",
+  "liftmid|maze13|87358|--lift time": "20261117T214618Z-3444441f",
+  "mid|plus40|87358|--lift none": "20261117T221238Z-093cd9c0"
+ },
+ "failed": {}
+}

@@ -1,0 +1,25 @@
+{
+ "done": {
+  "*|22|87358|Apowmix@all|main": "20261118T170240Z-a909c1b0",
+  "*|22|87358|octave|main": "20261118T170220Z-7892e48d",
+  "*|22|87358|Rtri@all|main": "20261118T171931Z-9adf3443",
+  "*|22|87358|Agtri@allx2|main": "20261118T173351Z-95a0a62a",
+  "*|22|87358|Asc@new128|main": "20261118T173911Z-efdaea34",
+  "*|22|87358|Rpowmix@half|main": "20261118T180801Z-0010cbda",
+  "*|22|87358|Apow16@axis|main": "20261118T180851Z-821e3bde",
+  "*|22|87358|Agtri@topx8|main": "20261118T182642Z-33460700",
+  "*|22|1|octave|main": "20261118T183132Z-c2c5a2c6",
+  "*|22|1|Apowmix@all|main": "20261118T184852Z-10bc52a2",
+  "*|22|1|Rtri@all|main": "20261118T185712Z-21cb07aa",
+  "*|22|1|Agtri@allx2|main": "20261118T190932Z-c6aeade0",
+  "*|22|1|Asc@new128|main": "20261118T192052Z-cb6dc355",
+  "*|22|1|Rpowmix@half|main": "20261118T194243Z-8c11e8fe",
+  "*|22|2|octave|main": "20261118T195203Z-a151cc5c",
+  "*|22|2|Apowmix@all|main": "20261118T200323Z-da66ee94",
+  "*|22|2|Rtri@all|main": "20261118T201643Z-06bbd333",
+  "*|22|2|Agtri@allx2|main": "20261118T202203Z-1abf987d",
+  "*|22|2|Rpowmix@half|main": "20261118T205444Z-3aa313e5",
+  "*|22|2|Asc@new128|main": "20261118T204124Z-481d8aab"
+ },
+ "failed": {}
+}

@@ -1,0 +1,122 @@
+# scene preparation
+house|Klickitat|--name Klickitat --pad 0.5
+blocked|plus22
+blocked|apt32
+blocked|apt64
+house|Allensville|--name Allensville
+house|Lakeville|--name Lakeville
+house|Klickitat|--name Klickitat
+blocked|plus30
+blocked|plus40
+blocked|Allensville
+blocked|Lakeville
+blocked|Klickitat
+# core arms, seed 87358
+field|ntrl|plus22|87358|--lift none
+field|lift|plus22|87358|--lift time
+field|lift_push|plus22|87358|--lift time --push page
+field|push|plus22|87358|--lift none --push page
+field|liftpush|plus22|87358|--lift time --push page
+field|pushonly|plus22|87358|--lift none --push page
+# plus22 variants (seed 87358): what holds the detours
+field|lift_c10|plus22|87358|--lift time --push const:1e-2
+field|vecpush|plus22|87358|--lift vec --push page
+field|lift_x|plus22|87358|--lift time --push const:1e-2 --mu1 0.05
+field|lift_x3|plus22|87358|--lift time --push const:3e-3 --mu1 0.05
+field|liftpush_cell|plus40|87358|--lift time --push page --lam-scale cell
+blocked|plus22in
+blocked|plus40in
+blocked|apt64in
+field|liftx_in|plus22in|87358|--lift time --depth 0.3 --push const:1e-2 --mu1 0.05
+field|lift_in|plus22in|87358|--lift time --depth 0.3
+field|liftpush_in|plus22in|87358|--lift time --depth 0.3 --push page
+field|liftpush_b|plus40|87358|--lift time --push page --b-scale cell
+field|ntrl_b|plus40|87358|--lift none --b-scale cell
+field|lift_in_long|plus22in|87358|--lift time --depth 0.3 --epochs 12500
+field|liftq_in|plus22in|87358|--lift time --depth 0.3 --push const:1e-2 --mu 10
+field|liftq3_in|plus22in|87358|--lift time --depth 0.3 --push const:3e-2 --mu 10
+field|liftq|plus22|87358|--lift time --push const:1e-2 --mu 10
+field|vecpush_in|plus22in|87358|--lift vec --depth 0.3 --push page
+field|vec_in|plus22in|87358|--lift vec --depth 0.3
+field|lift_c6_oct8|plus22|87358|--lift time --push const:6e-3 --octaves 2,4,8
+field|lift_r6_oct8|plus22|87358|--lift time --push 200:0,600:1e-2,2000:1e-2,3000:6e-3 --octaves 2,4,8
+field|ntrl_oct8|plus22|87358|--lift none --octaves 2,4,8
+field|liftpush_oct|plus40|87358|--lift time --push page --octaves 3.6,7.3,14.5
+field|lift_c10_oct8|plus22|87358|--lift time --push const:1e-2 --octaves 2,4,8
+field|lift_oct8|plus22|87358|--lift time --octaves 2,4,8
+field|ntrl_oct|plus40|87358|--lift none --octaves 3.6,7.3,14.5
+# core arms on the other scenes (larger first)
+field|ntrl|plus40|87358|--lift none
+field|lift|plus40|87358|--lift time
+field|liftpush|plus40|87358|--lift time --push page
+field|pushonly|plus40|87358|--lift none --push page
+field|ntrl|apt64|87358|--lift none
+field|lift|apt64|87358|--lift time
+field|liftpush|apt64|87358|--lift time --push page
+field|pushonly|apt64|87358|--lift none --push page
+field|liftpush_oct8|plus22|87358|--lift time --push page --octaves 2,4,8
+field|lift_nohead|plus22|87358|--lift time --zero-heading
+field|ntrl|Lakeville|87358|--lift none
+field|lift|Lakeville|87358|--lift time
+field|liftpush|Lakeville|87358|--lift time --push page
+field|ntrl|apt32|87358|--lift none
+field|lift|apt32|87358|--lift time
+field|liftpush|apt32|87358|--lift time --push page
+field|ntrl|Klickitat|87358|--lift none
+field|lift|Klickitat|87358|--lift time
+field|liftpush|Klickitat|87358|--lift time --push page
+field|pushonly|Klickitat|87358|--lift none --push page
+field|liftpush_oct|apt64|87358|--lift time --push page --octaves cell
+field|liftpush_oct|Klickitat|87358|--lift time --push page --octaves cell
+field|lift_c10_oct|plus40|87358|--lift time --push const:1e-2 --octaves cell
+field|lift_c10_oct|apt64|87358|--lift time --push const:1e-2 --octaves cell
+field|lift_c10_oct|Klickitat|87358|--lift time --push const:1e-2 --octaves cell
+field|ntrl_oct|apt64|87358|--lift none --octaves cell
+field|ntrl_oct|Klickitat|87358|--lift none --octaves cell
+field|liftpush_oct|Lakeville|87358|--lift time --push page --octaves cell
+field|liftpush_oct|Klickitat|1|--lift time --push page --octaves cell
+field|ntrl|plus30|87358|--lift none
+field|lift|plus30|87358|--lift time
+field|liftpush|plus30|87358|--lift time --push page
+field|ntrl|Allensville|87358|--lift none
+field|lift|Allensville|87358|--lift time
+field|liftpush|Allensville|87358|--lift time --push page
+field|liftpush_oct2|apt64|87358|--lift time --push page --octaves 11.6,23.2,46.4
+field|liftpush_oct2|plus40|87358|--lift time --push page --octaves 7.3,14.5,29
+field|liftpush_oct|plus30|87358|--lift time --push page --octaves cell
+field|ntrl_oct|Lakeville|87358|--lift none --octaves cell
+field|liftpush_oct|apt32|87358|--lift time --push page --octaves cell
+field|liftpush_oct|Allensville|87358|--lift time --push page --octaves cell
+field|lift_in|apt64in|87358|--lift time --depth 0.3
+# seeds 1 and 2: ntrl-demo and lift + push on every scene
+field|lift_c10_oct8|plus22|1|--lift time --push const:1e-2 --octaves 2,4,8
+field|liftpush_oct|plus22|1|--lift time --push page --octaves 2,4,8
+field|liftpush_oct|plus40|1|--lift time --push page --octaves 3.6,7.3,14.5
+field|ntrl|plus40|1|--lift none
+field|liftpush|plus40|1|--lift time --push page
+field|ntrl|Klickitat|1|--lift none
+field|liftpush|Klickitat|1|--lift time --push page
+field|ntrl|apt64|1|--lift none
+field|liftpush|apt64|1|--lift time --push page
+field|ntrl|Lakeville|1|--lift none
+field|liftpush|Lakeville|1|--lift time --push page
+field|liftpush_oct|Lakeville|1|--lift time --push page --octaves cell
+field|liftpush_oct|plus30|1|--lift time --push page --octaves cell
+field|liftpush|Allensville|1|--lift time --push page
+field|ntrl|Allensville|1|--lift none
+field|ntrl|plus30|1|--lift none
+field|liftpush|plus30|1|--lift time --push page
+field|liftpush_oct|Allensville|1|--lift time --push page --octaves cell
+# seed 2 of the headline arms on the larger scenes
+field|liftpush_oct|Klickitat|2|--lift time --push page --octaves cell
+field|liftpush_oct|Lakeville|2|--lift time --push page --octaves cell
+field|liftpush_oct|plus40|2|--lift time --push page --octaves 3.6,7.3,14.5
+field|liftpush_oct|plus30|2|--lift time --push page --octaves cell
+field|ntrl|Klickitat|2|--lift none
+field|ntrl|Lakeville|2|--lift none
+field|ntrl|plus40|2|--lift none
+field|ntrl|plus30|2|--lift none
+field|liftpush|Klickitat|2|--lift time --push page
+field|liftpush|Lakeville|2|--lift time --push page
+field|liftpush|plus40|2|--lift time --push page
+field|liftpush|plus30|2|--lift time --push page

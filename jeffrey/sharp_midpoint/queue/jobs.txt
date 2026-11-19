@@ -1,0 +1,23 @@
+# gpu|n|seed|spec|label ; label main = midpoint loss (weight 1, min leaves, safe traversals, tree + sub-paths), ctl = the resumed loop without it
+# round 1: 22x22 seed 87358
+*|22|87358|octave|main
+*|22|87358|Apowmix@all|main
+*|22|87358|Rtri@all|main
+*|22|87358|Agtri@allx2|main
+*|22|87358|Asc@new128|main
+*|22|87358|Rpowmix@half|main
+*|22|87358|Apow16@axis|main
+*|22|87358|Agtri@topx8|main
+# round 2: 22x22 seeds 1 and 2
+*|22|1|octave|main
+*|22|1|Apowmix@all|main
+*|22|1|Rtri@all|main
+*|22|1|Agtri@allx2|main
+*|22|1|Asc@new128|main
+*|22|1|Rpowmix@half|main
+*|22|2|octave|main
+*|22|2|Apowmix@all|main
+*|22|2|Rtri@all|main
+*|22|2|Agtri@allx2|main
+*|22|2|Asc@new128|main
+*|22|2|Rpowmix@half|main

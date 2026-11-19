@@ -1,0 +1,143 @@
+# gpu|n|seed|spec  (rebalanced 2026-11-17 01:10: GPU 1 runs at ~16 min/job next to the lift_scale queue, GPU 0 at ~10 min)
+# groups stay on one GPU: 0 = 13x13 seeds 87358/1/2 + 22x22 seed 87358; 1 = 22x22 seeds 1/2 (all rounds), then 3/4 (round 1 only)
+# GPU 0 round 1: exact octave, null, coherent +-5 %, incoherent 10 %
+0|13|87358|octave
+0|13|1|octave
+0|13|2|octave
+0|22|87358|octave
+0|13|87358|shift1.0001
+0|13|1|shift1.0001
+0|13|2|shift1.0001
+0|22|87358|shift1.0001
+0|13|87358|shift1.05
+0|13|1|shift1.05
+0|13|2|shift1.05
+0|22|87358|shift1.05
+0|13|87358|shift0.95
+0|13|1|shift0.95
+0|13|2|shift0.95
+0|22|87358|shift0.95
+0|13|87358|jitter0.1
+0|13|1|jitter0.1
+0|13|2|jitter0.1
+0|22|87358|jitter0.1
+# GPU 0 second null (x0.9999): the training-noise floor, a second sample per group
+0|13|87358|shift0.9999
+0|13|1|shift0.9999
+0|13|2|shift0.9999
+0|22|87358|shift0.9999
+# GPU 0 round 2: coherent +-10 %, incoherent 5 % / 20 %
+0|13|87358|shift1.1
+0|13|1|shift1.1
+0|13|2|shift1.1
+0|22|87358|shift1.1
+0|13|87358|shift0.9
+0|13|1|shift0.9
+0|13|2|shift0.9
+0|22|87358|shift0.9
+0|13|87358|jitter0.05
+0|13|1|jitter0.05
+0|13|2|jitter0.05
+0|22|87358|jitter0.05
+0|13|87358|jitter0.2
+0|13|1|jitter0.2
+0|13|2|jitter0.2
+0|22|87358|jitter0.2
+# GPU 0 log-uniform fill (jitter ±half an octave: same band, no discrete frequencies)
+0|13|87358|jitter0.4142
+0|13|1|jitter0.4142
+0|13|2|jitter0.4142
+0|22|87358|jitter0.4142
+# GPU 0 round 3: wide scan
+0|13|87358|shift1.189
+0|13|1|shift1.189
+0|13|2|shift1.189
+0|22|87358|shift1.189
+# GPU 0 which part of the band carries the x0.9 loss (13x13): only the top octave x0.9 / all but the top x0.9 (moved ahead of the rest of the wide scan at 08:55)
+0|13|87358|top0.9
+0|13|1|top0.9
+0|13|2|top0.9
+0|13|87358|rest0.9
+0|13|1|rest0.9
+0|13|2|rest0.9
+0|13|87358|shift0.841
+0|13|1|shift0.841
+0|13|2|shift0.841
+0|22|87358|shift0.841
+0|13|87358|shift1.414
+0|13|1|shift1.414
+0|13|2|shift1.414
+0|22|87358|shift1.414
+0|13|87358|shift0.707
+0|13|1|shift0.707
+0|13|2|shift0.707
+0|22|87358|shift0.707
+0|13|87358|shift2
+0|13|1|shift2
+0|13|2|shift2
+0|22|87358|shift2
+# GPU 0 locked one octave down (x0.5, the mirror of x2): grid lock kept, top level at f_grid / 2
+0|13|87358|shift0.5
+0|13|1|shift0.5
+0|13|2|shift0.5
+0|22|87358|shift0.5
+# GPU 1 round 1 (seeds 1, 2)
+1|22|1|octave
+1|22|2|octave
+1|22|1|shift1.0001
+1|22|2|shift1.0001
+1|22|1|shift1.05
+1|22|2|shift1.05
+1|22|1|shift0.95
+1|22|2|shift0.95
+1|22|1|jitter0.1
+1|22|2|jitter0.1
+# GPU 1 second null (x0.9999): the training-noise floor, a second sample per group
+1|22|1|shift0.9999
+1|22|2|shift0.9999
+# GPU 1 round 2 (seeds 1, 2)
+1|22|1|shift1.1
+1|22|2|shift1.1
+1|22|1|shift0.9
+1|22|2|shift0.9
+1|22|1|jitter0.05
+1|22|2|jitter0.05
+1|22|1|jitter0.2
+1|22|2|jitter0.2
+# GPU 1 log-uniform fill (jitter ±half an octave: same band, no discrete frequencies)
+1|22|1|jitter0.4142
+1|22|2|jitter0.4142
+# GPU 1 round 3 (seeds 1, 2)
+1|22|1|shift1.189
+1|22|2|shift1.189
+1|22|1|shift0.841
+1|22|2|shift0.841
+1|22|1|shift1.414
+1|22|2|shift1.414
+1|22|1|shift0.707
+1|22|2|shift0.707
+1|22|1|shift2
+1|22|2|shift2
+# GPU 1 locked one octave down (x0.5)
+1|22|1|shift0.5
+1|22|2|shift0.5
+# GPU 1 extra seeds 3, 4: round 1 only
+1|22|3|octave
+1|22|4|octave
+1|22|3|shift1.0001
+1|22|4|shift1.0001
+# GPU 1 extra seeds 3, 4: the higher shifts (x1.414 gained +7.3 +- 2.5 points on 22x22 seeds 1/2; x2 is locked again one octave up);
+# added 11:40 ahead of the remaining round-1 variants of these seeds
+1|22|3|shift1.414
+1|22|4|shift1.414
+1|22|3|shift2
+1|22|4|shift2
+1|22|3|shift1.05
+1|22|4|shift1.05
+1|22|3|shift0.95
+1|22|4|shift0.95
+1|22|3|jitter0.1
+1|22|4|jitter0.1
+# GPU 1 extra seeds 3, 4: second null
+1|22|3|shift0.9999
+1|22|4|shift0.9999

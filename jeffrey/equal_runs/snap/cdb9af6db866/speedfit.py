@@ -1,0 +1,142 @@
+"""Is the speed easier to learn through this map? A learnability score that needs no travel-time field.
+
+The request's reason for equal runs: 'you want to learn speed, so it would be better if the speed was more evenly distributed, peaking more periodically'. So this measures that directly: a network of ntrl-demo's
+shape (the same Fourier encoder size and softplus layers) regresses the speed label S(x, theta) from the warped coordinates z = phi(x) and the heading, for a fixed budget, and is scored on held-out points. Same network, same budget, same
+points per unit of z for every map. A regression is not a planner: speedfit_calibrate.py checks this score against the maps of line_warp, whose planning results are known.
+
+    fit(xy_of_z, maze, s)      xy_of_z: z (N, 2) -> x (N, 2) and a validity mask; z is drawn uniformly in the box, as in training on the warped maze
+"""
+import math
+import torch
+import torch.nn as nn
+import torch.nn.functional as Fn
+
+
+class SpeedNet(nn.Module):
+    """ntrl-demo's encoder at its own size: 128 Fourier rows, 256 wide, softplus(beta 10)."""
+
+    def __init__(self, B, width=256, depth=4):
+        super().__init__()
+        self.register_buffer('B', B)
+        self.inp = nn.Linear(2 * B.shape[0], width)
+        self.mid = nn.ModuleList([nn.Linear(width, width) for _ in range(depth)])
+        self.out = nn.Linear(width, 1)
+
+    def forward(self, u):
+        p = (2 * math.pi) * (u @ self.B.T)
+        h = Fn.softplus(self.inp(torch.cat([torch.sin(p), torch.cos(p)], -1)), beta=10)
+        for m in self.mid:
+            h = h + Fn.softplus(m(h), beta=10)
+        return torch.sigmoid(self.out(h))[:, 0]
+
+
+def draw(xy_of_z, maze, count, gen):
+    """count points: z uniform in the box, heading uniform; returns inputs (z, p) and the speed label."""
+    dev = maze.device
+    zs, ss = [], []
+    have = 0
+    while have < count:
+        z = torch.rand(count, 2, generator=gen, device=dev) - 0.5
+        x, ok = xy_of_z(z)
+        th = (torch.rand(len(z), generator=gen, device=dev) - 0.5) * math.pi
+        p = th * 0.25 / maze.E
+        d = maze.clearance(torch.cat([x, p[:, None]], 1))
+        s = maze.unit_speed(d)
+        keep = ok
+        zs.append(torch.cat([z[keep], (p[keep] / maze.phi_max * 0.5)[:, None]], 1))
+        ss.append(s[keep])
+        have += int(keep.sum())
+    return torch.cat(zs)[:count], torch.cat(ss)[:count]
+
+
+def fit(xy_of_z, maze, s=1.0, steps=3000, batch=16384, lr=1e-3, seed=0, rows=128, test=200000):
+    """Returns held-out scores. s scales the Fourier rows (ntrl-demo's B x s)."""
+    dev = maze.device
+    gen = torch.Generator(dev).manual_seed(seed + 100)
+    gcpu = torch.Generator().manual_seed(seed)
+    B = (torch.randn(rows, 3, generator=gcpu) * s).to(dev)
+    state = torch.get_rng_state()
+    torch.manual_seed(seed)
+    net = SpeedNet(B).to(dev)
+    torch.set_rng_state(state)
+    opt = torch.optim.Adam(net.parameters(), lr=lr)
+    sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, steps, eta_min=lr * 0.02)
+    # a fixed pool, drawn once, so that a slow inverse is paid once: a map is scored on what it shows, not on how fast it runs
+    pool_z, pool_s = draw(xy_of_z, maze, 1 << 21, gen)
+    for _ in range(steps):
+        i = torch.randint(len(pool_z), (batch,), generator=gen, device=dev)
+        loss = (net(pool_z[i]) - pool_s[i]).pow(2).mean()
+        opt.zero_grad(set_to_none=True)
+        loss.backward()
+        opt.step()
+        sched.step()
+    with torch.no_grad():
+        tz, ts = draw(xy_of_z, maze, test, torch.Generator(dev).manual_seed(seed + 200))
+        pr = torch.cat([net(tz[i:i + 65536]) for i in range(0, len(tz), 65536)])
+        err = (pr - ts).pow(2).mean()
+        floor, top = ts <= 0.2, ts >= 0.99
+        r2 = 1 - err / ts.var()
+        lp, lt = torch.log(pr.clamp(min=1e-3)), torch.log(ts)
+        corr = torch.corrcoef(torch.stack([lp, lt]))[0, 1]
+        return dict(r2=float(r2), log_corr=float(corr), rmse=float(err.sqrt()), wall_pred=float(pr[floor].median()) if bool(floor.any()) else None, free_pred=float(pr[top].median()) if bool(top.any()) else None,
+                    wall_share=float(floor.float().mean()), s=s, steps=steps)
+
+
+def fit_scene(psi, scene, s=1.0, steps=3000, batch=16384, lr=1e-3, seed=0, rows=128, test=200000, pool=1 << 21):
+    """The same score for any scene (the whole C-space, a 3-D workspace, a floor plan): inputs are z alone, the label is clip(clearance / margin, 0.1, 1) with the oracle's own margin."""
+    dev = scene.table.v.device
+    gen = torch.Generator(dev).manual_seed(seed + 100)
+    gcpu = torch.Generator().manual_seed(seed)
+    B = (torch.randn(rows, scene.dim, generator=gcpu) * s).to(dev)
+    state = torch.get_rng_state()
+    torch.manual_seed(seed)
+    net = SpeedNet(B).to(dev)
+    torch.set_rng_state(state)
+
+    @torch.no_grad()
+    def draw3(count, g):
+        z = torch.rand(count, scene.dim, generator=g, device=dev) - 0.5
+        x = torch.cat([psi(z[i:i + 262144]) for i in range(0, count, 262144)])
+        k = torch.zeros(count, device=dev, dtype=torch.long)
+        return z, (scene.sdf(x, k) / scene.margin).clamp(0.1, 1.0)
+
+    opt = torch.optim.Adam(net.parameters(), lr=lr)
+    sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, steps, eta_min=lr * 0.02)
+    pool_z, pool_s = draw3(pool, gen)
+    for _ in range(steps):
+        i = torch.randint(pool, (batch,), generator=gen, device=dev)
+        loss = (net(pool_z[i]) - pool_s[i]).pow(2).mean()
+        opt.zero_grad(set_to_none=True)
+        loss.backward()
+        opt.step()
+        sched.step()
+    with torch.no_grad():
+        tz, ts = draw3(test, torch.Generator(dev).manual_seed(seed + 200))
+        pr = torch.cat([net(tz[i:i + 65536]) for i in range(0, len(tz), 65536)])
+        err = (pr - ts).pow(2).mean()
+        floor, top = ts <= 0.2, ts >= 0.99
+        lp, lt = torch.log(pr.clamp(min=1e-3)), torch.log(ts)
+        return dict(r2=float(1 - err / ts.var()), log_corr=float(torch.corrcoef(torch.stack([lp, lt]))[0, 1]), rmse=float(err.sqrt()), wall_pred=float(pr[floor].median()) if bool(floor.any()) else None,
+                    free_pred=float(pr[top].median()) if bool(top.any()) else None, wall_share=float(floor.float().mean()), s=s, steps=steps)
+
+
+def score(psi, scene, ss, steps):
+    """Learnability scores of a map on any scene: {s: scores}. A plane maze (headings as an extra input), a turned maze (only points inside the turned square), or any other scene through its oracle."""
+    if scene.dim == 3 or not hasattr(scene, 'maze'):
+        return {s: fit_scene(psi, scene, float(s), steps) for s in ss}
+    if hasattr(scene, 'deg'):
+        def turned(z):                                  # outside the turned square there is no maze: those z are not drawn
+            x, _ = of_psi(psi)(z)
+            x = scene.to_inner(x)
+            return x, (x.abs() <= 0.5).all(1)
+        return {s: fit(turned, scene.maze, float(s), steps) for s in ss}
+    return {s: fit(of_psi(psi), scene.maze, float(s), steps) for s in ss}
+
+
+def of_psi(psi):
+    """xy_of_z for a map of this study (a self-map of the box: every z is valid)."""
+    def f(z):
+        with torch.no_grad():
+            x = torch.cat([psi(z[i:i + 262144]) for i in range(0, len(z), 262144)])
+        return x, torch.ones(len(z), device=z.device, dtype=torch.bool)
+    return f

@@ -1,0 +1,39 @@
+{
+ "done": {
+  "ntrl|allensville|87358|--weight 0": "20261118T023748Z-5b9f5719",
+  "ntrl|lakeville|87358|--weight 0": "20261118T023808Z-c65a276c",
+  "ntrl|klickitat|87358|--weight 0": "20261118T024648Z-59b46a8b",
+  "ctl|allensville|87358|--weight 0 --resume @base --validate-at 3000,4000": "20261118T025508Z-4ca3fda9",
+  "mid|allensville|87358|--weight 1 --resume @base --validate-at 3000,4000": "20261118T024528Z-6a280004",
+  "ctl|lakeville|87358|--weight 0 --resume @base --validate-at 3000,4000": "20261118T042328Z-71cf25be",
+  "ctl|klickitat|87358|--weight 0 --resume @base --validate-at 3000,4000": "20261118T042848Z-1e865f66",
+  "mid|lakeville|87358|--weight 1 --resume @base --validate-at 3000,4000 @gpu1": "20261118T025938Z-a3044b56",
+  "ntrl|allensville|1|--weight 0": "20261118T043408Z-594e05ea",
+  "ntrl|lakeville|1|--weight 0": "20261118T044118Z-692bee68",
+  "ntrl|klickitat|1|--weight 0": "20261118T044938Z-a96de18c",
+  "ctl|allensville|1|--weight 0 --resume @base --validate-at 3000,4000": "20261118T045728Z-cb467132",
+  "mid|klickitat|87358|--weight 1 --resume @base --validate-at 3000,4000 @gpu1": "20261118T043658Z-3d6e309d",
+  "mid|allensville|1|--weight 1 --resume @base --validate-at 3000,4000 @gpu0": "20261118T050218Z-6070b066",
+  "ctl|lakeville|1|--weight 0 --resume @base --validate-at 3000,4000": "20261118T063958Z-2c01ced5",
+  "ctl|klickitat|1|--weight 0 --resume @base --validate-at 3000,4000": "20261118T064519Z-9465989f",
+  "ntrl|allensville|2|--weight 0": "20261118T065038Z-c602da9c",
+  "ntrl|lakeville|2|--weight 0": "20261118T065758Z-9b98b0f6",
+  "ntrl|klickitat|2|--weight 0": "20261118T070619Z-691cf175",
+  "ctl|allensville|2|--weight 0 --resume @base --validate-at 3000,4000": "20261118T071408Z-071b4529",
+  "mid|lakeville|1|--weight 1 --resume @base --validate-at 3000,4000 @gpu1": "20261118T062108Z-b63265db",
+  "mid|allensville|2|--weight 1 --resume @base --validate-at 3000,4000 @gpu0": "20261118T071859Z-d5ba84a8",
+  "ctl|lakeville|2|--weight 0 --resume @base --validate-at 3000,4000": "20261118T085608Z-7c0f3ddb",
+  "mid|klickitat|1|--weight 1 --resume @base --validate-at 3000,4000 @gpu1": "20261118T081548Z-5fe9a90a",
+  "mid|lakeville|2|--weight 1 --resume @base --validate-at 3000,4000 @gpu0": "20261118T090129Z-4fb5a605",
+  "ctl|klickitat|2|--weight 0 --resume @base --validate-at 3000,4000": "20261118T112809Z-78b0cb56",
+  "mid|klickitat|2|--weight 1 --resume @base --validate-at 3000,4000 @gpu1": "20261118T104218Z-4537e4df"
+ },
+ "failed": {},
+ "superseded": {
+  "ntrl|allensville|87358|--weight 0 (snapshot path bug)": "20261118T022244Z-b9a618a7",
+  "ntrl|lakeville|87358|--weight 0 (snapshot path bug)": "20261118T022706Z-6bfab72d",
+  "mid|allensville|87358|--weight 1 (from scratch, stopped)": "20261118T022304Z-f6aab8af",
+  "mid|allensville|87358 resume (stopped, path bug)": "20261118T022726Z-1aac4109",
+  "ntrl|klickitat|87358|--weight 0 (stopped, path bug)": "20261118T023516Z-7a05f1fe"
+ }
+}

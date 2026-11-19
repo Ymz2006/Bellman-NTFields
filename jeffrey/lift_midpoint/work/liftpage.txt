@@ -1,0 +1,341 @@
+ 
+ 2026-11-11 Travel-Time Lift 
+lift_warp study · follow-up to the max-min warp page · every number from registered runs and read-only forensics on their checkpoints 
+Why raising the slowest coordinate speed did not help, and the version of the idea that does 
+The max-min map raises the slowest coordinate speed by 1.11–1.50 where the wall band needs a factor of 83, and pays for it with free space; the trained networks build no more of the wall layer than without a map. The idea works once the minimum is taken along the gradient and the room for the band comes from a third input coordinate, h(x) = the travel time out of the band along the normal: ntrl-demo then satisfies the eikonal equation in every speed bin (S × slope 0.98–1.02) within about 100 epochs, with free space untouched. That exposes a second problem the smeared wall layer had been hiding: the eikonal loss accepts fields that pass straight through obstacles, and the corner trap and the stalls of the max-min page are the same family. The true field is the largest solution, and a push on pairs whose straight segment is blocked selects it. Lift plus push, disks / floor plan / plus maze / gap maze: 100.0 / 94.2 / 64.9 / 91.5 % of queries solved and 99.0 / 82.1 / 86.3 / 92.5 % of travel times within 10 % (plain ntrl-demo 96.6 / 61.1 / 68.5 / 53.1 % and 90.4 / 22.0 / 9.7 / 43.6 %). In queries solved that is better on disks (+3 points), floor plan (+33 points), gap maze (+38 points); worse on plus maze (-4 points). The plus maze needs one more thing the lift cannot give, room between the two sides of a thin wall. With a wall-magnifying planar map in front of the lift: 100.0 / 98.3 / 99.8 / 99.3 % solved and 98.9 / 81.9 / 83.3 / 92.0 % within 10 %. 
+Answers 
+1. Why did raising the minimum speed not make the field easier to learn? 
+ it could not The network is limited by how fast its slope can change per unit of its input, and the max-min map gives the wall band no more input length. R is 1.11–1.50 where the band’s slope spans a factor of 83, and the room for the larger obstacles comes out of free space (5 % of it compressed to 0.05–0.41 or less). The trained networks built the same wall layer as without a map: 0.09 of the required slope against 0.10 on the plus maze. 
+2. Is the idea wrong? 
+The reasoning holds; the minimum was taken over the wrong set and paid for in the wrong place. The gradient of a far field in the band points along the wall normal, and that is the only direction that needs speed. A map of the plane onto itself has no room to give it. 
+3. What is the adapted version? 
+ yes A lift instead of a warp: the network’s input is (x, h(x)), with h the travel time from x out of the speed band along the normal, a closed-form function of the clearance. Coordinate speed along normals is 1 everywhere, free space is untouched, and the minimum over gradient directions is 59 times the floor (the max-min value R stays exactly 1). 
+4. Does the network then learn the sharp part? 
+ yes Exactly. S × |∇T| is 0.98–1.02 in every speed bin on every scene and seed, reached within about 100 epochs (plain ntrl-demo: 0.08–0.26 in the innermost band after 5,000). Travel times within 10 %, disks / floor plan / plus maze / gap maze: 96.6 / 61.8 / 74.5 / 83.9 % against 90.4 / 22.0 / 9.7 / 43.6 % for plain ntrl-demo. 
+5. Does it plan better? 
+Not by itself. Queries solved with the lift alone: 95.8 / 65.0 / 57.9 / 56.4 % (plain 96.6 / 61.1 / 68.5 / 53.1 %). With the wall layer exact, a second problem becomes visible: the eikonal loss accepts fields that go straight through obstacles, and plain ntrl-demo only avoided them as a side effect of its smeared wall layer. With the largest-solution push added: 100.0 / 94.2 / 64.9 / 91.5 % solved, 99.0 / 82.1 / 86.3 / 92.5 % within 10 %. Against plain ntrl-demo that is, in queries solved, better on disks (+3 points), floor plan (+33 points), gap maze (+38 points); worse on plus maze (-4 points); in travel times within 10 %, better on disks (+9 points), floor plan (+60 points), plus maze (+77 points), gap maze (+49 points). 
+6. And the plus maze, where lift and push stop short? 
+ yes The lift cannot tell the two sides of a thin wall apart: they have the same clearance, so the same height. A planar map that magnifies wall interiors, placed in front of the lift, can. Map + lift + push, disks / floor plan / plus maze / gap maze: 100.0 / 98.3 / 99.8 / 99.3 % solved and 98.9 / 81.9 / 83.3 / 92.0 % within 10 % (3 / 3 / 3 / 3 seeds). The map is the wall-magnifying kind from the earlier pages; alone it planned 78.1 / 92.3 / 94.9 / 69.0 % with 72.2 / 70.2 / 11.7 / 63.2 % within 10 %. On a 30 × 30 plus maze no setting was chosen on: 97.3 % solved against 70.2 % without the map (one seed). So a diffeomorphism has a job after all, and it is giving obstacles room, not raising the slowest speed (Part 3). 
+7. Is it generalizable? 
+The lift needs the clearance and the speed profile, nothing else: no mesh, no optimization, no solver, any dimension. The push needs a collision check of straight segments. The wall-magnifying map is the part that does not generalize for free: it comes from a lattice optimizer that runs on any 2-D scene in minutes but has no 3-D version, and a closed-form substitute recovers only part of its effect (Part 3). One lift-and-push setting was used on all scenes, including two larger mazes it was not chosen on: 30 × 30 plus maze 70.2 % solved and 86.0 % within 10 % against 66.7 % and 26.8 % for plain ntrl-demo; gap maze ×4 75.1 % solved and 96.7 % within 10 % against 36.8 % and 51.8 % for plain ntrl-demo (one seed each). It has not been run in 3-D or in a robot’s configuration space, where the clearance gradient is not a unit vector and the equalization is approximate. 
+Part 1 · Why raising the minimum did not help 
+With y = φ(x) the learned field is T(x 0 , x 1 ) = H(φ(x 0 ), φ(x 1 )), and the slope the network must build in its own input coordinates is one over the coordinate speed. The reasoning behind the max-min map is sound up to that point. Three things break it between there and the learner. 
+1. The network is limited by how fast its slope can change, and the map does not change that 
+ntrl-demo’s speed falls from 1 to the floor 0.012 inside a band 0.175 cells wide next to every obstacle, so the field’s slope along the wall normal must rise from 1 to 83 within that band. The earlier chord_warp study measured what the network does there: the slope it reaches is proportional to the width of the band in its input coordinates (slope − 1 ≈ 170–390 divided by the scene size in cells), not capped at a value. What it lacks is input length over which to turn the slope up. The chart shows that length for four coordinate systems on the plus maze. 
+Without a map the slope goes from 83 to 1 in 0.175 cells. The max-min map leaves that profile where it was: the floor is 1.11–1.50 times higher (R on the four scenes), so the innermost band asks 22–30 instead of 34, and the band is no longer than before along the normal (0.15–0.24 cells of input against 0.157). The objective is met by enlarging the obstacle floor and interiors by R in every direction; a band point with speed above the new minimum is not asked to stretch at all, and is free to shrink. 
+The room for the larger obstacles comes out of free space. Half of the free points are compressed to 0.18–0.82 of their size in one direction and 5 % of them to 0.05–0.41 or less, with anisotropy up to 39 (95th percentile). Free space asked a slope of exactly 1 before; now a twentieth of it asks 2.4–21 or more. Measured over the directions a field’s gradient can take, the ratio between the fastest and the slowest coordinate speed goes from 72 without a map to 109–179 with the max-min map: the field became more uneven, not less. The companion page on speeds along optimal paths shows the same thing path by path. 
+2. The networks did not build more of the wall layer 
+The direct test: S × |∇T| of each trained network at held-out band points, by speed. It is 1 where the eikonal equation holds and below 1 where the network’s slope falls short. 
+On the plus maze plain ntrl-demo builds 0.10 of the required slope in the innermost band and the max-min field 0.09; on the floor plan 0.08 and 0.09. Where R is largest (gap maze, 1.49) the fit moves from 0.14 to 0.24, and that is the one scene where max-min planned better (+18 points). So the gain exists and has the right sign, but its size is set by R, and R is 1.1–1.5 where the band needs a factor of 83. 
+3. The objective ranks coordinate systems backwards 
+The max-min objective takes the minimum over every direction at every point. A far field’s gradient inside the band is close to the wall normal (Snell’s law: its tangential slowness is at most 1 while the normal one is up to 83), so the tangential direction in the band, where the minimum sits, is never used. Left: R as the objective defines it, evaluated on the training points. Right: the same minimum over the gradient’s own directions. 
+By R the max-min map is the best of the four (1.11–1.50), the planar band map of chord_warp is worse than no map (0.34–0.67: it squeezes the band tangentially to stretch it across), and the lift introduced below is exactly 1.00. The learned wall layer orders them the other way round. 
+Why a map of the plane onto itself cannot do better 
+Evening out the slope along the normal means stretching the band by 1 / S across the wall. The trained band (0.0175–0.175 cells) then needs ∫ dd / S = 0.75 cells instead of 0.16, and 3.7 cells with the floor layer, on each side of every wall. In the plus maze a corridor is 0.5 cells wide, 0.35 of it band; equalized at free-space scale it would need 1.65 cells. The only material that is not trained on is the inside of the walls, 0.47 cells per corridor. A planar self-map therefore pays with free space (max-min, diffusion) or stops at a partial stretch (the band map reaches ×4–5 in the innermost band by emptying the walls). Max-min is further from it than the others because it requires the obstacles to grow as well. 
+Part 2 · The adapted idea: take the minimum along the gradient, and take the room from a third coordinate 
+Two changes to the max-min idea follow from Part 1. First, the minimum is taken over the directions the gradient takes, which in the band means the cone around the wall normal. Second, the map does not have to send the plane onto itself. The network’s input can be a surface in three dimensions, and then the length the band needs along the normal can go upward instead of sideways. 
+φ(x) = ( x , h(x) ) h(x) = G(d(x)) G(d) = ∫_d^margin √( 1 / S(d')² − 1 ) dd' h = 0 in free space
+along the wall normal: surface length = √(1 + G'²) dd = dd / S → coordinate speed 1 everywhere
+any far-field gradient: speed = 1 / √(1 + p² (1 − S²)) ∈ [0.707, 1] (p ≤ 1 its tangential slowness)
+free space: φ is the identity, nothing is compressed
+all directions (max-min): R = 1.000 
+A patch of the plus maze. Left: the speed the eikonal loss sees (the band is the thin rim around each wall). Middle: the third coordinate h, the travel time from the point out of the band along the normal (0 in free space, 0.69 cells at the inner edge of the trained band, 3.6 cells at the depth the training pairs reach). Right: the surface the network takes as input. Free space is flat and untouched; every corridor has become a canyon whose walls are as long, in input coordinates, as the time it takes to climb them. 
+h is a one-dimensional integral of the speed profile, evaluated at the clearance d(x) that the speed is already computed from. There is no optimization, no mesh and no solver, and nothing in it is specific to two dimensions. ntrl-demo is unchanged except that its Fourier features take three inputs instead of two; every term of its loss is still differentiated with respect to x through the chain rule (checked to 6 × 10⁻⁷). 
+In the terms of Part 1: along normals the requested slope is 1 in every speed bin, the band has 0.72 cells of input length instead of 0.16 (2.2 with the floor layer), free space asks exactly what it asked before, and the minimum speed over gradient directions is 59 times the floor. By the max-min objective itself the lift does nothing (R = 1.000): the tangential direction in the band is as slow as ever. No far field uses it. 
+What it does: the wall layer is learned exactly, and within about a hundred epochs 
+The lifted fields are the fourth line in the four charts of Part 1: S × |∇T| is between 0.98 and 1.02 in every speed bin on every scene (plain ntrl-demo: 0.08–0.26 in the innermost band). It also gets there fast. Below, the innermost-band fit of one seed scored at ntrl-demo’s own early checkpoints. 
+With the wall layer right, travel times along free lines of sight are right too. On random pairs whose true path is within 5 % of the straight line, the share of learned times within 10 % of the truth is 99 % with the lift against 93 % for plain ntrl-demo (disks; median learned / true 0.99 against 1.02), 95 % with the lift against 25 % for plain ntrl-demo (floor plan; median learned / true 1.01 against 1.20), 92 % with the lift against 7 % for plain ntrl-demo (plus maze; median learned / true 1.03 against 1.19), 97 % with the lift against 46 % for plain ntrl-demo (gap maze; median learned / true 1.02 against 1.11). Plain ntrl-demo cannot draw a thin wall layer and spreads it into the free space next to every wall, which is where its 10–20 % overestimate on the mazes comes from. 
+Controls: what in the lift does the work 
+ A dead third input (h = 0, same network, same three Fourier columns): disks 97.0 % solved, 90.3 % within 10 %, innermost fit 0.24 (plain ntrl-demo 96.6 %, 90.4 %, 0.26); plus maze 69.1 % solved, 7.9 % within 10 %, innermost fit 0.10 (plain ntrl-demo 68.5 %, 9.7 %, 0.10); gap maze 50.0 % solved, 45.0 % within 10 %, innermost fit 0.13 (plain ntrl-demo 53.1 %, 43.6 %, 0.14). The loss is identical to the registered plain run of the same seed at every one of the 5,000 epochs, and so are the scores: the lift’s plumbing changes nothing by itself. 
+ The band coordinate without the time metric (h linear in the clearance, scaled to the same range, so the band has the same input length but the requested slope still varies 83-fold along it), solved / within 10 % / innermost fit, with the lift in brackets: disks 100.0 % / 44.3 % / 0.91 (95.8 % / 96.6 % / 1.00; 2 seeds); floor plan 78.8 % / 64.1 % / 0.77 (65.0 % / 61.8 % / 0.98; 2 seeds); plus maze 56.8 % / 70.0 % / 0.86 (57.9 % / 74.5 % / 1.00; 2 seeds); gap maze 45.7 % / 59.1 % / 0.76 (56.4 % / 83.9 % / 1.00; 2 seeds). Input length alone lets the network build most or all of the wall layer, so that is what the layer needs. The travel-time profile is the version with no slope change left: its fit is exact on every scene and seed, and on the open scene its travel times are right where the clearance coordinate’s are 9 % short. On the floor plan the clearance coordinate plans better than the lift alone; its wall layer is less exact there (one seed 0.63, with slopes of 1.2–1.3 spilling into free space), which is the regime in which plain ntrl-demo keeps its detours. 
+How much of the lift is needed? In a run where the third coordinate was faded in between epochs 300 and 1,500 (plus maze), the innermost-band fit went from 0.04 at epoch 300 to 1.04 at epoch 400, when the coordinate was at 8 % of its full size. At this scene size a twelfth of the lift already gives the band enough input length; the full lift is the size at which the answer no longer depends on the scene’s scale. 
+The closed problem becomes learnable 
+ntrl-demo never samples inside an obstacle, and chord_warp showed that closing the interiors at the true floor speed breaks plain ntrl-demo: it is asked for slope 83 over a third of its first ends and inflates every travel time. With h continued to the same depth (0.1 cells) the interior asks for slope 1 like everything else: 
+disks: 100.0 % solved, 97.9 % within 10 %, median learned / true 0.99 (plain ntrl-demo on the same pairs 95.1 %, 70.1 %, 1.07; planar band map 99.6 %, 93.6 %, 0.97). 
+floor plan: 69.9 % solved, 66.1 % within 10 %, median learned / true 0.99 (plain ntrl-demo on the same pairs 53.2 %, 0.5 %, 7.10; planar band map 93.8 %, 6.4 %, 1.48). 
+plus maze: 59.3 % solved, 68.8 % within 10 %, median learned / true 1.03 (plain ntrl-demo on the same pairs 57.8 %, 0.3 %, 1.53; planar band map 67.6 %, 1.1 %, 1.31). 
+gap maze: 52.7 % solved, 82.9 % within 10 %, median learned / true 1.01 (plain ntrl-demo on the same pairs 43.4 %, 1.4 %, 1.32; planar band map 77.0 %, 20.9 %, 1.16). 
+What it exposes: the eikonal loss does not decide what happens across an obstacle 
+On the gap maze the lifted fields have an exact wall layer, 83.9 % of random pairs within 10 % (plain ntrl-demo 43.6 %), and they plan no better than plain ntrl-demo: 56.4 % against 53.1 %, 43.4 % of the queries end in a stall. The reason is a property of the training problem that the smeared wall layer of plain ntrl-demo had been hiding. 
+ntrl-demo's loss at a pair (x0, x1): S(x0) |∇T| = 1 at x0 and S(x1) |∇T| = 1 at x1
+(local, and blind to the sign of the gradient)
+each of these satisfies it almost everywhere:
+ T = min( true time , straight distance + barrier heights + c ) c ≥ 0 a crossing cost per wall
+ "see-through": for c = 0 an obstacle is a bump, not a wall
+ T = min( true time , c0 + |x0 − p| ) p any point, c0 any head start
+ a spurious sink at p: the corner trap, the stalls
+all of them are ≤ the true travel time: the largest function whose slope nowhere exceeds 1 / S. 
+A detour index makes this measurable: ρ = (T net − D) / (T* − D) on random pairs whose true path is at least 30 % longer than the straight distance D. ρ = 0 means the field is the straight distance there, ρ = 1 the truth. 
+ The lifted field starts on the see-through solution and leaves it slowly. Gap maze: ρ = 0.01–0.08 up to epoch 1,000 (98–99 % of detour pairs seen through), 0.65 at epoch 5,000. Along lines of sight it is right from the first hundred epochs. 
+ Plain ntrl-demo’s detours are a side effect of its smeared wall layer. In the faded-in run the plain phase reaches ρ = 0.69 by epoch 300; at epoch 400, with the third coordinate at 8 % of its size, ρ is 0.10. Faded in later (from epoch 1,000): ρ 1.36 at epoch 1,000, 0.21 at epoch 1,200. A network that cannot build a thin barrier raises the slope in both bands of a wall by letting its embedding run monotonically across the wall, which separates the two sides as a by-product (with travel times 10–20 % long). Once the barrier can be drawn exactly that pressure is gone, and nothing in the loss keeps the two sides apart. 
+ The stalls are places where the learned time is too short. Gap maze: 125–133 of 300 plans stall per seed, at points where the learned time is 0.59 of the truth (median). Disks: two seeds plan 100 %; the third stalls on 38 queries, all 38 of them in the box corner, in open space, where the learned time is 0.79 of the truth. That is the corner trap of the max-min page, here with free space untouched by any map: it does not come from compressing the corner. 
+So the two false minima of the max-min page and the see-through field are one thing: a local minimum of T that is not the goal, which the loss cannot see because it checks slopes, not where they lead. Each of them makes the field smaller than the true one. 
+Selecting the largest solution 
+The true travel time is the largest member of that family, so the selection rule is to push T up wherever the slope constraint allows it. This is how quasimetric reinforcement learning and maximum-variance unfolding recover geodesic distances from local constraints. The pairs a see-through field gets wrong can be found without a solver: their straight segment crosses an obstacle (a collision check on 48 points of the segment). 
+loss = β [ ntrl-demo's loss
+ − λ(epoch) · mean of T over pairs whose straight segment crosses an obstacle and whose T is below 3 box lengths
+ + μ · mean of relu(√(S |∇T|) − 1)² at both ends ]
+first term: push the too-short pairs up (bounded, so pairs that no path connects stop being pushed).
+second term: keep the slope from exceeding 1 / S.
+λ: 0 at epoch 200, 1e-2 from 600 to 2,000, 3e-3 from 3,000 on. μ = 0.1.
+ntrl-demo's own loss value (its β and its epoch-repeat rule) is left as it is. 
+Gap maze, same seed: at epoch 1,000 the detour index is 0.08 without the push and 0.78 with a constant push of λ = 3e-3, which reaches 0.96 by epoch 2,000 with line-of-sight times still 1.03 of the truth. Three times the push gets there by epoch 600 and then overshoots: index 1.53, line-of-sight times 1.10. The plus maze has longer detours and needs the stronger push to move at all in the first 1,500 epochs. Hence the schedule: strong until the detours are there, then relaxed. 
+The push has to be bounded: the floor plan 
+On the floor plan the push first works and then destroys the field. At epoch 1,000 the 5 fields trained with it solve 90–97 % of the queries with 49–86 % of travel times within 10 % (plain ntrl-demo: 61.1 % and 22.0 % at its final epoch). At epoch 5,000 the 6 that have finished solve 48 % with 2 % within 10 %: the whole field has shrunk (median learned / true 0.46). The cause is in the scene: 44 % of its free points lie outside the house and no path connects them to the inside, so 41 % of the training pairs have a true travel time of infinity. The push does what it should with them and never stops: their learned time is 1.2 times the straight distance at epoch 400, 6 times at 600 and 42 times at 800, 269 cells, which is as far apart as the network can put two points. Its embedding is normalized, so once inside and outside take all of its range the real distances shrink: learned / true on connected pairs 0.98 at epoch 1,000, 0.75 at 1,500, 0.69 at 2,000. 
+The fix is a bound: a pair is pushed only while its learned time is below three box lengths. The largest true travel time is 1.5–1.8 box lengths on every scene here, so the bound is inactive on connected pairs and stops the others. With the bound the unconnected pairs stay at 3.5–5.2 box lengths through training instead of 24. With it the floor plan gives 94.2 % solved and 82.1 % within 10 % at the final epoch (3 seeds). Where free space is connected the bound never acts: trained with it, one seed per scene gives disks 100.0 % / 99.0 %; plus maze 68.7 % / 88.2 %; gap maze 91.7 % / 89.9 %, identical to the run of the same seed without the bound. The recipe’s numbers on this page are the bounded push on the floor plan and, on the other scenes, the three seeds trained before the bound was added. 
+Travel time to one goal (star) on the floor plan, seed 1; contours every 2 cells, obstacles grey; the free space outside the house cannot be reached and is grey in the truth panel. With the unbounded push the inside has flattened to less than half its true range; with the bound the field has the true structure. 
+Travel time to one goal (star) inside a block of the gap maze, seed 87358; contours every 2 cells, walls grey. The plain field knows the walls but is smooth and long; the max-min field is far too long here; the lifted field is a set of circles around the goal that ignore the walls (the region below the block’s bottom wall is reached straight through it); with the push the lifted field has the true field’s structure. 
+ The schedule does not hold everywhere. On the plus maze the detours are all there by epoch 2,000 under the strong push (index 1.66; a detour of 14 cells is learned as 21). When the push is relaxed the long ones are lost again (index 0.50 at epoch 3,000, 0.7 of those 14 cells) and only partly rebuilt by the end (0.63). The gap maze, with the same walls but shorter detours, keeps its detours through the relaxation. What this does to planning is in the summary below. 
+ Control: the same push without the lift (one seed): disks 55.9 % solved, 96.1 % within 10 %, median learned / true 1.03; floor plan 31.0 % solved, 1.4 % within 10 %, median learned / true 0.37; plus maze 54.2 % solved, 81.5 % within 10 %, median learned / true 1.05; gap maze 46.6 % solved, 90.9 % within 10 %, median learned / true 1.04. With the lift and the same push: 100.0 / 94.2 / 64.9 / 91.5 % solved and 99.0 / 82.1 / 86.3 / 92.5 % within 10 % (disks / floor plan / plus maze / gap maze). 
+All arms on the four scenes 
+ The plus maze is where the recipe stops short. Its travel times are right (86.3 % within 10 % against 9.7 % for plain ntrl-demo and 52.4 % for the planar band map), but it solves 64.9 % of the queries, like plain ntrl-demo (68.5 %) and below the band map (85.4 %). By distance bin, from the shortest queries to the longest: recipe 99 / 95 / 87 / 76 / 33 / 0 %, plain 98 / 90 / 83 / 72 / 59 / 9 %. It is better up to about 16 cells and worse beyond, where it stalls (35.1 % of all queries) on detours it still underestimates, while plain ntrl-demo mostly collides. A constant strong push plans 79.0 % there with travel times 17 % long: on this maze the strength that holds the long detours up also inflates the field. Part 3 below finds what is missing. 
+Every arm: seeds, queries solved, travel time, stalls, wall-layer fit, detour index 
+ scene arm seeds solved % [range] T within 10 % [range] median T / T* timeouts % S × slope, S detour index ρ 
+ disks no map (ntrl-demo) 3 96.6 [93.3–99.3] 90.4 [88.9–92.0] 1.008 0.6 [0.1–1.0] 0.26 0.71 
+ disks dead third input (control) 1 97.0 90.3 1.022 0.1 0.24 0.64 
+ disks the same push without the lift (control) 1 55.9 96.1 1.031 2.9 0.05 0.43 
+ disks max-min map 3 79.9 [74.9–89.7] 77.0 [73.6–80.6] 0.987 19.7 [9.0–25.1] 0.53 0.82 
+ disks max-min, anisotropy ≤ 2 2 84.8 [84.3–85.3] 81.1 [78.5–83.7] 0.966 14.4 [14.1–14.7] 0.44 0.61 
+ disks band map (chord_warp) 3 85.9 [85.0–86.7] 72.8 [70.2–76.2] 0.936 14.1 [13.3–15.0] 0.74 0.60 
+ disks pinned band map (chord_warp) 2 99.5 [99.0–100.0] 83.8 [82.7–84.9] 0.947 0.5 [0.0–1.0] 0.80 0.64 
+ disks clearance coordinate, no time metric (control) 2 100.0 [100.0–100.0] 44.3 [38.4–50.3] 0.904 0.0 [0.0–0.0] 0.91 0.49 
+ disks travel-time lift 3 95.8 [87.3–100.0] 96.6 [96.0–97.1] 0.979 4.2 [0.0–12.7] 1.00 0.74 
+ disks lift + constant push λ 3e-3 1 100.0 99.0 1.027 0.0 0.94 0.84 
+ disks lift + constant push λ 1e-2 1 100.0 44.3 1.105 0.0 0.95 1.12 
+ disks lift + push, strong then relaxed 3 100.0 [100.0–100.0] 99.0 [99.0–99.1] 1.027 0.0 [0.0–0.0] 0.95 0.84 
+ disks lift on closed pairs (floor shell 0.1) 2 100.0 [100.0–100.0] 97.9 [97.8–98.0] 0.990 0.0 [0.0–0.0] 1.00 0.81 
+ disks no map on closed pairs 3 95.1 [89.9–98.0] 70.1 [57.7–78.7] 1.073 0.6 [0.0–1.1] – – 
+ disks band map on closed pairs 3 99.6 [99.3–100.0] 93.6 [92.9–94.1] 0.973 0.4 [0.0–0.7] – – 
+ disks no map, gentle shell (chord_warp) 2 97.7 [96.0–99.3] 74.6 [56.6–92.5] 1.059 0.6 [0.0–1.1] – – 
+ disks band map, gentle shell (chord_warp) 2 99.8 [99.7–100.0] 94.7 [93.2–96.1] 0.970 0.2 [0.0–0.3] – – 
+ disks core 3 78.1 [74.3–80.1] 72.2 [62.5–81.3] 0.953 21.2 [17.9–25.7] – 0.61 
+ disks core_lift 3 99.9 [99.7–100.0] 97.6 [97.2–98.1] 0.978 0.1 [0.0–0.3] 1.00 0.77 
+ disks core_upq 3 100.0 [100.0–100.0] 98.9 [98.9–99.1] 1.019 0.0 [0.0–0.0] 0.94 0.84 
+ disks plain_b3 3 67.3 [56.8–79.7] 59.9 [45.2–72.4] 0.923 32.7 [20.3–43.2] – – 
+ disks lift + push, strong then relaxed, bounded 1 100.0 99.0 1.029 0.0 0.94 0.84 
+ disks upq_b2 1 95.3 98.2 1.014 4.7 0.95 0.84 
+ disks upq_b3 3 94.1 [93.3–95.4] 97.6 [97.5–97.9] 1.013 5.9 [4.6–6.7] 0.96 0.85 
+ disks wide 3 100.0 [100.0–100.0] 98.9 [98.9–99.1] 1.019 0.0 [0.0–0.0] 0.94 – 
+ disks wide_lift 3 99.9 [99.7–100.0] 97.6 [97.2–98.1] 0.978 0.1 [0.0–0.3] 1.00 – 
+ floor plan no map (ntrl-demo) 6 61.1 [35.0–95.0] 22.0 [15.4–33.0] 1.197 1.4 [0.0–4.4] 0.08 1.30 
+ floor plan the same push without the lift (control) 1 31.0 1.4 0.371 36.8 0.04 -0.63 
+ floor plan max-min map 3 49.5 [36.2–75.8] 20.7 [16.1–28.3] 1.193 8.7 [2.5–13.5] 0.09 0.98 
+ floor plan max-min, anisotropy ≤ 2 2 51.0 [40.7–61.4] 20.3 [17.6–23.0] 1.188 1.2 [0.3–2.1] 0.07 1.32 
+ floor plan band map (chord_warp) 3 38.9 [38.3–39.6] 23.2 [20.3–28.2] 1.146 3.7 [0.8–9.2] 0.23 0.65 
+ floor plan pinned band map (chord_warp) 2 37.7 [35.6–39.9] 22.2 [20.4–24.0] 1.154 6.2 [5.4–6.9] 0.22 0.62 
+ floor plan clearance coordinate, no time metric (control) 2 78.8 [78.8–78.8] 64.1 [53.1–75.1] 1.013 21.2 [21.2–21.2] 0.77 0.84 
+ floor plan travel-time lift 3 65.0 [57.8–71.0] 61.8 [50.8–71.4] 0.954 35.0 [29.0–42.2] 0.98 0.28 
+ floor plan lift + constant push λ 3e-3 3 46.6 [43.2–49.9] 1.5 [0.4–2.9] 0.414 52.7 [50.1–54.7] 0.57 -0.55 
+ floor plan lift + push, strong then relaxed 3 50.0 [48.6–52.1] 3.4 [1.3–5.3] 0.502 48.4 [45.8–50.6] 0.55 -0.39 
+ floor plan lift on closed pairs (floor shell 0.1) 2 69.9 [63.2–76.7] 66.1 [61.3–70.9] 0.987 30.1 [23.3–36.8] 0.99 0.35 
+ floor plan no map on closed pairs 3 53.2 [38.8–66.9] 0.5 [0.0–0.7] 7.100 21.3 [5.8–39.0] – – 
+ floor plan band map on closed pairs 3 93.8 [92.5–94.6] 6.4 [3.3–9.9] 1.484 0.1 [0.0–0.4] – – 
+ floor plan no map, gentle shell (chord_warp) 3 97.9 [96.2–98.9] 17.2 [15.1–19.9] 1.182 1.5 [0.8–2.5] – – 
+ floor plan band map, gentle shell (chord_warp) 3 98.1 [97.1–99.6] 29.2 [27.5–31.9] 1.147 1.9 [0.4–2.9] – – 
+ floor plan core 3 92.3 [85.6–95.8] 70.2 [61.6–76.9] 1.053 7.7 [4.2–14.4] – 1.19 
+ floor plan core_lift 3 100.0 [100.0–100.0] 91.0 [87.8–93.0] 1.004 0.0 [0.0–0.0] 0.85 1.03 
+ floor plan core_upq 3 98.3 [96.0–100.0] 81.9 [74.8–86.6] 1.004 1.4 [0.0–3.2] 0.61 1.07 
+ floor plan plain_b3 3 96.3 [95.0–97.1] 69.1 [54.2–76.6] 1.060 3.7 [2.9–5.0] – – 
+ floor plan lift + push, strong then relaxed, bounded 3 94.2 [85.6–98.5] 82.1 [72.8–88.7] 0.984 5.8 [1.5–14.4] 0.85 1.00 
+ floor plan upq_b2 1 64.9 45.4 0.897 35.1 0.68 0.04 
+ floor plan upq_b3 3 79.7 [76.1–85.6] 59.1 [43.3–77.2] 0.936 19.3 [14.4–22.1] 0.69 0.80 
+ floor plan wide 3 98.3 [96.0–100.0] 81.9 [74.8–86.6] 1.004 1.4 [0.0–3.2] 0.61 – 
+ floor plan wide_lift 3 100.0 [100.0–100.0] 91.0 [87.8–93.0] 1.004 0.0 [0.0–0.0] 0.85 – 
+ plus maze no map (ntrl-demo) 3 68.5 [65.7–70.6] 9.7 [7.0–14.1] 1.197 14.2 [10.0–19.9] 0.10 1.36 
+ plus maze dead third input (control) 1 69.1 7.9 1.207 10.0 0.10 1.87 
+ plus maze the same push without the lift (control) 1 54.2 81.5 1.053 0.0 0.04 0.76 
+ plus maze max-min map 3 67.1 [61.3–73.0] 23.3 [17.5–29.8] 1.157 17.5 [12.0–23.2] 0.09 1.75 
+ plus maze max-min, anisotropy ≤ 2 2 69.8 [67.0–72.5] 9.1 [6.4–11.8] 1.197 12.1 [12.0–12.2] 0.10 1.76 
+ plus maze band map (chord_warp) 3 85.4 [84.0–87.7] 52.4 [40.5–60.3] 1.095 8.2 [6.2–9.7] 0.48 1.38 
+ plus maze pinned band map (chord_warp) 2 76.8 [74.4–79.3] 39.1 [37.1–41.1] 1.116 20.9 [18.2–23.6] 0.47 1.39 
+ plus maze clearance coordinate, no time metric (control) 2 56.8 [56.6–56.9] 70.0 [68.4–71.5] 0.970 43.2 [43.1–43.4] 0.86 0.10 
+ plus maze travel-time lift 3 57.9 [57.5–58.2] 74.5 [74.0–75.0] 0.989 42.1 [41.8–42.5] 1.00 0.21 
+ plus maze lift × 0.1 1 56.1 60.6 0.967 43.9 1.00 0.07 
+ plus maze lift × 0.3 1 58.1 69.8 0.978 41.9 1.00 0.20 
+ plus maze lift faded in, epochs 300–1,500 1 58.2 75.9 0.987 41.8 1.00 0.23 
+ plus maze lift faded in, epochs 1,000–2,500 1 58.9 74.4 1.010 41.1 1.00 0.33 
+ plus maze lift + constant push λ 3e-3 1 66.9 88.7 1.042 32.9 0.93 0.97 
+ plus maze lift + constant push λ 6e-3 1 68.2 51.5 1.090 31.8 0.90 0.67 
+ plus maze lift + constant push λ 1e-2 1 79.0 12.2 1.174 21.0 0.92 1.66 
+ plus maze lift + push, strong then relaxed 3 64.9 [62.6–68.7] 86.3 [84.4–88.2] 1.021 35.1 [31.3–37.3] 0.92 0.44 
+ plus maze lift on closed pairs (floor shell 0.1) 2 59.3 [59.2–59.4] 68.8 [67.3–70.3] 1.026 40.7 [40.6–40.8] 0.98 0.30 
+ plus maze no map on closed pairs 2 57.8 [56.4–59.2] 0.3 [0.1–0.5] 1.532 20.2 [15.3–25.2] – – 
+ plus maze band map on closed pairs 2 67.6 [66.5–68.7] 1.1 [0.3–1.9] 1.313 16.4 [16.4–16.5] – – 
+ plus maze no map, gentle shell (chord_warp) 2 80.9 [77.3–84.4] 2.4 [2.4–2.4] 1.244 10.2 [9.8–10.6] – – 
+ plus maze band map, gentle shell (chord_warp) 2 90.6 [88.1–93.1] 14.0 [11.4–16.7] 1.161 7.2 [6.1–8.3] – – 
+ plus maze bandz_upq 1 72.3 86.3 1.053 26.9 0.87 0.74 
+ plus maze blur7_upq 1 82.7 93.3 1.042 16.9 0.91 0.96 
+ plus maze blur_lift 1 59.5 72.8 1.008 40.5 1.00 0.39 
+ plus maze blur_upq 1 84.7 89.8 1.046 14.5 0.91 1.16 
+ plus maze core 3 94.9 [90.1–98.3] 11.7 [8.3–17.9] 1.172 1.5 [0.8–1.9] – 1.62 
+ plus maze core_lift 3 94.2 [90.6–97.5] 85.4 [83.9–87.4] 1.050 5.8 [2.5–9.4] 0.99 1.19 
+ plus maze core_upq 3 99.8 [99.4–100.0] 83.3 [81.9–85.2] 1.061 0.2 [0.0–0.6] 0.91 1.27 
+ plus maze lift_b2 1 62.2 77.2 1.023 36.8 0.99 0.57 
+ plus maze plain_b3 3 89.9 [84.6–94.2] 5.3 [0.1–15.1] 1.300 3.5 [1.9–4.5] – – 
+ plus maze plain_upq_b3 1 70.2 58.0 1.090 3.8 0.09 1.37 
+ plus maze lift + push, strong then relaxed, bounded 1 68.7 88.2 1.038 31.3 0.92 0.63 
+ plus maze upq_b2 1 83.1 88.8 1.048 16.8 0.92 0.87 
+ plus maze upq_b3 3 92.3 [91.1–93.3] 77.9 [75.5–81.4] 1.067 7.7 [6.7–8.9] 0.94 1.26 
+ plus maze upst 1 71.6 88.5 1.050 27.5 0.85 0.82 
+ plus maze wide 3 99.8 [99.4–100.0] 83.3 [81.9–85.2] 1.061 0.2 [0.0–0.6] 0.91 – 
+ plus maze wide_lift 3 94.2 [90.6–97.5] 85.4 [83.9–87.4] 1.050 5.8 [2.5–9.4] 0.99 – 
+ gap maze no map (ntrl-demo) 3 53.1 [48.8–60.6] 43.6 [31.0–54.7] 1.106 30.6 [27.2–34.4] 0.14 1.19 
+ gap maze dead third input (control) 1 50.0 45.0 1.102 27.2 0.13 1.30 
+ gap maze the same push without the lift (control) 1 46.6 90.9 1.041 7.7 0.06 1.10 
+ gap maze max-min map 3 70.7 [69.3–72.3] 50.8 [43.4–59.2] 1.083 21.7 [15.6–25.7] 0.24 1.55 
+ gap maze band map (chord_warp) 3 66.0 [62.4–71.4] 87.6 [84.9–91.1] 1.037 29.4 [25.6–33.3] 0.58 0.99 
+ gap maze pinned band map (chord_warp) 2 68.7 [66.2–71.1] 88.7 [87.9–89.6] 1.032 25.3 [25.1–25.4] 0.56 1.11 
+ gap maze clearance coordinate, no time metric (control) 2 45.7 [44.8–46.7] 59.1 [58.1–60.0] 0.949 54.3 [53.3–55.2] 0.76 0.26 
+ gap maze travel-time lift 3 56.4 [55.2–57.6] 83.9 [82.7–85.2] 1.005 43.4 [42.4–44.8] 1.00 0.65 
+ gap maze lift × 0.1 1 47.3 74.1 0.992 52.7 0.98 0.44 
+ gap maze lift × 0.3 1 55.8 84.2 1.006 44.2 1.01 0.71 
+ gap maze lift faded in, epochs 300–1,500 1 55.8 83.7 1.005 44.0 1.00 0.73 
+ gap maze lift faded in, epochs 1,000–2,500 1 56.4 84.8 1.003 43.6 1.03 0.77 
+ gap maze lift + constant push λ 3e-3 1 84.6 92.7 1.036 15.4 0.95 1.18 
+ gap maze lift + constant push λ 6e-3 1 93.4 58.3 1.086 6.6 0.96 1.37 
+ gap maze lift + constant push λ 1e-2 1 92.3 24.1 1.147 7.4 0.93 1.65 
+ gap maze lift + push, strong then relaxed 3 91.5 [90.6–92.2] 92.5 [89.9–94.8] 1.038 8.5 [7.8–9.4] 0.94 1.18 
+ gap maze lift on closed pairs (floor shell 0.1) 2 52.7 [51.9–53.6] 82.9 [80.1–85.7] 1.008 47.3 [46.4–48.1] 0.99 0.47 
+ gap maze no map on closed pairs 2 43.4 [42.3–44.6] 1.4 [1.2–1.6] 1.319 25.6 [24.4–26.8] – – 
+ gap maze band map on closed pairs 2 77.0 [71.2–82.8] 20.9 [20.3–21.5] 1.158 10.5 [9.8–11.2] – – 
+ gap maze no map, gentle shell (chord_warp) 2 61.6 [58.7–64.4] 30.0 [30.0–30.1] 1.135 33.8 [30.2–37.3] – – 
+ gap maze band map, gentle shell (chord_warp) 2 78.1 [73.2–82.9] 47.7 [45.4–49.9] 1.100 19.4 [17.1–21.8] – – 
+ gap maze core 2 69.0 [67.8–70.2] 63.2 [59.6–66.7] 1.070 17.4 [14.2–20.7] – – 
+ gap maze core1_lift 3 91.3 [86.2–96.0] 95.0 [92.5–98.1] 1.028 8.7 [4.0–13.8] 1.00 1.05 
+ gap maze core1_upq 3 99.3 [98.7–100.0] 92.0 [89.8–94.3] 1.038 0.7 [0.0–1.3] 0.92 1.20 
+ gap maze core_lift 3 57.0 [55.1–58.4] 80.2 [79.1–80.9] 0.992 43.0 [41.6–44.9] 0.99 0.64 
+ gap maze core_upq 3 83.6 [79.8–86.7] 89.0 [87.1–90.2] 1.011 16.3 [13.3–20.0] 0.91 1.08 
+ gap maze lift + push, strong then relaxed, bounded 1 91.7 89.9 1.033 8.3 0.94 1.21 
+ gap maze upq_b2 1 96.7 91.7 1.042 3.3 0.95 1.21 
+ gap maze upq_b3 3 96.1 [93.1–97.8] 89.6 [89.0–90.4] 1.042 3.4 [2.2–5.4] 0.96 1.17 
+ gap maze wide 3 99.3 [98.7–100.0] 92.0 [89.8–94.3] 1.038 0.7 [0.0–1.3] 0.92 – 
+ gap maze wide_lift 3 91.3 [86.2–96.0] 95.0 [92.5–98.1] 1.028 8.7 [4.0–13.8] 1.00 – 
+Part 3 · What the lift cannot do: give a thin wall two sides 
+The height h depends on the clearance alone, so two points that face each other across a wall get the same height. On the plus maze such points are 0.66 cells apart in the plane (wall 0.5 cells), and the travel times to a goal behind the wall differ between them by the whole detour (a median of 14 cells in the longest class of detours). The lift gives the network no input length for that difference. Under the strong push the network builds it anyway; once the push is relaxed it lets the long detours go. Giving the wall room is a job for the position coordinates, and a planar map can do it. 
+A wall-magnifying planar map in front of the lift 
+φ(x) = ( ψ(x) , h(x) ) ψ : a planar map that magnifies wall interiors (registered, from the earlier speed-equalization study)
+ h : the lift, unchanged, from the clearance in the maze
+ψ gives a wall two sides that are far apart; h gives the band its length along the normal.
+The loss and its slopes are still taken in x (chain rule through ψ and h); the push is unchanged. 
+The map is not new. It is the speed-equalization map with unconstrained wall interiors (core target 0.1) from the earlier pages, produced by the same optimizer on every scene. On the plus maze it stretches wall interiors ×3.2 along the wall normal and shrinks free space to ×0.61; the band keeps its length (×0.93), which is why the map could not help the wall layer. Used alone it had the best planning and the worst travel times of all planar maps on the plus maze: 94.9 % / 11.7 % (queries solved / travel times within 10 %), with detours overestimated (index 1.62, where 1 is the truth). The lift alone was the mirror image: 57.9 % / 74.5 %, detours seen through. The two repair each other. 
+ Plus maze, 3 seeds: 99.8 % / 83.3 % with the map, the lift and the push (lift + push without the map: 64.9 % / 86.3 %; plain ntrl-demo: 68.5 % / 9.7 %). By distance bin, shortest to longest queries: 100 / 100 / 100 / 100 / 99 / 100 % against 99 / 95 / 87 / 76 / 33 / 0 %. Without the push the map and the lift already give 94.2 % / 85.4 %: on this maze the detours stay without being held up. 
+Travel time to one goal (star) on the plus maze, seed 87358; contours every 2 cells, walls grey, one colour scale. 
+The same three parts on all four scenes 
+Map + lift + push, disks / floor plan / plus maze / gap maze: 100.0 / 98.3 / 99.8 / 99.3 % solved and 98.9 / 81.9 / 83.3 / 92.0 % of travel times within 10 %. Lift + push without the map: 100.0 / 94.2 / 64.9 / 91.5 % and 99.0 / 82.1 / 86.3 / 92.5 %. Plain ntrl-demo: 96.6 / 61.1 / 68.5 / 53.1 % and 90.4 / 22.0 / 9.7 / 43.6 %. The map alone: 78.1 / 92.3 / 94.9 / 69.0 % and 72.2 / 70.2 / 11.7 / 63.2 % (on the gap maze this is the earlier, weaker map; the new one was not trained without the lift). 
+ Disks. The map alone made this scene worse than no map (78.1 % / 72.2 % against 96.6 % / 90.4 %). With the lift on top it is 99.9 % / 97.6 % without the push and 100.0 % / 98.9 % with it: the lift takes over the band, which the map handled badly. 
+ Floor plan. Map + lift without any push: 100.0 % / 91.0 % (3 seeds), above the bounded push without the map (94.2 % / 82.1 %); with the push as well: 98.3 % / 81.9 % (3 seeds). ntrl-demo’s trainer repeats thousands of epochs on this scene with the map (its rollback rule), so these trainings take several times longer. 
+ Gap maze. Lift + push without a map already plans 91.5 % here. With the only wall-magnifying map registered for this maze when the test started (a weaker kind: walls ×1.6), map + lift + push gives 83.6 % / 89.0 % and map + lift without the push 57.0 % / 80.2 %, the same as the lift alone (56.4 % / 83.9 %). With a map of the same kind as on the other scenes, built for this page (walls ×5.7): 99.3 % / 92.0 % with the push (3 seeds) and 91.3 % / 95.0 % without. So the push stays in the recipe: whether the detours hold without it depends on how much room the map gives the walls. 
+ A larger plus maze (30 × 30, one seed, no setting chosen on it). Map + lift + push: 97.3 % / 83.1 %, against 70.2 % / 86.0 % for lift + push and 66.7 % / 26.8 % for plain ntrl-demo. Without the push: 75.6 % / 83.9 %. The longer the detours, the more the push is needed. 
+Control: which property of the map does the work 
+A second map tests whether the distance between the two sides of a wall is what matters. It is closed-form, the gradient map of a blurred obstacle indicator, ψ(x) = x − k ∇(G σ ∗ occupancy), one-to-one by construction. It moves the two sides of a wall apart as much as the optimized map does (distance between facing points ×1.32 against ×1.32), but stretches the wall interior only ×1.5 instead of ×3.2 and leaves free space away from walls as it is. Plus maze, one seed: with the lift and no push it plans 59.5 % / 72.8 %, like the lift alone, and the field is see-through again (index 0.39). With the push it gives 84.7 % / 89.8 % (σ 0.35 cells, compression limit 0.85) and 82.7 % / 93.3 % (limit 0.7), against 68.7 % / 88.2 % for the same seed without a map. So the distance between the two sides is not what holds the detours without a push, and a modest widening still helps the push keep them. The optimized map differs from this one in two ways, the ×3 stretch of wall interiors and the compression of all free space. 
+The gap maze points to the wall stretch. Its two optimized maps compress free space about equally (×0.76 and ×0.69) and differ in how much they stretch wall interiors (×1.6 and ×5.7). With the lift and no push the first plans 57.0 % with the detours seen through (index 0.64), the second 91.3 % (index 1.05). The two maps also differ in the band (×1.37 and ×1.08), so this is evidence, not a clean separation. 
+Every map: stretch along the wall normal by region, distance between the two sides of a wall, and the result under the lift 
+ scene map wall interior band free space > 1 cell from walls two sides of a wall map + lift: solved / T10 % map + lift + push: solved / T10 % 
+ disks optimized, wall-magnifying ×1.26 ×0.98 ×0.76 ×1.19 99.9 % / 97.6 % 100.0 % / 98.9 % 
+ disks closed-form, limit 0.85 ×1.27 ×0.76 ×0.99 ×1.26 – – 
+ disks closed-form, limit 0.7 ×1.22 ×0.81 ×0.99 ×1.21 – – 
+ disks band map (chord_warp) ×0.84 ×0.88 ×0.93 ×1.09 – – 
+ disks max-min map ×1.42 ×0.93 ×0.71 ×1.42 – – 
+ floor plan optimized, wall-magnifying ×3.06 ×1.09 ×0.77 ×2.23 100.0 % / 91.0 % 98.3 % / 81.9 % 
+ floor plan closed-form, limit 0.85 ×1.50 ×0.97 ×0.99 ×1.42 – – 
+ floor plan closed-form, limit 0.7 ×1.41 ×0.97 ×0.99 ×1.35 – – 
+ floor plan band map (chord_warp) ×0.87 ×0.92 ×0.92 ×1.24 – – 
+ floor plan max-min map ×1.12 ×1.01 ×0.84 ×1.12 – – 
+ plus maze optimized, wall-magnifying ×3.23 ×0.93 ×0.61 ×1.32 94.2 % / 85.4 % 99.8 % / 83.3 % 
+ plus maze closed-form, limit 0.85 ×1.51 ×0.76 ×1.00 ×1.32 59.5 % / 72.8 % 84.7 % / 89.8 % 
+ plus maze closed-form, limit 0.7 ×1.42 ×0.80 ×1.00 ×1.26 – 82.7 % / 93.3 % 
+ plus maze band map (chord_warp) ×0.86 ×0.94 ×0.89 ×1.22 – 72.3 % / 86.3 % 
+ plus maze max-min map ×1.17 ×1.17 ×0.48 ×1.17 – – 
+ gap maze optimized, core target 0.3 (chord_warp) ×1.62 ×1.37 ×0.76 ×1.64 57.0 % / 80.2 % 83.6 % / 89.0 % 
+ gap maze optimized, core target 0.1 (built for this page) ×5.69 ×1.08 ×0.69 ×1.46 91.3 % / 95.0 % 99.3 % / 92.0 % 
+ gap maze band map (chord_warp) ×0.87 ×1.09 ×0.94 ×1.37 – – 
+ gap maze max-min map ×1.51 ×1.50 ×0.58 ×1.51 – – 
+The alternative without a map: finer position features 
+The network’s position inputs pass through random Fourier features, and multiplying their frequencies by 3 also gives a thin wall more room. With the lift and the push: disks / floor plan / plus maze / gap maze 94.1 / 79.7 / 92.3 / 96.1 % solved and 97.6 / 59.1 / 77.9 / 89.6 % within 10 % (3 / 3 / 3 / 3 seeds). It fixes the plus maze (92.3 % / 77.9 %) and costs the floor plan (79.7 % / 59.1 % against 94.2 % / 82.1 %), where the see-through fields come back, and a few points on the disks. Controls on the plus maze: the same features and push without the lift 70.2 % / 58.0 %; the same features and the lift without the push 62.2 % / 77.2 % (frequencies ×2); plain ntrl-demo with frequencies ×3 89.9 % / 5.3 %. It needs no map, and it is not safe on every scene, so it is not part of the recipe. 
+ What this says about the original idea. A map of the plane does have a job in learning the travel-time field, but it is not raising the slowest speed. The speed problem sits along the wall normal, and the lift solves it exactly without a map. What a planar map can add is room inside the obstacles, so that the two sides of a wall are far apart for the network. The max-min map spent its room on neither. 
+Other sizes, same settings 
+The same lift and the same push setting on two larger mazes, one seed each, against the registered plain fields; on the 30 × 30 plus maze also with its wall-magnifying map (Part 3). 
+ scene arm seeds solved % [range] T within 10 % [range] median T / T* S × slope, S 
+ 30 × 30 plus maze no map (ntrl-demo) 3 66.7 [66.4–67.0] 26.8 [23.7–30.8] 1.144 – 
+ 30 × 30 plus maze travel-time lift 1 65.9 58.5 0.945 1.00 
+ 30 × 30 plus maze lift + push 1 70.2 86.0 1.027 0.94 
+ 30 × 30 plus maze wall-magnifying map + lift 1 75.6 83.9 1.028 0.97 
+ 30 × 30 plus maze wall-magnifying map + lift + push 1 97.3 83.1 1.064 0.90 
+ 10 × 10 maze pulled apart ×4 no map (ntrl-demo) 3 36.8 [36.1–38.1] 51.8 [39.5–64.9] 1.094 – 
+ 10 × 10 maze pulled apart ×4 band map (planar) 3 51.6 [48.4–54.2] 88.0 [86.3–89.0] 1.023 – 
+ 10 × 10 maze pulled apart ×4 travel-time lift 1 40.2 75.5 0.967 1.00 
+ 10 × 10 maze pulled apart ×4 lift + push 1 75.1 96.7 1.027 0.95 
+The recipe in a dozen lines 
+Steps 1 and 2 use only what an eikonal learner already has: the clearance function behind its speed labels, and a collision check. Step 0 needs a map of the scene, here the registered one from the speed-equalization study. 
+# 0. (where walls are thin against the detours they cause) a planar map ψ that magnifies wall interiors;
+# replace x by ψ(x) in the network input below. Everything else, h included, stays in the maze's coordinates.
+# 1. the lift: one more input coordinate, from the clearance the speed labels already use
+d, n = clearance(x) # signed distance to the obstacles and its unit gradient
+h = G(d) # G(d) = ∫_d^margin √(1 / S(d')² − 1) dd' (a 1-D table; 0 in free space;
+ # continued with the floor slope as deep as the training points go)
+T = net(fourier([x0, h0]), fourier([x1, h1]))
+ # ∂h/∂x = G'(d) n, so ∇_x T follows by the chain rule
+# 2. the selection term, added to the eikonal loss (faded in; λ strong first, then relaxed)
+blocked = segment_hits_obstacle(x0, x1) & (T < 3 box lengths) # a collision check, no solver; bounded
+loss += − λ · mean(T[blocked]) + μ · mean(relu(√(S |∇_x T|) − 1)²) 
+Limits and open points 
+ The lift needs the clearance at query time , the same function the training speeds come from. ntrl-demo evaluates only the network when it plans; a lifted field also evaluates d(x). 
+ Lift and push alone do not hold long detours behind thin walls. The lift gives the band length along the normal; the difference between the two sides of a wall still has to be built inside the wall’s own width in the plane. On the 22 × 22 plus maze the recipe’s fields know, of a true detour of 2.3, 4.3, 8.0, 14.1 cells (medians by length class), 1.2, 2.4, 2.4, 1.6 cells. A wall-magnifying planar map in front of the lift closes this (99.8 % solved, Part 3). That map is the open point now: it comes from a lattice optimizer for 2-D scenes, minutes per scene, with no 3-D or configuration-space version. The closed-form map tried here recovers about half of the gain, and only with the push. Which property of the optimized map carries the result is not cleanly separated; the gap maze points to the stretch of wall interiors (Part 3). 
+ The push trades accuracy for planning, and the schedule only partly escapes the trade. Constant push, one seed, queries solved / travel times within 10 %: λ 3e-3: plus maze 66.9 % / 88.7 %, gap maze 84.6 % / 92.7 %; λ 6e-3: plus maze 68.2 % / 51.5 %, gap maze 93.4 % / 58.3 %; λ 1e-2: plus maze 79.0 % / 12.2 %, gap maze 92.3 % / 24.1 %. On the gap maze strong-then-relaxed keeps the planning of the strong push and the accuracy of the weak one; on the plus maze it ends where the weak push does. The balance between push and one-sided term was set by one argument and one seed, not tuned per scene. 
+ The push must be bounded wherever free space is not connected (the floor plan’s outside), and it has to be faded in: switched on at once it hangs ntrl-demo’s trainer (its epoch-repeat rule). A push on every pair with the one-sided term deflates the field instead of selecting anything. Fading the lift into a trained plain network does not keep its detours. These first attempts are in the run table. 
+ Not tested: 3-D scenes, configuration spaces, other speed profiles, more than one seed on the two larger mazes. In a configuration space the lift’s normal speed is 1 / |∇ q d| instead of 1. 
+Registered runs of this study 
+ run registry id what 
+ main 20261111T174515Z-c95c48c5 disks, floor plan, plus maze: lift × 3 seeds; controls zero, chan 
+ gap 20261111T174520Z-7bde3c19 gap maze: lift × 3; zero; chan × 2 
+ inner 20261111T174622Z-b1e16cc7 closed pairs (floor shell 0.1): lift × 2 on three scenes 
+ inner_gap 20261111T174627Z-fff58dd4 closed pairs, gap maze 
+ curve 20261111T175307Z-76269b36 learning curves, 1,000 epochs: plain vs lift (three scenes) 
+ curve_gap 20261111T175311Z-c83ba447 learning curves, gap maze 
+ select_gap 20261111T180943Z-ea4e98ce same on the gap maze 
+ select 20261111T180947Z-9fd70b9c plus maze: lift faded in (two schedules), lift × 0.1 / × 0.3; its push arms were stopped (trainer hang) 
+ push_gap 20261111T183244Z-6a36ca59 same on the gap maze 
+ push 20261111T183248Z-a4a34cb6 plus maze: push on blocked pairs (λ 3e-3 μ 0.1; λ 3e-2 μ 1); its all-pairs push arms were stopped (deflation) 
+ push_disks 20261111T183252Z-b5b4c9db same on disks, seed 2 
+ push2_gap 20261111T184431Z-01739260 same on the gap maze 
+ push2 20261111T184435Z-34a90489 plus maze: stronger push (λ 1e-2 μ 0.1); λ 1e-1 stopped 
+ push2_disks 20261111T184439Z-0ea8ac45 same on disks, seed 2 
+ final2_gap 20261111T190429Z-15559ab5 
+ final2 20261111T190434Z-603b7076 
+ scale2_gap 20261111T191206Z-61a125f1 
+ scale2 20261111T191210Z-8c7cc4e2 
+ allen_upb 20261111T195920Z-0ff87084 
+ dose 20261111T211907Z-f04d9572 
+ dose_gap 20261111T211911Z-1ccf55aa 
+ cap 20261111T212930Z-8b189c42 
+ cap_gap 20261111T212933Z-50543b47 
+ width 20261112T055800Z-e33dfffe Part 3, plus maze: lift + push with Fourier frequencies ×2 / ×3, lift with ×2 and no push, constant stiff push; ×2 on disks and floor plan 
+ width_gap 20261112T055804Z-b56ae8a0 same ×2 on the gap maze 
+ compose 20261112T060434Z-8ce8b5a4 Part 3, plus maze, seed 87358: wall-magnifying map + lift, with and without push; band map + lift + push 
+ res 20261112T064557Z-9b900464 lift + push with frequencies ×3: plus maze seeds 1, 2; disks and floor plan × 3; the same without the lift (control) 
+ res_gap 20261112T064556Z-9cc919c5 same on the gap maze × 3 
+ compose2 20261112T070022Z-de0dfb5d map + lift, no push: plus maze seeds 1, 2; disks and floor plan × 3 
+ compose2_gap 20261112T070022Z-5f9a9cff same on the gap maze × 3 (chord_warp core-target-0.3 map) 
+ compose3 20261112T071137Z-8c8a87c7 map + lift + push: plus maze seeds 1, 2; disks and floor plan × 3 
+ compose3_gap 20261112T071136Z-1828d31e same on the gap maze × 3 (chord_warp core-target-0.3 map) 
+ res_retry 20261112T071136Z-ae56d9cb one disks job of the run above again (it died at start, GPU out of memory) 
+ blur 20261112T071552Z-ec87f2e3 plus maze, seed 87358: closed-form map + lift, with and without push (control) 
+ compose4_gap 20261112T104510Z-a6477221 gap maze with the core-target-0.1 map built for this page: map + lift with and without push × 3 
+ scale3 20261112T104707Z-ba9f4439 30 × 30 plus maze: map + lift with and without push, one seed 
+ maps blur 20261112T071511Z-05ae1744 closed-form wall-widening maps (blurmap.py) for plus maze, disks, floor plan 
+ maps gap10_control 20261112T095307Z-6786df31 speed_equalize optimizer: core-target-0.1 map of the gap maze 
+ select2_gap 20261111T181748Z-754d4743 stopped: every arm hung at the push start (ntrl-demo’s epoch-repeat rule); nothing is cited from it 
+ select2 20261111T181752Z-e87e9938 stopped: every arm hung at the push start (ntrl-demo’s epoch-repeat rule); nothing is cited from it 
+ select_disks 20261111T182830Z-77448b43 stopped: every arm hung at the push start (ntrl-demo’s epoch-repeat rule); nothing is cited from it 
+ final 20261111T185436Z-ff292fe7 stopped: every arm hung at the push start (ntrl-demo’s epoch-repeat rule); nothing is cited from it 
+ final_gap 20261111T185431Z-ca385253 stopped: every arm hung at the push start (ntrl-demo’s epoch-repeat rule); nothing is cited from it 
+ scale 20261111T185543Z-8ff1f88c stopped: every arm hung at the push start (ntrl-demo’s epoch-repeat rule); nothing is cited from it 
+ scale_gap 20261111T185540Z-8e02c83f stopped: every arm hung at the push start (ntrl-demo’s epoch-repeat rule); nothing is cited from it 
+ width_smoke_interrupted 20261112T054727Z-870da055 stopped: every arm hung at the push start (ntrl-demo’s epoch-repeat rule); nothing is cited from it 
+ smoke 20261111T174247Z-2da49df9 integration check (2 jobs × 30 epochs) 
+ smoke 20261112T055209Z-73a47604 integration check (2 jobs × 30 epochs) 
+ smoke 20261112T055952Z-4dc90a61 integration check (2 jobs × 30 epochs) 
+ Study folder jeffrey/lift_warp (README: request, setup, run ids). Fields: ntrl-demo unchanged on disk, 5,000 epochs, 500,000 of its own training pairs per scene, scored on the frozen queries of jeffrey/warp_ntrl (MPPI, planning seeds 0/1/2, exact clearance). Earlier arms are the registered fields of warp_ntrl , chord_warp and maxmin_warp . 
+[SCRIPT]
+[SCRIPT]
+ 

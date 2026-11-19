@@ -1,0 +1,46 @@
+{
+ "plus22": {
+  "prepared": "results/registered_20261102T042454Z-62864e61",
+  "blocked": "results/registered_20261117T054324Z-5d148fc2"
+ },
+ "apt32": {
+  "prepared": "results/registered_20261112T081337Z-6b5d9544",
+  "blocked": "results/registered_20261117T054339Z-e11680af"
+ },
+ "apt64": {
+  "prepared": "results/registered_20261112T063206Z-6e271a95",
+  "blocked": "results/registered_20261117T054355Z-f92d3460"
+ },
+ "plus30": {
+  "prepared": "results/registered_20261117T053658Z-9fd2caea",
+  "blocked": "results/registered_20261117T055154Z-cfaabec8"
+ },
+ "Allensville": {
+  "prepared": "results/registered_20261117T054449Z-0144646b",
+  "blocked": "results/registered_20261117T055619Z-82b0a941"
+ },
+ "plus40": {
+  "prepared": "results/registered_20261117T053700Z-41060313",
+  "blocked": "results/registered_20261117T060610Z-f818c76e"
+ },
+ "Lakeville": {
+  "prepared": "results/registered_20261117T054504Z-e60b96b5",
+  "blocked": "results/registered_20261117T060740Z-ec2f04f3"
+ },
+ "Klickitat": {
+  "prepared": "results/registered_20261117T063709Z-61a4f754",
+  "blocked": "results/registered_20261117T070515Z-c2424771"
+ },
+ "plus22in": {
+  "prepared": "results/registered_20261112T065945Z-91ae7981",
+  "blocked": "results/registered_20261117T075055Z-ad16e810"
+ },
+ "plus40in": {
+  "prepared": "results/registered_20261117T081804Z-72d00fe8",
+  "blocked": "results/registered_20261117T082205Z-01c9ed95"
+ },
+ "apt64in": {
+  "prepared": "results/registered_20261117T081808Z-316b6497",
+  "blocked": "results/registered_20261117T082300Z-5bf4cb84"
+ }
+}

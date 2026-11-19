@@ -1,0 +1,19 @@
+# label|scene key|seed|pipeline arguments   (processed in file order)
+# main test: lift + midpoint where the lift alone plans below ntrl-demo (plus 22 / 40, the three houses), plus 30 and maze 22 (sizes),
+# maze 13 as the contrast case where the lift alone is already ahead of ntrl-demo
+liftmid|plus22|87358|--lift time
+liftmid|Allensville|87358|--lift time
+liftmid|plus40|87358|--lift time
+liftmid|Lakeville|87358|--lift time
+mid|plus22|87358|--lift none
+drive|plus22|87358|--lift time --driver /home/jeffrey/bellman-ntfield/results/registered_20261117T054519Z-9a3bc556/training/checkpoint.pt
+liftmid|Klickitat|87358|--lift time
+liftmid|maze22|87358|--lift time
+mid|Allensville|87358|--lift none
+drive|Allensville|87358|--lift time --driver /home/jeffrey/bellman-ntfield/results/registered_20261117T121605Z-9c558da3/training/checkpoint.pt
+liftmid|plus30|87358|--lift time
+liftmid|maze13|87358|--lift time
+mid|plus40|87358|--lift none
+# dropped to keep the test count small (the lift alone is not behind ntrl-demo on maze 10; Lakeville repeats the house case):
+# mid|Lakeville|87358|--lift none
+# liftmid|maze10|87358|--lift time

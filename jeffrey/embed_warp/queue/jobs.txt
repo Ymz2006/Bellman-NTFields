@@ -1,0 +1,125 @@
+# seed 87358
+ntrl|results/registered_20261105T070402Z-98f3cab7|87358|
+ntrl|results/registered_20261105T070611Z-cf3b0b02|87358|
+ntrl|results/registered_20261105T070549Z-25e73d68|87358|
+ntrl|results/registered_20261105T070535Z-01c9f536|87358|
+ntrl|results/registered_20261105T070523Z-5877176f|87358|
+geoc|results/registered_20261105T070402Z-98f3cab7|87358|--octaves 7.43,14.86,29.72 --gate geo
+diffc|results/registered_20261105T070402Z-98f3cab7|87358|--octaves 7.43,14.86,29.72 --gate diff
+learnc|results/registered_20261105T070402Z-98f3cab7|87358|--octaves 7.43,14.86,29.72 --gate learn
+octc|results/registered_20261105T070402Z-98f3cab7|87358|--octaves 7.43,14.86,29.72 --gate const
+geoc|results/registered_20261105T070611Z-cf3b0b02|87358|--octaves 5.26,10.52,21.03 --gate geo
+diffc|results/registered_20261105T070611Z-cf3b0b02|87358|--octaves 5.26,10.52,21.03 --gate diff
+learnc|results/registered_20261105T070611Z-cf3b0b02|87358|--octaves 5.26,10.52,21.03 --gate learn
+octc|results/registered_20261105T070611Z-cf3b0b02|87358|--octaves 5.26,10.52,21.03 --gate const
+geoc|results/registered_20261105T070549Z-25e73d68|87358|--octaves 3.09,6.17,12.34 --gate geo
+diffc|results/registered_20261105T070549Z-25e73d68|87358|--octaves 3.09,6.17,12.34 --gate diff
+learnc|results/registered_20261105T070549Z-25e73d68|87358|--octaves 3.09,6.17,12.34 --gate learn
+octc|results/registered_20261105T070549Z-25e73d68|87358|--octaves 3.09,6.17,12.34 --gate const
+geo8|results/registered_20261105T070402Z-98f3cab7|87358|--octaves 2,4,8 --gate geo
+diff8|results/registered_20261105T070402Z-98f3cab7|87358|--octaves 2,4,8 --gate diff
+learn8|results/registered_20261105T070402Z-98f3cab7|87358|--octaves 2,4,8 --gate learn
+oct8|results/registered_20261105T070402Z-98f3cab7|87358|--octaves 2,4,8 --gate const
+geo8|results/registered_20261105T070611Z-cf3b0b02|87358|--octaves 2,4,8 --gate geo
+diff8|results/registered_20261105T070611Z-cf3b0b02|87358|--octaves 2,4,8 --gate diff
+learn8|results/registered_20261105T070611Z-cf3b0b02|87358|--octaves 2,4,8 --gate learn
+oct8|results/registered_20261105T070611Z-cf3b0b02|87358|--octaves 2,4,8 --gate const
+geo8|results/registered_20261105T070549Z-25e73d68|87358|--octaves 2,4,8 --gate geo
+diff8|results/registered_20261105T070549Z-25e73d68|87358|--octaves 2,4,8 --gate diff
+learn8|results/registered_20261105T070549Z-25e73d68|87358|--octaves 2,4,8 --gate learn
+oct8|results/registered_20261105T070549Z-25e73d68|87358|--octaves 2,4,8 --gate const
+geo8|results/registered_20261105T070535Z-01c9f536|87358|--octaves 2,4,8 --gate geo
+diff8|results/registered_20261105T070535Z-01c9f536|87358|--octaves 2,4,8 --gate diff
+learn8|results/registered_20261105T070535Z-01c9f536|87358|--octaves 2,4,8 --gate learn
+oct8|results/registered_20261105T070535Z-01c9f536|87358|--octaves 2,4,8 --gate const
+geo8|results/registered_20261105T070523Z-5877176f|87358|--octaves 2,4,8 --gate geo
+diff8|results/registered_20261105T070523Z-5877176f|87358|--octaves 2,4,8 --gate diff
+learn8|results/registered_20261105T070523Z-5877176f|87358|--octaves 2,4,8 --gate learn
+oct8|results/registered_20261105T070523Z-5877176f|87358|--octaves 2,4,8 --gate const
+# pairs drawn on the warped maze (cross_warp --z-draw), loss and planning on the real maze
+ntrl_zp|results/registered_20261105T070657Z-4ef430ba|87358|
+geoc_zp|results/registered_20261105T070657Z-4ef430ba|87358|--octaves 7.43,14.86,29.72 --gate geo
+learnc_zp|results/registered_20261105T070657Z-4ef430ba|87358|--octaves 7.43,14.86,29.72 --gate learn
+octc_zp|results/registered_20261105T070657Z-4ef430ba|87358|--octaves 7.43,14.86,29.72 --gate const
+diffc_zp|results/registered_20261105T070657Z-4ef430ba|87358|--octaves 7.43,14.86,29.72 --gate diff
+ntrl_zp|results/registered_20261105T070709Z-0edca351|87358|
+geoc_zp|results/registered_20261105T070709Z-0edca351|87358|--octaves 3.09,6.17,12.34 --gate geo
+learnc_zp|results/registered_20261105T070709Z-0edca351|87358|--octaves 3.09,6.17,12.34 --gate learn
+octc_zp|results/registered_20261105T070709Z-0edca351|87358|--octaves 3.09,6.17,12.34 --gate const
+diffc_zp|results/registered_20261105T070709Z-0edca351|87358|--octaves 3.09,6.17,12.34 --gate diff
+# seed 1
+ntrl|results/registered_20261105T070402Z-98f3cab7|1|
+ntrl|results/registered_20261105T070611Z-cf3b0b02|1|
+ntrl|results/registered_20261105T070549Z-25e73d68|1|
+ntrl|results/registered_20261105T070535Z-01c9f536|1|
+ntrl|results/registered_20261105T070523Z-5877176f|1|
+geoc|results/registered_20261105T070402Z-98f3cab7|1|--octaves 7.43,14.86,29.72 --gate geo
+diffc|results/registered_20261105T070402Z-98f3cab7|1|--octaves 7.43,14.86,29.72 --gate diff
+learnc|results/registered_20261105T070402Z-98f3cab7|1|--octaves 7.43,14.86,29.72 --gate learn
+octc|results/registered_20261105T070402Z-98f3cab7|1|--octaves 7.43,14.86,29.72 --gate const
+geoc|results/registered_20261105T070611Z-cf3b0b02|1|--octaves 5.26,10.52,21.03 --gate geo
+diffc|results/registered_20261105T070611Z-cf3b0b02|1|--octaves 5.26,10.52,21.03 --gate diff
+learnc|results/registered_20261105T070611Z-cf3b0b02|1|--octaves 5.26,10.52,21.03 --gate learn
+octc|results/registered_20261105T070611Z-cf3b0b02|1|--octaves 5.26,10.52,21.03 --gate const
+geoc|results/registered_20261105T070549Z-25e73d68|1|--octaves 3.09,6.17,12.34 --gate geo
+diffc|results/registered_20261105T070549Z-25e73d68|1|--octaves 3.09,6.17,12.34 --gate diff
+learnc|results/registered_20261105T070549Z-25e73d68|1|--octaves 3.09,6.17,12.34 --gate learn
+octc|results/registered_20261105T070549Z-25e73d68|1|--octaves 3.09,6.17,12.34 --gate const
+geo8|results/registered_20261105T070402Z-98f3cab7|1|--octaves 2,4,8 --gate geo
+diff8|results/registered_20261105T070402Z-98f3cab7|1|--octaves 2,4,8 --gate diff
+learn8|results/registered_20261105T070402Z-98f3cab7|1|--octaves 2,4,8 --gate learn
+oct8|results/registered_20261105T070402Z-98f3cab7|1|--octaves 2,4,8 --gate const
+geo8|results/registered_20261105T070611Z-cf3b0b02|1|--octaves 2,4,8 --gate geo
+diff8|results/registered_20261105T070611Z-cf3b0b02|1|--octaves 2,4,8 --gate diff
+learn8|results/registered_20261105T070611Z-cf3b0b02|1|--octaves 2,4,8 --gate learn
+oct8|results/registered_20261105T070611Z-cf3b0b02|1|--octaves 2,4,8 --gate const
+geo8|results/registered_20261105T070549Z-25e73d68|1|--octaves 2,4,8 --gate geo
+diff8|results/registered_20261105T070549Z-25e73d68|1|--octaves 2,4,8 --gate diff
+learn8|results/registered_20261105T070549Z-25e73d68|1|--octaves 2,4,8 --gate learn
+oct8|results/registered_20261105T070549Z-25e73d68|1|--octaves 2,4,8 --gate const
+geo8|results/registered_20261105T070535Z-01c9f536|1|--octaves 2,4,8 --gate geo
+diff8|results/registered_20261105T070535Z-01c9f536|1|--octaves 2,4,8 --gate diff
+learn8|results/registered_20261105T070535Z-01c9f536|1|--octaves 2,4,8 --gate learn
+oct8|results/registered_20261105T070535Z-01c9f536|1|--octaves 2,4,8 --gate const
+geo8|results/registered_20261105T070523Z-5877176f|1|--octaves 2,4,8 --gate geo
+diff8|results/registered_20261105T070523Z-5877176f|1|--octaves 2,4,8 --gate diff
+learn8|results/registered_20261105T070523Z-5877176f|1|--octaves 2,4,8 --gate learn
+oct8|results/registered_20261105T070523Z-5877176f|1|--octaves 2,4,8 --gate const
+# seed 2
+ntrl|results/registered_20261105T070402Z-98f3cab7|2|
+ntrl|results/registered_20261105T070611Z-cf3b0b02|2|
+ntrl|results/registered_20261105T070549Z-25e73d68|2|
+ntrl|results/registered_20261105T070535Z-01c9f536|2|
+ntrl|results/registered_20261105T070523Z-5877176f|2|
+geoc|results/registered_20261105T070402Z-98f3cab7|2|--octaves 7.43,14.86,29.72 --gate geo
+diffc|results/registered_20261105T070402Z-98f3cab7|2|--octaves 7.43,14.86,29.72 --gate diff
+learnc|results/registered_20261105T070402Z-98f3cab7|2|--octaves 7.43,14.86,29.72 --gate learn
+octc|results/registered_20261105T070402Z-98f3cab7|2|--octaves 7.43,14.86,29.72 --gate const
+geoc|results/registered_20261105T070611Z-cf3b0b02|2|--octaves 5.26,10.52,21.03 --gate geo
+diffc|results/registered_20261105T070611Z-cf3b0b02|2|--octaves 5.26,10.52,21.03 --gate diff
+learnc|results/registered_20261105T070611Z-cf3b0b02|2|--octaves 5.26,10.52,21.03 --gate learn
+octc|results/registered_20261105T070611Z-cf3b0b02|2|--octaves 5.26,10.52,21.03 --gate const
+geoc|results/registered_20261105T070549Z-25e73d68|2|--octaves 3.09,6.17,12.34 --gate geo
+diffc|results/registered_20261105T070549Z-25e73d68|2|--octaves 3.09,6.17,12.34 --gate diff
+learnc|results/registered_20261105T070549Z-25e73d68|2|--octaves 3.09,6.17,12.34 --gate learn
+octc|results/registered_20261105T070549Z-25e73d68|2|--octaves 3.09,6.17,12.34 --gate const
+geo8|results/registered_20261105T070402Z-98f3cab7|2|--octaves 2,4,8 --gate geo
+diff8|results/registered_20261105T070402Z-98f3cab7|2|--octaves 2,4,8 --gate diff
+learn8|results/registered_20261105T070402Z-98f3cab7|2|--octaves 2,4,8 --gate learn
+oct8|results/registered_20261105T070402Z-98f3cab7|2|--octaves 2,4,8 --gate const
+geo8|results/registered_20261105T070611Z-cf3b0b02|2|--octaves 2,4,8 --gate geo
+diff8|results/registered_20261105T070611Z-cf3b0b02|2|--octaves 2,4,8 --gate diff
+learn8|results/registered_20261105T070611Z-cf3b0b02|2|--octaves 2,4,8 --gate learn
+oct8|results/registered_20261105T070611Z-cf3b0b02|2|--octaves 2,4,8 --gate const
+geo8|results/registered_20261105T070549Z-25e73d68|2|--octaves 2,4,8 --gate geo
+diff8|results/registered_20261105T070549Z-25e73d68|2|--octaves 2,4,8 --gate diff
+learn8|results/registered_20261105T070549Z-25e73d68|2|--octaves 2,4,8 --gate learn
+oct8|results/registered_20261105T070549Z-25e73d68|2|--octaves 2,4,8 --gate const
+geo8|results/registered_20261105T070535Z-01c9f536|2|--octaves 2,4,8 --gate geo
+diff8|results/registered_20261105T070535Z-01c9f536|2|--octaves 2,4,8 --gate diff
+learn8|results/registered_20261105T070535Z-01c9f536|2|--octaves 2,4,8 --gate learn
+oct8|results/registered_20261105T070535Z-01c9f536|2|--octaves 2,4,8 --gate const
+geo8|results/registered_20261105T070523Z-5877176f|2|--octaves 2,4,8 --gate geo
+diff8|results/registered_20261105T070523Z-5877176f|2|--octaves 2,4,8 --gate diff
+learn8|results/registered_20261105T070523Z-5877176f|2|--octaves 2,4,8 --gate learn
+oct8|results/registered_20261105T070523Z-5877176f|2|--octaves 2,4,8 --gate const

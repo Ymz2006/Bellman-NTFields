@@ -1,0 +1,42 @@
+2026-11-18 12:02:19 runner start, 0 done, 0 failed
+2026-11-18 12:02:19 start *|22|87358|octave|main (RAM 16.0 GB, GPU 0 free 10.1 GB, foreign 0)
+2026-11-18 12:02:39 start *|22|87358|Apowmix@all|main (RAM 14.4 GB, GPU 1 free 23.5 GB, foreign 0)
+2026-11-18 12:19:29 done *|22|87358|Apowmix@all|main -> 20261118T170240Z-a909c1b0
+2026-11-18 12:19:29 start *|22|87358|Rtri@all|main (RAM 14.4 GB, GPU 1 free 23.5 GB, foreign 0)
+2026-11-18 12:33:50 done *|22|87358|octave|main -> 20261118T170220Z-7892e48d
+2026-11-18 12:33:50 start *|22|87358|Agtri@allx2|main (RAM 13.1 GB, GPU 0 free 10.1 GB, foreign 0)
+2026-11-18 12:39:10 done *|22|87358|Rtri@all|main -> 20261118T171931Z-9adf3443
+2026-11-18 12:39:10 start *|22|87358|Asc@new128|main (RAM 12.4 GB, GPU 1 free 23.5 GB, foreign 0)
+2026-11-18 13:08:00 done *|22|87358|Agtri@allx2|main -> 20261118T173351Z-95a0a62a
+2026-11-18 13:08:00 start *|22|87358|Rpowmix@half|main (RAM 12.9 GB, GPU 0 free 10.0 GB, foreign 0)
+2026-11-18 13:08:50 done *|22|87358|Asc@new128|main -> 20261118T173911Z-efdaea34
+2026-11-18 13:08:50 start *|22|87358|Apow16@axis|main (RAM 12.4 GB, GPU 1 free 23.5 GB, foreign 0)
+2026-11-18 13:26:40 done *|22|87358|Rpowmix@half|main -> 20261118T180801Z-0010cbda
+2026-11-18 13:26:40 start *|22|87358|Agtri@topx8|main (RAM 12.9 GB, GPU 0 free 10.0 GB, foreign 0)
+2026-11-18 13:31:30 done *|22|87358|Apow16@axis|main -> 20261118T180851Z-821e3bde
+2026-11-18 13:31:31 start *|22|1|octave|main (RAM 12.6 GB, GPU 1 free 23.5 GB, foreign 0)
+2026-11-18 13:48:51 done *|22|87358|Agtri@topx8|main -> 20261118T182642Z-33460700
+2026-11-18 13:48:51 start *|22|1|Apowmix@all|main (RAM 13.8 GB, GPU 0 free 10.0 GB, foreign 0)
+2026-11-18 13:57:11 done *|22|1|octave|main -> 20261118T183132Z-c2c5a2c6
+2026-11-18 13:57:11 start *|22|1|Rtri@all|main (RAM 12.6 GB, GPU 1 free 23.5 GB, foreign 0)
+2026-11-18 14:09:31 done *|22|1|Apowmix@all|main -> 20261118T184852Z-10bc52a2
+2026-11-18 14:09:31 start *|22|1|Agtri@allx2|main (RAM 14.0 GB, GPU 0 free 10.0 GB, foreign 0)
+2026-11-18 14:20:51 done *|22|1|Rtri@all|main -> 20261118T185712Z-21cb07aa
+2026-11-18 14:20:51 start *|22|1|Asc@new128|main (RAM 13.7 GB, GPU 1 free 23.5 GB, foreign 0)
+2026-11-18 14:42:41 done *|22|1|Agtri@allx2|main -> 20261118T190932Z-c6aeade0
+2026-11-18 14:42:42 start *|22|1|Rpowmix@half|main (RAM 14.0 GB, GPU 0 free 10.0 GB, foreign 0)
+2026-11-18 14:52:02 done *|22|1|Asc@new128|main -> 20261118T192052Z-cb6dc355
+2026-11-18 14:52:02 start *|22|2|octave|main (RAM 13.6 GB, GPU 1 free 23.5 GB, foreign 0)
+2026-11-18 15:03:22 done *|22|1|Rpowmix@half|main -> 20261118T194243Z-8c11e8fe
+2026-11-18 15:03:22 start *|22|2|Apowmix@all|main (RAM 14.0 GB, GPU 0 free 10.0 GB, foreign 0)
+2026-11-18 15:16:42 done *|22|2|octave|main -> 20261118T195203Z-a151cc5c
+2026-11-18 15:16:42 start *|22|2|Rtri@all|main (RAM 13.5 GB, GPU 1 free 23.5 GB, foreign 0)
+2026-11-18 15:22:02 done *|22|2|Apowmix@all|main -> 20261118T200323Z-da66ee94
+2026-11-18 15:22:02 start *|22|2|Agtri@allx2|main (RAM 13.9 GB, GPU 0 free 10.0 GB, foreign 0)
+2026-11-18 15:41:22 done *|22|2|Rtri@all|main -> 20261118T201643Z-06bbd333
+2026-11-18 15:41:23 start *|22|2|Asc@new128|main (RAM 13.5 GB, GPU 1 free 23.5 GB, foreign 0)
+2026-11-18 15:54:43 done *|22|2|Agtri@allx2|main -> 20261118T202203Z-1abf987d
+2026-11-18 15:54:43 start *|22|2|Rpowmix@half|main (RAM 13.9 GB, GPU 0 free 10.0 GB, foreign 0)
+2026-11-18 16:13:33 done *|22|2|Rpowmix@half|main -> 20261118T205444Z-3aa313e5
+2026-11-18 16:14:03 done *|22|2|Asc@new128|main -> 20261118T204124Z-481d8aab
+2026-11-18 16:14:03 runner end

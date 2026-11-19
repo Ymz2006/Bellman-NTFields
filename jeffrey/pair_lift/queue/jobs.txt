@@ -1,0 +1,111 @@
+bit_push_tri|plus22|87358|--lift time --pair bit --push page --tri1 0.5 --tri 10
+bit_push|plus22|87358|--lift time --pair bit --push page
+bit|plus22|87358|--lift time --pair bit
+ud_push_tri|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-nograd --push page --tri1 0.5 --tri 10
+fit_lift|plus22|87358|--lift time
+fit_count_f025|plus22|87358|--lift time --pair count --pair-norm raw --pair-scale 1 --pair-freq 0.25
+fit_bit|plus22|87358|--lift time --pair bit
+fit_ntrl|plus22|87358|--lift none
+fit_count_f1|plus22|87358|--lift time --pair count --pair-norm raw --pair-scale 1 --pair-freq 1
+fit_udraw_f025|plus22|87358|--lift time --pair len --pair-what updown --pair-norm raw --pair-scale 7.2 --pair-freq 0.25
+fit_lenraw_box|plus22|87358|--lift time --pair len --pair-what length --pair-norm raw --pair-scale box
+fit_count_same|plus22|87358|--lift time --pair count --pair-norm raw --pair-scale 1 --pair-freq 0.25 --pair-sign same
+fit_lift_oct8|plus22|87358|--lift time --octaves 2,4,8
+fit_count_f1_30k|plus22|87358|--lift time --pair count --pair-norm raw --pair-scale 1 --pair-freq 1 --steps 30000
+fit_lift_30k|plus22|87358|--lift time --steps 30000
+fit_liftB|plus22|87358|--lift time --band 0.6 --steps 20000
+fit_countB_f1|plus22|87358|--lift time --pair count --pair-norm raw --pair-scale 1 --pair-freq 1 --band 0.6 --steps 20000
+fit_countB_f025|plus22|87358|--lift time --pair count --pair-norm raw --pair-scale 1 --pair-freq 0.25 --band 0.6 --steps 20000
+fit_ud_tanh|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1
+fit_vec|plus22|87358|--lift vec
+bell1|plus22|87358|--lift time --bell 1 --td-free
+bell01|plus22|87358|--lift time --bell 0.1 --td-free
+tdfree|plus22|87358|--lift time --td-free
+fit_udrawB_f025|plus22|87358|--lift time --pair len --pair-what updown --pair-norm raw --pair-scale 7.2 --pair-freq 0.25 --band 0.6 --steps 20000
+fit_lenrawB_box|plus22|87358|--lift time --pair len --pair-what length --pair-norm raw --pair-scale box --band 0.6 --steps 20000
+fit_bitB|plus22|87358|--lift time --pair bit --band 0.6 --steps 20000
+fit_lift_oct8B|plus22|87358|--lift time --octaves 2,4,8 --band 0.6 --steps 20000
+fit_ntrlB|plus22|87358|--lift none --band 0.6 --steps 20000
+bell1_count|plus22|87358|--lift time --pair count --pair-norm raw --pair-scale 1 --pair-freq 0.25 --bell 1 --td-free
+ntrl_bell1|plus22|87358|--lift none --bell 1 --td-free
+bx1|plus22|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6
+bxt1|plus22|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table
+bxt3|plus22|87358|--lift time --bell 3 --td-free --bell-k 16 --bell-cone 6 --bell-table
+bxt1_r15|plus22|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-r 0.015 --bell-table
+bxt1|plus40|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell
+bxt1|apt64|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell
+bxt1|Klickitat|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell
+bxt1|plus22|1|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table
+bxt1|plus22|2|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table
+bxt1n|plus40|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm
+bxt1L|plus22|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-long 8
+bxt1nL|plus40|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long 8
+bxt1nL|apt64|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long 8
+bxt1b|plus40|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table
+bxt1nL|Klickitat|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long 8
+bxt1nL|plus30|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long 8
+bell03_k16|plus22|87358|--lift time --bell 0.3 --bell-k 16 --td-free
+count_f025|plus22|87358|--lift time --pair count --pair-norm raw --pair-scale 1 --pair-freq 0.25 --push page --tri1 0.5 --tri 10
+# reordered 05:45: houses, seeds, ablations, then the remaining pair-input variants
+bxt1nL|Lakeville|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long 8
+bxt1nL|Allensville|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long 8
+bxt1L|plus22|1|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-long 8
+bxt1L|plus22|2|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-long 8
+bxt1_tdall|plus22|87358|--lift time --bell 1 --bell-k 16 --bell-cone 6 --bell-table
+bxt1nK|plus40|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long 8 --bell-keep
+bxt1nLB|Klickitat|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
+bxt1K|plus22|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-long 8 --bell-keep
+fit_liftB|plus40|87358|--lift time --band 0.6 --steps 20000
+fit_liftB|apt64|87358|--lift time --band 0.6 --steps 20000
+fit_lift_octB|plus40|87358|--lift time --octaves 3.62,7.24,14.48 --band 0.6 --steps 20000
+fit_lift_octB|apt64|87358|--lift time --octaves 5.79,11.58,23.17 --band 0.6 --steps 20000
+bxt1nL_oct|apt64|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long 8 --octaves cell
+bxt1nL_oct|plus40|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long 8 --octaves cell
+bxt1nLB|apt64|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
+fit_pre2B|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place pre --pair-copies 2 --band 0.6 --steps 20000
+fit_pre8B|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place pre --pair-copies 8 --band 0.6 --steps 20000
+fit_pre32B|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place pre --pair-copies 32 --band 0.6 --steps 20000
+fit_pre128B|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place pre --pair-copies 128 --band 0.6 --steps 20000
+fit_post2B|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place post --pair-copies 2 --pair-amp 0.3 --band 0.6 --steps 20000
+fit_post8B|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place post --pair-copies 8 --pair-amp 0.3 --band 0.6 --steps 20000
+fit_post32B|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place post --pair-copies 32 --pair-amp 0.3 --band 0.6 --steps 20000
+fit_post128B|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place post --pair-copies 128 --pair-amp 0.075 --band 0.6 --steps 20000
+bxt1nLB|plus40|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
+bxt1nLB|plus30|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
+bxt1_bit|plus22|87358|--lift time --pair bit --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table
+rec|plus40|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
+rec|plus30|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
+rec|plus22|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
+# obstacle-space sampling (20 % of the pairs with one end inside an obstacle; lift continued 0.3 cells into the walls)
+bxt1_in|plus22in|87358|--lift time --depth 0.3 --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table
+rec|apt64|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
+rec_in|apt64in|87358|--lift time --depth 0.3 --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
+bit_in_zero|plus22in|87358|--lift time --depth 0.3 --pair bit --pair-inside zero --push page --tri1 0.5 --tri 10
+bxt1nL_oct_in|plus40in|87358|--lift time --depth 0.3 --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long 8 --octaves cell
+rec|Klickitat|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
+# second training seed on the 40-cell maze: long steps of 8 radii (5.3 cells) against 0.24 box (9.6 cells)
+bxt1nL_oct|plus40|1|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long 8 --octaves cell
+rec|plus40|1|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
+bxt1_pre8|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place pre --pair-copies 8 --pair-nograd --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table
+bxt1_pre32|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place pre --pair-copies 32 --pair-nograd --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table
+rec|Lakeville|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
+rec|Allensville|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
+rec|apt32|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
+ntrl_bxt1|plus22|87358|--lift none --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table
+bxt1_k8|plus22|87358|--lift time --bell 1 --td-free --bell-k 8 --bell-table
+lift_push_tri|plus22|87358|--lift time --push page --tri1 0.5 --tri 10
+post32|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place post --pair-copies 32 --pair-amp 0.3 --pair-nograd --push page --tri1 0.5 --tri 10
+pre128|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place pre --pair-copies 128 --pair-nograd --push page --tri1 0.5 --tri 10
+same_len|plus22|87358|--lift time --pair len --pair-what length --pair-norm raw --pair-scale box --pair-sign same --pair-nograd --push page --tri1 0.5 --tri 10
+# dropped (not run): 
+#bxt1n|apt64|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm
+#bxt1b|apt64|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table
+#len_push_tri|plus22|87358|--lift time --pair len --pair-nograd --push page --tri1 0.5 --tri 10
+#pre8|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place pre --pair-copies 8 --pair-nograd --push page --tri1 0.5 --tri 10
+#bxt1_count|plus22|87358|--lift time --pair count --pair-norm raw --pair-scale 1 --pair-freq 0.25 --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table
+#bxt1_post32|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place post --pair-copies 32 --pair-amp 0.3 --pair-nograd --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table
+#bxt1nLB|Lakeville|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
+#bxt1nLB|Allensville|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
+#rows_ud|plus22|87358|--lift time --pair len --pair-what updown --pair-norm raw --pair-scale 7.2 --pair-place rows --pair-rows 16 --pair-nograd --push page --tri1 0.5 --tri 10
+#udraw_f025|plus22|87358|--lift time --pair len --pair-what updown --pair-norm raw --pair-scale 7.2 --pair-freq 0.25 --pair-nograd --push page --tri1 0.5 --tri 10
+#bxt1nLB|apt32|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24

@@ -1,0 +1,30 @@
+# label|house|seed|pipeline args. Paired design (as jeffrey/midpoint_dp): ntrl = ntrl-demo 5,000 epochs; mid = its epoch-2,000 checkpoint
+# (@base) + 3,000 epochs with the midpoint term; ctl = the same resumed loop without the term. @gpuN pins a job (large-house midpoint
+# runs on the 3090, which runs the refresh 1.8x faster than the 5070).
+ntrl|allensville|87358|--weight 0
+ntrl|lakeville|87358|--weight 0
+mid|allensville|87358|--weight 1 --resume @base --validate-at 3000,4000
+ntrl|klickitat|87358|--weight 0
+ctl|allensville|87358|--weight 0 --resume @base --validate-at 3000,4000
+mid|lakeville|87358|--weight 1 --resume @base --validate-at 3000,4000 @gpu1
+mid|klickitat|87358|--weight 1 --resume @base --validate-at 3000,4000 @gpu1
+ctl|lakeville|87358|--weight 0 --resume @base --validate-at 3000,4000
+ctl|klickitat|87358|--weight 0 --resume @base --validate-at 3000,4000
+ntrl|allensville|1|--weight 0
+ntrl|lakeville|1|--weight 0
+ntrl|klickitat|1|--weight 0
+mid|lakeville|1|--weight 1 --resume @base --validate-at 3000,4000 @gpu1
+mid|klickitat|1|--weight 1 --resume @base --validate-at 3000,4000 @gpu1
+ctl|allensville|1|--weight 0 --resume @base --validate-at 3000,4000
+mid|allensville|1|--weight 1 --resume @base --validate-at 3000,4000 @gpu0
+ctl|lakeville|1|--weight 0 --resume @base --validate-at 3000,4000
+ctl|klickitat|1|--weight 0 --resume @base --validate-at 3000,4000
+ntrl|allensville|2|--weight 0
+ntrl|lakeville|2|--weight 0
+ntrl|klickitat|2|--weight 0
+mid|klickitat|2|--weight 1 --resume @base --validate-at 3000,4000 @gpu1
+ctl|allensville|2|--weight 0 --resume @base --validate-at 3000,4000
+mid|allensville|2|--weight 1 --resume @base --validate-at 3000,4000 @gpu0
+ctl|lakeville|2|--weight 0 --resume @base --validate-at 3000,4000
+mid|lakeville|2|--weight 1 --resume @base --validate-at 3000,4000 @gpu0
+ctl|klickitat|2|--weight 0 --resume @base --validate-at 3000,4000

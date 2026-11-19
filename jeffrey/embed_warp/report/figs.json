@@ -1,0 +1,51 @@
+{
+ "gates_plus": [
+  "geo",
+  "kde",
+  "diff",
+  "curv",
+  "learn",
+  "learnb",
+  "geot",
+  "geow"
+ ],
+ "slices_plus": [
+  "ntrl",
+  "oct",
+  "geo"
+ ],
+ "gates_disks": [
+  "geo",
+  "kde",
+  "diff",
+  "learn",
+  "learnb",
+  "geot"
+ ],
+ "slices_disks": [
+  "ntrl",
+  "oct",
+  "geo"
+ ],
+ "gates_gibson": [
+  "geo",
+  "kde",
+  "diff",
+  "learn",
+  "learnb"
+ ],
+ "slices_gibson": [
+  "ntrl",
+  "oct",
+  "geo"
+ ],
+ "gates_gibson32": [
+  "geo",
+  "learn"
+ ],
+ "slices_gibson32": [
+  "ntrl",
+  "oct",
+  "geo"
+ ]
+}
