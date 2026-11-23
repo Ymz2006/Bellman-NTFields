@@ -1,0 +1,79 @@
+{
+ "field": "registered_20261121T100413Z-6e662858",
+ "arm": {
+  "L": true,
+  "B": true,
+  "S": true
+ },
+ "planner": {
+  "sample_num": 50,
+  "horizon": 5,
+  "step": 0.0033791208791208787,
+  "temperature": 221.95121951219514,
+  "tol": 0.0022527472527472526,
+  "steps": 600
+ },
+ "ends": {
+  "count": 543,
+  "remaining_over_line": [
+   0.8739487171173096,
+   0.9992502927780151,
+   1.1156848669052124,
+   1.2546734809875488,
+   1.4109201431274414
+  ],
+  "clearance_cells": [
+   -0.2051261693239212,
+   -0.028291191905736923,
+   0.05342716723680496,
+   0.4942285567522049,
+   0.6283818006515504
+  ],
+  "in_contact": 215,
+  "within_margin": 337,
+  "T_end_over_T_start": [
+   0.5137437582015991,
+   0.5801749229431152,
+   0.6396458745002747,
+   0.7105886042118073,
+   0.7882976651191711
+  ],
+  "used_all_steps": 543,
+  "last_100_steps_net_move_over_straight": [
+   0.003134908154606819,
+   0.006943723186850548,
+   0.023151278868317603
+  ],
+  "local": {
+   "1": {
+    "lower_share_median": 0.00537109375,
+    "none_lower": 168,
+    "none_lower_free": 325,
+    "best_drop_over_T_median": 0.0001786706707207486,
+    "best_free_drop_over_T_median": -0.0001050508872140199
+   },
+   "3": {
+    "lower_share_median": 0.0,
+    "none_lower": 440,
+    "none_lower_free": 487,
+    "best_drop_over_T_median": -0.0014393538003787398,
+    "best_free_drop_over_T_median": -0.0034033695701509714
+   },
+   "8": {
+    "lower_share_median": 0.0,
+    "none_lower": 451,
+    "none_lower_free": 480,
+    "best_drop_over_T_median": -0.009540748782455921,
+    "best_free_drop_over_T_median": -0.01942671276628971
+   }
+  },
+  "by_task": [
+   90,
+   98,
+   92,
+   88,
+   82,
+   93
+  ]
+ }
+}

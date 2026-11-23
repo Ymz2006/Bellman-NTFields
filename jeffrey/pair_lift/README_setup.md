@@ -79,3 +79,39 @@ Recipes:
 * 22-cell maze (label `bxt1`): `--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table`
 * larger scenes (label `bxt1nL`): the same plus `--bell-r cell --bell-norm --bell-long 8`
 * with octaves (label `bxt1nL_oct`): the same plus `--octaves cell`; label `rec` has `--bell-long box:0.24` in place of `--bell-long 8`
+
+## Models trained with pairs inside obstacles (2026-11-19, second request)
+
+Request, 14:50: "see the lift flat top whole interior method [of the Lift Variants page]. This one is working well because it samples inside
+the obstacles. This is why it is able to re-create the accurate speed. 1) train this travel time, and only use its speed, sampling in the
+boundaries. 2) base the bellman update on this method [...] skip the bellman loss when you are in the boundary. The bottom line is that
+there is already a model that satisfies the eikonal equation, but does not get the viscosity solution. Try to add the bellman updates to
+this model so that it works." Later: "I think it was only around 20% of pairs that have an end in the obstacle."
+
+The Lift Variants study (`jeffrey/lift_warp`, point robot in 2-D) is not on this machine: its folders, result folders and registry entries
+are absent. The models here are rebuilds on the SE(2) rectangle robot:
+
+* `wholedata.py` (`run.py --stage data --prepared <prepare run> --label <name> --extra '--inside-pairs 0.2'`): whole-interior pairs.
+  ntrl-demo's sampler with its two lower bounds dropped (d(x0) < margin, any d(x1)); `--inside-pairs f` thins the pairs with an end inside
+  an obstacle to the share f, `--x0-inside f` the first ends. Scenes `plus22w` (unthinned: 68 % of the pairs with an end inside),
+  `plus22w3`, `plus22w20` (20 %) in `queue/scenes.json`.
+* Flat top = the lift's default depth (0.0175 cells); `--depth 0.3` continues the lift 0.3 cells into the walls (the page's ridge) and is
+  used with lift_scale's `plus22in` / `plus40in` / `apt64in` pairs (the second end of 20 % of the pairs inside an obstacle).
+* `speedcheck.py <run ids>` -> `report/speed.json`: S |grad T| of a trained field by clearance, the step cost from its speed table against
+  the true one, and a collision check from the speed alone. `crossings.py <run ids>` -> `report/crossings.json`: the cost of wall
+  crossings by a model's speed table against the true cost.
+* Idea 1, the speed of a frozen model as the backup's step cost: `run.py --field <field run>` + `--bell-tau field`
+  (`pairnet.SpeedTable`: log |grad_q T| on the clearance table's grid, 4 random partners per node; step cost = length x mean slowness,
+  33 samples per radius). `--speed-check s`: a candidate step must keep the tabulated speed above s (replaces the geometric check);
+  `--bell-nofree`: every step is a candidate. (`--bell-tau learned` uses the training network's own speed; not pursued.)
+* Idea 2, the backup added to the model's own training: `--bell-free` applies the backup only to pairs with both ends out of obstacles;
+  `--bell-nofree` (without `--bell-free`) applies it to every pair with no collision check, a step through an obstacle costing its
+  floor-speed travel time. `--in-weight w` weights ntrl-demo's loss of the pairs with an end inside; `run.py --init <field run>` is a
+  warm start from a finished field of the same network and seed.
+* `queue/direct.py <gpu> '<label>|<scene>|<seed>|<arguments>' [--field id] [--init id] [--repeat-reason '...']` launches one run outside
+  the runner (the queue was paused for these tests: `queue/PAUSE` and the `#PAUSED` lines of `queue/jobs.txt`); `queue/direct.txt` lists
+  them for `status.py` and `report.py`.
+
+Recipes (22-cell maze): idea 1 = `--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-tau field --speed-check 0.04`
+with `--field` = lift_scale's `lift_in` run 20261117T075605Z-a19f8f34 (label `bxt1_sR_scheck`); idea 2 = the same backup with
+`--depth 0.3 --bell-free` on `plus22in` (label `bxt1_inF`).

@@ -33,9 +33,11 @@ def headline(res):
 def main():
     verbose = '-v' in sys.argv
     jobs = [l.strip() for l in open(HERE / 'queue/jobs.txt') if l.strip() and not l.startswith('#')]
+    direct = HERE / 'queue/direct.txt'
+    jobs += [l.strip() for l in open(direct) if l.strip()] if direct.exists() else []
     print(f'{"label":22s} {"scene":8s} {"seed":>5s} {"id":28s} solved  wall stall   T10  T/T*  LOS10   rho  seen blk10  fit   rb   min  jump')
     for j in jobs:
-        label, key, seed, extra = j.split('|')
+        label, key, seed, extra = j.split(';')[0].split('|')
         rid = run_id(j)
         line = f'{label:22s} {key:8s} {seed:>5s} {str(rid):28s} '
         out = ROOT / 'results' / f'registered_{rid}' if rid else None

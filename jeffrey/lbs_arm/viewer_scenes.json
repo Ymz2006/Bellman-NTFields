@@ -1,0 +1,50 @@
+{
+ "cabinet": {
+  "name": "Cabinet task",
+  "prepared": "results/registered_20261121T042600Z-9d9afe1e",
+  "runs": [
+   [
+    "lbs",
+    "LBS",
+    "results/registered_20261121T042823Z-793479a8"
+   ],
+   [
+    "ntrl",
+    "ntrl-demo",
+    "results/registered_20261121T042946Z-eab861c8"
+   ]
+  ]
+ },
+ "real_world_6dof": {
+  "name": "Real-world cupboard",
+  "prepared": "results/registered_20261121T175332Z-f452e2ae",
+  "runs": [
+   [
+    "lbs",
+    "LBS",
+    "results/registered_20261121T180923Z-cd9646ee"
+   ],
+   [
+    "ntrl",
+    "ntrl-demo",
+    "results/registered_20261121T180103Z-9fa94e84"
+   ]
+  ]
+ },
+ "real_world_12dof": {
+  "name": "Real-world cupboard, two arms",
+  "prepared": "results/registered_20261121T212233Z-2850cb28",
+  "runs": [
+   [
+    "lbs",
+    "LBS",
+    "results/registered_20261121T214053Z-ac867258"
+   ],
+   [
+    "ntrl",
+    "ntrl-demo",
+    "results/registered_20261121T213203Z-78ce002c"
+   ]
+  ]
+ }
+}

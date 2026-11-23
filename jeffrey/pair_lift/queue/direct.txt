@@ -1,0 +1,25 @@
+liftW|plus22w|87358|--lift time
+liftW_bellF|plus22w|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-free
+bxt1_sA_soft|plus22|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-tau field --bell-nofree;field=20261119T195829Z-e518c164
+liftW_tdfree|plus22w|87358|--lift time --td-free
+bxt1_sA_scheck|plus22|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-tau field --speed-check 0.04;field=20261119T195829Z-e518c164
+liftW|plus22w20|87358|--lift time
+liftW_bellF|plus22w20|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-free
+bxt1_nofree|plus22|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-nofree
+bxt1_s20_scheck|plus22|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-tau field --speed-check 0.06;field=20261119T203113Z-543f4eb9
+bxt1_sR_scheck|plus22|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-tau field --speed-check 0.04;field=20261117T075605Z-a19f8f34
+bxt1_sR_soft|plus22|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-tau field --bell-nofree;field=20261117T075605Z-a19f8f34
+bxt1_inF|plus22in|1|--lift time --depth 0.3 --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-free
+bxt1_inF|plus22in|2|--lift time --depth 0.3 --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-free
+liftR|plus40in|87358|--lift time --depth 0.3
+bxt1_sR_scheck|plus22|1|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-tau field --speed-check 0.04;field=20261117T075605Z-a19f8f34
+bxt1_in_soft|plus22in|87358|--lift time --depth 0.3 --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-nofree
+liftR_oct|plus40in|87358|--lift time --depth 0.3 --octaves cell
+bxt1nL_oct_sR_scheck|plus40|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long 8 --bell-tau field --speed-check 0.04;field=20261119T224932Z-fa50bf49
+bxt1_sR_scheck|plus22|2|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-tau field --speed-check 0.04;field=20261117T075605Z-a19f8f34
+bxt1_inF_init|plus22in|87358|--lift time --depth 0.3 --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-free;init=20261117T075605Z-a19f8f34
+bxt1_sR_scheck_tdall|plus22|87358|--lift time --bell 1 --bell-k 16 --bell-cone 6 --bell-table --bell-tau field --speed-check 0.04;field=20261117T075605Z-a19f8f34
+bxt1nL_oct_sR_scheck|plus40|1|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long 8 --bell-tau field --speed-check 0.04;field=20261119T224932Z-fa50bf49
+bxt1nL_oct|plus40|1|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long 8 --octaves cell
+bxt1nL_oct_sR_scheck|plus40|2|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long 8 --bell-tau field --speed-check 0.04;field=20261119T224932Z-fa50bf49
+bxt1nL_oct|plus40|2|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long 8 --octaves cell

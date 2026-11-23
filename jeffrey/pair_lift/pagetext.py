@@ -91,6 +91,11 @@ def body(D, C):
       f', {v("bxt1", "within10")} % of the travel times within 10 % of the truth, {v("bxt1", "seen_through")} % of the detours seen through, with no push and no pair input. '
       + (f'With candidate steps up to 5.3 cells long: {v("bxt1L")} %' + (f' ({each(seedsL)})' if each(seedsL) else '') + f', and detours {f(100 * ((seedsL.get("rho") or np.nan) - 1), 0)} % too long in excess. ' if seedsL else '')
       + ('On larger scenes the backup needs its weight scaled with the step and the longer steps; with both, one training seed per scene: ' + '; '.join(f'{SHORT[s]} {bl(s)} ({refs(s)})' for s in others if BL(s)) + '.' if any(BL(s) for s in others) else '')
+      + ((' A second request (Part 6): a lift trained with pairs inside obstacles has the right speed everywhere without the right travel time. '
+          + (f'With only that model’s speed in the backup, as the cost of a step and as the collision check, <b>{f(P("bxt1_sR_scheck")["solved"])} % of the queries are solved</b>'
+             + (f' ({each(P("bxt1_sR_scheck"))})' if each(P('bxt1_sR_scheck')) else '') + '; ' if P('bxt1_sR_scheck') else '')
+          + (f'with the backup added to that model’s own training, {f(P("bxt1_inF", "plus22in")["solved"])} %' + (f' ({each(P("bxt1_inF", "plus22in"))})' if each(P('bxt1_inF', 'plus22in')) else '') + '.' if P('bxt1_inF', 'plus22in') else ''))
+         if D.sel('liftW', 'plus22w20') else '')
       + '</p></header>')
 
     # ------------------------------------------------------------------ answers
@@ -137,6 +142,29 @@ def body(D, C):
         if long_:
             txt += 'With the weight scaled with the step and steps up to 5.3 cells: ' + '; '.join(f'{SHORT[s]} {bl(s, True)} ({refs(s)})' for s in long_) + '.'
         ans.append(qa('6. Does it hold on other seeds and scenes?', 'seeds yes · houses yes · larger mazes and the apartment partly', 'mixed', txt))
+    if have('bxt1_in', 'plus22in'):
+        txt = (f'With the backup as it is, pairs with one end inside an obstacle (20 % of the pairs) break the recipe: {v("bxt1_in", scene="plus22in")} % solved on the 22-cell maze against {v("bxt1")} % on free-space pairs'
+               + (f', {v("rec_in", scene="apt64in")} % against {v("rec", scene="apt64")} % on the apartment' if have('rec_in', 'apt64in') else '') + '. '
+               'The backup has nothing to hold on to for a goal inside a wall, and the travel times to such goals run away (median 24.6 box lengths). ')
+        if have('bxt1_inF', 'plus22in'):
+            txt += (f'With the backup kept to pairs with both ends free the see-through failure is gone ({v("bxt1_inF", "seen_through", 1, "plus22in")} % seen through) and {v("bxt1_inF", scene="plus22in")} % are solved, '
+                    'still below the run on free-space pairs. ')
+        if have('rec_inF', 'apt64in'):
+            txt += f'Apartment, same change: {v("rec_inF", scene="apt64in")} % ({v("rec", scene="apt64")} % on free-space pairs). '
+        ans.append(qa('7. Sampling inside obstacles', 'no gain so far', 'no', txt + 'Part 5.'))
+    if have('liftW', 'plus22w20'):
+        Rr_ = D.ref('plus22in', 'lift_in') or {}
+        txt = ('Idea 1: keep only the speed of a model trained with pairs inside obstacles and integrate it along a step as the backup’s step cost. Idea 2: add the backup to that model’s own training, skipped inside obstacles. '
+               f'The flat-top lift with 20 % of the pairs inside does not reproduce the Lift Variants result here ({v("liftW", "seen_through", 1, "plus22w20")} % of the detours seen through); the local model with the right speed '
+               f'everywhere is the lift continued into the walls ({f(Rr_.get("solved"))} % solved alone). ')
+        if have('bxt1_sR_scheck'):
+            txt += f'Idea 1 with that model’s speed and a collision check made from the same speed: <b>{v("bxt1_sR_scheck")} % solved</b>, {v("bxt1_sR_scheck", "seen_through", 1)} % seen through. '
+        elif have('bxt1_sA_soft'):
+            txt += f'Idea 1, first run (flat-top 68 % model’s speed, no collision check): {v("bxt1_sA_soft")} % solved, {v("bxt1_sA_soft", "seen_through", 1)} % seen through, none of the 32–64-cell queries. '
+        if have('bxt1_inF', 'plus22in'):
+            pi = P('bxt1_inF', 'plus22in')
+            txt += f'Idea 2: <b>{f(pi["solved"])} % solved</b>' + (f' ({each(pi)})' if each(pi) else '') + f', {f(pi.get("seen_through"))} % seen through. '
+        ans.append(qa('8. A model with the right speed: use only its speed (idea 1), or add the backup to it (idea 2)', 'both remove the see-through · runs still training', 'mixed', txt + 'Part 6.'))
     A('<h2>Answers</h2><div class="answers">' + ''.join(ans) + '</div>')
 
     # ------------------------------------------------------------------ setup
@@ -339,6 +367,219 @@ def body(D, C):
                     rows.append([TITLE[s], name, p['seeds'], f(p['solved']) + (f' ({each(p)})' if each(p) else ''), f((D.ref(s, 'ntrl') or {}).get('solved')), f((D.ref(s, 'liftpush') or {}).get('solved')), f((D.ref(s, 'liftpush_oct') or {}).get('solved')),
                                  f(p.get('within10')), f((D.ref(s, 'liftpush_oct') or D.ref(s, 'liftpush') or {}).get('within10')), f(p.get('wall')), f(p.get('stall')), f(p.get('seen_through'))])
         A(details('Every scene and variant: the numbers', table(['scene', 'backup variant', 'seeds', 'solved %', 'ntrl-demo', 'lift + push', 'lift + push + octaves', 'T within 10 %', 'best lift arm T within 10 %', 'through a wall %', 'stalled %', 'seen through %'], rows, left=2)))
+
+    # ------------------------------------------------------------------ obstacle-space samples
+    if have('bxt1_in', 'plus22in'):
+        A('<h2>Part 5 · Training pairs inside obstacles</h2>')
+        A('<p>Every run above trains on pairs with both ends in free space. The data variant of the earlier studies puts one end of 20 % of the pairs inside an obstacle; there the speed label is at its floor (0.012) and the lift is continued '
+          '0.3 cells into the walls, so a wall is a ridge up to 25 cells high in the lifted input. In the lift-scale study this variant did not make the walls felt (22-cell maze: lift 63.3 % solved, lift + push 65.3 %; apartment: lift 63.6 %). '
+          'Here it is combined with the backup, unchanged recipes, one training seed.</p>')
+        A(grid('inside_solved', 'inside_seen'))
+        t = (f'<p><b>With the backup as it is, obstacle samples break the recipe.</b> 22-cell maze: {v("bxt1_in", scene="plus22in")} % solved against {v("bxt1")} % on free-space pairs (three training seeds, {each(P("bxt1"))}), {v("bxt1_in", "seen_through", 0, "plus22in")} % of the detours seen through, '
+             f'and even the travel times of pairs in line of sight are within 10 % for only {v("bxt1_in", "los_within10", 0, "plus22in")} % ({v("bxt1", "los_within10", 0)} %).')
+        if have('rec_in', 'apt64in'):
+            t += f' Apartment: {v("rec_in", scene="apt64in")} % against {v("rec", scene="apt64")} %, {v("rec_in", "seen_through", 0, "apt64in")} % seen through ({v("rec", "seen_through", 0, "apt64")} %).'
+        t += ('</p><p>Measured on the trained 22-cell field, on 20,000 of its own training pairs: the travel time to a goal inside a wall has a median of 24.6 box lengths, where the true value is at most about 1.1 '
+              '(0.3 cells at the speed floor); ntrl-demo’s loss sits at 2 × 10⁻² from epoch 100 to the end (4.7 × 10⁻⁴ on free-space pairs); the backup’s own residual on the pairs with both ends free is 13 times larger than in the run on free-space pairs '
+              '(1.0 × 10⁻³ against 7.7 × 10⁻⁵), and the pairs with a goal inside a wall, 19 % of the pairs, carry 36 % of the backup term. '
+              'A goal inside a wall has no free step that reaches it, so the backup at the other end of such a pair copies travel times to that goal from neighbour to neighbour with nothing that fixes their level; '
+              'ntrl-demo’s loss weight exp(−T / 2) lowers the loss of a pair whose time drifts upward. That is the reading the first control tests.</p>')
+        A(t)
+        c = ''
+        if have('bxt1_inF', 'plus22in'):
+            c += (f'<b>Control: the backup only for pairs with both ends free</b> (a pair with an end inside an obstacle is left to ntrl-demo’s loss): {v("bxt1_inF", scene="plus22in")} % solved, '
+                  f'{v("bxt1_inF", "seen_through", 1, "plus22in")} % seen through, ntrl-demo’s loss back at 4.9 × 10⁻⁴. The see-through failure is gone, so it came from the backup on goals inside walls. '
+                  f'The run is still below the free-space pairs ({each(P("bxt1"))} % over three seeds): {v("bxt1_inF", "stall", 1, "plus22in")} % of the plans stall and the travel times are within 10 % for '
+                  f'{v("bxt1_inF", "within10", 0, "plus22in")} % of the pairs ({v("bxt1", "within10", 0)} %). With one seed, obstacle samples show no gain on this maze even with the backup kept off them. ')
+        if have('bxt1_inW', 'plus22in'):
+            c += (f'<b>Control: ntrl-demo’s loss of the obstacle pairs times 0.02</b>, backup unchanged: {v("bxt1_inW", scene="plus22in")} % solved, {v("bxt1_inW", "seen_through", 0, "plus22in")} % seen through. ')
+        if have('bit_in_zero', 'plus22in'):
+            c += (f'The Task 2 rule on this data (flag −1 / +1 for blocked pairs, both 0 when an end is inside an obstacle; push and cap, no backup): {v("bit_in_zero", scene="plus22in")} % solved, '
+                  f'{v("bit_in_zero", "seen_through", 0, "plus22in")} % seen through. ')
+        for lab, sc, ctl, csc, name in (('bxt1nL_oct_inF', 'plus40in', 'bxt1nL_oct', 'plus40', '40-cell maze'), ('rec_inF', 'apt64in', 'rec', 'apt64', 'apartment')):
+            if have(lab, sc):
+                c += f'Backup on free pairs only, {name}: {v(lab, scene=sc)} % solved against {v(ctl, scene=csc)} % on free-space pairs ({v(lab, "seen_through", 0, sc)} % against {v(ctl, "seen_through", 0, csc)} % seen through). '
+        if c:
+            A('<p>' + c + '</p>')
+        rows = []
+        for title, free, runs in PG.INSIDE:
+            if not any(P(lab, sc) for (lab, sc), _ in runs):
+                continue
+            for (lab, sc), name in [free] + runs:
+                p = P(lab, sc)
+                if p:
+                    rows.append([title, name, p['seeds'], f(p['solved']), f(p.get('within10')), f(p.get('los_within10')), f(p.get('seen_through')), f(p.get('wall')), f(p.get('stall'))])
+        A(details('Obstacle-space samples: the numbers', table(['recipe and scene', 'training pairs', 'seeds', 'solved %', 'T within 10 %', 'line of sight within 10 %', 'seen through %', 'through a wall %', 'stalled %'], rows, left=2)))
+
+    # ------------------------------------------------------------------ Part 6: a model with the right speed
+    SP = D.speed
+    if have('liftW', 'plus22w20'):
+        W20, W68, R20, LFREE = PG.W20, PG.W68, PG.R20, PG.LIFT_FREE
+        DEEP, OPEN, BAND = 'inside, deeper than 0.1 cells', 'open space', 'band, lower half'
+
+        def sp(rid, where):
+            r = SP.get(rid, {}).get('point', {}).get(where)
+            return f(r['fit'][2], 2) if r else '–'
+
+        def stepc(rid, where, key='ratio'):
+            r = SP.get(rid, {}).get('step', {}).get(where)
+            return (f(r[key][2], 2) if key == 'ratio' else f(r[key], 1)) if r else '–'
+
+        def chk(rid, thr, key):
+            r = SP.get(rid, {}).get('check', {}).get(str(thr))
+            return f(100 * r[key], 1) if r else '–'
+
+        def bins(label, scene, b):
+            r = one(label, scene)
+            return f(r.get('by_bin', {}).get(b), 0) if r else '–'
+        Rr = D.ref('plus22in', 'lift_in') or {}
+        Lr = D.ref('plus22', 'lift') or {}
+        A('<h2>Part 6 · A model with the right speed and the wrong travel time</h2>')
+        A('<p>The request: the “lift, flat top, whole interior” model of the <a href="https://claude.ai/artifact/Bu7xZpbydnqWwN9URoKEHp">Lift Variants page</a> samples pairs inside obstacles, so it recovers the speed there; '
+          'it satisfies the eikonal equation without being the viscosity solution. Two uses were asked for: (1) keep only its speed and integrate it along a candidate step as the backup’s step cost, in place of the lifted length; '
+          '(2) add the backup to that model’s own training, skipped where a pair has an end inside an obstacle. Everything here is the 22-cell maze, training seed 87358, one training per arm unless a range is given.</p>')
+        A('<h3>Rebuilding the model on the local setup</h3>')
+        A('<p>The page’s code is not on this machine and its robot was a point in 2-D; here it is the rectangle in SE(2) of every local study. Three lifts trained alone, with no push and no backup: '
+          '<b>flat top, 20 %</b>: the lift that stops 0.0175 cells into an obstacle, on pairs whose two ends may lie anywhere inside one, thinned so that 20 % of the pairs have an end inside (the share of the original); '
+          '<b>flat top, 68 %</b>: the same sampler unthinned (the rectangle’s obstacles are 0.3–0.6 cells thick, so most first ends land inside); '
+          '<b>lift into the walls, 20 %</b>: the lift continued 0.3 cells into the walls (the page’s “ridge”), on the lift-scale study’s pairs with the second end of 20 % inside an obstacle.</p>')
+        A(grid('w_solved', 'w_seen'))
+        A(ch('w_speed'))
+        A(f'<p><b>The page’s result is not reproduced by the flat top at 20 %.</b> It solves {v("liftW", scene="plus22w20")} % and sees through {v("liftW", "seen_through", 1, "plus22w20")} % of the detours, the level of the lift on free-space pairs '
+          f'({f(Lr.get("solved"))} %, {f(Lr.get("seen_through"))} %); the page reported 65.5 % and 18 % on its plus maze. The reason is in the speed: inside obstacles its S |∇T| is {sp(W20, DEEP)} (1 = exact; {sp(LFREE, DEEP)} with no pair inside, 0.80 on the page), '
+          f'so a wall costs {stepc(W20, "through an obstacle")} of its true crossing time. With 68 % of the pairs inside it reaches {sp(W68, DEEP)} and sees through {v("liftW", "seen_through", 0, "plus22w")} %, and pays as the page describes: '
+          f'travel times {f(100 * ((P("liftW", "plus22w").get("ratio") or 1) - 1), 0)} % long, the predicted speed {f(100 * (float(sp(W68, OPEN)) - 1), 0) if sp(W68, OPEN) != "–" else "–"} % too slow in open space. '
+          f'<b>The model with the right speed everywhere is the lift continued into the walls:</b> S |∇T| {sp(R20, DEEP)} inside obstacles, {sp(R20, BAND)} in the band, {sp(R20, OPEN)} in open space, '
+          f'a step through a wall at {stepc(R20, "through an obstacle")} of its true cost. It is the model of the request: the eikonal equation holds inside and outside the walls, and it is not the viscosity solution '
+          f'({f(Rr.get("solved"))} % solved, {f(Rr.get("seen_through"), 0)} % of the detours seen through, travel times within 10 % for {f(Rr.get("within10"), 0)} % of the pairs).</p>')
+        rows = []
+        for rid, name, _ in PG.SPEED_RUNS + PG.SPEED_RUNS40:
+            if rid in SP:
+                rows.append([name] + [sp(rid, b) for b in PG.SPEED_BINS] + [stepc(rid, 'free, open space'), stepc(rid, 'free, in the speed band'), stepc(rid, 'through an obstacle'),
+                                                                         stepc(rid, 'through an obstacle', 'true_cells'), stepc(rid, 'through an obstacle', 'table_cells'), chk(rid, 0.04, 'blocked_caught'), chk(rid, 0.04, 'free_flagged')])
+        A(details('Predicted speed and step cost of each model: the numbers', table(['model', 'S |∇T| inside, deep', 'inside, shallow', 'skin', 'band, lower', 'band, upper', 'open space', 'step cost / true: open', 'band', 'through an obstacle',
+                                                                                    'true crossing (cells)', 'from the model (cells)', 'speed below 0.04 catches (% of steps through obstacles)', 'flags (% of free steps)'], rows)))
+        if PG.R40O in SP:
+            A(f'<p>The same holds on the 40-cell maze: the lift continued into the walls on that maze’s pairs (20 % with the second end inside) has S |∇T| {sp(PG.R40O, DEEP)} inside obstacles, {sp(PG.R40O, BAND)} in the band and '
+              f'{sp(PG.R40O, OPEN)} in open space with the octaves of Part 4 ({sp(PG.R40, DEEP)} / {sp(PG.R40, BAND)} / {sp(PG.R40, OPEN)} without), a wall crossing at {stepc(PG.R40O, "through an obstacle")} of its true cost, '
+              f'while it solves {v("liftR_oct", scene="plus40in")} % of the queries and sees through {v("liftR_oct", "seen_through", 1, "plus40in")} % of the detours.</p>')
+        A('<p class="note">S |∇T|: median over 120,000 configurations uniform in the C-space box, the partner a random free configuration. Step cost: straight steps of 0.015–0.03 box lengths (0.33–0.66 cells on the 22-cell maze, 0.6–1.2 on the 40-cell one), the cost integrated from the model’s speed table '
+          '(the one the backup reads) against the true step time; inside an obstacle the true speed is ntrl-demo’s floor, 0.012. The last two columns are a collision check made from the speed alone: a step is called blocked '
+          'when the tabulated speed falls below 0.04 at a sample; every flagged free step lies within 0.05 cells of an obstacle.</p>')
+
+        # ---- idea 1
+        if any(have(l, 'plus22') for l in ('bxt1_sA_soft', 'bxt1_sR_scheck', 'bxt1_nofree')):
+            A('<h3>Idea 1 · Only its speed, as the cost of a step in the backup</h3>')
+            A('<p>The frozen model’s predicted speed 1 / |∇T| is tabulated on the grid of the clearance table (32 nodes per cell, 49 headings, the log of the slowness averaged over 4 random partners). '
+              'The backup of Part 3 is unchanged except for the cost of a candidate step: its length times the mean of the tabulated slowness along it, in place of the integral of the true speed (the lifted length). '
+              'The network is trained on free-space pairs, as in Part 3. Steps through obstacles are handled in one of two ways, neither of which reads the scene: <b>no check</b> (a step through a wall is a candidate and costs '
+              'what the speed says) or a <b>check from the speed</b> (a step is dropped when the tabulated speed falls below a threshold at a sample).</p>')
+            A(grid('t1_solved', 't1_seen'))
+            A(grid('t1_within', 't1_stall'))
+            t = ''
+            if have('bxt1_sR_scheck'):
+                t += (f'<b>With the speed of the lift-into-walls model and the check from that speed: {v("bxt1_sR_scheck")} % solved</b>, {v("bxt1_sR_scheck", "seen_through", 1)} % of the detours seen through, '
+                      f'travel times within 10 % for {v("bxt1_sR_scheck", "within10", 0)} % of the pairs, against {v("bxt1")} % ({each(P("bxt1"))}), {v("bxt1", "seen_through", 1)} % and {v("bxt1", "within10", 0)} % '
+                      'for the true speed with the geometric collision check. ')
+                ps = P('bxt1_sR_scheck')
+                if ps.get('seeds', 1) > 2:
+                    hf = ROOT / 'jeffrey/pair_lift/report/holes_a19f8f34_s2.json'
+                    holes = json.load(open(hf)) if hf.exists() else None
+                    worst = max(D.sel('bxt1_sR_scheck'), key=lambda r_: r_.get('wall', 0))
+                    t += (f'Per training seed: {each(ps)} %. The weakest seed loses {f(worst.get("wall"))} % of its plans, every one a plan that crosses a wall on a 32–64-cell query '
+                          '(on planning seed 0: 14 plans, 0.15–0.27 cells deep; 0.15 cells is half a wall when the robot travels along it). The true-speed runs lose plans the same way on the same queries '
+                          '(0.8 / 1.9 / 0.0 % of their plans; on planning seed 0, 3 and 5 plans). The likely reading: the field is right on both sides of a thin wall and ntrl-demo’s planner, which does not test collisions, steps across. '
+                          + (f'The check itself has no gap: of {holes["crossings"]:,} wall crossings sampled against the table that seed read, none passes at any threshold from 0.04 to 0.2. ' if holes and not any(holes['missed'].values()) else ''))
+
+            if have('bxt1_sR_soft'):
+                t += (f'Without any check: {v("bxt1_sR_soft")} % solved ({bins("bxt1_sR_soft", "plus22", "32-64")} % of the 32–64-cell queries). ')
+            if have('bxt1_nofree'):
+                t += (f'The control with the true speed and no check: {v("bxt1_nofree")} % solved, {bins("bxt1_nofree", "plus22", "32-64")} % of the 32–64-cell queries, {v("bxt1_nofree", "seen_through", 1)} % seen through. ')
+            if have('bxt1_sA_soft'):
+                t += (f'With the flat-top 68 % model’s speed and no check: {v("bxt1_sA_soft")} % solved and {v("bxt1_sA_soft", "seen_through", 1)} % seen through; every query with a true path up to 32 cells is solved (600 of 600) '
+                      f'and none of the 120 longer ones; travel times are {f(100 * ((P("bxt1_sA_soft").get("ratio") or 1) - 1), 0)} % long, which is that model’s speed error in open space carried into the field. ')
+            if have('bxt1_s20_scheck'):
+                t += (f'With the flat-top 20 % model’s speed and a check below 0.06: {v("bxt1_s20_scheck")} % solved, {v("bxt1_s20_scheck", "seen_through", 1)} % seen through. ')
+            A('<p>' + t + '</p>')
+            CR = json.load(open(ROOT / 'jeffrey/pair_lift/report/crossings.json')) if (ROOT / 'jeffrey/pair_lift/report/crossings.json').exists() else {}
+            if have('bxt1_nofree'):
+                cr, ca = CR.get(R20, {}), CR.get(W68, {})
+                t = (f'<p><b>What the step cost has to get right.</b> With the true speed the backup needs no collision check on this maze: {v("bxt1_nofree")} % solved, every 32–64-cell query, {v("bxt1_nofree", "seen_through", 1)} % of the detours seen through. '
+                     'At ntrl-demo’s floor speed (0.012) an obstacle is a very slow strip: crossing the thinnest face-on section of a wall (0.3 cells for the rectangle) costs 25 cells of travel time, more than a crossing saves anywhere in this maze. '
+                     'The margin is thin.')
+                if cr and have('bxt1_sR_soft'):
+                    c3 = (one('bxt1_sR_soft').get('course', {}).get('3000', {}).get('success') or [0, 1])
+                    t += (f' The lift-into-walls model prices a wall crossing at {f(cr["ratio"][2], 2)}–{f(cr["ratio"][4], 2)} of its true cost (5 % and 50 % quantiles over {cr["n"]:,} crossing steps)'
+                          + (f', the flat-top 68 % model at {f(ca["ratio"][2], 2)}–{f(ca["ratio"][4], 2)}' if ca else '') + '. '
+                          f'With the lift-into-walls model’s speed and no check the field solved {f(100 * c3[0] / c3[1], 1)} % at epoch 3,000 on planning seed 0 and ended at {v("bxt1_sR_soft")} %: '
+                          f'at the end the detours of 12–24 cells are 24 % seen through and {bins("bxt1_sR_soft", "plus22", "32-64")} % of the 32–64-cell queries are solved. The table is the only difference to the true-speed run, and taking the crossing steps out of the candidates (next) restores the result, so the crossings are the cause: priced 3–16 % low, they open the longest detours.')
+                if have('bxt1_sR_scheck'):
+                    t += (f' With the check made from the same speed the walls are hard again and the under-pricing no longer matters: {v("bxt1_sR_scheck")} % solved, {bins("bxt1_sR_scheck", "plus22", "32-64")} % of the 32–64-cell queries. '
+                          f'What the model’s speed costs is accuracy of the travel times: {f(100 * ((P("bxt1_sR_scheck").get("ratio") or 1) - 1), 0)} % long at the median, within 10 % for {v("bxt1_sR_scheck", "within10", 0)} % of the pairs '
+                          f'({v("bxt1", "within10", 0)} % with the true speed).')
+                A(t + '</p>')
+                A('<p class="note">In these runs ntrl-demo’s own TD term still skips steps that cross an obstacle by the geometric test, as in Part 3. '
+                  + (f'With that term left as ntrl-demo has it, so that no loss term tests a step against the scene: <b>{v("bxt1_sR_scheck_tdall")} % solved</b>, {v("bxt1_sR_scheck_tdall", "seen_through", 1)} % seen through, '
+                     f'travel times within 10 % for {v("bxt1_sR_scheck_tdall", "within10", 0)} % of the pairs (one seed). ' if have('bxt1_sR_scheck_tdall') else '')
+                  + 'The lift and the speed labels come from the scene as in every run of this page.</p>')
+            if have('bxt1nL_oct_sR_scheck', 'plus40'):
+                p40, r40 = P('bxt1nL_oct_sR_scheck', 'plus40'), P('bxt1nL_oct', 'plus40')
+                A('<h3>Idea 1 on the 40-cell maze</h3>')
+                A(grid('t1_40_solved', 't1_40_seen'))
+                A(f'<p>The large-scene recipe of Part 4 (lift + octaves + backup with candidate steps up to 5.3 cells), with the step cost and the check taken from the speed of that maze’s own lift-into-walls model (with octaves): '
+                  f'<b>{f(p40["solved"])} % solved</b>' + (f' ({each(p40)})' if each(p40) else '') + f', {f(p40.get("seen_through"))} % of the detours seen through, travel times within 10 % for {f(p40.get("within10"), 0)} % of the pairs, '
+                  f'against {f(r40.get("solved"))} %' + (f' ({each(r40)})' if each(r40) else '') + f', {f(r40.get("seen_through"))} % and {f(r40.get("within10"), 0)} % with the true speed and the geometric check'
+                  + (' (one training seed each)' if p40['seeds'] == 1 and r40.get('seeds', 1) == 1 else '') + '. '
+                  + 'The longest class decides each run. 64–128-cell queries solved, per training seed: '
+                  + ' / '.join(f(r_.get('by_bin', {}).get('64-128'), 0) for r_ in sorted(D.sel('bxt1nL_oct_sR_scheck', 'plus40'), key=lambda r_: r_['seed'])) + ' % with the model’s speed, '
+                  + ' / '.join(f(r_.get('by_bin', {}).get('64-128'), 0) for r_ in sorted(D.sel('bxt1nL_oct', 'plus40'), key=lambda r_: r_['seed'])) + ' % with the true speed'
+                  + ' (seeds ' + ', '.join(str(r_['seed']) for r_ in sorted(D.sel('bxt1nL_oct_sR_scheck', 'plus40'), key=lambda r_: r_['seed'])) + ' and '
+                  + ', '.join(str(r_['seed']) for r_ in sorted(D.sel('bxt1nL_oct', 'plus40'), key=lambda r_: r_['seed'])) + '); all the shorter queries together are solved at '
+                  + f'{f(min(100 * (r_["success"][0] - 1.2 * r_["by_bin"]["64-128"]) / (r_["success"][1] - 120) for r_ in D.sel("bxt1nL_oct_sR_scheck", "plus40") + D.sel("bxt1nL_oct", "plus40")), 0)} % or more in every run. '
+                  + 'The same class separated the two true-speed variants of Part 4 (0 % against 72 %), so on this maze a single training does not rank two methods.</p>')
+        # ---- idea 2
+        if have('bxt1_inF', 'plus22in'):
+            A('<h3>Idea 2 · The backup added to the model, skipped inside obstacles</h3>')
+            r = one('bxt1_inF', 'plus22in')
+            c = r.get('course', {}) if r else {}
+            def cs(ep):
+                x = c.get(str(ep), {}).get('success')
+                return f(100 * x[0] / x[1], 1) if x else '–'
+            A(grid('t2_solved', 't2_seen'))
+            A(grid('t2_within', 't2_stall'))
+            runs2 = sorted(D.sel('bxt1_inF', 'plus22in'), key=lambda r_: r_['seed'])
+            pi = P('bxt1_inF', 'plus22in')
+            long_ = ' / '.join(f(r_.get('by_bin', {}).get('32-64'), 0) for r_ in runs2)
+            rest = [100 * (r_['success'][0] - r_['by_bin']['32-64'] * 1.2) / (r_['success'][1] - 120) for r_ in runs2 if r_.get('by_bin', {}).get('32-64') is not None]
+            t = (f'<p>The model with the right speed (lift into the walls, 20 % of the pairs with an end inside) trained with the backup of Part 3, the backup applied only to pairs with both ends out of obstacles: '
+                 f'<b>{f(pi["solved"])} % solved' + (f' over {pi["seeds"]} training seeds ({each(pi)})' if pi['seeds'] > 1 else '') + f', {f(pi.get("seen_through"))} % of the detours seen through</b>, '
+                 f'against {f(Rr.get("solved"))} % and {f(Rr.get("seen_through"), 0)} % for the model alone. The backup removes nearly all of the see-through in every seed (' + ' / '.join(f(r_.get('seen_through')) for r_ in runs2) + ' %). '
+                 f'What varies is the longest class of queries: {long_} % of the 32–64-cell queries solved' + (f', against {f(min(rest), 0)}–{f(max(rest), 0)} % of all the shorter ones' if len(rest) > 1 else '') + '. '
+                 f'On seed 87358 the field solved {cs(3000)} % at epoch 3,000 on planning seed 0 and lost the longest queries in the last 2,000 epochs; where those plans stall, the learned travel time is 0.78–0.85 of the truth, '
+                 'so the far field is short again there. The same backup on free-space pairs holds them in all three seeds '
+                 f'({each(P("bxt1"))} %), and idea 1 keeps the pairs inside obstacles out of the second training altogether. '
+                 f'With the backup applied to every pair and the geometric check it fails ({v("bxt1_in", scene="plus22in")} %, Part 5).</p>')
+            A(t)
+            if have('bxt1_in_soft', 'plus22in'):
+                A(f'<p><b>The backup on every pair, with no collision check</b>: a step through an obstacle is a candidate and costs its floor-speed travel time, so the backup is the Bellman equation of the same passable-wall problem '
+                  f'whose eikonal equation the pairs inside obstacles train, and a goal inside a wall is reached by steps into it. {v("bxt1_in_soft", scene="plus22in")} % solved, {v("bxt1_in_soft", "seen_through", 1, "plus22in")} % seen through, '
+                  f'travel times within 10 % for {v("bxt1_in_soft", "within10", 0, "plus22in")} % of the pairs, {bins("bxt1_in_soft", "plus22in", "32-64")} % of the 32–64-cell queries. '
+                  'That is worse than skipping the pairs inside obstacles, and it did not improve during training (60–61 % on planning seed 0 at epochs 1,000, 2,000 and 3,000). No control was run on why.</p>')
+            t = ''
+            if have('liftW_bellF', 'plus22w20'):
+                t += (f'The flat-top lift on the 20 % whole-interior pairs with the same backup: {v("liftW_bellF", scene="plus22w20")} % solved, {v("liftW_bellF", "seen_through", 1, "plus22w20")} % seen through '
+                      f'({v("liftW", scene="plus22w20")} % and {v("liftW", "seen_through", 1, "plus22w20")} % without the backup). ')
+            if have('bxt1_inF_init', 'plus22in'):
+                t += (f'Started from the trained model instead of from scratch: {v("bxt1_inF_init", scene="plus22in")} % solved, {v("bxt1_inF_init", "seen_through", 1, "plus22in")} % seen through. ')
+            if t:
+                A('<p>' + t + '</p>')
+        rows = []
+        for title, arms in (('lift alone', PG.WMODEL), ('idea 1', PG.T1ARMS), ('idea 2', PG.T2ARMS)):
+            for src, name, _ in arms:
+                p_ = D.ref(*src[4:].split(':')) if isinstance(src, str) else P(*src)
+                if p_:
+                    rows.append([title, name, p_.get('seeds', 1), f(p_.get('solved')), f(p_.get('within10')), f(p_.get('seen_through')), f(p_.get('wall')), f(p_.get('stall')), f(p_.get('ratio'), 3)])
+        A(details('Part 6, every arm: the numbers', table(['test', 'arm', 'seeds', 'solved %', 'T within 10 %', 'seen through %', 'through a wall %', 'stalled %', 'median learned / true time'], rows, left=2)))
 
     # ------------------------------------------------------------------ limits
     A('<h2>What this does not show</h2>')

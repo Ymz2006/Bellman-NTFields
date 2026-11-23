@@ -1,0 +1,74 @@
+# real_world_6dof, planning copy: jeffrey/real_world/scenes/real_world_6dof.yml with the pedestal top lowered by 0.04 m so that the release scorer,
+# which checks the fixed shoulder spheres too, accepts configurations (jeffrey/lbs_arm/make_real_scene.py). Nothing else differs.
+# Written by make_real_scene.py; do not edit by hand.
+
+robots:
+- name: arm
+  base: [0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0]
+cuboids:
+- name: floor
+  pose: [0.5, 0.0, -0.725, 1.0, 0.0, 0.0, 0.0]
+  dims: [4.0, 4.0, 0.05]
+  color: [120, 120, 115]
+- name: pedestal
+  pose: [0.0, 0.0, -0.37, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.25, 0.25, 0.66]
+  color: [90, 96, 104]
+- name: shelf_bottom
+  pose: [0.73, 0.0, -0.66, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.56, 0.92, 0.08]
+  color: [150, 156, 166]
+- name: shelf_top
+  pose: [0.73, 0.0, 1.08, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.56, 0.92, 0.08]
+  color: [150, 156, 166]
+- name: shelf_back
+  pose: [0.995, 0.0, 0.21, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.03, 0.92, 1.66]
+  color: [150, 156, 166]
+- name: shelf_side_right
+  pose: [0.715, -0.445, 0.21, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.53, 0.03, 1.66]
+  color: [150, 156, 166]
+- name: shelf_side_left
+  pose: [0.715, 0.445, 0.21, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.53, 0.03, 1.66]
+  color: [150, 156, 166]
+- name: shelf_divider_1
+  pose: [0.715, 0.0, -0.071667, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.53, 0.86, 0.03]
+  color: [182, 188, 196]
+- name: shelf_divider_2
+  pose: [0.715, 0.0, 0.491667, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.53, 0.86, 0.03]
+  color: [182, 188, 196]
+sampling:
+  x: [0.08, 1.01]
+  y: [-0.69, 0.69]
+  z: [-0.7, 1.12]
+compartments:
+- name: bottom
+  x: [0.49, 0.98]
+  y: [-0.43, 0.43]
+  z: [-0.62, -0.0867]
+- name: middle
+  x: [0.49, 0.98]
+  y: [-0.43, 0.43]
+  z: [-0.0567, 0.4767]
+- name: top
+  x: [0.49, 0.98]
+  y: [-0.43, 0.43]
+  z: [0.5067, 1.04]
+interiors:
+- name: bottom
+  x: [0.45, 0.98]
+  y: [-0.43, 0.43]
+  z: [-0.62, -0.0867]
+- name: middle
+  x: [0.45, 0.98]
+  y: [-0.43, 0.43]
+  z: [-0.0567, 0.4767]
+- name: top
+  x: [0.45, 0.98]
+  y: [-0.43, 0.43]
+  z: [0.5067, 1.04]

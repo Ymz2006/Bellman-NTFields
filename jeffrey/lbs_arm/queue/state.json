@@ -1,0 +1,221 @@
+{
+ "done": {
+  "lbs|cab|87358|--lift time --bell 1 --traversals 4096|1": {
+   "id": "20261121T042823Z-793479a8",
+   "eval": "20261121T055835Z-69a9fa28"
+  },
+  "lbsg2|cab|87358|--lift time --lift-gain 2.45 --bell 1 --traversals 4096": {
+   "id": "20261121T043813Z-61828666",
+   "eval": "20261121T071203Z-7ad54eaf"
+  },
+  "lbscup|cab|87358|--lift time --bell 1 --traversals 4096 --pair-cup 0.5 --min-clear 0 --safe-margin 0|1": {
+   "id": "20261121T062933Z-818e7646",
+   "eval": "20261121T082018Z-46c1e829"
+  },
+  "ntrlc|cabc|87358|--lift none --weight 0": {
+   "id": "20261121T082313Z-f2943872",
+   "eval": "20261121T083010Z-ad102ef0"
+  },
+  "lbsg6|cab|87358|--lift time --lift-gain 6 --bell 1 --traversals 4096": {
+   "id": "20261121T071653Z-6750161e",
+   "eval": "20261121T095038Z-cb2f9882"
+  },
+  "lbsd|cabc|87358|--lift time --bell 1 --traversals 4096": {
+   "id": "20261121T083133Z-78627133",
+   "eval": "20261121T100137Z-77e5f7a5"
+  },
+  "lbsf4|cab|87358|--lift time --bell 1 --traversals 4096 --freq 4": {
+   "id": "20261121T100413Z-6e662858",
+   "eval": "20261121T112916Z-e872cb73"
+  },
+  "lbsf2|cab|87358|--lift time --bell 1 --traversals 4096 --freq 2": {
+   "id": "20261121T095423Z-74894796",
+   "eval": "20261121T122225Z-73c7cca2"
+  },
+  "lbsf05|cab|87358|--lift time --bell 1 --traversals 4096 --freq 0.5": {
+   "id": "20261121T113303Z-584af8c7",
+   "eval": "20261121T132144Z-3282c2db"
+  },
+  "lbsg04|cab|87358|--lift time --lift-gain 0.41 --bell 1 --traversals 4096": {
+   "id": "20261121T132443Z-3591894b",
+   "eval": "20261121T145459Z-d4d7babb"
+  },
+  "noL|cab|87358|--lift none --bell 1 --traversals 4096": {
+   "id": "20261121T145733Z-44b684a2",
+   "eval": "20261121T161638Z-2292f9fb"
+  },
+  "lbsf025|cab|87358|--lift time --bell 1 --traversals 4096 --freq 0.25": {
+   "id": "20261121T122623Z-5f629752",
+   "eval": "20261121T172010Z-d3ecaf0a"
+  },
+  "lbsfs|cab|87358|--lift time --bell 1 --traversals 4096 --freq sens": {
+   "id": "20261121T161823Z-b11be4ae",
+   "eval": "20261121T175801Z-8b1c27cc"
+  },
+  "rw_ntrl|rw6|87358|--lift none --weight 0": {
+   "id": "20261121T180103Z-9fa94e84",
+   "eval": "20261121T180744Z-799684da"
+  },
+  "noS|cab|87358|--lift time --bell 1 --weight 0": {
+   "id": "20261121T172343Z-6a50478c",
+   "eval": "20261121T192948Z-d4d926ac"
+  },
+  "rw_lbs|rw6|87358|--lift time --bell 1 --traversals 4096": {
+   "id": "20261121T180923Z-cd9646ee",
+   "eval": "20261121T193818Z-813a077f"
+  },
+  "noB|cab|87358|--lift time --traversals 4096": {
+   "id": "20261121T193313Z-fb3d627a",
+   "eval": "20261121T200739Z-6f854c9f"
+  },
+  "rw12_ntrl|rw12|87358|--lift none --weight 0|1": {
+   "id": "20261121T210323Z-3ca3e6a4",
+   "eval": null
+  },
+  "liftonly|cab|87358|--lift time --weight 0|1": {
+   "id": "20261121T211313Z-b59cd66d",
+   "eval": "20261121T212749Z-261af963"
+  },
+  "rw12b_ntrl|rw12b|87358|--lift none --weight 0|1": {
+   "id": "20261121T213203Z-78ce002c",
+   "eval": null
+  },
+  "lbs2|cab|87359|--lift time --bell 1 --traversals 4096|0": {
+   "id": "20261121T201103Z-f4e8487c",
+   "eval": "20261121T224321Z-c4acd909"
+  },
+  "rw12b_lift|rw12b|87358|--lift time --weight 0|0": {
+   "id": "20261121T224643Z-9b85e241",
+   "eval": null
+  },
+  "rw_lift|rw6|87358|--lift time --weight 0|0": {
+   "id": "20261121T231303Z-c6d89aec",
+   "eval": "20261121T232440Z-57dfe0f8"
+  },
+  "ntrl2|cab|87359|--lift none --weight 0|0": {
+   "id": "20261121T232753Z-2e95bb3b",
+   "eval": "20261121T233443Z-e73673cb"
+  },
+  "rw12b_lbs|rw12b|87358|--lift time --bell 1 --traversals 4096 --pair-max 0.85|1": {
+   "id": "20261121T214053Z-ac867258",
+   "eval": null
+  },
+  "rw12b_lift_f05|rw12b|87358|--lift time --weight 0 --freq 0.5|1": {
+   "id": "20261122T013933Z-540c0bf9",
+   "eval": null
+  },
+  "rw_lbs2|rw6|87359|--lift time --bell 1 --traversals 4096|0": {
+   "id": "20261121T233613Z-e092e8a8",
+   "eval": "20261122T020620Z-f4e9e21a"
+  },
+  "rw_ntrl2|rw6|87359|--lift none --weight 0|0": {
+   "id": "20261122T020944Z-ccb90c49",
+   "eval": "20261122T021615Z-5698b216"
+  },
+  "rw12b_ls_pd|rw12b|87358|--lift time --traversals 4096 --pair-max 0.85 --pair-data|1": {
+   "id": "20261122T020423Z-62cd88bd",
+   "eval": null
+  },
+  "rw_lbs_w3|rw6|87358|--lift time --bell 1 --traversals 4096 --weight 3|1": {
+   "id": "20261122T025053Z-7dd2f93a",
+   "eval": "20261122T041820Z-ad87cf83"
+  },
+  "rw_lbs_w10|rw6|87358|--lift time --bell 1 --traversals 4096 --weight 10|0": {
+   "id": "20261122T021804Z-26841e12",
+   "eval": "20261122T044549Z-bc9d8e12"
+  },
+  "rw_lbs_lpath|rw6|87358|--lift time --bell 1 --traversals 4096 --leaf path|1": {
+   "id": "20261122T042114Z-2e8bb124",
+   "eval": "20261122T055001Z-f1aef4c5"
+  },
+  "rw_lbs_lnet|rw6|87358|--lift time --bell 1 --traversals 4096 --leaf net|0": {
+   "id": "20261122T044904Z-5bea368d",
+   "eval": "20261122T071812Z-0e02db55"
+  },
+  "rw_lbs_bgoal|rw6|87358|--lift time --bell 1 --traversals 4096 --bell-goal|1": {
+   "id": "20261122T055254Z-2a52f997",
+   "eval": "20261122T072017Z-50e5a4af"
+  },
+  "rw12b_lift_f025|rw12b|87358|--lift time --weight 0 --freq 0.25|1": {
+   "id": "20261122T072304Z-8f4713f3",
+   "eval": null
+  },
+  "rw12b_lift_g2|rw12b|87358|--lift time --weight 0 --lift-gain 2.45|1": {
+   "id": "20261122T074754Z-dcdd9a11",
+   "eval": null
+  },
+  "rw12b_lift_g04|rw12b|87358|--lift time --weight 0 --lift-gain 0.41|1": {
+   "id": "20261122T080944Z-615635f4",
+   "eval": null
+  },
+  "rw12b_lift_g35|rw12b|87358|--lift time --weight 0 --lift-gain 3.46|1": {
+   "id": "20261122T083104Z-35f0ab78",
+   "eval": null
+  },
+  "rw12b_ls_pd_f05|rw12b|87358|--lift time --traversals 4096 --pair-max 0.85 --pair-data --freq 0.5|1": {
+   "id": "20261122T085254Z-d0cf3f53",
+   "eval": null
+  },
+  "rw_lbs_w30|rw6|87358|--lift time --bell 1 --traversals 4096 --weight 30|0": {
+   "id": "20261122T072114Z-2f17ddbe",
+   "eval": "20261122T095031Z-04de7517"
+  },
+  "rw12b_ntrl_f05|rw12b|87358|--lift none --weight 0 --freq 0.5|0": {
+   "id": "20261122T095434Z-133b76ca",
+   "eval": null
+  },
+  "rw_lbs_w100|rw6|87358|--lift time --bell 1 --traversals 4096 --weight 100|0": {
+   "id": "20261122T100254Z-1c7c406c",
+   "eval": "20261122T123443Z-77b1c32e"
+  },
+  "rw12b_lbs_pd_f05|rw12b|87358|--lift time --bell 1 --traversals 4096 --pair-max 0.85 --pair-data --freq 0.5|1": {
+   "id": "20261122T094014Z-71c6d343",
+   "eval": null
+  },
+  "rw12b_lift_f05_s2|rw12b|87359|--lift time --weight 0 --freq 0.5|1": {
+   "id": "20261122T132004Z-5ff97e4f",
+   "eval": null
+  },
+  "rw12b_ls_pd_f05_s2|rw12b|87359|--lift time --traversals 4096 --pair-max 0.85 --pair-data --freq 0.5|1": {
+   "id": "20261122T134254Z-f2c07bb8",
+   "eval": null
+  },
+  "rw_lbs_f05|rw6|87358|--lift time --bell 1 --traversals 4096 --freq 0.5|0": {
+   "id": "20261122T123744Z-121e678e",
+   "eval": "20261122T151431Z-a35eb399"
+  },
+  "rw_lift_f05|rw6|87358|--lift time --weight 0 --freq 0.5|0": {
+   "id": "20261122T151734Z-0e849084",
+   "eval": "20261122T152843Z-ebedfeb4"
+  },
+  "rw12b_lbs_pd_f05_s2|rw12b|87359|--lift time --bell 1 --traversals 4096 --pair-max 0.85 --pair-data --freq 0.5|1": {
+   "id": "20261122T142944Z-b127b8d5",
+   "eval": null
+  },
+  "rw_lbs_f05_s2|rw6|87359|--lift time --bell 1 --traversals 4096 --freq 0.5|0": {
+   "id": "20261122T153324Z-58f9b67f",
+   "eval": "20261122T181526Z-25cda11f"
+  },
+  "rw_lbs_f025|rw6|87358|--lift time --bell 1 --traversals 4096 --freq 0.25|0": {
+   "id": "20261122T181834Z-1b5aa297",
+   "eval": "20261122T210248Z-3cb827fc"
+  },
+  "rw_lift_f05_s2|rw6|87359|--lift time --weight 0 --freq 0.5|0": {
+   "id": "20261122T210554Z-85295aaa",
+   "eval": "20261122T211725Z-aa2b297e"
+  },
+  "rw_ntrl_f05|rw6|87358|--lift none --weight 0 --freq 0.5|0": {
+   "id": "20261122T212044Z-eb0c2c00",
+   "eval": "20261122T212713Z-ae2d3810"
+  },
+  "rw12b_lbs_pd_f025|rw12b|87358|--lift time --bell 1 --traversals 4096 --pair-max 0.85 --pair-data --freq 0.25|1": {
+   "id": "20261122T180914Z-e63151c0",
+   "eval": null
+  },
+  "lbsf025_s2|cab|87359|--lift time --bell 1 --traversals 4096 --freq 0.25|1": {
+   "id": "20261122T220534Z-79858f70",
+   "eval": "20261123T020922Z-bababfcf"
+  }
+ },
+ "failed": {}
+}

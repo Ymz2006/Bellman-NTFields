@@ -1,0 +1,2672 @@
+[
+ {
+  "name": "prep:maze10_1",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "maze",
+   "--n",
+   "10",
+   "--instance",
+   "1"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "prep:maze10_2",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "maze",
+   "--n",
+   "10",
+   "--instance",
+   "2"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "prep:maze10_3",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "maze",
+   "--n",
+   "10",
+   "--instance",
+   "3"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "prep:maze14_1",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "maze",
+   "--n",
+   "14",
+   "--instance",
+   "1"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "prep:maze14_2",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "maze",
+   "--n",
+   "14",
+   "--instance",
+   "2"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "prep:maze14_3",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "maze",
+   "--n",
+   "14",
+   "--instance",
+   "3"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "prep:maze18_1",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "maze",
+   "--n",
+   "18",
+   "--instance",
+   "1"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "prep:maze18_2",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "maze",
+   "--n",
+   "18",
+   "--instance",
+   "2"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "prep:maze18_3",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "maze",
+   "--n",
+   "18",
+   "--instance",
+   "3"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "prep:maze22_1",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "maze",
+   "--n",
+   "22",
+   "--instance",
+   "1"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "prep:maze22_2",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "maze",
+   "--n",
+   "22",
+   "--instance",
+   "2"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "prep:maze22_3",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "maze",
+   "--n",
+   "22",
+   "--instance",
+   "3"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "prep:gap1_1",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "gap",
+   "--scale",
+   "1",
+   "--instance",
+   "1"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "prep:gap1_2",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "gap",
+   "--scale",
+   "1",
+   "--instance",
+   "2"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "prep:gap1_3",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "gap",
+   "--scale",
+   "1",
+   "--instance",
+   "3"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "prep:gap2_1",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "gap",
+   "--scale",
+   "2",
+   "--instance",
+   "1"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "prep:gap2_2",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "gap",
+   "--scale",
+   "2",
+   "--instance",
+   "2"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "prep:gap2_3",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "gap",
+   "--scale",
+   "2",
+   "--instance",
+   "3"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "prep:gap4_1",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "gap",
+   "--scale",
+   "4",
+   "--instance",
+   "1"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "prep:gap4_2",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "gap",
+   "--scale",
+   "4",
+   "--instance",
+   "2"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "prep:gap4_3",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "gap",
+   "--scale",
+   "4",
+   "--instance",
+   "3"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "prep:gap8_1",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "gap",
+   "--scale",
+   "8",
+   "--instance",
+   "1"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "prep:gap8_2",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "gap",
+   "--scale",
+   "8",
+   "--instance",
+   "2"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "prep:gap8_3",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "gap",
+   "--scale",
+   "8",
+   "--instance",
+   "3"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "prep:Allensville3d",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "house3",
+   "--name",
+   "Allensville"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 3
+ },
+ {
+  "name": "prep:Mifflinburg3d",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "house3",
+   "--name",
+   "Mifflinburg"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 3
+ },
+ {
+  "name": "prep:Noxapater3d",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "house3",
+   "--name",
+   "Noxapater"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 3
+ },
+ {
+  "name": "prep:Markleeville3d",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "house3",
+   "--name",
+   "Markleeville"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 3
+ },
+ {
+  "name": "prep:Lakeville3d",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "house3",
+   "--name",
+   "Lakeville"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 3
+ },
+ {
+  "name": "prep:Collierville3d",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "house3",
+   "--name",
+   "Collierville"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 3
+ },
+ {
+  "name": "prep:Benevolence3d",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "house3",
+   "--name",
+   "Benevolence"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 3
+ },
+ {
+  "name": "prep:Onaga3d",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "house3",
+   "--name",
+   "Onaga"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 3
+ },
+ {
+  "name": "prep:Coffeen3d",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "house3",
+   "--name",
+   "Coffeen"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 3
+ },
+ {
+  "name": "prep:Forkland3d",
+  "stage": "prep",
+  "args": [
+   "--kind",
+   "house3",
+   "--name",
+   "Forkland"
+  ],
+  "deps": [],
+  "gpu": null,
+  "table": 3
+ },
+ {
+  "name": "bench:maze10_1:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze10_1",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:maze10_1"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "bench:maze10_2:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze10_2",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:maze10_2"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "bench:maze10_3:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze10_3",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:maze10_3"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "bench:maze14_1:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze14_1",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:maze14_1"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "bench:maze14_2:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze14_2",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:maze14_2"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "bench:maze14_3:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze14_3",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:maze14_3"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "bench:maze18_1:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze18_1",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:maze18_1"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "bench:maze18_2:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze18_2",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:maze18_2"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "bench:maze18_3:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze18_3",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:maze18_3"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "bench:maze22_1:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze22_1",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:maze22_1"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "bench:maze22_2:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze22_2",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:maze22_2"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "bench:maze22_3:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze22_3",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:maze22_3"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "bench:gap1_1:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap1_1",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:gap1_1"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "bench:gap1_2:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap1_2",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:gap1_2"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "bench:gap1_3:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap1_3",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:gap1_3"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "bench:gap2_1:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap2_1",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:gap2_1"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "bench:gap2_2:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap2_2",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:gap2_2"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "bench:gap2_3:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap2_3",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:gap2_3"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "bench:gap4_1:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap4_1",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:gap4_1"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "bench:gap4_2:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap4_2",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:gap4_2"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "bench:gap4_3:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap4_3",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:gap4_3"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "bench:gap8_1:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap8_1",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:gap8_1"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "bench:gap8_2:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap8_2",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:gap8_2"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "bench:gap8_3:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap8_3",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:gap8_3"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "bench:Allensville3d:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Allensville3d",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:Allensville3d"
+  ],
+  "gpu": "cpu",
+  "table": 3
+ },
+ {
+  "name": "bench:Mifflinburg3d:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Mifflinburg3d",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:Mifflinburg3d"
+  ],
+  "gpu": "cpu",
+  "table": 3
+ },
+ {
+  "name": "bench:Noxapater3d:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Noxapater3d",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:Noxapater3d"
+  ],
+  "gpu": "cpu",
+  "table": 3
+ },
+ {
+  "name": "bench:Markleeville3d:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Markleeville3d",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:Markleeville3d"
+  ],
+  "gpu": "cpu",
+  "table": 3
+ },
+ {
+  "name": "bench:Lakeville3d:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Lakeville3d",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:Lakeville3d"
+  ],
+  "gpu": "cpu",
+  "table": 3
+ },
+ {
+  "name": "bench:Collierville3d:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Collierville3d",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:Collierville3d"
+  ],
+  "gpu": "cpu",
+  "table": 3
+ },
+ {
+  "name": "bench:Benevolence3d:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Benevolence3d",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:Benevolence3d"
+  ],
+  "gpu": "cpu",
+  "table": 3
+ },
+ {
+  "name": "bench:Onaga3d:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Onaga3d",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:Onaga3d"
+  ],
+  "gpu": "cpu",
+  "table": 3
+ },
+ {
+  "name": "bench:Coffeen3d:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Coffeen3d",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:Coffeen3d"
+  ],
+  "gpu": "cpu",
+  "table": 3
+ },
+ {
+  "name": "bench:Forkland3d:sampling",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Forkland3d",
+   "--methods",
+   "rrtc,lazyprm"
+  ],
+  "deps": [
+   "prep:Forkland3d"
+  ],
+  "gpu": "cpu",
+  "table": 3
+ },
+ {
+  "name": "field:maze10_1:ntrl",
+  "stage": "reuse",
+  "run": "20261120T024436Z-582ae344",
+  "deps": [],
+  "table": 1
+ },
+ {
+  "name": "field:maze10_1:lbs",
+  "stage": "reuse",
+  "run": "20261120T024416Z-e62e1e8c",
+  "deps": [],
+  "table": 1
+ },
+ {
+  "name": "bench:maze10_1:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze10_1",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:maze10_1:ntrl",
+   "--field",
+   "lbs=@field:maze10_1:lbs"
+  ],
+  "deps": [
+   "prep:maze10_1",
+   "field:maze10_1:ntrl",
+   "field:maze10_1:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "field:maze10_2:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:maze10_2",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean"
+  ],
+  "deps": [
+   "prep:maze10_2"
+  ],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "field:maze10_2:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:maze10_2",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 1 --lean"
+  ],
+  "deps": [
+   "prep:maze10_2"
+  ],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "bench:maze10_2:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze10_2",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:maze10_2:ntrl",
+   "--field",
+   "lbs=@field:maze10_2:lbs"
+  ],
+  "deps": [
+   "prep:maze10_2",
+   "field:maze10_2:ntrl",
+   "field:maze10_2:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "field:maze10_3:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:maze10_3",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean"
+  ],
+  "deps": [
+   "prep:maze10_3"
+  ],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "field:maze10_3:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:maze10_3",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 1 --lean"
+  ],
+  "deps": [
+   "prep:maze10_3"
+  ],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "bench:maze10_3:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze10_3",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:maze10_3:ntrl",
+   "--field",
+   "lbs=@field:maze10_3:lbs"
+  ],
+  "deps": [
+   "prep:maze10_3",
+   "field:maze10_3:ntrl",
+   "field:maze10_3:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "field:maze14_1:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:maze14_1",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean"
+  ],
+  "deps": [
+   "prep:maze14_1"
+  ],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "field:maze14_1:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:maze14_1",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 1 --lean"
+  ],
+  "deps": [
+   "prep:maze14_1"
+  ],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "bench:maze14_1:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze14_1",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:maze14_1:ntrl",
+   "--field",
+   "lbs=@field:maze14_1:lbs"
+  ],
+  "deps": [
+   "prep:maze14_1",
+   "field:maze14_1:ntrl",
+   "field:maze14_1:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "field:maze14_2:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:maze14_2",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean"
+  ],
+  "deps": [
+   "prep:maze14_2"
+  ],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "field:maze14_2:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:maze14_2",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 1 --lean"
+  ],
+  "deps": [
+   "prep:maze14_2"
+  ],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "bench:maze14_2:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze14_2",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:maze14_2:ntrl",
+   "--field",
+   "lbs=@field:maze14_2:lbs"
+  ],
+  "deps": [
+   "prep:maze14_2",
+   "field:maze14_2:ntrl",
+   "field:maze14_2:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "field:maze14_3:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:maze14_3",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean"
+  ],
+  "deps": [
+   "prep:maze14_3"
+  ],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "field:maze14_3:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:maze14_3",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 1 --lean"
+  ],
+  "deps": [
+   "prep:maze14_3"
+  ],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "bench:maze14_3:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze14_3",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:maze14_3:ntrl",
+   "--field",
+   "lbs=@field:maze14_3:lbs"
+  ],
+  "deps": [
+   "prep:maze14_3",
+   "field:maze14_3:ntrl",
+   "field:maze14_3:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "field:maze18_1:ntrl",
+  "stage": "reuse",
+  "run": "20261120T060816Z-2cdfe357",
+  "deps": [],
+  "table": 1
+ },
+ {
+  "name": "field:maze18_1:lbs",
+  "stage": "reuse",
+  "run": "20261120T053456Z-a02310b0",
+  "deps": [],
+  "table": 1
+ },
+ {
+  "name": "bench:maze18_1:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze18_1",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:maze18_1:ntrl",
+   "--field",
+   "lbs=@field:maze18_1:lbs"
+  ],
+  "deps": [
+   "prep:maze18_1",
+   "field:maze18_1:ntrl",
+   "field:maze18_1:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "field:maze18_2:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:maze18_2",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean"
+  ],
+  "deps": [
+   "prep:maze18_2"
+  ],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "field:maze18_2:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:maze18_2",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 1 --lean"
+  ],
+  "deps": [
+   "prep:maze18_2"
+  ],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "bench:maze18_2:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze18_2",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:maze18_2:ntrl",
+   "--field",
+   "lbs=@field:maze18_2:lbs"
+  ],
+  "deps": [
+   "prep:maze18_2",
+   "field:maze18_2:ntrl",
+   "field:maze18_2:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "field:maze18_3:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:maze18_3",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean"
+  ],
+  "deps": [
+   "prep:maze18_3"
+  ],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "field:maze18_3:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:maze18_3",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 1 --lean"
+  ],
+  "deps": [
+   "prep:maze18_3"
+  ],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "bench:maze18_3:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze18_3",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:maze18_3:ntrl",
+   "--field",
+   "lbs=@field:maze18_3:lbs"
+  ],
+  "deps": [
+   "prep:maze18_3",
+   "field:maze18_3:ntrl",
+   "field:maze18_3:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "field:maze22_1:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:maze22_1",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean"
+  ],
+  "deps": [
+   "prep:maze22_1"
+  ],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "field:maze22_1:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:maze22_1",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 1 --lean"
+  ],
+  "deps": [
+   "prep:maze22_1"
+  ],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "bench:maze22_1:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze22_1",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:maze22_1:ntrl",
+   "--field",
+   "lbs=@field:maze22_1:lbs"
+  ],
+  "deps": [
+   "prep:maze22_1",
+   "field:maze22_1:ntrl",
+   "field:maze22_1:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "field:maze22_2:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:maze22_2",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean"
+  ],
+  "deps": [
+   "prep:maze22_2"
+  ],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "field:maze22_2:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:maze22_2",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 1 --lean"
+  ],
+  "deps": [
+   "prep:maze22_2"
+  ],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "bench:maze22_2:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze22_2",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:maze22_2:ntrl",
+   "--field",
+   "lbs=@field:maze22_2:lbs"
+  ],
+  "deps": [
+   "prep:maze22_2",
+   "field:maze22_2:ntrl",
+   "field:maze22_2:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "field:maze22_3:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:maze22_3",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean"
+  ],
+  "deps": [
+   "prep:maze22_3"
+  ],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "field:maze22_3:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:maze22_3",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 1 --lean"
+  ],
+  "deps": [
+   "prep:maze22_3"
+  ],
+  "gpu": null,
+  "table": 1
+ },
+ {
+  "name": "bench:maze22_3:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze22_3",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:maze22_3:ntrl",
+   "--field",
+   "lbs=@field:maze22_3:lbs"
+  ],
+  "deps": [
+   "prep:maze22_3",
+   "field:maze22_3:ntrl",
+   "field:maze22_3:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 1
+ },
+ {
+  "name": "field:gap1_1:ntrl",
+  "stage": "reuse",
+  "run": "20261120T082856Z-8764ef43",
+  "deps": [],
+  "table": 2
+ },
+ {
+  "name": "field:gap1_1:lbs",
+  "stage": "reuse",
+  "run": "20261120T082336Z-33650f07",
+  "deps": [],
+  "table": 2
+ },
+ {
+  "name": "bench:gap1_1:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap1_1",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:gap1_1:ntrl",
+   "--field",
+   "lbs=@field:gap1_1:lbs"
+  ],
+  "deps": [
+   "prep:gap1_1",
+   "field:gap1_1:ntrl",
+   "field:gap1_1:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "field:gap1_2:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:gap1_2",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean"
+  ],
+  "deps": [
+   "prep:gap1_2"
+  ],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "field:gap1_2:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:gap1_2",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 1 --lean"
+  ],
+  "deps": [
+   "prep:gap1_2"
+  ],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "bench:gap1_2:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap1_2",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:gap1_2:ntrl",
+   "--field",
+   "lbs=@field:gap1_2:lbs"
+  ],
+  "deps": [
+   "prep:gap1_2",
+   "field:gap1_2:ntrl",
+   "field:gap1_2:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "field:gap1_3:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:gap1_3",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean"
+  ],
+  "deps": [
+   "prep:gap1_3"
+  ],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "field:gap1_3:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:gap1_3",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 1 --lean"
+  ],
+  "deps": [
+   "prep:gap1_3"
+  ],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "bench:gap1_3:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap1_3",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:gap1_3:ntrl",
+   "--field",
+   "lbs=@field:gap1_3:lbs"
+  ],
+  "deps": [
+   "prep:gap1_3",
+   "field:gap1_3:ntrl",
+   "field:gap1_3:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "field:gap2_1:ntrl",
+  "stage": "reuse",
+  "run": "20261120T104726Z-007aeff7",
+  "deps": [],
+  "table": 2
+ },
+ {
+  "name": "field:gap2_1:lbs",
+  "stage": "reuse",
+  "run": "20261120T095336Z-719315ba",
+  "deps": [],
+  "table": 2
+ },
+ {
+  "name": "bench:gap2_1:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap2_1",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:gap2_1:ntrl",
+   "--field",
+   "lbs=@field:gap2_1:lbs"
+  ],
+  "deps": [
+   "prep:gap2_1",
+   "field:gap2_1:ntrl",
+   "field:gap2_1:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "field:gap2_2:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:gap2_2",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean"
+  ],
+  "deps": [
+   "prep:gap2_2"
+  ],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "field:gap2_2:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:gap2_2",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 1 --lean"
+  ],
+  "deps": [
+   "prep:gap2_2"
+  ],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "bench:gap2_2:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap2_2",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:gap2_2:ntrl",
+   "--field",
+   "lbs=@field:gap2_2:lbs"
+  ],
+  "deps": [
+   "prep:gap2_2",
+   "field:gap2_2:ntrl",
+   "field:gap2_2:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "field:gap2_3:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:gap2_3",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean"
+  ],
+  "deps": [
+   "prep:gap2_3"
+  ],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "field:gap2_3:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:gap2_3",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 1 --lean"
+  ],
+  "deps": [
+   "prep:gap2_3"
+  ],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "bench:gap2_3:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap2_3",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:gap2_3:ntrl",
+   "--field",
+   "lbs=@field:gap2_3:lbs"
+  ],
+  "deps": [
+   "prep:gap2_3",
+   "field:gap2_3:ntrl",
+   "field:gap2_3:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "field:gap4_1:ntrl",
+  "stage": "reuse",
+  "run": "20261120T124626Z-146b5fcf",
+  "deps": [],
+  "table": 2
+ },
+ {
+  "name": "field:gap4_1:lbs",
+  "stage": "reuse",
+  "run": "20261120T112717Z-11b4d878",
+  "deps": [],
+  "table": 2
+ },
+ {
+  "name": "bench:gap4_1:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap4_1",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:gap4_1:ntrl",
+   "--field",
+   "lbs=@field:gap4_1:lbs"
+  ],
+  "deps": [
+   "prep:gap4_1",
+   "field:gap4_1:ntrl",
+   "field:gap4_1:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "field:gap4_2:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:gap4_2",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean"
+  ],
+  "deps": [
+   "prep:gap4_2"
+  ],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "field:gap4_2:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:gap4_2",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 8 --lean"
+  ],
+  "deps": [
+   "prep:gap4_2"
+  ],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "bench:gap4_2:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap4_2",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:gap4_2:ntrl",
+   "--field",
+   "lbs=@field:gap4_2:lbs"
+  ],
+  "deps": [
+   "prep:gap4_2",
+   "field:gap4_2:ntrl",
+   "field:gap4_2:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "field:gap4_3:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:gap4_3",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean"
+  ],
+  "deps": [
+   "prep:gap4_3"
+  ],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "field:gap4_3:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:gap4_3",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 8 --lean"
+  ],
+  "deps": [
+   "prep:gap4_3"
+  ],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "bench:gap4_3:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap4_3",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:gap4_3:ntrl",
+   "--field",
+   "lbs=@field:gap4_3:lbs"
+  ],
+  "deps": [
+   "prep:gap4_3",
+   "field:gap4_3:ntrl",
+   "field:gap4_3:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "field:gap8_1:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:gap8_1",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean"
+  ],
+  "deps": [
+   "prep:gap8_1"
+  ],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "field:gap8_1:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:gap8_1",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 8 --lean"
+  ],
+  "deps": [
+   "prep:gap8_1"
+  ],
+  "gpu": "1",
+  "table": 2
+ },
+ {
+  "name": "bench:gap8_1:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap8_1",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:gap8_1:ntrl",
+   "--field",
+   "lbs=@field:gap8_1:lbs"
+  ],
+  "deps": [
+   "prep:gap8_1",
+   "field:gap8_1:ntrl",
+   "field:gap8_1:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "field:gap8_2:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:gap8_2",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean"
+  ],
+  "deps": [
+   "prep:gap8_2"
+  ],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "field:gap8_2:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:gap8_2",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 8 --lean"
+  ],
+  "deps": [
+   "prep:gap8_2"
+  ],
+  "gpu": "1",
+  "table": 2
+ },
+ {
+  "name": "bench:gap8_2:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap8_2",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:gap8_2:ntrl",
+   "--field",
+   "lbs=@field:gap8_2:lbs"
+  ],
+  "deps": [
+   "prep:gap8_2",
+   "field:gap8_2:ntrl",
+   "field:gap8_2:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "field:gap8_3:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:gap8_3",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean"
+  ],
+  "deps": [
+   "prep:gap8_3"
+  ],
+  "gpu": null,
+  "table": 2
+ },
+ {
+  "name": "field:gap8_3:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:gap8_3",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 8 --lean"
+  ],
+  "deps": [
+   "prep:gap8_3"
+  ],
+  "gpu": "1",
+  "table": 2
+ },
+ {
+  "name": "bench:gap8_3:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap8_3",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:gap8_3:ntrl",
+   "--field",
+   "lbs=@field:gap8_3:lbs"
+  ],
+  "deps": [
+   "prep:gap8_3",
+   "field:gap8_3:ntrl",
+   "field:gap8_3:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 2
+ },
+ {
+  "name": "field:Allensville3d:ntrl",
+  "stage": "reuse",
+  "run": "20261121T005037Z-585c4d0f",
+  "deps": [],
+  "table": 3
+ },
+ {
+  "name": "field:Allensville3d:lbs",
+  "stage": "reuse",
+  "run": "20261120T235517Z-71d6a2c5",
+  "deps": [],
+  "table": 3
+ },
+ {
+  "name": "bench:Allensville3d:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Allensville3d",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:Allensville3d:ntrl",
+   "--field",
+   "lbs=@field:Allensville3d:lbs"
+  ],
+  "deps": [
+   "prep:Allensville3d",
+   "field:Allensville3d:ntrl",
+   "field:Allensville3d:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 3
+ },
+ {
+  "name": "field:Mifflinburg3d:ntrl",
+  "stage": "reuse",
+  "run": "20261120T234857Z-2727e491",
+  "deps": [],
+  "table": 3
+ },
+ {
+  "name": "field:Mifflinburg3d:lbs",
+  "stage": "reuse",
+  "run": "20261120T232237Z-6dfa59f7",
+  "deps": [],
+  "table": 3
+ },
+ {
+  "name": "bench:Mifflinburg3d:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Mifflinburg3d",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:Mifflinburg3d:ntrl",
+   "--field",
+   "lbs=@field:Mifflinburg3d:lbs"
+  ],
+  "deps": [
+   "prep:Mifflinburg3d",
+   "field:Mifflinburg3d:ntrl",
+   "field:Mifflinburg3d:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 3
+ },
+ {
+  "name": "field:Noxapater3d:ntrl",
+  "stage": "reuse",
+  "run": "20261121T005627Z-d6eee0aa",
+  "deps": [],
+  "table": 3
+ },
+ {
+  "name": "field:Noxapater3d:lbs",
+  "stage": "reuse",
+  "run": "20261121T010917Z-fd0e606d",
+  "deps": [],
+  "table": 3
+ },
+ {
+  "name": "bench:Noxapater3d:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Noxapater3d",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:Noxapater3d:ntrl",
+   "--field",
+   "lbs=@field:Noxapater3d:lbs"
+  ],
+  "deps": [
+   "prep:Noxapater3d",
+   "field:Noxapater3d:ntrl",
+   "field:Noxapater3d:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 3
+ },
+ {
+  "name": "field:Markleeville3d:ntrl",
+  "stage": "reuse",
+  "run": "20261121T010147Z-51711f85",
+  "deps": [],
+  "table": 3
+ },
+ {
+  "name": "field:Markleeville3d:lbs",
+  "stage": "reuse",
+  "run": "20261121T021707Z-9645d217",
+  "deps": [],
+  "table": 3
+ },
+ {
+  "name": "bench:Markleeville3d:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Markleeville3d",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:Markleeville3d:ntrl",
+   "--field",
+   "lbs=@field:Markleeville3d:lbs"
+  ],
+  "deps": [
+   "prep:Markleeville3d",
+   "field:Markleeville3d:ntrl",
+   "field:Markleeville3d:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 3
+ },
+ {
+  "name": "field:Lakeville3d:ntrl",
+  "stage": "reuse",
+  "run": "20261121T010238Z-6ac4101f",
+  "deps": [],
+  "table": 3
+ },
+ {
+  "name": "field:Lakeville3d:lbs",
+  "stage": "reuse",
+  "run": "20261121T010828Z-3fc6f1af",
+  "deps": [],
+  "table": 3
+ },
+ {
+  "name": "bench:Lakeville3d:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Lakeville3d",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:Lakeville3d:ntrl",
+   "--field",
+   "lbs=@field:Lakeville3d:lbs"
+  ],
+  "deps": [
+   "prep:Lakeville3d",
+   "field:Lakeville3d:ntrl",
+   "field:Lakeville3d:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 3
+ },
+ {
+  "name": "field:Collierville3d:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:Collierville3d",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean --validate-every 1000"
+  ],
+  "deps": [
+   "prep:Collierville3d"
+  ],
+  "gpu": null,
+  "table": 3
+ },
+ {
+  "name": "field:Collierville3d:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:Collierville3d",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 8 --lean --validate-every 1000"
+  ],
+  "deps": [
+   "prep:Collierville3d"
+  ],
+  "gpu": null,
+  "table": 3
+ },
+ {
+  "name": "bench:Collierville3d:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Collierville3d",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:Collierville3d:ntrl",
+   "--field",
+   "lbs=@field:Collierville3d:lbs"
+  ],
+  "deps": [
+   "prep:Collierville3d",
+   "field:Collierville3d:ntrl",
+   "field:Collierville3d:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 3
+ },
+ {
+  "name": "field:Benevolence3d:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:Benevolence3d",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean --validate-every 1000"
+  ],
+  "deps": [
+   "prep:Benevolence3d"
+  ],
+  "gpu": null,
+  "table": 3
+ },
+ {
+  "name": "field:Benevolence3d:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:Benevolence3d",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 8 --lean --validate-every 1000"
+  ],
+  "deps": [
+   "prep:Benevolence3d"
+  ],
+  "gpu": null,
+  "table": 3
+ },
+ {
+  "name": "bench:Benevolence3d:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Benevolence3d",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:Benevolence3d:ntrl",
+   "--field",
+   "lbs=@field:Benevolence3d:lbs"
+  ],
+  "deps": [
+   "prep:Benevolence3d",
+   "field:Benevolence3d:ntrl",
+   "field:Benevolence3d:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 3
+ },
+ {
+  "name": "field:Onaga3d:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:Onaga3d",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean --validate-every 1000"
+  ],
+  "deps": [
+   "prep:Onaga3d"
+  ],
+  "gpu": null,
+  "table": 3
+ },
+ {
+  "name": "field:Onaga3d:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:Onaga3d",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 8 --lean --validate-every 1000"
+  ],
+  "deps": [
+   "prep:Onaga3d"
+  ],
+  "gpu": null,
+  "table": 3
+ },
+ {
+  "name": "bench:Onaga3d:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Onaga3d",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:Onaga3d:ntrl",
+   "--field",
+   "lbs=@field:Onaga3d:lbs"
+  ],
+  "deps": [
+   "prep:Onaga3d",
+   "field:Onaga3d:ntrl",
+   "field:Onaga3d:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 3
+ },
+ {
+  "name": "field:Coffeen3d:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:Coffeen3d",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean --validate-every 1000"
+  ],
+  "deps": [
+   "prep:Coffeen3d"
+  ],
+  "gpu": null,
+  "table": 3
+ },
+ {
+  "name": "field:Coffeen3d:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:Coffeen3d",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 8 --lean --validate-every 1000"
+  ],
+  "deps": [
+   "prep:Coffeen3d"
+  ],
+  "gpu": null,
+  "table": 3
+ },
+ {
+  "name": "bench:Coffeen3d:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Coffeen3d",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:Coffeen3d:ntrl",
+   "--field",
+   "lbs=@field:Coffeen3d:lbs"
+  ],
+  "deps": [
+   "prep:Coffeen3d",
+   "field:Coffeen3d:ntrl",
+   "field:Coffeen3d:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 3
+ },
+ {
+  "name": "field:Forkland3d:ntrl",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:Forkland3d",
+   "--label",
+   "ntrl",
+   "--extra",
+   "--lift none --weight 0 --lean --validate-every 1000"
+  ],
+  "deps": [
+   "prep:Forkland3d"
+  ],
+  "gpu": null,
+  "table": 3
+ },
+ {
+  "name": "field:Forkland3d:lbs",
+  "stage": "field",
+  "args": [
+   "--prepared",
+   "@prep:Forkland3d",
+   "--label",
+   "lbs",
+   "--extra",
+   "--lift time --bell 1 --bell-long 8 --lean --validate-every 1000"
+  ],
+  "deps": [
+   "prep:Forkland3d"
+  ],
+  "gpu": null,
+  "table": 3
+ },
+ {
+  "name": "bench:Forkland3d:learned",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Forkland3d",
+   "--methods",
+   "ntrl,lbs",
+   "--field",
+   "ntrl=@field:Forkland3d:ntrl",
+   "--field",
+   "lbs=@field:Forkland3d:lbs"
+  ],
+  "deps": [
+   "prep:Forkland3d",
+   "field:Forkland3d:ntrl",
+   "field:Forkland3d:lbs"
+  ],
+  "gpu": "cpu",
+  "table": 3
+ }
+]

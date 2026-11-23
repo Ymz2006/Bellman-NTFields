@@ -124,7 +124,29 @@ def step_time(scene, a, b, samples=9, exact=True, clear=None):
     return torch.linalg.vector_norm(b - a, dim=-1) * mean, d.amin(-1) > -OFFSET_CELLS
 
 
-def pair_loss(function, scene, points, Yobs, normal, beta, td_len=0.03, td_free=False, td_weight=1e-3):
+def learned_step_time(net, points, sl, a, b, n, gen):
+    """Step cost from the field's own speed: |b - a| x the mean of |grad T| (the predicted slowness, gradient at the moving end with the
+    pair's other end as the goal) at n stratified random points of the straight step a -> b (an unbiased estimate of the line integral).
+    a (N, 3), b (N, K, 3); no gradient is kept."""
+    N, K = b.shape[:2]
+    out = torch.empty(N, K, device=a.device)
+    chunk = max(1, 120000 // (K * n))
+    for i in range(0, N, chunk):
+        aa, bb = a[i:i + chunk], b[i:i + chunk]
+        m = len(aa)
+        t = (torch.arange(n, device=a.device) + torch.rand(m, K, n, generator=gen, device=a.device)) / n
+        p = aa[:, None, None, :] + t[..., None] * (bb - aa[:, None, :])[:, :, None, :]
+        x = points[i:i + chunk, None, None, :].repeat(1, K, n, 1)
+        x[..., sl] = p
+        with torch.enable_grad():
+            tau, _, xp = net.out(x.reshape(-1, 6))
+            g, = torch.autograd.grad(tau.sum(), xp)
+        slow = torch.linalg.vector_norm(g[:, sl], dim=1).reshape(m, K, n).mean(2)
+        out[i:i + chunk] = torch.linalg.vector_norm(bb - aa[:, None, :], dim=2) * slow
+    return out.detach()
+
+
+def pair_loss(function, scene, points, Yobs, normal, beta, td_len=0.03, td_free=False, td_weight=1e-3, pair_w=None):
     """lift_scale.trainer.ntrl_loss (ntrl-demo's metric loss, line for line) with one option: td_free drops the temporal-difference term of
     a pair whose step (0.03 box lengths down the field's own gradient, taken by ntrl-demo with no collision check) does not stay out of
     obstacles. Such a step equates the travel time on one side of a wall with the travel time on the other plus the step's cost at the
@@ -184,13 +206,14 @@ def pair_loss(function, scene, points, Yobs, normal, beta, td_len=0.03, td_free=
     n_loss0 = (1.001 - Yobs[:, 0].unsqueeze(1)) * (Yobs[:, 0].unsqueeze(1) * DT0 + normal0) ** 2
     n_loss1 = (1.001 - Yobs[:, 1].unsqueeze(1)) * (Yobs[:, 1].unsqueeze(1) * DT1 + normal1) ** 2
     n_loss = normal_weight * (torch.sum(n_loss0, dim=1) + torch.sum(n_loss1, dim=1))
-    loss_n = (torch.sum((diff + n_loss + tau_loss) * torch.exp(-0.5 * T))) / Yobs.shape[0]
+    # pair_w: a weight per pair (`--in-weight`: the pairs with an end inside an obstacle); None is ntrl-demo's loss
+    loss_n = (torch.sum((diff + n_loss + tau_loss) * torch.exp(-0.5 * T) * (1.0 if pair_w is None else pair_w))) / Yobs.shape[0]
     loss = beta * loss_n
     td_blocked = float(1 - 0.5 * (free0.float().mean() + free1.float().mean())) if td_free else float('nan')
     return loss, loss_n, T, l0_2, l1_2, DT0.detach(), DT1.detach(), td_blocked
 
 
-def bellman_term(net, scene, points, T, grads, radius, K, gen, one_sided=False, cone=0, exact=True, huber=0.0, clear=None, long=1.0, keep_cone=False):
+def bellman_term(net, scene, points, T, grads, radius, K, gen, one_sided=False, cone=0, exact=True, huber=0.0, clear=None, long=1.0, keep_cone=False, free_goal=False, tau_mode='true', ls=4, nofree=False, speed=None, speed_check=0.0):
     """Free-step Bellman backup at both ends of every pair (q, g):
 
         y = min over K steps q -> q' that stay out of obstacles of [ tau(q, q') + T(q', g) ]          (no gradient through y)
@@ -233,12 +256,26 @@ def bellman_term(net, scene, points, T, grads, radius, K, gen, one_sided=False, 
         with torch.no_grad():
             b = torch.minimum(torch.maximum(a[:, None, :] + dirs * length, scene.lo), scene.hi)
             tau, free = step_time(scene, a[:, None, :].expand(-1, K, -1), b, (int(min(17 * max(long, 1.0), 137)) if exact else 6), exact=exact, clear=clear)
+            if tau_mode == 'learned':
+                # the step's cost from the field's own predicted speed in place of the true speed along the step (the lifted length)
+                tau = learned_step_time(net, points, sl, a, b, int(min(ls * max(long, 1.0), 32)), gen)
+            if tau_mode == 'field':
+                # the step's cost from the speed another (frozen) field predicts, read from its table (pairnet.SpeedTable)
+                tau, smax = speed.step_time(a[:, None, :].expand(-1, K, -1), b, int(min(33 * max(long, 1.0), 265)), with_max=True)
+                if speed_check > 0:
+                    # collision check from the predicted speed: a step is a candidate if the frozen field's speed stays above speed_check along it
+                    free = smax < 1.0 / speed_check
+            if nofree and not (tau_mode == 'field' and speed_check > 0):
+                free = torch.ones_like(free)
             new = points[:, None, :].repeat(1, K, 1)
             new[:, :, sl] = b
             Tn = net.out(new.reshape(-1, 6))[0][:, 0].reshape(N, K)
             cand = torch.where(free, tau + Tn, torch.full_like(Tn, float('inf')))
             y, _ = cand.min(1)
             ok = torch.isfinite(y) & (torch.linalg.vector_norm(a - points[:, other], dim=1) > 2 * radius)
+            if free_goal:
+                # obstacle-space sampling: a pair whose other end is inside an obstacle is left to ntrl-demo's loss
+                ok = ok & ((scene.clearance if clear is None else clear)(points[:, other]) > -OFFSET_CELLS)
         if bool(ok.any()):
             r = (T - y)[ok]
             r2 = torch.relu(r) if one_sided else r
@@ -249,7 +286,7 @@ def bellman_term(net, scene, points, T, grads, radius, K, gen, one_sided=False, 
 
 
 def train(data_dir, out, seed, epochs, cfg, scene, log, blocked=None, schedule=None, mu=0.1, bound=3.0, push_all=False, save_at=(), mu1=0.0, b_scale=1.0,
-          tri=0.0, tri1=0.0, tri_r=0.03, bell=0.0, bell_r=0.03, bell_k=8, bell_from=0, td_free=False, td_weight=1e-3, bell_cone=0, bell_exact=True, bell_huber=0.0, bell_table=False, bell_long=1.0, bell_keep=False):
+          tri=0.0, tri1=0.0, tri_r=0.03, bell=0.0, bell_r=0.03, bell_k=8, bell_from=0, td_free=False, td_weight=1e-3, bell_cone=0, bell_exact=True, bell_huber=0.0, bell_table=False, bell_long=1.0, bell_keep=False, bell_free=False, in_weight=1.0, bell_tau='true', bell_ls=4, bell_nofree=False, bell_speed=None, init=None, bell_speed_check=0.0):
     mt, mf, mn, db = LT.ntrl_modules()
     dev = 'cuda:0'
     out = Path(out)
@@ -266,6 +303,13 @@ def train(data_dir, out, seed, epochs, cfg, scene, log, blocked=None, schedule=N
     cfg['lift'] = dict(cfg.get('lift') or {}, seed=seed)
     cfg['pair'] = dict(cfg.get('pair') or {}, seed=seed)
     network = PN.build_network(mn, dev, B, cfg, scene)
+    if init is not None:
+        # warm start from a finished field of the same network (same seed, so the same Fourier matrix): the new loss terms are added to it
+        payload = torch.load(init, map_location=dev, weights_only=False)
+        assert torch.equal(payload['B_state_dict'].cpu(), B.cpu()), 'the warm start has another Fourier matrix (seed or scale)'
+        network.load_state_dict(payload['model_state_dict'], strict=True)
+        log(f'warm start from {init} (epoch {payload["epoch"]}, loss {payload["val_loss"]:.4e})')
+        del payload
     function = mf.Function(str(out), dev, network, 3)
     optimizer = torch.optim.AdamW([{'params': list(network.parameters())}], lr=1e-3, weight_decay=0.5)
     dataset = db.Database(str(data_dir) + '/')
@@ -292,7 +336,7 @@ def train(data_dir, out, seed, epochs, cfg, scene, log, blocked=None, schedule=N
     t_start = time.time()
     save_at = set(int(e) for e in save_at) | {epochs}
     log(f'network: lift {network.lift_kind} gain {network.lift_gain}, pair {cfg["pair"]}, octaves {network.octaves}, parameters {sum(p.numel() for p in network.parameters())}, '
-        f'push schedule {schedule}, mu {mu}, mu1 {mu1}, bound {bound}, triangle cap {tri} / {tri1} radius {tri_r}, Bellman backup {bell} radius {bell_r} K {bell_k} cone {bell_cone} exact step time {bell_exact} clearance table {bell_table} huber {bell_huber} longest step x{bell_long} (cone kept short: {bell_keep}) from epoch {bell_from}, '
+        f'push schedule {schedule}, mu {mu}, mu1 {mu1}, bound {bound}, triangle cap {tri} / {tri1} radius {tri_r}, Bellman backup {bell} radius {bell_r} K {bell_k} cone {bell_cone} exact step time {bell_exact} clearance table {bell_table} huber {bell_huber} longest step x{bell_long} (cone kept short: {bell_keep}), backup only for pairs with both ends free {bell_free}, weight of the pairs with an end inside an obstacle {in_weight}, step cost {bell_tau} ({bell_ls} samples), collision check of the steps {not bell_nofree} from epoch {bell_from}, '
         f'TD weight {td_weight} free steps only {td_free}')
     for epoch in range(1, epochs + 1):
         gamma = 0.001
@@ -323,7 +367,13 @@ def train(data_dir, out, seed, epochs, cfg, scene, log, blocked=None, schedule=N
                 normal = batch[:, 8:14]
                 speed = speed * speed * (2 - speed) * (2 - speed)
                 speed = alpha * speed + 1 - alpha
-                loss_value, loss_n, T, r0, r1, g0, g1, tdb = pair_loss(function, scene, points, speed, normal, beta, td_free=td_free, td_weight=td_weight)
+                pair_w = None
+                if in_weight != 1.0:
+                    with torch.no_grad():
+                        cl = scene.clearance if bell_clear is None else bell_clear
+                        inside = (cl(points[:, :3]) <= -OFFSET_CELLS) | (cl(points[:, 3:6]) <= -OFFSET_CELLS)
+                        pair_w = torch.where(inside, in_weight, 1.0)
+                loss_value, loss_n, T, r0, r1, g0, g1, tdb = pair_loss(function, scene, points, speed, normal, beta, td_free=td_free, td_weight=td_weight, pair_w=pair_w)
                 acc['tdb'] += tdb
                 extra = 0.0
                 if blocked is not None:
@@ -349,7 +399,7 @@ def train(data_dir, out, seed, epochs, cfg, scene, log, blocked=None, schedule=N
                     acc['tused'] += used
                     acc['tmax'] = max(acc['tmax'], vmax)
                 if bell > 0 and epoch >= bell_from:
-                    bt, bused, bgap = bellman_term(network, scene, points, T, (g0, g1), bell_r, bell_k, tri_gen, cone=bell_cone, exact=bell_exact, huber=bell_huber, clear=bell_clear, long=bell_long, keep_cone=bell_keep)
+                    bt, bused, bgap = bellman_term(network, scene, points, T, (g0, g1), bell_r, bell_k, tri_gen, cone=bell_cone, exact=bell_exact, huber=bell_huber, clear=bell_clear, long=bell_long, keep_cone=bell_keep, free_goal=bell_free, tau_mode=bell_tau, ls=bell_ls, nofree=bell_nofree, speed=bell_speed, speed_check=bell_speed_check)
                     extra = extra + bell * bt
                     acc['bell'] += float(bt)
                     acc['bgap'] += bgap

@@ -4,6 +4,7 @@ into report/runs.json and report/tables.md.
     ~/.venvs/bellman-ntfield/bin/python jeffrey/pair_lift/report.py
 """
 import json
+import re
 from pathlib import Path
 import numpy as np
 
@@ -16,6 +17,7 @@ REFERENCES = {'plus22': {'ntrl-demo': ['20261117T054519Z-9a3bc556'], 'lift': ['2
 SCENE_TITLE = dict(plus22='plus maze 22 x 22', plus30='plus maze 30 x 30', plus40='plus maze 40 x 40', apt32='apartment, 32 cells', apt64='apartment, 64 cells',
                    Allensville='house Allensville, 43 cells', Lakeville='house Lakeville, 83 cells', Klickitat='house Klickitat, 96 cells',
                    plus22in='plus maze 22 x 22, 20 % of the pairs with one end inside an obstacle',
+                   plus22w='plus maze 22 x 22, whole-interior pairs (55 % of the first ends inside an obstacle)', plus22w3='plus maze 22 x 22, whole-interior pairs (a third of the first ends inside)',
                    plus40in='plus maze 40 x 40, 20 % of the pairs with one end inside an obstacle', apt64in='apartment, 64 cells, 20 % of the pairs with one end inside an obstacle')
 
 
@@ -54,6 +56,16 @@ def load():
         label, key, seed, extra = job.split('|')
         row = row_of(rid, key, label, seed, extra, 'fit' if label.startswith('fit_') else 'field')
         if row:
+            runs.append(row)
+    direct = HERE / 'queue/direct.txt'
+    for job in ([l.strip() for l in open(direct) if l.strip()] if direct.exists() else []):
+        # runs launched outside the runner (queue/direct.py): the id is in the job's log; ';field=<id>' / ';init=<id>' name the frozen field / warm start
+        f = HERE / 'queue/logs' / (''.join(c if c.isalnum() or c in '-_.' else '_' for c in job)[:180] + '.log')
+        m = re.search(r'"id": "([^"]+)"', f.read_text()) if f.exists() else None
+        label, key, seed, extra = job.split(';')[0].split('|')
+        row = row_of(m.group(1), key, label, seed, extra, 'field') if m else None
+        if row:
+            row.update({kv.split('=')[0]: kv.split('=')[1] for kv in job.split(';')[1:]})
             runs.append(row)
     for scene, refs in REFERENCES.items():
         for label, ids in refs.items():

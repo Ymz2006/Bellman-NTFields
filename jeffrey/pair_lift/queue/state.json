@@ -72,12 +72,20 @@
   "rec|plus30|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24": "20261119T153624Z-59bc35da",
   "rec|plus40|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24": "20261119T153604Z-aa584d33",
   "bxt1_bit|plus22|87358|--lift time --pair bit --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table": "20261119T153143Z-f5cf29c0",
-  "rec|plus22|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24": "20261119T162013Z-854fbc8f"
+  "rec|plus22|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24": "20261119T162013Z-854fbc8f",
+  "bxt1_in|plus22in|87358|--lift time --depth 0.3 --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table": "20261119T164633Z-5691e027",
+  "rec|apt64|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24": "20261119T164823Z-ce32f880",
+  "rec_in|apt64in|87358|--lift time --depth 0.3 --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24": "20261119T170414Z-9c98b304",
+  "bxt1_inF|plus22in|87358|--lift time --depth 0.3 --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-free": "20261119T181623Z-b50acc81",
+  "bit_in_zero|plus22in|87358|--lift time --depth 0.3 --pair bit --pair-inside zero --push page --tri1 0.5 --tri 10": "20261119T175203Z-ed651028",
+  "bxt1_inW|plus22in|87358|--lift time --depth 0.3 --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --in-weight 0.02": "20261119T183044Z-2eac66cd",
+  "rec_inF|apt64in|87358|--lift time --depth 0.3 --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24 --bell-free": "20261119T185754Z-5320e16a"
  },
  "failed": {
   "bell03_k16|plus22|87358|--lift time --bell 0.3 --bell-k 16 --td-free": "20261119T063343Z-fbef26cb",
   "bx1|plus22|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6": "20261119T064233Z-a3d6270c",
   "bxt1nLB|plus40|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24": "20261119T152334Z-44d3ecfa",
-  "bxt1nLB|plus30|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24": "20261119T153123Z-d85dea7e"
+  "bxt1nLB|plus30|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24": "20261119T153123Z-d85dea7e",
+  "rec|Klickitat|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24": "20261119T185634Z-ff87a1d9"
  }
 }

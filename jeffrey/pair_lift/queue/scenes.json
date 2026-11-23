@@ -42,5 +42,14 @@
  "apt64in": {
   "prepared": "results/registered_20261117T081808Z-316b6497",
   "blocked": "results/registered_20261117T082300Z-5bf4cb84"
+ },
+ "plus22w": {
+  "prepared": "results/registered_20261119T195737Z-bc75cf3b"
+ },
+ "plus22w3": {
+  "prepared": "results/registered_20261119T200611Z-3854b987"
+ },
+ "plus22w20": {
+  "prepared": "results/registered_20261119T203057Z-26f6dcd6"
  }
 }

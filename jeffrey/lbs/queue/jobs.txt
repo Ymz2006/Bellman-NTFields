@@ -1,0 +1,72 @@
+# 2026-11-20 01:13 user: re-run to check whether the segment loss really hurts on Allensville (LBS 92.5 vs reused no-segment 100.0)
+# 12:25 user: LBS with the segment part swapped for "plain, min leaves, tree" of the midpoint artifact (--traverse plain --nodes tree); pinned to the GPU of the scene's LBS run so the pair is identical through epoch 2,000
+ntrl|Mifflinburg3d|87358|--lift none --weight 0 --lean --validate-every 1000
+ntrl|Allensville3d|87358|--lift none --weight 0 --lean --validate-every 1000
+ntrl|Noxapater3d|87358|--lift none --weight 0 --lean --validate-every 1000
+ntrl|Markleeville3d|87358|--lift none --weight 0 --lean --validate-every 1000
+ntrl|Lakeville3d|87358|--lift none --weight 0 --lean --validate-every 1000
+lbs|Mifflinburg3d|87358|--lift time --bell 1 --bell-long 8 --lean --validate-every 1000
+lbs|Allensville3d|87358|--lift time --bell 1 --bell-long 8 --lean --validate-every 1000
+lbs|Lakeville3d|87358|--lift time --bell 1 --bell-long 8 --lean --validate-every 1000|1
+lbs|Noxapater3d|87358|--lift time --bell 1 --bell-long 8 --lean --validate-every 1000
+lbs|Markleeville3d|87358|--lift time --bell 1 --bell-long 8 --lean --validate-every 1000
+lbsP|maze13|87358|--lift time --bell 1 --bell-long 1 --traverse plain --nodes tree --lean|0
+lbsP|maze18|87358|--lift time --bell 1 --bell-long 1 --traverse plain --nodes tree --lean|0
+lbsP|gap1|87358|--lift time --bell 1 --bell-long 1 --traverse plain --nodes tree --lean|0
+lbsP|gap2|87358|--lift time --bell 1 --bell-long 1 --traverse plain --nodes tree --lean|0
+lbsP|gap4|87358|--lift time --bell 1 --bell-long 8 --traverse plain --nodes tree --lean|0
+lbsP|maze10|87358|--lift time --bell 1 --bell-long 1 --traverse plain --nodes tree --lean|1
+lbsP|Allensville|87358|--lift time --bell 1 --bell-long 8 --traverse plain --nodes tree --lean --validate-every 1000|1
+lbsP|Lakeville|87358|--lift time --bell 1 --bell-long 8 --traverse plain --nodes tree --lean --validate-every 1000|1
+lbsP|Klickitat|87358|--lift time --bell 1 --bell-long 8 --traverse plain --nodes tree --lean --validate-every 1000|1
+noS|Allensville|87358|--lift time --bell 1 --bell-long 8 --weight 0 --lean --validate-every 1000|1
+lbs|Allensville|1|--lift time --bell 1 --bell-long 8 --lean --validate-every 1000|1
+noS|Allensville|1|--lift time --bell 1 --bell-long 8 --weight 0 --lean --validate-every 1000|1
+# label|scene key|seed|pipeline arguments[|gpu]   (processed in file order; a 5th field pins the GPU)
+# arms: lbs = lift + Bellman + segment; noS / noB / noL = one of them removed; ntrl = ntrl-demo. Bellman steps up to 8 radii on scenes above 24 cells.
+lbs|maze10|87358|--lift time --bell 1 --bell-long 1 --lean
+ntrl|maze10|87358|--lift none --weight 0 --lean
+noS|maze10|87358|--lift time --bell 1 --bell-long 1 --weight 0 --lean
+noB|maze10|87358|--lift time --lean
+noL|maze10|87358|--lift none --bell 1 --bell-long 1 --lean
+lbs|maze13|87358|--lift time --bell 1 --bell-long 1 --lean
+ntrl|maze13|87358|--lift none --weight 0 --lean
+noS|maze13|87358|--lift time --bell 1 --bell-long 1 --weight 0 --lean
+noB|maze13|87358|--lift time --lean
+noL|maze13|87358|--lift none --bell 1 --bell-long 1 --lean
+lbs|Allensville|87358|--lift time --bell 1 --bell-long 8 --lean --validate-every 1000|1
+lbs|maze18|87358|--lift time --bell 1 --bell-long 1 --lean
+ntrl|maze18|87358|--lift none --weight 0 --lean
+noS|maze18|87358|--lift time --bell 1 --bell-long 1 --weight 0 --lean
+noB|maze18|87358|--lift time --lean
+noL|maze18|87358|--lift none --bell 1 --bell-long 1 --lean
+lbs|gap1|87358|--lift time --bell 1 --bell-long 1 --lean
+ntrl|gap1|87358|--lift none --weight 0 --lean
+noS|gap1|87358|--lift time --bell 1 --bell-long 1 --weight 0 --lean
+noB|gap1|87358|--lift time --lean
+noL|gap1|87358|--lift none --bell 1 --bell-long 1 --lean
+lbs|Lakeville|87358|--lift time --bell 1 --bell-long 8 --lean --validate-every 1000|1
+lbs|gap2|87358|--lift time --bell 1 --bell-long 1 --lean
+ntrl|gap2|87358|--lift none --weight 0 --lean
+noS|gap2|87358|--lift time --bell 1 --bell-long 1 --weight 0 --lean
+noB|gap2|87358|--lift time --lean
+noL|gap2|87358|--lift none --bell 1 --bell-long 1 --lean
+lbs|Klickitat|87358|--lift time --bell 1 --bell-long 8 --lean --validate-every 1000|1
+# 2026-11-20 06:30 no segment on Lakeville / Klickitat with this benchmark's code (the reused pair_lift runs are other runs: Allensville 100.0 reused vs 94.2 re-run)
+noS|Lakeville|87358|--lift time --bell 1 --bell-long 8 --weight 0 --lean --validate-every 1000|1
+noS|Klickitat|87358|--lift time --bell 1 --bell-long 8 --weight 0 --lean --validate-every 1000|1
+lbs|gap4|87358|--lift time --bell 1 --bell-long 8 --lean
+ntrl|gap4|87358|--lift none --weight 0 --lean
+noS|gap4|87358|--lift time --bell 1 --bell-long 8 --weight 0 --lean
+noB|gap4|87358|--lift time --lean
+noL|gap4|87358|--lift none --bell 1 --bell-long 8 --lean
+noL|Allensville|87358|--lift none --bell 1 --bell-long 8 --lean --validate-every 1000|1
+noL|Lakeville|87358|--lift none --bell 1 --bell-long 8 --lean --validate-every 1000|1
+noL|Klickitat|87358|--lift none --bell 1 --bell-long 8 --lean --validate-every 1000|1
+# 2026-11-20 03:30 third Allensville seed pair (segment check), after everything else
+lbs|Allensville|2|--lift time --bell 1 --bell-long 8 --lean --validate-every 1000|1
+noS|Allensville|2|--lift time --bell 1 --bell-long 8 --weight 0 --lean --validate-every 1000|1
+# 12:13 controls for "no lift is worse than ntrl-demo on Lakeville and Klickitat" (far field goes flat beyond ~8 cells; Bellman weight 14.1 / 18.9 there against 3.8 on Allensville)
+ntrl|Lakeville|87358|--lift none --weight 0 --lean --validate-every 1000|0
+# control stopped at 12:25 one minute in to free GPU 0 for the user test; re-queued last with the exact Allensville weight ratio (3.786 / 14.105)
+noLw|Lakeville|87358|--lift none --bell 0.2684 --bell-long 8 --lean --validate-every 1000

@@ -1,0 +1,63 @@
+lbs|cab|87358|--lift time --bell 1 --traversals 4096|1
+#manual 23:31 ntrl|cab|87358|--lift none --weight 0|0
+lbsg2|cab|87358|--lift time --lift-gain 2.45 --bell 1 --traversals 4096
+lbscup|cab|87358|--lift time --bell 1 --traversals 4096 --pair-cup 0.5 --min-clear 0 --safe-margin 0|1
+ntrlc|cabc|87358|--lift none --weight 0
+lbsd|cabc|87358|--lift time --bell 1 --traversals 4096
+lbsf2|cab|87358|--lift time --bell 1 --traversals 4096 --freq 2
+lbsg6|cab|87358|--lift time --lift-gain 6 --bell 1 --traversals 4096
+lbsf4|cab|87358|--lift time --bell 1 --traversals 4096 --freq 4
+lbsf05|cab|87358|--lift time --bell 1 --traversals 4096 --freq 0.5
+lbsf025|cab|87358|--lift time --bell 1 --traversals 4096 --freq 0.25
+lbsg04|cab|87358|--lift time --lift-gain 0.41 --bell 1 --traversals 4096
+noL|cab|87358|--lift none --bell 1 --traversals 4096
+lbsfs|cab|87358|--lift time --bell 1 --traversals 4096 --freq sens
+noS|cab|87358|--lift time --bell 1 --weight 0
+rw_ntrl|rw6|87358|--lift none --weight 0
+rw_lbs|rw6|87358|--lift time --bell 1 --traversals 4096
+noB|cab|87358|--lift time --traversals 4096
+#dropped 04:58 (lbscup and lbsd gave no gain) lbsdc|cabc|87358|--lift time --bell 1 --traversals 4096 --pair-cup 0.5 --min-clear 0 --safe-margin 0
+lbs2|cab|87359|--lift time --bell 1 --traversals 4096|0
+rw12b_lift|rw12b|87358|--lift time --weight 0|0
+rw_lift|rw6|87358|--lift time --weight 0|0
+ntrl2|cab|87359|--lift none --weight 0|0
+rw_lbs2|rw6|87359|--lift time --bell 1 --traversals 4096|0
+rw12_ntrl|rw12|87358|--lift none --weight 0|1
+liftonly|cab|87358|--lift time --weight 0|1
+#dropped 16:25 (rw12 pairs too short for the queries; rw12b replaces it) rw12_lbs|rw12|87358|--lift time --bell 1 --traversals 4096 --pair-max 0.85|1
+rw12b_ntrl|rw12b|87358|--lift none --weight 0|1
+rw12b_lbs|rw12b|87358|--lift time --bell 1 --traversals 4096 --pair-max 0.85|1
+rw12b_lift_f05|rw12b|87358|--lift time --weight 0 --freq 0.5|1
+rw12b_ls_pd|rw12b|87358|--lift time --traversals 4096 --pair-max 0.85 --pair-data|1
+# 21:10 leaf experiment (user): full LBS on real_world_6dof, one change each; then the 12-DOF lift-only knobs
+rw_lbs_w3|rw6|87358|--lift time --bell 1 --traversals 4096 --weight 3|1
+rw_lbs_w10|rw6|87358|--lift time --bell 1 --traversals 4096 --weight 10|0
+rw_lbs_lpath|rw6|87358|--lift time --bell 1 --traversals 4096 --leaf path|1
+rw_lbs_bgoal|rw6|87358|--lift time --bell 1 --traversals 4096 --bell-goal|1
+rw_lbs_lnet|rw6|87358|--lift time --bell 1 --traversals 4096 --leaf net|0
+rw_lbs_w30|rw6|87358|--lift time --bell 1 --traversals 4096 --weight 30|0
+rw_ntrl2|rw6|87359|--lift none --weight 0|0
+rw12b_lift_f025|rw12b|87358|--lift time --weight 0 --freq 0.25|1
+rw12b_lift_g2|rw12b|87358|--lift time --weight 0 --lift-gain 2.45|1
+rw12b_lift_g04|rw12b|87358|--lift time --weight 0 --lift-gain 0.41|1
+rw12b_lift_g35|rw12b|87358|--lift time --weight 0 --lift-gain 3.46|1
+#dropped 21:10 (user agreed: leaf runs first) lbs3|cab|87360|--lift time --bell 1 --traversals 4096|0
+#dropped 21:10 (user agreed: leaf runs first) ntrl3|cab|87360|--lift none --weight 0|0
+#dropped 21:10 (user agreed: leaf runs first) rw_lbs3|rw6|87360|--lift time --bell 1 --traversals 4096|0
+#dropped 21:10 (user agreed: leaf runs first) rw_ntrl3|rw6|87360|--lift none --weight 0|0
+#dropped 21:10 (user agreed: leaf runs first) rw12b_lbs_pd|rw12b|87358|--lift time --bell 1 --traversals 4096 --pair-max 0.85 --pair-data|1
+rw12b_ls_pd_f05|rw12b|87358|--lift time --traversals 4096 --pair-max 0.85 --pair-data --freq 0.5|1
+rw12b_lbs_pd_f05|rw12b|87358|--lift time --bell 1 --traversals 4096 --pair-max 0.85 --pair-data --freq 0.5|1
+rw12b_ntrl_f05|rw12b|87358|--lift none --weight 0 --freq 0.5|0
+rw_lbs_w100|rw6|87358|--lift time --bell 1 --traversals 4096 --weight 100|0
+rw_lbs_f05|rw6|87358|--lift time --bell 1 --traversals 4096 --freq 0.5|0
+rw_lift_f05|rw6|87358|--lift time --weight 0 --freq 0.5|0
+rw12b_lift_f05_s2|rw12b|87359|--lift time --weight 0 --freq 0.5|1
+rw12b_ls_pd_f05_s2|rw12b|87359|--lift time --traversals 4096 --pair-max 0.85 --pair-data --freq 0.5|1
+rw12b_lbs_pd_f05_s2|rw12b|87359|--lift time --bell 1 --traversals 4096 --pair-max 0.85 --pair-data --freq 0.5|1
+rw_lbs_f05_s2|rw6|87359|--lift time --bell 1 --traversals 4096 --freq 0.5|0
+rw_lbs_f025|rw6|87358|--lift time --bell 1 --traversals 4096 --freq 0.25|0
+rw12b_lbs_pd_f025|rw12b|87358|--lift time --bell 1 --traversals 4096 --pair-max 0.85 --pair-data --freq 0.25|1
+rw_lift_f05_s2|rw6|87359|--lift time --weight 0 --freq 0.5|0
+rw_ntrl_f05|rw6|87358|--lift none --weight 0 --freq 0.5|0
+lbsf025_s2|cab|87359|--lift time --bell 1 --traversals 4096 --freq 0.25|1

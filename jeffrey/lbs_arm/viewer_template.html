@@ -1,0 +1,389 @@
+<title>2026-11-21 LBS Arm Paths</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600&display=swap">
+<style>
+/* Layout: a control column beside the 3-D stage (stacked on a phone); the timeline sits under the stage; one line of provenance at the foot. */
+:root {
+  --bg: #f6f7f9; --surface: #fcfcfb; --ink: #14171c; --ink-2: #4b5160; --ink-3: #7a8091; --rule: #dfe2e8; --accent: #1f5fb4; --accent-wash: #e3ecf8;
+  --critical: #d03b3b; --good: #0ca30c; --code-bg: #eef0f4;
+  --stage: #eceef2; --panel3d: #9aa3b2; --floor3d: #cfd3da; --edge3d: #5d6472;
+  --p-cert: #2a78d6; --p-lbs: #eda100; --p-ntrl: #1baf7a; --ghost: #6b7280;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-head: "IBM Plex Sans Condensed", "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121418; --surface: #1a1a19; --ink: #eceef2; --ink-2: #b7bcc8; --ink-3: #8a90a0; --rule: #2c3038; --accent: #7fb0f0; --accent-wash: #1c2a3d;
+    --critical: #e66767; --good: #2fbf2f; --code-bg: #20232a;
+    --stage: #181b20; --panel3d: #7f8898; --floor3d: #2b2f37; --edge3d: #aab1bf;
+    --p-cert: #3987e5; --p-lbs: #c98500; --p-ntrl: #199e70; --ghost: #9aa1ae;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121418; --surface: #1a1a19; --ink: #eceef2; --ink-2: #b7bcc8; --ink-3: #8a90a0; --rule: #2c3038; --accent: #7fb0f0; --accent-wash: #1c2a3d;
+  --critical: #e66767; --good: #2fbf2f; --code-bg: #20232a;
+  --stage: #181b20; --panel3d: #7f8898; --floor3d: #2b2f37; --edge3d: #aab1bf;
+  --p-cert: #3987e5; --p-lbs: #c98500; --p-ntrl: #199e70; --ghost: #9aa1ae;
+  color-scheme: dark;
+}
+[hidden] { display: none !important; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.55; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 22px 48px; }
+h1 { font-family: var(--font-head); font-weight: 600; font-size: clamp(26px, 3.6vw, 34px); line-height: 1.15; margin: 0 0 6px; text-wrap: balance; }
+.lede { color: var(--ink-2); max-width: 82ch; margin: 0 0 16px; font-size: 15.5px; }
+.app { display: grid; grid-template-columns: minmax(0, 330px) minmax(0, 1fr); gap: 16px; align-items: start; }
+.panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 14px; display: grid; gap: 14px; min-width: 0; }
+.group { display: grid; gap: 6px; min-width: 0; }
+.label { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); }
+select, button { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--rule); border-radius: 6px; padding: 6px 9px; min-width: 0; }
+select { width: 100%; }
+button { cursor: pointer; }
+button:hover { border-color: var(--ink-3); }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.row { display: flex; gap: 6px; align-items: center; min-width: 0; }
+.row select { flex: 1 1 auto; }
+.count { font-size: 13px; color: var(--ink-2); }
+.paths { display: grid; gap: 6px; }
+.pathbtn { display: grid; grid-template-columns: 12px minmax(0, 1fr) auto; gap: 8px; align-items: center; text-align: left; padding: 8px 10px; }
+.pathbtn[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-wash); }
+.sw { display: inline-block; flex: none; width: 12px; height: 12px; border-radius: 50%; }
+.pathbtn .nm { font-weight: 500; }
+.pathbtn .sub { display: block; font-size: 12.5px; color: var(--ink-2); font-weight: 400; }
+.chip { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; padding: 1px 6px; border-radius: 3px; white-space: nowrap; color: var(--ink); box-shadow: inset 0 0 0 1px var(--rule); background: var(--code-bg); }
+.chip.ok { background: color-mix(in srgb, var(--good) 16%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--good) 55%, transparent); }
+.chip.bad { background: color-mix(in srgb, var(--critical) 14%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--critical) 50%, transparent); }
+.checks { display: grid; gap: 4px; font-size: 14px; }
+.checks label { display: flex; gap: 8px; align-items: center; }
+.read { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px; font-size: 13.5px; }
+.read dt { color: var(--ink-2); margin: 0; }
+.read dd { margin: 0; font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; }
+.read dd.bad { color: var(--critical); font-weight: 500; }
+.stage { display: grid; gap: 10px; min-width: 0; }
+.viewport { position: relative; height: min(68vh, 640px); min-height: 380px; background: var(--stage); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; touch-action: none; }
+.viewport canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.caption { position: absolute; left: 10px; top: 8px; right: 10px; font-size: 13px; color: var(--ink-2); pointer-events: none; }
+.caption b { color: var(--ink); font-weight: 600; }
+.views { position: absolute; right: 8px; bottom: 8px; display: flex; gap: 4px; }
+.views button { font-size: 12.5px; padding: 3px 8px; background: var(--surface); }
+.time { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: center; background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 8px 12px; }
+.time input[type=range] { width: 100%; accent-color: var(--accent); }
+.time .pos { font-family: var(--font-mono); font-size: 13px; color: var(--ink-2); min-width: 9ch; text-align: right; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; color: var(--ink-2); }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+.note { font-size: 13px; color: var(--ink-3); margin: 14px 0 0; max-width: 100ch; }
+.msg { padding: 30px 16px; color: var(--ink-2); }
+@media (max-width: 820px) {
+  .app { grid-template-columns: minmax(0, 1fr); }
+  .stage { order: -1; }
+  .viewport { height: 56vh; min-height: 320px; }
+}
+</style>
+<div class="wrap">
+  <header>
+    <h1>Arm paths, query by query</h1>
+    <p class="lede">Every frozen test query of the scene, with three paths for the arm: the suite’s certified collision-free path, the LBS plan and the ntrl-demo plan (planning seed 0). Pick a query and a path, then press play or drag the timeline. The arm is drawn as its collision spheres.</p>
+  </header>
+  <div class="app">
+    <aside class="panel">
+      <div class="group" id="g-scene" hidden><span class="label">Scene</span><select id="scene" aria-label="Scene"></select></div>
+      <div class="group"><span class="label">Suite</span><select id="suite" aria-label="Suite"></select></div>
+      <div class="group"><span class="label">Show queries where</span><select id="filter" aria-label="Outcome filter"></select></div>
+      <div class="group"><span class="label">Query</span>
+        <div class="row"><button id="prev" aria-label="Previous query">‹</button><select id="query" aria-label="Query"></select><button id="next" aria-label="Next query">›</button></div>
+        <span class="count" id="count"></span>
+      </div>
+      <div class="group"><span class="label">Path shown on the arm</span><div class="paths" id="paths"></div></div>
+      <div class="group"><span class="label">At this moment</span>
+        <dl class="read">
+          <dt>nearest obstacle</dt><dd id="r-obs">–</dd>
+          <dt>nearest other link</dt><dd id="r-self">–</dd>
+          <dt id="row-inter" hidden>between the two arms</dt><dd id="r-inter" hidden>–</dd>
+          <dt id="l-ee">hand to its goal position</dt><dd id="r-ee">–</dd>
+          <dt>joint distance to the goal</dt><dd id="r-q">–</dd>
+        </dl>
+      </div>
+      <div class="group checks">
+        <label><input type="checkbox" id="c-trails" checked> hand trails of all three paths</label>
+        <label><input type="checkbox" id="c-goal" checked> goal pose (grey)</label>
+        <label><input type="checkbox" id="c-solid"> solid panels</label>
+      </div>
+    </aside>
+    <div class="stage">
+      <div class="viewport" id="vp">
+        <div class="caption" id="cap"></div>
+        <div class="views"><button data-view="front">front</button><button data-view="side">side</button><button data-view="top">top</button></div>
+        <div class="msg" id="msg">Loading the paths…</div>
+      </div>
+      <div class="time"><button id="play" aria-label="Play or pause">Play</button><input type="range" id="t" min="0" max="1" step="0.001" value="0" aria-label="Position along the path"><span class="pos" id="pos">0 %</span></div>
+      <div class="legend" id="legend"></div>
+    </div>
+  </div>
+  <p class="note" id="foot"></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(function () {
+'use strict';
+const SCENES = /*SCENES*/[];
+const $ = id => document.getElementById(id);
+const STATUS = ['solved', 'path in contact', 'stopped short'];
+const PATH_VAR = { cert: '--p-cert', lbs: '--p-lbs', ntrl: '--p-ntrl' };
+const cache = {};
+let D = null, A = null, data = null;          // scene meta, arm model, Int16 paths
+let qi = 0, pi = 1, t = 0, playing = false, hold = 0, list = [];
+let renderer, camera, controls, scene3, armMesh, ghostMesh, trailGroup, boxGroup, markGroup;
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+
+// ---- kinematics: the chain and collision spheres of the study's arm model --------------------------------------------------------
+function mul(a, b) { const c = new Float64Array(16); for (let r = 0; r < 4; r++) for (let k = 0; k < 4; k++) { const v = a[r * 4 + k]; if (v !== 0) for (let j = 0; j < 4; j++) c[r * 4 + j] += v * b[k * 4 + j]; } return c; }
+function frames(q, a) {             // link frames of arm a (its six joints start at q[6 a])
+  let T = A.base[a]; const out = [];
+  for (let k = 0; k < 6; k++) {
+    const c = Math.cos(q[6 * a + k]), s = Math.sin(q[6 * a + k]);
+    T = mul(mul(T, A.O[k]), new Float64Array([c, -s, 0, 0, s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]));
+    out.push(T);
+  }
+  return out;
+}
+function pose(q, out) {              // out: Float64Array(3 S + 3 NA): every arm's sphere centres, then every arm's grasp point
+  const S1 = A.S1, S = A.radius.length;
+  for (let a = 0; a < A.NA; a++) {
+    const F = frames(q, a);
+    for (let s = 0; s < S1; s++) {
+      const T = F[A.frame[s]], l = A.local[s], o = 3 * (a * S1 + s);
+      for (let r = 0; r < 3; r++) out[o + r] = T[r * 4] * l[0] + T[r * 4 + 1] * l[1] + T[r * 4 + 2] * l[2] + T[r * 4 + 3];
+    }
+    const T = F[5], e = A.ee_local;
+    for (let r = 0; r < 3; r++) out[3 * S + 3 * a + r] = T[r * 4] * e[0] + T[r * 4 + 1] * e[1] + T[r * 4 + 2] * e[2] + T[r * 4 + 3];
+  }
+  return out;
+}
+function config(i, p, f, q) {        // joint angles (rad) of query i, path p at fractional frame f
+  const F = D.frames, f0 = Math.min(F - 1, Math.floor(f)), f1 = Math.min(F - 1, f0 + 1), w = f - f0, P = D.paths.length;
+  const NQ = A.NQ, a = ((i * P + p) * F + f0) * NQ, b = ((i * P + p) * F + f1) * NQ;
+  for (let j = 0; j < NQ; j++) q[j] = ((1 - w) * data[a + j] + w * data[b + j]) / D.scale * A.q_range[j];
+  return q;
+}
+function clearances(P) {             // per-sphere obstacle clearance, min obstacle clearance, min self clearance (metres)
+  const S = A.radius.length, per = new Float64Array(S); let obs = Infinity, self = Infinity; const hit = new Uint8Array(S);
+  for (let s = 0; s < S; s++) {
+    let best = Infinity;
+    for (const c of D.cuboids) {
+      const dx = Math.max(Math.abs(P[3 * s] - c.c[0]) - c.d[0] / 2, 0), dy = Math.max(Math.abs(P[3 * s + 1] - c.c[1]) - c.d[1] / 2, 0), dz = Math.max(Math.abs(P[3 * s + 2] - c.c[2]) - c.d[2] / 2, 0);
+      const d = Math.sqrt(dx * dx + dy * dy + dz * dz); if (d < best) best = d;
+    }
+    per[s] = best - A.radius[s]; if (per[s] < obs) obs = per[s]; if (per[s] < 0.005) hit[s] = 1;
+  }
+  for (const [a, b] of A.pairs) {
+    const dx = P[3 * a] - P[3 * b], dy = P[3 * a + 1] - P[3 * b + 1], dz = P[3 * a + 2] - P[3 * b + 2];
+    const d = Math.sqrt(dx * dx + dy * dy + dz * dz) - A.radius[a] - A.radius[b];
+    if (d < self) self = d; if (d < 0.002) { hit[a] = 1; hit[b] = 1; }
+  }
+  let inter = Infinity;                // the other arm counts as an obstacle: every sphere pair of two different arms, 5 mm
+  for (let a = 0; a < S; a++) for (let b = (Math.floor(a / A.S1) + 1) * A.S1; b < S; b++) {
+    const dx = P[3 * a] - P[3 * b], dy = P[3 * a + 1] - P[3 * b + 1], dz = P[3 * a + 2] - P[3 * b + 2];
+    const d = Math.sqrt(dx * dx + dy * dy + dz * dz) - A.radius[a] - A.radius[b];
+    if (d < inter) inter = d; if (d < 0.005) { hit[a] = 1; hit[b] = 1; }
+  }
+  return { obs, self, inter, hit };
+}
+
+// ---- 3-D ------------------------------------------------------------------------------------------------------------------------
+function init3d() {
+  const vp = $('vp');
+  renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  vp.insertBefore(renderer.domElement, vp.firstChild);
+  camera = new THREE.PerspectiveCamera(40, 1, 0.05, 50); camera.up.set(0, 0, 1);
+  controls = new THREE.OrbitControls(camera, renderer.domElement); controls.enableDamping = true; controls.dampingFactor = 0.12;
+  scene3 = new THREE.Scene();
+  scene3.add(new THREE.HemisphereLight(0xffffff, 0x8a8f99, 0.85));
+  const sun = new THREE.DirectionalLight(0xffffff, 0.55); sun.position.set(-2, -3, 4); scene3.add(sun);
+  boxGroup = new THREE.Group(); trailGroup = new THREE.Group(); markGroup = new THREE.Group(); scene3.add(boxGroup, trailGroup, markGroup);
+  new ResizeObserver(resize).observe(vp); resize();
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', retheme);
+  new MutationObserver(retheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  requestAnimationFrame(tick);
+}
+function resize() { const vp = $('vp'), w = vp.clientWidth, h = vp.clientHeight; if (!w || !h) return; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+function clearGroup(g) { while (g.children.length) { const o = g.children.pop(); if (o.geometry) o.geometry.dispose(); if (o.material) o.material.dispose(); } }
+function buildScene() {
+  clearGroup(boxGroup);
+  const solid = $('c-solid').checked;
+  for (const c of D.cuboids) {
+    const ground = /floor|table/.test(c.name), geo = new THREE.BoxGeometry(c.d[0], c.d[1], c.d[2]);
+    const mat = new THREE.MeshStandardMaterial({ color: new THREE.Color(css(ground ? '--floor3d' : '--panel3d')), roughness: 0.9, metalness: 0, transparent: !ground && !solid, opacity: ground || solid ? 1 : 0.28, depthWrite: ground || solid });
+    const m = new THREE.Mesh(geo, mat); m.position.set(c.c[0], c.c[1], c.c[2]); m.renderOrder = ground ? 0 : 2; boxGroup.add(m);
+    if (!ground) { const e = new THREE.LineSegments(new THREE.EdgesGeometry(geo), new THREE.LineBasicMaterial({ color: new THREE.Color(css('--edge3d')) })); e.position.copy(m.position); boxGroup.add(e); }
+  }
+  const S = A.radius.length, sphere = new THREE.SphereGeometry(1, 20, 14);
+  for (const m of [armMesh, ghostMesh]) if (m) { scene3.remove(m); m.geometry.dispose(); m.material.dispose(); }
+  armMesh = new THREE.InstancedMesh(sphere, new THREE.MeshStandardMaterial({ roughness: 0.55, metalness: 0.05 }), S);
+  armMesh.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(3 * S), 3);
+  ghostMesh = new THREE.InstancedMesh(sphere.clone(), new THREE.MeshStandardMaterial({ color: new THREE.Color(css('--ghost')), roughness: 0.9, transparent: true, opacity: 0.45, depthWrite: false }), S);
+  ghostMesh.renderOrder = 1; armMesh.frustumCulled = false; ghostMesh.frustumCulled = false;
+  scene3.add(armMesh, ghostMesh);
+  renderer.setClearColor(new THREE.Color(css('--stage')), 1);
+}
+function setInstances(mesh, P) {
+  const m = new THREE.Matrix4(), S = A.radius.length;
+  for (let s = 0; s < S; s++) { const r = A.radius[s]; m.set(r, 0, 0, P[3 * s], 0, r, 0, P[3 * s + 1], 0, 0, r, P[3 * s + 2], 0, 0, 0, 1); mesh.setMatrixAt(s, m); }
+  mesh.instanceMatrix.needsUpdate = true;
+}
+function view(name) {
+  const cb = D.cupboard, c = [(cb[0][0] + cb[0][1]) / 2, (cb[1][0] + cb[1][1]) / 2, (cb[2][0] + cb[2][1]) / 2];
+  const tgt = new THREE.Vector3(c[0] * 0.6, c[1] * 0.6, c[2] * 0.75 + 0.1);
+  const size = Math.max(cb[2][1] - cb[2][0], cb[1][1] - cb[1][0], cb[0][1]) * 1.15 + 0.7;
+  const dir = { front: [-0.75, -1.35, 0.7], side: [0.05, -1.7, 0.3], top: [-0.35, -0.02, 1.8] }[name];
+  camera.position.set(tgt.x + dir[0] * size, tgt.y + dir[1] * size, tgt.z + dir[2] * size); controls.target.copy(tgt); controls.update();
+}
+function buildTrails() {
+  clearGroup(trailGroup); clearGroup(markGroup);
+  const q = new Float64Array(A.NQ), P = new Float64Array(3 * A.radius.length + 3 * A.NA), S3 = 3 * A.radius.length;
+  if ($('c-trails').checked) D.paths.forEach((p, k) => {
+    for (let a = 0; a < A.NA; a++) {   // one trail per hand
+      const pts = [], o = S3 + 3 * a;
+      for (let f = 0; f < D.frames; f++) { pose(config(qi, k, f, q), P); const v = new THREE.Vector3(P[o], P[o + 1], P[o + 2]); if (!pts.length || pts[pts.length - 1].distanceTo(v) > 1e-4) pts.push(v); }
+      if (pts.length < 2) continue;
+      const tube = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, false, 'centripetal'), Math.max(16, pts.length * 3), k === pi ? 0.008 : 0.0045, 8, false),
+        new THREE.MeshBasicMaterial({ color: new THREE.Color(css(PATH_VAR[p.key] || '--p-cert')), transparent: k !== pi, opacity: k === pi ? 1 : 0.6 }));
+      trailGroup.add(tube);
+    }
+  });
+  pose(config(qi, 0, D.frames - 1, q), P); setInstances(ghostMesh, P); ghostMesh.visible = $('c-goal').checked;
+  goalEE = Array.from(P.subarray(S3, S3 + 3 * A.NA)); goalQ = Array.from(q);
+  const mk = (pos, col) => { const m = new THREE.Mesh(new THREE.SphereGeometry(0.018, 14, 10), new THREE.MeshBasicMaterial({ color: new THREE.Color(col) })); m.position.set(pos[0], pos[1], pos[2]); markGroup.add(m); };
+  for (let a = 0; a < A.NA; a++) mk(goalEE.slice(3 * a, 3 * a + 3), css('--ink'));
+  pose(config(qi, 0, 0, q), P); for (let a = 0; a < A.NA; a++) mk([P[S3 + 3 * a], P[S3 + 3 * a + 1], P[S3 + 3 * a + 2]], css('--ink-3'));
+}
+let goalEE = [0, 0, 0], goalQ = [0, 0, 0, 0, 0, 0];
+let qbuf = new Float64Array(6), Pbuf = null;
+function drawArm() {
+  const F = D.frames, S = A.radius.length;
+  if (!Pbuf || Pbuf.length !== 3 * S + 3 * A.NA) Pbuf = new Float64Array(3 * S + 3 * A.NA);
+  if (qbuf.length !== A.NQ) qbuf = new Float64Array(A.NQ);
+  config(qi, pi, t * (F - 1), qbuf); pose(qbuf, Pbuf); setInstances(armMesh, Pbuf);
+  const c = clearances(Pbuf), base = new THREE.Color(css(PATH_VAR[D.paths[pi].key] || '--p-cert')), red = new THREE.Color(css('--critical')), col = armMesh.instanceColor.array;
+  for (let s = 0; s < S; s++) { const k = c.hit[s] ? red : base; col[3 * s] = k.r; col[3 * s + 1] = k.g; col[3 * s + 2] = k.b; }
+  armMesh.instanceColor.needsUpdate = true;
+  const mm = v => (v * 1000).toFixed(0) + ' mm';
+  $('r-obs').textContent = mm(c.obs); $('r-obs').className = c.obs < 0.005 ? 'bad' : '';
+  $('r-self').textContent = mm(c.self); $('r-self').className = c.self < 0.002 ? 'bad' : '';
+  if (A.NA > 1) { $('r-inter').textContent = mm(c.inter); $('r-inter').className = c.inter < 0.005 ? 'bad' : ''; }
+  let e = 0; for (let a = 0; a < A.NA; a++) e = Math.max(e, Math.hypot(Pbuf[3 * S + 3 * a] - goalEE[3 * a], Pbuf[3 * S + 3 * a + 1] - goalEE[3 * a + 1], Pbuf[3 * S + 3 * a + 2] - goalEE[3 * a + 2]));
+  $('r-ee').textContent = (e * 100).toFixed(1) + ' cm';
+  let dq = 0; for (let j = 0; j < A.NQ; j++) dq += (qbuf[j] - goalQ[j]) ** 2;
+  $('r-q').textContent = Math.sqrt(dq).toFixed(2) + ' rad';
+  $('pos').textContent = Math.round(t * 100) + ' %'; $('t').value = t;
+}
+let last = 0;
+function tick(now) {
+  requestAnimationFrame(tick);
+  const dt = Math.min(0.1, (now - last) / 1000); last = now;
+  if (D && playing) {
+    if (hold > 0) { hold -= dt; if (hold <= 0) t = 0; }
+    else { t += dt / 5; if (t >= 1) { t = 1; hold = 1.2; } }
+    drawArm();
+  }
+  if (renderer && scene3 && D) { controls.update(); renderer.render(scene3, camera); }
+}
+function retheme() { if (!D) return; buildScene(); buildTrails(); drawArm(); legend(); }
+
+// ---- controls -------------------------------------------------------------------------------------------------------------------
+function opt(sel, value, text) { const o = document.createElement('option'); o.value = value; o.textContent = text; sel.appendChild(o); }
+function filters() {
+  const f = [['all', 'any outcome', () => true]];
+  if (D.paths.length >= 3) {
+    const a = D.paths[1].name, b = D.paths[2].name;
+    f.push(['win', `${a} solved, ${b} failed`, i => D.status[i][1] === 0 && D.status[i][2] !== 0]);
+    f.push(['stop', `${a} stopped short of the goal`, i => D.status[i][1] === 2]);
+    f.push(['contact', `${a} arrived on a path in contact`, i => D.status[i][1] === 1]);
+    f.push(['both', 'both solved', i => D.status[i][1] === 0 && D.status[i][2] === 0]);
+    f.push(['lose', `${b} solved, ${a} failed`, i => D.status[i][1] !== 0 && D.status[i][2] === 0]);
+    f.push(['none', 'both failed', i => D.status[i][1] !== 0 && D.status[i][2] !== 0]);
+  }
+  return f;
+}
+function refill() {
+  const s = $('suite').value, fl = filters().find(f => f[0] === $('filter').value) || filters()[0];
+  list = []; for (let i = 0; i < D.task.length; i++) if ((s === 'all' || D.task[i] === +s) && fl[2](i)) list.push(i);
+  const q = $('query'); q.textContent = '';
+  for (const i of list) opt(q, i, `query ${i + 1} · ${D.tasks[D.task[i]]}`);
+  $('count').textContent = list.length ? `${list.length} of ${D.task.length} queries match` : 'No query matches; widen the suite or the outcome.';
+  if (list.length) { if (!list.includes(qi)) qi = list[0]; q.value = qi; pick(qi); }
+}
+function pick(i) {
+  qi = i; $('query').value = i; t = 0; hold = 0;
+  const box = $('paths'); box.textContent = '';
+  D.paths.forEach((p, k) => {
+    const b = document.createElement('button'); b.className = 'pathbtn'; b.type = 'button'; b.setAttribute('aria-pressed', k === pi);
+    const sw = document.createElement('span'); sw.className = 'sw'; sw.style.background = `var(${PATH_VAR[p.key] || '--p-cert'})`;
+    const nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = p.name;
+    const sub = document.createElement('span'); sub.className = 'sub'; sub.textContent = `length ${D.length[i][k].toFixed(2)} · straight line ${straight(i).toFixed(2)}`; nm.appendChild(sub);
+    const chip = document.createElement('span'); const st = D.status[i][k]; chip.className = 'chip ' + (st === 0 ? 'ok' : 'bad'); chip.textContent = k === 0 ? 'certified' : STATUS[st];
+    b.append(sw, nm, chip); b.addEventListener('click', () => { pi = k; t = 0; hold = 0; pick(qi); }); box.appendChild(b);
+  });
+  $('cap').innerHTML = '';
+  const cap = $('cap'), bq = document.createElement('b'); bq.textContent = `Query ${i + 1}`; cap.append(bq, ` · ${D.tasks[D.task[i]]} · ` + (D.line[i] ? 'the straight joint-space line is collision-free' : 'the straight joint-space line collides: a detour is needed'));
+  buildTrails(); drawArm();
+}
+function straight(i) { const P = D.paths.length, F = D.frames, NQ = A.NQ, a = (i * P) * F * NQ, b = a + (F - 1) * NQ; let s = 0; for (let j = 0; j < NQ; j++) s += ((data[a + j] - data[b + j]) / D.scale) ** 2; return Math.sqrt(s); }
+function legend() {
+  const L = $('legend'); L.textContent = '';
+  const add = (col, text) => { const s = document.createElement('span'), d = document.createElement('i'); d.className = 'sw'; d.style.background = col; s.append(d, text); L.appendChild(s); };
+  D.paths.forEach(p => add(`var(${PATH_VAR[p.key] || '--p-cert'})`, p.name));
+  add('var(--critical)', 'sphere within 5 mm of an obstacle' + (A.NA > 1 ? ' or of the other arm,' : '') + ' or 2 mm of another link (the scorer’s limits)');
+  add('var(--ghost)', 'goal pose');
+}
+async function load(key) {
+  const meta = SCENES.find(s => s.key === key);
+  if (!cache[key]) { const r = await fetch(meta.file); if (!r.ok) throw new Error('data file ' + meta.file + ': ' + r.status); cache[key] = await r.json(); }
+  D = cache[key];
+  if (!D.bin) { const raw = atob(D.data), u = new Uint8Array(raw.length); for (let i = 0; i < raw.length; i++) u[i] = raw.charCodeAt(i); D.bin = new Int16Array(u.buffer); D.data = null; }
+  data = D.bin;
+  const T0 = Float64Array.from(D.arm.T0.flat()), bases = D.arm.bases || [[[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]], NA = bases.length, S1 = D.arm.radius.length;
+  const rad = [], prs = [];            // every arm's spheres in one list; an arm's own pairs shifted to its block
+  for (let a = 0; a < NA; a++) { rad.push(...D.arm.radius); for (const [x, y] of D.arm.pairs) prs.push([x + a * S1, y + a * S1]); }
+  A = { base: bases.map(b => mul(Float64Array.from(b.flat()), T0)), O: D.arm.O.map(o => Float64Array.from(o.flat())), frame: D.arm.frame, local: D.arm.local, radius: rad, ee_local: D.arm.ee_local,
+        q_range: D.arm.q_range, pairs: prs, NA, S1, NQ: 6 * NA };
+  let err = 0; const P = new Float64Array(3 * A.radius.length + 3 * NA);
+  D.check.x.forEach((x, n) => { pose(x.map((v, j) => v * A.q_range[j]), P); D.check.spheres[n].forEach((c, s) => { for (let r = 0; r < 3; r++) err = Math.max(err, Math.abs(P[3 * s + r] - c[r])); });
+    D.check.ee[n].forEach((c, a) => { for (let r = 0; r < 3; r++) err = Math.max(err, Math.abs(P[3 * A.radius.length + 3 * a + r] - c[r])); }); });
+  $('row-inter').hidden = $('r-inter').hidden = NA < 2; $('l-ee').textContent = NA > 1 ? 'hand farthest from its goal position' : 'hand to its goal position';
+  window.__fk = err;
+  const su = $('suite'); su.textContent = ''; opt(su, 'all', 'all six suites'); D.tasks.forEach((n, k) => opt(su, k, n));
+  const fi = $('filter'); fi.textContent = ''; filters().forEach(f => opt(fi, f[0], f[1]));
+  fi.value = filters().some(f => f[0] === 'win') ? 'win' : 'all';
+  pi = Math.min(1, D.paths.length - 1); qi = -1;
+  buildScene(); view('front'); legend(); refill();
+  const runs = D.runs.map(r => `${r.name}: ${r.solved} solved, ${r.contact} arrived on a path in contact, ${r.stopped} stopped short (run ${r.id.slice(-8)})`).join('; ');
+  $('foot').textContent = `${D.name}, ${D.task.length} frozen queries, planning seed 0. ${runs}. Path lengths are in joint space with every joint divided by its range. Each path is shown at ${D.frames} configurations evenly spaced along it; a plan that stopped short is shown up to its last planned configuration. ` +
+    `Outcomes are this study’s copy of the scorer’s rule. Kinematics check: the page’s arm model agrees with the study’s to ${(err * 1000).toFixed(3)} mm.`;
+  $('msg').hidden = true;
+}
+function wire() {
+  $('suite').addEventListener('change', refill); $('filter').addEventListener('change', refill);
+  $('query').addEventListener('change', e => pick(+e.target.value));
+  const step = d => { if (!list.length) return; const k = (list.indexOf(qi) + d + list.length) % list.length; pick(list[k]); };
+  $('prev').addEventListener('click', () => step(-1)); $('next').addEventListener('click', () => step(1));
+  $('play').addEventListener('click', () => { playing = !playing; if (playing && t >= 1) t = 0; hold = 0; $('play').textContent = playing ? 'Pause' : 'Play'; });
+  $('t').addEventListener('input', e => { t = +e.target.value; hold = 0; if (playing) { playing = false; $('play').textContent = 'Play'; } drawArm(); });
+  $('c-trails').addEventListener('change', buildTrails); $('c-goal').addEventListener('change', () => { ghostMesh.visible = $('c-goal').checked; });
+  $('c-solid').addEventListener('change', () => { buildScene(); buildTrails(); drawArm(); });
+  document.querySelectorAll('.views button').forEach(b => b.addEventListener('click', () => view(b.dataset.view)));
+  document.addEventListener('keydown', e => { if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') return; if (e.key === 'ArrowRight') step(1); else if (e.key === 'ArrowLeft') step(-1); });
+  if (SCENES.length > 1) { $('g-scene').hidden = false; SCENES.forEach(s => opt($('scene'), s.key, s.name)); $('scene').addEventListener('change', e => { store.set('arm-paths-scene', e.target.value); start(e.target.value); }); }
+}
+async function start(key) { $('msg').hidden = false; $('msg').textContent = 'Loading the paths…'; try { await load(key); } catch (e) { $('msg').textContent = 'The path data did not load (' + e.message + ').'; } }
+if (!window.THREE) { $('msg').textContent = 'The 3-D library did not load.'; } else {
+  init3d(); wire();
+  const saved = store.get('arm-paths-scene'), first = SCENES.some(s => s.key === saved) ? saved : SCENES[0].key;
+  if (SCENES.length > 1) $('scene').value = first;
+  start(first);
+}
+})();
+</script>

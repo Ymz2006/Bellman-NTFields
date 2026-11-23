@@ -1,0 +1,10 @@
+{
+  "source_run": "registered_20261121T195802Z-0defb4fb",
+  "scene": "real_world_12dof",
+  "scene_sha256": "36dbf07d643f0189f03fc729f67ff276bd7933fef3e4c1605700a5d39f1c761e",
+  "suite_manifest_sha256": "8dd0cc629da9b3d627e282acacc53232a91dc74a6eebf84082e39ea8413d9025",
+  "total": 600,
+  "generator": "jeffrey/lbs_arm/make_tests12.py",
+  "generator_sha256": "a4bac7b1823fea6a5668f9ac9d2455ccabfbb9844f828caaa16dd94e8cc19b25",
+  "note": "Frozen testing data: never resample or edit."
+}

@@ -84,6 +84,50 @@ class ClearTable:
         return out
 
 
+class SpeedTable(ClearTable):
+    """The speed a trained field predicts, on the ClearTable grid: log |grad_q T(q, g)| (the predicted slowness 1 / S; the eikonal term trains
+    S |grad T| = 1 at both ends of every pair) averaged over `goals` random free partners g per node. Trilinear in the log."""
+
+    def __init__(self, net, scene, per_cell=32, nt=49, goals=4, seed=0, chunk=150_000):
+        dev = scene.device
+        self.nx = int(round(scene.E * per_cell)) + 1
+        self.nt = int(nt)
+        xs = torch.linspace(-0.5, 0.5, self.nx, device=dev)
+        ts = torch.linspace(-scene.phi_max, scene.phi_max, self.nt, device=dev)
+        gen = torch.Generator(dev).manual_seed(seed)
+        pool = scene.free(8192, gen, 0.1)
+        tab = torch.empty(self.nx, self.nx, self.nt, device=dev)
+        rows = max(1, chunk // (self.nx * self.nt))
+        for i in range(0, self.nx, rows):
+            X, Y, Tt = torch.meshgrid(xs[i:i + rows], xs, ts, indexing='ij')
+            q = torch.stack([X, Y, Tt], -1).reshape(-1, 3)
+            acc = torch.zeros(len(q), device=dev)
+            for _ in range(goals):
+                g = pool[torch.randint(len(pool), (len(q),), generator=gen, device=dev)]
+                with torch.enable_grad():
+                    tau, _, xp = net.out(torch.cat([q, g], 1))
+                    gr, = torch.autograd.grad(tau.sum(), xp)
+                acc += torch.log(torch.linalg.vector_norm(gr[:, :3], dim=1).clamp(min=1e-6))
+            tab[i:i + rows] = (acc / goals).reshape(X.shape)
+        self.tab = tab.reshape(-1).contiguous()
+        self.lo, self.hi = scene.lo, scene.hi
+        self.size = torch.tensor([self.nx - 1, self.nx - 1, self.nt - 1], device=dev, dtype=torch.float32)
+
+    def slowness(self, q):
+        return torch.exp(self(q))
+
+    def step_time(self, a, b, samples=33, with_max=False):
+        """Cost of the straight step a -> b (..., 3): its length x the mean (trapezoid rule) of the predicted slowness along it
+        (with_max: also the largest predicted slowness at a sample, for a collision check from the predicted speed)."""
+        shape = a.shape[:-1]
+        ts = torch.linspace(0, 1, samples, device=a.device)
+        p = a[..., None, :] + ts[:, None] * (b - a)[..., None, :]
+        s = self.slowness(p.reshape(-1, 3)).reshape(*shape, samples)
+        mean = (0.5 * (s[..., 1:] + s[..., :-1])).mean(-1)
+        tau = torch.linalg.vector_norm(b - a, dim=-1) * mean
+        return (tau, s.amax(-1)) if with_max else tau
+
+
 def _chunks(k, budget):
     """Index groups (in order of the per-pair sample count k) whose total sample count stays below budget."""
     order = torch.argsort(k)

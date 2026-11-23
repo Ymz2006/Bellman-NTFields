@@ -84,6 +84,15 @@ def main():
     p.add_argument('--bell-huber', type=float, default=0.0)
     p.add_argument('--bell-long', default='1', help="candidate steps up to this many radii long (log-uniform lengths); 'box:f' = up to f box lengths")
     p.add_argument('--bell-keep', action='store_true', help='with --bell-long: the candidates around the descent direction keep their short lengths')
+    p.add_argument('--bell-tau', choices=['true', 'learned', 'field'], default='true', help="cost of a candidate step: 'true' = the true speed along it (its lifted length), 'learned' = the field's own predicted speed 1 / |grad T| integrated along it, 'field' = the speed predicted by the frozen field of --speed-field")
+    p.add_argument('--speed-field', type=Path, default=None, help='--bell-tau field: a finished field run (run.py --field); its predicted speed is tabulated (pairnet.SpeedTable)')
+    p.add_argument('--speed-goals', type=int, default=4, help='--bell-tau field: partners per table node')
+    p.add_argument('--speed-check', type=float, default=0.0, help='--bell-tau field: a candidate step must keep the frozen field\'s predicted speed above this value (collision check from the predicted speed; replaces the geometric one)')
+    p.add_argument('--init-field', type=Path, default=None, help='warm start: a finished field run of the same network and seed (run.py --init)')
+    p.add_argument('--bell-ls', type=int, default=4, help='--bell-tau learned: stratified random samples per step')
+    p.add_argument('--bell-nofree', action='store_true', help='no collision check of the candidate steps (a step through an obstacle costs its integral)')
+    p.add_argument('--bell-free', action='store_true', help='obstacle-space sampling: the backup only for pairs with both ends out of obstacles')
+    p.add_argument('--in-weight', type=float, default=1.0, help="weight of ntrl-demo's loss for the pairs with an end inside an obstacle (1 = ntrl-demo)")
     p.add_argument('--bell-table', action='store_true', help="clearance along the backup's steps from pairnet.ClearTable instead of the exact rectangle clearance")
     p.add_argument('--td-free', action='store_true', help="drop ntrl-demo's TD term for pairs whose step crosses an obstacle")
     p.add_argument('--td-weight', type=float, default=1e-3)
@@ -124,15 +133,25 @@ def main():
     bell_long = float(a.bell_long.split(':')[1]) / bell_r if a.bell_long.startswith('box:') else float(a.bell_long)
     truth = DG.Truth(scene, a.prepared)
     res = dict(stage='pair-lift-field', scene=scene.describe(), scene_name=SN.scene_name(info), seed=a.seed, epochs=epochs, prepared=str(a.prepared), gpu=torch.cuda.get_device_name(0),
-               smoke=a.smoke, config=cfg, push=dict(schedule=schedule, mu=a.mu, mu1=a.mu1, bound=bound, check=a.check, push_all=a.push_all), tri=dict(tri=a.tri, tri1=a.tri1, radius=a.tri_r), bellman=dict(weight=bell_w, weight_argument=a.bell, normalized=a.bell_norm, radius=bell_r, radius_cells=bell_r * scene.E, k=a.bell_k, cone=a.bell_cone, table=a.bell_table, td_free=a.td_free, long=bell_long, long_cells=bell_long * bell_r * scene.E, keep_cone=a.bell_keep),
+               smoke=a.smoke, config=cfg, push=dict(schedule=schedule, mu=a.mu, mu1=a.mu1, bound=bound, check=a.check, push_all=a.push_all), tri=dict(tri=a.tri, tri1=a.tri1, radius=a.tri_r), bellman=dict(weight=bell_w, weight_argument=a.bell, normalized=a.bell_norm, radius=bell_r, radius_cells=bell_r * scene.E, k=a.bell_k, cone=a.bell_cone, table=a.bell_table, td_free=a.td_free, long=bell_long, long_cells=bell_long * bell_r * scene.E, keep_cone=a.bell_keep, free_pairs=a.bell_free, in_weight=a.in_weight, tau=a.bell_tau, tau_samples=a.bell_ls, collision_check=('speed' if (a.bell_tau == 'field' and a.speed_check > 0) else (not a.bell_nofree)), speed_check=a.speed_check),
                args={k: (str(v) if isinstance(v, Path) else v) for k, v in vars(a).items()})
     res['b_scale'] = b_scale
     log(f'scene {res["scene_name"]} E={scene.E:g}, lift {a.lift} gain {gain:.3f}, pair {cfg["pair"]}, octaves {octaves}, B x {b_scale:.3f}, push {schedule} bound {bound:.2f} check {a.check}')
     save_at = () if a.smoke else tuple(sorted(set(SAVE_AT) | set(range(5000, epochs, 1000))))
+    bell_speed = None
+    if a.bell_tau == 'field':
+        assert a.speed_field is not None, '--bell-tau field needs --speed-field (run.py --field)'
+        ts = time.time()
+        fnet = PN.load_field(a.speed_field / 'training/checkpoint.pt', scene)
+        bell_speed = PN.SpeedTable(fnet, scene, 32, 49, goals=a.speed_goals, seed=a.seed)
+        del fnet
+        torch.cuda.empty_cache()
+        res['speed_field'] = dict(run=a.speed_field.name, goals=a.speed_goals, nodes=[bell_speed.nx, bell_speed.nx, bell_speed.nt], seconds=time.time() - ts)
+        log(f'speed table of {a.speed_field.name}: {res["speed_field"]}')
     ck, hist = PT.train(a.prepared / 'data', a.out / 'training', a.seed, epochs, cfg, scene, log, blocked=blocked, schedule=schedule, mu=a.mu, bound=bound,
                         push_all=a.push_all, save_at=save_at, mu1=a.mu1, b_scale=b_scale, tri=a.tri, tri1=a.tri1, tri_r=a.tri_r,
                         bell=bell_w, bell_r=bell_r, bell_k=a.bell_k, bell_from=a.bell_from, td_free=a.td_free, td_weight=a.td_weight,
-                        bell_cone=a.bell_cone, bell_exact=not a.bell_trapz, bell_huber=a.bell_huber, bell_table=a.bell_table, bell_long=bell_long, bell_keep=a.bell_keep)
+                        bell_cone=a.bell_cone, bell_exact=not a.bell_trapz, bell_huber=a.bell_huber, bell_table=a.bell_table, bell_long=bell_long, bell_keep=a.bell_keep, bell_free=a.bell_free, in_weight=a.in_weight, bell_tau=a.bell_tau, bell_ls=a.bell_ls, bell_nofree=a.bell_nofree, bell_speed=bell_speed, bell_speed_check=a.speed_check, init=(a.init_field / 'training/checkpoint.pt') if a.init_field is not None else None)
     res['tri_final'] = dict(sq=hist['tri_sq'][-1], lin=hist['tri_lin'][-1], max=hist['tri_max'][-1], used=hist['tri_used'][-1]) if hist['tri_sq'] else None
     res['t_blocked_free'] = [hist['t_blocked'][-1], hist['t_free'][-1]] if hist['t_blocked'] else None
     res['train_seconds'] = time.time() - t0

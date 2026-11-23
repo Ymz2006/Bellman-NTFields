@@ -20,6 +20,27 @@ _spec.loader.exec_module(L)
 f, hbar, line, table, details, chart, figure, esc = L.f, L.hbar, L.line, L.table, L.details, L.chart, L.figure, L.esc
 
 TITLE_TAG = '2026-11-19 Pair Lift'
+# obstacle-space sampling: (group title, ((label, scene), name) of the free-space control, [((label, scene), name), ...])
+INSIDE = [('22-cell maze, lift + backup', (('bxt1', 'plus22'), 'free-space pairs'),
+           [(('bxt1_in', 'plus22in'), 'obstacle pairs'), (('bxt1_inF', 'plus22in'), 'backup on free pairs'), (('bxt1_inW', 'plus22in'), 'obstacle loss x 0.02')]),
+          ('Apartment, lift + octaves + backup', (('rec', 'apt64'), 'free-space pairs'), [(('rec_in', 'apt64in'), 'obstacle pairs'), (('rec_inF', 'apt64in'), 'backup on free pairs')]),
+          ('40-cell maze, lift + octaves + backup', (('bxt1nL_oct', 'plus40'), 'free-space pairs'), [(('bxt1nL_oct_in', 'plus40in'), 'obstacle pairs'), (('bxt1nL_oct_inF', 'plus40in'), 'backup on free pairs')])]
+# Part 6. Models trained with pairs inside obstacles: W20 / W68 = flat-top lift on whole-interior pairs (20 % / 68 % of the pairs with an end inside),
+# R20 = jeffrey/lift_scale's lift_in: the lift continued 0.3 cells into the walls, 20 % of the pairs with the second end inside
+W20, W68, R20, LIFT_FREE = '20261119T203113Z-543f4eb9', '20261119T195829Z-e518c164', '20261117T075605Z-a19f8f34', '20261117T055249Z-d953394e'
+SPEED_RUNS = [(LIFT_FREE, 'lift, free pairs', 3), (W20, 'flat top, 20 % inside', 4), (W68, 'flat top, 68 % inside', 5), (R20, 'into walls, 20 %', 6)]
+R40, R40O = '20261119T221757Z-d6b6c73f', '20261119T224932Z-fa50bf49'          # the same model on the 40-cell maze (plus40in pairs), without / with octaves
+SPEED_RUNS40 = [(R40, '40-cell maze: lift into walls, 20 % inside', 6), (R40O, '40-cell maze: the same with octaves', 6)]
+SPEED_BINS = ['inside, deeper than 0.1 cells', 'inside, 0.0175 - 0.1 cells deep', 'skin at the floor speed', 'band, lower half', 'band, upper half', 'open space']
+WMODEL = [('ref:plus22:lift', 'free-space pairs', 3), (('liftW', 'plus22w20'), 'flat top, 20 % inside', 4), (('liftW', 'plus22w'), 'flat top, 68 % inside', 5), ('ref:plus22in:lift_in', 'into walls, 20 %', 6)]
+T1ARMS = [('ref:plus22:ntrl', 'ntrl-demo', 1), ('ref:plus22:lift', 'lift, no backup', 3), (('bxt1', 'plus22'), 'true speed + check', 4), (('bxt1_nofree', 'plus22'), 'true speed, no check', 4),
+          (('bxt1_sR_scheck', 'plus22'), 'model speed + check', 6), (('bxt1_sR_scheck_tdall', 'plus22'), 'same, plain TD term', 6), (('bxt1_sR_soft', 'plus22'), 'model speed, no check', 6),
+          (('bxt1_s20_scheck', 'plus22'), 'flat top 20 % + check', 5), (('bxt1_sA_soft', 'plus22'), 'flat 68 %, no check', 5)]
+T1ARMS40 = [('ref:plus40:ntrl', 'ntrl-demo', 1), (('liftR_oct', 'plus40in'), 'model alone', 3),
+            (('bxt1nL_oct', 'plus40'), 'true speed + check', 4), (('bxt1nL_oct_sR_scheck', 'plus40'), 'model speed + check', 6)]
+T2ARMS = [(('bxt1', 'plus22'), 'free pairs + backup', 3), ('ref:plus22in:lift_in', 'model alone', 4), (('bxt1_inF', 'plus22in'), '+ backup, skip inside', 6),
+          (('bxt1_inF_init', 'plus22in'), 'same, warm start', 6), (('bxt1_in_soft', 'plus22in'), 'backup all, no check', 6),
+          (('bxt1_in', 'plus22in'), 'backup all + check', 5), (('liftW', 'plus22w20'), 'flat top 20 % alone', 4), (('liftW_bellF', 'plus22w20'), 'flat 20 % + backup', 6)]
 SCENES = ['plus22', 'plus30', 'plus40', 'apt32', 'Allensville', 'apt64', 'Lakeville', 'Klickitat']
 # arm label -> (name on the page, colour slot). Slots follow the lift pages: 1 ntrl-demo, 2 lift, 3 lift + push, 6 lift + push + octaves; 5 = pair input, 4 = Bellman backup
 ARM = {
@@ -61,6 +82,7 @@ class Data:
         self.forensics = json.load(open(OUT / 'forensics.json')) if (OUT / 'forensics.json').exists() else {}
         self.jumps = json.load(open(OUT / 'jumps.json')) if (OUT / 'jumps.json').exists() else []
         self.ls = json.load(open(LS / 'report/runs.json'))['runs']
+        self.speed = json.load(open(OUT / 'speed.json')) if (OUT / 'speed.json').exists() else {}
 
     def sel(self, label, scene='plus22', seed=None):
         return [r for r in self.runs if r['label'] == label and r['scene'] == scene and (seed is None or r['seed'] == seed)]
@@ -248,6 +270,63 @@ def build_charts(D):
                               scene_groups('solved'), legend=sleg, value_name='solved')
     C['scenes_within'] = hbar('Travel times within 10 % on every scene', 'Same arms.', scene_groups('within10'), legend=sleg, value_name='within 10 %')
     C['scenes_wall'] = hbar('Plans that arrive through an obstacle', 'Share of plans that reach the goal with negative clearance somewhere on the path.', scene_groups('wall'), legend=sleg, value_name='through a wall')
+    # obstacle-space sampling: each run next to the same recipe on free-space pairs
+    def inside_groups(key):
+        out = []
+        for title, free, runs in INSIDE:
+            rows = []
+            p = D.pool(*free[0])
+            if p and p.get(key) is not None:
+                rows.append((free[1], p[key], 1, seeds_note(p)))
+            for (lab, sc), name in runs:
+                p = D.pool(lab, sc)
+                if p and p.get(key) is not None:
+                    rows.append((name, p[key], 4, seeds_note(p)))
+            if len(rows) > 1:
+                out.append((title, rows))
+        return out
+    ileg = [('free-space pairs only', 1), ('20 % of the pairs with one end inside an obstacle', 4)]
+    if inside_groups('solved'):
+        C['inside_solved'] = hbar('Queries solved with obstacle-space samples', 'Same recipe and scene; grey: the training pairs of every other run (both ends in free space).', inside_groups('solved'), legend=ileg, value_name='solved')
+        C['inside_seen'] = hbar('Detours seen through with obstacle-space samples', 'Share of the pairs with a true detour whose learned time is close to the straight-line time.', inside_groups('seen_through'), legend=ileg, value_name='seen through')
+    # Part 6: the flat-top lift on whole-interior pairs (the Lift Variants page's model), its speed as the backup's step cost, the backup on it
+    def arm_groups(key, arms, title='22-cell maze'):
+        rows = []
+        for src, name, slot in arms:
+            p = D.ref(*src[4:].split(':')) if isinstance(src, str) and src.startswith('ref:') else D.pool(*src)
+            if p and p.get(key) is not None:
+                rows.append((name, p[key], slot, seeds_note(p)))
+        return [(title, rows)] if rows else []
+    if D.pool('liftW', 'plus22w') or D.pool('liftW', 'plus22w20'):
+        wleg = [('free-space pairs', 3), ('flat-top lift, pairs inside obstacles', 4), ('the same, 68 % of the pairs', 5), ('lift continued into the walls, 20 % of the pairs', 6)]
+        C['w_solved'] = hbar('The lift alone with pairs inside obstacles: queries solved', 'No push, no backup. The share of pairs with an end inside an obstacle is on the label.',
+                             arm_groups('solved', WMODEL), legend=wleg, value_name='solved')
+        C['w_seen'] = hbar('The lift alone with pairs inside obstacles: detours seen through', 'Share of the pairs with a true detour whose learned time is close to the straight-line time.', arm_groups('seen_through', WMODEL), legend=wleg, value_name='seen through')
+        C['w_within'] = hbar('The lift alone with pairs inside obstacles: travel times within 10 %', 'Random (free configuration, goal) pairs against the grid solver’s travel time.', arm_groups('within10', WMODEL), legend=wleg, value_name='within 10 %')
+    if D.speed:
+        groups = []
+        for b in SPEED_BINS:
+            rows = [(name, D.speed[rid]['point'][b]['fit'][2], slot, '') for rid, name, slot in SPEED_RUNS if rid in D.speed and b in D.speed[rid]['point']]
+            if rows:
+                groups.append((b, rows))
+        C['w_speed'] = hbar('Predicted speed against the true speed, by clearance', 'Median of S |∇T| at random configurations (1 = the predicted speed is exact; below 1 the field is too fast there). Partner: a random free configuration.',
+                            groups, xmax=1.5, ticks=(0, 0.5, 1, 1.5), digits=2, suffix='', value_name='S |∇T|', legend=[(n, sl) for _, n, sl in SPEED_RUNS if _ in D.speed])
+    t1leg = [('ntrl-demo', 1), ('lift, no backup', 3), ('backup, step cost from the true speed (lifted length)', 4), ('backup, step cost from the speed of the lift-into-walls model', 6), ('backup, step cost from a flat-top model’s speed', 5)]
+    if any(D.pool(*src) for src, _, _ in T1ARMS[4:]):
+        C['t1_solved'] = hbar('Idea 1: queries solved', 'Free-space pairs, same recipe; only the cost of a candidate step and the check of the steps change. “check”: geometric for the true speed, made from the same speed table for a model’s speed.', arm_groups('solved', T1ARMS), legend=t1leg, value_name='solved')
+        C['t1_seen'] = hbar('Idea 1: detours seen through', 'Same arms.', arm_groups('seen_through', T1ARMS), legend=t1leg, value_name='seen through')
+        C['t1_within'] = hbar('Idea 1: travel times within 10 %', 'Same arms.', arm_groups('within10', T1ARMS), legend=t1leg, value_name='within 10 %')
+        C['t1_stall'] = hbar('Idea 1: plans that stall', 'Share of plans that do not reach the goal.', arm_groups('stall', T1ARMS), legend=t1leg, value_name='stalled')
+    if D.pool('bxt1nL_oct_sR_scheck', 'plus40'):
+        t40 = [('ntrl-demo', 1), ('the frozen model alone', 3), ('backup, step cost from the true speed', 4), ('backup, step cost and check from the model’s speed', 6)]
+        C['t1_40_solved'] = hbar('Idea 1 on the 40-cell maze: queries solved', 'Lift + octaves + backup with long steps (the recipe of Part 4); only the step cost and the check change.', arm_groups('solved', T1ARMS40, '40-cell maze'), legend=t40, value_name='solved')
+        C['t1_40_seen'] = hbar('Idea 1 on the 40-cell maze: detours seen through', 'Same arms.', arm_groups('seen_through', T1ARMS40, '40-cell maze'), legend=t40, value_name='seen through')
+    t2leg = [('free pairs + backup', 3), ('pairs inside obstacles, no backup', 4), ('+ backup (skipped inside obstacles, or everywhere without a collision check)', 6), ('+ backup everywhere with the collision check', 5)]
+    if D.pool('bxt1_inF', 'plus22in'):
+        C['t2_solved'] = hbar('Idea 2: queries solved', 'The backup added to the training of a model with pairs inside obstacles. “skip inside”: no backup for a pair with an end inside an obstacle.', arm_groups('solved', T2ARMS), legend=t2leg, value_name='solved')
+        C['t2_seen'] = hbar('Idea 2: detours seen through', 'Same arms.', arm_groups('seen_through', T2ARMS), legend=t2leg, value_name='seen through')
+        C['t2_within'] = hbar('Idea 2: travel times within 10 %', 'Same arms.', arm_groups('within10', T2ARMS), legend=t2leg, value_name='within 10 %')
+        C['t2_stall'] = hbar('Idea 2: plans that stall', 'Share of plans that do not reach the goal.', arm_groups('stall', T2ARMS), legend=t2leg, value_name='stalled')
     return {k: v for k, v in C.items() if v}
 
 

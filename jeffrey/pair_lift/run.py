@@ -22,7 +22,7 @@ sys.path.insert(0, str(HERE / 'jeffrey/gibson_embed'))
 from run import REGISTRY, environment  # noqa: E402
 
 DIR = 'jeffrey/pair_lift'
-SOURCES = ['pairnet.py', 'pairtrain.py', 'pairpipe.py', 'repfit.py']
+SOURCES = ['pairnet.py', 'pairtrain.py', 'pairpipe.py', 'repfit.py', 'wholedata.py']
 LIFT = ['lift.py', 'scenes.py', 'diag.py', 'trainer.py', 'jumps.py']
 EMBED = ['scene.py', 'features.py', 'diagnostics.py']
 MAZE = ['maze.py', 'plan.py', 'evaluate.py', 'common.py', 'plus.py', 'truth.py']
@@ -31,7 +31,9 @@ GIBSON = ['grid.py']
 NTRL = ['models/metric/model_train_metric.py', 'models/metric/model_network_metric.py', 'models/metric/model_function_metric.py', 'models/data_mlp.py']
 PREPARED = ['maze.json', 'goals.npy', 'queries.npz', 'truth_paths.npy', 'truth_fields.npy', 'data', 'heldout']
 REQUIRED = dict(field=['results.json', 'log.txt', 'rows.npz', 'training/checkpoint.pt', 'training/history.json', 'paths_seed0.npy'],
-                repfit=['results.json', 'log.txt', 'training/checkpoint.pt'])
+                repfit=['results.json', 'log.txt', 'training/checkpoint.pt'],
+                data=['results.json', 'log.txt', 'maze.json', 'data/sampled_points.npy', 'data/speed.npy', 'data/normal.npy', 'heldout/sampled_points.npy'])
+SCRIPT = dict(field='pairpipe.py', repfit='repfit.py', data='wholedata.py')
 
 
 def snapshot(src):
@@ -57,7 +59,9 @@ def rel(p):
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument('--stage', choices=['field', 'repfit'], default='field')
+    p.add_argument('--stage', choices=['field', 'repfit', 'data'], default='field')
+    p.add_argument('--init', type=Path, default=None, help='a finished field run to warm-start from (same network and seed)')
+    p.add_argument('--field', type=Path, default=None, help='a finished field run whose checkpoint the run reads (the frozen field of --bell-tau field)')
     p.add_argument('--prepared', type=Path, required=True)
     p.add_argument('--blocked', type=Path, default=None)
     p.add_argument('--seed', type=int, default=87358)
@@ -84,7 +88,19 @@ def main():
         home = Path(os.environ.get('GIBSON_TINY', str(Path.home() / 'Downloads/gibson_tiny')))
         inputs['mesh'] = str(home / sc['name'] / 'mesh_z_up.obj')
     config = dict(action='pair-lift-' + a.stage, label=a.label, extra=' '.join(extra), smoke=a.smoke, code=snap.name, n=info['n'], scene=scene, prepared=rel(prepared), seed=a.seed)
-    args = ['--prepared', str(prepared), '--seed', str(a.seed)]
+    args = ['--prepared', str(prepared), '--seed', str(a.seed)] if a.stage != 'data' else ['--from', str(prepared)]
+    if a.field is not None:
+        field = a.field.resolve()
+        assert (field / 'training/checkpoint.pt').exists(), '--field must be a finished field run'
+        config['field'] = rel(field)
+        inputs.update({'field_' + f.replace('/', '_'): str(field / f) for f in ('results.json', 'training/checkpoint.pt')})
+        args += ['--speed-field', str(field)]
+    if a.init is not None:
+        init = a.init.resolve()
+        assert (init / 'training/checkpoint.pt').exists(), '--init must be a finished field run'
+        config['init'] = rel(init)
+        inputs.update({'init_' + f.replace('/', '_'): str(init / f) for f in ('results.json', 'training/checkpoint.pt')})
+        args += ['--init-field', str(init)]
     if a.blocked is not None:
         blocked = a.blocked.resolve()
         assert (blocked / 'results.json').exists(), '--blocked must be a finished blocked run'
@@ -97,7 +113,7 @@ def main():
     tag = hashlib.sha256(json.dumps(config, sort_keys=True).encode()).hexdigest()[:10]
     name = f'Pair lift {a.stage} {scene} n={info["n"]} seed {a.seed} {a.label} {tag}' + (' smoke' if a.smoke else '')
     spec = dict(name=name, kind='pipeline', root=str(HERE), config=config, environment=environment(), inputs=inputs,
-                command=[py, str(snap / ('pairpipe.py' if a.stage == 'field' else 'repfit.py')), *args, '--out', '{output}'], required_outputs=REQUIRED[a.stage], validation='files')
+                command=[py, str(snap / SCRIPT[a.stage]), *args, '--out', '{output}'], required_outputs=REQUIRED[a.stage], validation='files')
     directory = HERE / 'specs'
     directory.mkdir(exist_ok=True)
     path = directory / f'pair_lift_{a.stage}_{tag}{"_smoke" if a.smoke else ""}.json'

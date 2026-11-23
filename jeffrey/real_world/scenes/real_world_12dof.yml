@@ -1,0 +1,90 @@
+# real_world_12dof: two UR5e arms (12 joints: left q[0:6], right q[6:12]) side by side in front of the measured cupboard, symmetric
+# about its width centre. Written by jeffrey/real_world/make_scenes.py; do not edit by hand.
+# Cupboard (measured): outer box 1.82 m tall x 0.56 m deep x 0.92 m wide, panels included; top and bottom
+# 0.08 m metal, sides 0.03 m, back 0.03 m, two dividers 0.03 m (thickness ASSUMED, not measured)
+# evenly spaced: three zones 0.5333 m tall, 0.53 m deep, 0.86 m wide inside.
+# Open towards the robot (-x). Standing on the floor; each robot on a 0.25 x 0.25 m pedestal, base_link z = 0 = pedestal top.
+# Arm model: the release UR5e + Robotiq 2F-140, cuRobo spheres (jeffrey/real_world/robot.py).
+# Frame: midway between the two bases, x towards the cupboard, z up. Bases at y = +-0.30 (left = +y), both facing +x.
+# Floor z = -0.60 (bases 0.60 m above the floor); cupboard front face x = 0.25, back face x = 0.81, y -0.46 to
+# 0.46, z -0.60 to 1.22.
+# Placement: largest mean reached share of the zone interiors by either arm (the other at home, straight up) over a grid of base height 0.6-1.1 m (0.1 m steps) and front-face distance 0.15-0.75 m
+# and half spacing 0.20-0.46 m. Reached by either arm: bottom 83 %, middle 86 %, top 78 %.
+# Validity: each arm against the cuboids (>= 0.005 m) and itself (>= 0.002 m); the two arms against each other (>= 0.005 m, all spheres).
+
+robots:
+- name: left
+  base: [0.0, 0.3, 0.0, 1.0, 0.0, 0.0, 0.0]
+- name: right
+  base: [0.0, -0.3, 0.0, 1.0, 0.0, 0.0, 0.0]
+cuboids:
+- name: floor
+  pose: [0.5, 0.0, -0.625, 1.0, 0.0, 0.0, 0.0]
+  dims: [4.0, 4.0, 0.05]
+  color: [120, 120, 115]
+- name: pedestal_left
+  pose: [0.0, 0.3, -0.3, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.25, 0.25, 0.6]
+  color: [90, 96, 104]
+- name: pedestal_right
+  pose: [0.0, -0.3, -0.3, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.25, 0.25, 0.6]
+  color: [90, 96, 104]
+- name: shelf_bottom
+  pose: [0.53, 0.0, -0.56, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.56, 0.92, 0.08]
+  color: [150, 156, 166]
+- name: shelf_top
+  pose: [0.53, 0.0, 1.18, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.56, 0.92, 0.08]
+  color: [150, 156, 166]
+- name: shelf_back
+  pose: [0.795, 0.0, 0.31, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.03, 0.92, 1.66]
+  color: [150, 156, 166]
+- name: shelf_side_right
+  pose: [0.515, -0.445, 0.31, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.53, 0.03, 1.66]
+  color: [150, 156, 166]
+- name: shelf_side_left
+  pose: [0.515, 0.445, 0.31, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.53, 0.03, 1.66]
+  color: [150, 156, 166]
+- name: shelf_divider_1
+  pose: [0.515, 0.0, 0.028333, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.53, 0.86, 0.03]
+  color: [182, 188, 196]
+- name: shelf_divider_2
+  pose: [0.515, 0.0, 0.591667, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.53, 0.86, 0.03]
+  color: [182, 188, 196]
+sampling:
+  x: [0.08, 0.81]
+  y: [-0.69, 0.69]
+  z: [-0.6, 1.22]
+compartments:
+- name: bottom
+  x: [0.29, 0.78]
+  y: [-0.43, 0.43]
+  z: [-0.52, 0.0133]
+- name: middle
+  x: [0.29, 0.78]
+  y: [-0.43, 0.43]
+  z: [0.0433, 0.5767]
+- name: top
+  x: [0.29, 0.78]
+  y: [-0.43, 0.43]
+  z: [0.6067, 1.14]
+interiors:
+- name: bottom
+  x: [0.25, 0.78]
+  y: [-0.43, 0.43]
+  z: [-0.52, 0.0133]
+- name: middle
+  x: [0.25, 0.78]
+  y: [-0.43, 0.43]
+  z: [0.0433, 0.5767]
+- name: top
+  x: [0.25, 0.78]
+  y: [-0.43, 0.43]
+  z: [0.6067, 1.14]

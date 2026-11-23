@@ -28,7 +28,7 @@ fit_lift_oct8B|plus22|87358|--lift time --octaves 2,4,8 --band 0.6 --steps 20000
 fit_ntrlB|plus22|87358|--lift none --band 0.6 --steps 20000
 bell1_count|plus22|87358|--lift time --pair count --pair-norm raw --pair-scale 1 --pair-freq 0.25 --bell 1 --td-free
 ntrl_bell1|plus22|87358|--lift none --bell 1 --td-free
-bx1|plus22|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6
+#PAUSED 2026-11-19 14:55 (user: pause everything not related to the flat-top whole-interior test)# bx1|plus22|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6
 bxt1|plus22|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table
 bxt3|plus22|87358|--lift time --bell 3 --td-free --bell-k 16 --bell-cone 6 --bell-table
 bxt1_r15|plus22|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-r 0.015 --bell-table
@@ -44,7 +44,7 @@ bxt1nL|apt64|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --be
 bxt1b|plus40|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table
 bxt1nL|Klickitat|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long 8
 bxt1nL|plus30|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long 8
-bell03_k16|plus22|87358|--lift time --bell 0.3 --bell-k 16 --td-free
+#PAUSED 2026-11-19 14:55 (user: pause everything not related to the flat-top whole-interior test)# bell03_k16|plus22|87358|--lift time --bell 0.3 --bell-k 16 --td-free
 count_f025|plus22|87358|--lift time --pair count --pair-norm raw --pair-scale 1 --pair-freq 0.25 --push page --tri1 0.5 --tri 10
 # reordered 05:45: houses, seeds, ablations, then the remaining pair-input variants
 bxt1nL|Lakeville|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long 8
@@ -70,8 +70,8 @@ fit_post2B|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1
 fit_post8B|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place post --pair-copies 8 --pair-amp 0.3 --band 0.6 --steps 20000
 fit_post32B|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place post --pair-copies 32 --pair-amp 0.3 --band 0.6 --steps 20000
 fit_post128B|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place post --pair-copies 128 --pair-amp 0.075 --band 0.6 --steps 20000
-bxt1nLB|plus40|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
-bxt1nLB|plus30|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
+#PAUSED 2026-11-19 14:55 (user: pause everything not related to the flat-top whole-interior test)# bxt1nLB|plus40|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
+#PAUSED 2026-11-19 14:55 (user: pause everything not related to the flat-top whole-interior test)# bxt1nLB|plus30|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
 bxt1_bit|plus22|87358|--lift time --pair bit --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table
 rec|plus40|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
 rec|plus30|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
@@ -81,22 +81,31 @@ bxt1_in|plus22in|87358|--lift time --depth 0.3 --bell 1 --td-free --bell-k 16 --
 rec|apt64|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
 rec_in|apt64in|87358|--lift time --depth 0.3 --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
 bit_in_zero|plus22in|87358|--lift time --depth 0.3 --pair bit --pair-inside zero --push page --tri1 0.5 --tri 10
-bxt1nL_oct_in|plus40in|87358|--lift time --depth 0.3 --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long 8 --octaves cell
+# controls for bxt1_in (59.4 %): the backup on pairs with both ends free only; ntrl-demo loss of the obstacle pairs x 0.02
+bxt1_inF|plus22in|87358|--lift time --depth 0.3 --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-free
+bxt1_inW|plus22in|87358|--lift time --depth 0.3 --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --in-weight 0.02
 rec|Klickitat|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
 # second training seed on the 40-cell maze: long steps of 8 radii (5.3 cells) against 0.24 box (9.6 cells)
-bxt1nL_oct|plus40|1|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long 8 --octaves cell
-rec|plus40|1|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
-bxt1_pre8|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place pre --pair-copies 8 --pair-nograd --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table
-bxt1_pre32|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place pre --pair-copies 32 --pair-nograd --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table
-rec|Lakeville|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
-rec|Allensville|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
-rec|apt32|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
-ntrl_bxt1|plus22|87358|--lift none --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table
-bxt1_k8|plus22|87358|--lift time --bell 1 --td-free --bell-k 8 --bell-table
-lift_push_tri|plus22|87358|--lift time --push page --tri1 0.5 --tri 10
-post32|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place post --pair-copies 32 --pair-amp 0.3 --pair-nograd --push page --tri1 0.5 --tri 10
-pre128|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place pre --pair-copies 128 --pair-nograd --push page --tri1 0.5 --tri 10
-same_len|plus22|87358|--lift time --pair len --pair-what length --pair-norm raw --pair-scale box --pair-sign same --pair-nograd --push page --tri1 0.5 --tri 10
+rec_inF|apt64in|87358|--lift time --depth 0.3 --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24 --bell-free
+# step cost of the backup from the learned speed (integral of |grad T| along the step) against the lifted length; with / without the collision check of the steps
+#PAUSED 2026-11-19 14:55 (user: pause everything not related to the flat-top whole-interior test)# bxt1_ls|plus22|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-tau learned --bell-ls 8
+#PAUSED 2026-11-19 14:55 (user: pause everything not related to the flat-top whole-interior test)# bxt1_ls_nofree|plus22|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-tau learned --bell-ls 8 --bell-nofree
+#PAUSED 2026-11-19 14:55 (user: pause everything not related to the flat-top whole-interior test)# bxt1_nofree|plus22|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-nofree
+#PAUSED 2026-11-19 14:55 (user: pause everything not related to the flat-top whole-interior test)# bxt1nL_oct|plus40|1|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long 8 --octaves cell
+#PAUSED 2026-11-19 14:55 (user: pause everything not related to the flat-top whole-interior test)# rec|plus40|1|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
+# obstacle-space samples with the backup on free pairs only (run only if bxt1_inF restores the 22-cell maze)
+#bxt1nL_oct_inF|plus40in|87358|--lift time --depth 0.3 --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long 8 --octaves cell --bell-free   (dropped: no see-through left to fix on this maze)
+#PAUSED 2026-11-19 14:55 (user: pause everything not related to the flat-top whole-interior test)# bxt1_pre8|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place pre --pair-copies 8 --pair-nograd --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table
+#PAUSED 2026-11-19 14:55 (user: pause everything not related to the flat-top whole-interior test)# bxt1_pre32|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place pre --pair-copies 32 --pair-nograd --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table
+#PAUSED 2026-11-19 14:55 (user: pause everything not related to the flat-top whole-interior test)# rec|Lakeville|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
+#PAUSED 2026-11-19 14:55 (user: pause everything not related to the flat-top whole-interior test)# rec|Allensville|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
+#PAUSED 2026-11-19 14:55 (user: pause everything not related to the flat-top whole-interior test)# rec|apt32|87358|--lift time --octaves cell --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm --bell-long box:0.24
+#PAUSED 2026-11-19 14:55 (user: pause everything not related to the flat-top whole-interior test)# ntrl_bxt1|plus22|87358|--lift none --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table
+#PAUSED 2026-11-19 14:55 (user: pause everything not related to the flat-top whole-interior test)# bxt1_k8|plus22|87358|--lift time --bell 1 --td-free --bell-k 8 --bell-table
+#PAUSED 2026-11-19 14:55 (user: pause everything not related to the flat-top whole-interior test)# lift_push_tri|plus22|87358|--lift time --push page --tri1 0.5 --tri 10
+#PAUSED 2026-11-19 14:55 (user: pause everything not related to the flat-top whole-interior test)# post32|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place post --pair-copies 32 --pair-amp 0.3 --pair-nograd --push page --tri1 0.5 --tri 10
+#PAUSED 2026-11-19 14:55 (user: pause everything not related to the flat-top whole-interior test)# pre128|plus22|87358|--lift time --pair len --pair-what updown --pair-scale 1 --pair-place pre --pair-copies 128 --pair-nograd --push page --tri1 0.5 --tri 10
+#PAUSED 2026-11-19 14:55 (user: pause everything not related to the flat-top whole-interior test)# same_len|plus22|87358|--lift time --pair len --pair-what length --pair-norm raw --pair-scale box --pair-sign same --pair-nograd --push page --tri1 0.5 --tri 10
 # dropped (not run): 
 #bxt1n|apt64|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table --bell-r cell --bell-norm
 #bxt1b|apt64|87358|--lift time --bell 1 --td-free --bell-k 16 --bell-cone 6 --bell-table
