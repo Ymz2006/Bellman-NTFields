@@ -1,0 +1,42 @@
+[14:37:56] compare suite p_d055_s46_h60_anywhere_50.npz: DIFFERENT (here True, export True)
+[14:37:56] compare suite p_d055_s46_h60_compartment_to_compartment_50.npz: DIFFERENT (here True, export True)
+[14:37:56] compare suite p_d055_s46_h60_compartment_to_free_50.npz: DIFFERENT (here True, export True)
+[14:37:56] compare suite p_d055_s46_h60_free_to_compartment_50.npz: DIFFERENT (here True, export True)
+[14:37:56] compare suite p_d055_s46_h60_free_to_free_50.npz: DIFFERENT (here True, export True)
+[14:37:56] compare suite p_d055_s46_h60_same_compartment_50.npz: DIFFERENT (here True, export True)
+[14:37:56] compare suite suite_manifest.json: DIFFERENT (here True, export True)
+[14:37:56] prep: start on GPU 1
+[14:38:52] prep: rc 0, run 20261123T193757Z-11356432, 0.9 min
+[14:38:52] compare prepare queries.npz: DIFFERENT (here True, export True)
+[14:38:52] compare prepare scene.json: DIFFERENT (here True, export True)
+[14:38:52] compare prepare robot_model.npz: identical
+[14:38:52] compare prepare data/sampled_points.npy: DIFFERENT (here True, export True)
+[14:38:52] compare prepare data/speed.npy: DIFFERENT (here True, export True)
+[14:38:53] compare prepare data/normal.npy: DIFFERENT (here True, export True)
+[14:38:53] euclid: start on GPU 1
+[14:38:53] lift_s87358: start on GPU 1
+[14:39:16] euclid: rc 0, run 20261123T193854Z-e5462df2, 0.4 min
+[14:39:16] ntrl_s87358: start on GPU 1
+[14:54:14] ntrl_s87358: rc 0, run 20261123T193917Z-e343a228, 15.0 min
+[15:05:23] lift_s87358: rc 0, run 20261123T193854Z-089d42cd, 26.5 min
+[15:05:23] plan_lift_s87358: start on GPU 1
+[15:05:23] lift_s87359: start on GPU 1
+[15:05:23] ntrl_s87359: start on GPU 1
+[15:15:16] plan_lift_s87358: rc 0, run 20261123T200524Z-33106626, 9.9 min
+[15:15:16] budget_lift_s87358: start on GPU 1
+[15:27:22] budget_lift_s87358: rc 0, run 20261123T201517Z-78ffc5d5, 12.1 min
+[15:27:22] picks_lift: start on GPU 1
+[15:27:34] ntrl_s87359: rc 0, run 20261123T200524Z-910f5cd9, 22.2 min
+[15:32:46] picks_lift: rc 0, run 20261123T202723Z-1991fced, 5.4 min
+[15:32:46] plan_ntrl_s87358: start on GPU 1
+[15:35:33] plan_ntrl_s87358: rc 0, run 20261123T203248Z-d67cd04c, 2.8 min
+[15:35:33] budget_ntrl_s87358: start on GPU 1
+[15:39:54] budget_ntrl_s87358: rc 0, run 20261123T203534Z-e62c527f, 4.4 min
+[15:39:54] picks_ntrl: start on GPU 1
+[15:42:37] picks_ntrl: rc 0, run 20261123T203955Z-31202de5, 2.7 min
+[15:44:33] lift_s87359: rc 0, run 20261123T200524Z-357d53ee, 39.2 min
+[15:44:33] budget_lift_s87359: start on GPU 1
+[15:49:28] budget_lift_s87359: rc 0, run 20261123T204434Z-2ada4e29, 4.9 min
+[15:49:28] demo: start on GPU 1
+[15:50:00] demo: rc 0, run 20261123T204929Z-e274f0e8, 0.5 min
+[15:50:00] chain done

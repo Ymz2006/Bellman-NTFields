@@ -4,6 +4,8 @@ import json
 import math
 from pathlib import Path
 
+import status_tables
+
 HERE = Path(__file__).resolve().parent
 TITLE = '2026-11-22 LBS Final Results'
 COLOR = dict(ntrl='var(--s1)', lbs='var(--s2)', rrtc='var(--s3)', lazyprm='var(--s4)')
@@ -199,7 +201,8 @@ def summary_table(D, t, metric='pct'):
                 continue
             part = '' if x['instances'] == x['of'] else f' <span style="color:var(--ink-3)">({x["instances"]}/{x["of"]})</span>'
             cls = ' class="best"' if best[c['key']] is not None and abs(x['pct'] - best[c['key']]) < 1e-9 else ''
-            cells.append(f'<td{cls}>{x["pct"]:.1f} %{part}</td>')
+            lim = '' if x.get('limits', [30.0]) == [30.0] else ' <span style="color:var(--ink-3)" title="first pass, 10 s per query; the 30 s rerun is still running">(10 s)</span>'
+            cells.append(f'<td{cls}>{x["pct"]:.1f} %{part}{lim}</td>')
             if x['instances'] == x['of']:
                 vals.append(x['pct'])
         avg = f'{sum(vals) / len(vals):.1f} %' if len(vals) == len(t['cols']) else (f'<span style="color:var(--ink-3)">{sum(vals) / len(vals):.1f} % of {len(vals)}</span>' if vals else '')
@@ -218,7 +221,7 @@ def full_table(D, t):
                 rows.append(f'<tr><td class="l">{esc(c["label"])}</td><td class="l">{D["names"][m]}</td><td colspan="10" class="l pend">pending</td></tr>')
                 continue
             tm, ln, lr = x['time'], x['length'], x['length_ratio']
-            fail = (f'{x["timeouts"]} time-outs' if 'timeouts' in x else f'{x["through_wall"]} through a wall, {x["not_arrived"]} not arrived')
+            fail = (f'{x["timeouts"]} time-outs at {"/".join(f"{v:g}" for v in x["limits"])} s' + (f'; solved within 10 s: {x["pct_within10"]:.1f} %' if 'pct_within10' in x else '') if 'timeouts' in x else f'{x["through_wall"]} through a wall, {x["not_arrived"]} not arrived')
             cm = x.get('common')
             rows.append(f'<tr><td class="l">{esc(c["label"])}</td><td class="l">{D["names"][m]}</td><td>{x["instances"]}/{x["of"]}</td><td>{x["pct"]:.1f} % ({x["success"]}/{x["n"]})</td>'
                         f'<td>{" / ".join(f"{v:.1f}" for v in x["per_instance"])}</td>'
@@ -278,16 +281,24 @@ def body(D):
     h = [f'<title>{TITLE}</title>', '<meta name="claude:viewport-fit-sides" content="cover">',
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">',
          f'<style>{CSS}</style>', '<div class="wrap">',
-         '<header class="top"><div class="eyebrow">jeffrey/lbs_final · 500 random queries per scene · all planners on the CPU, one query at a time · every number from registered runs</div>',
+         '<header class="top"><div class="eyebrow">jeffrey/lbs_final · 500 random queries per scene · one query at a time · LBS on the RTX 5070, the others on the CPU · every number from registered runs</div>',
          '<h1>LBS final results: LBS against ntrl-demo, RRT-Connect and LazyPRM</h1>',
          f'<p class="lede">{lede(D)}</p></header>',
          f'<div class="status"><b>{n_bench} of {total}</b> scene × planner results are in. Cells marked (k/3) pool the instances finished so far.</div>',
+         status_tables.section(),                                   # four status tables (2026-11-24), report/status_tables.json
+         '<h2 id="findings">What the results say</h2><div class="answers">',
+         '<div><div class="q">Timing</div><div class="a">LBS runs on the GPU with jeffrey/lbs_fast’s planner (CUDA graphs, 8 MPPI steps per call): 0.12–0.21 ms per MPPI step, 18–119 ms per solved query. ntrl-demo, RRT-Connect and LazyPRM run on two CPU threads. The same LBS fields with the earlier CPU planner (2 threads, 4.4 ms per step) took 0.6–1.75 s per query and solved the same share of queries (within 0.6 points in every cell, same path lengths); the fast planner draws different random numbers, nothing else changes.</div></div>',
+         '<div><div class="q">2-D mazes</div><div class="a">LBS solves 100 / 97.1 / 96.3 / 69.1 % at 10 / 14 / 18 / 22 cells against ntrl-demo’s 90.4 / 47.9 / 21.6 / 5.3 %, in 18–34 ms, with paths 1.03 × the shortest. With 30 s the sampling planners solve more on the large mazes (LazyPRM 99.1 %, RRT-Connect 84.9 % at 22 × 22) at 8.6 s and 13.6 s per solved query, and with paths 1.21–1.35 × the shortest. Nearly all of LBS’s 22 × 22 misses are stalls (447 of 464), not paths through walls, and they grow with distance: 79.3 % on the shorter half of the queries, 58.8 % on the longer half (LazyPRM 99.6 / 98.5 %).</div></div>',
+         '<div><div class="q">Gap mazes</div><div class="a">LBS 99.9 / 99.8 / 99.5 / 94.8 % at gap × 1 / 2 / 4 / 8 in 21–76 ms, against ntrl-demo’s 75.9 / 69.1 / 56.3 / 56.4 %, LazyPRM 100 / 100 / 99.9 / 97.3 % and RRT-Connect 100 / 99.1 / 96.8 / 85.8 %. The hard queries are the ones whose goal sits inside a maze block. At gap × 8, goal in the open band: LBS 100 %, RRT-Connect 99.7 %, ntrl-demo 98.8 %; goal inside a block: LBS 89.6 %, LazyPRM 94.7 %, RRT-Connect 72.0 %, ntrl-demo 14.3 %. Most RRT-Connect misses fail at both 10 s and 30 s: uniform samples land mostly in the wide band, so its tree rarely grows into the block’s corridors.</div></div>',
+         '<div><div class="q">3-D houses</div><div class="a">The sampling planners solve 82–100 % in 0.04–1.1 s (a point robot in open rooms is easy to sample); LBS 99.6–100 % in Collierville, Benevolence and Onaga, 70–91 % in five houses and 40–56 % in Allensville and Lakeville, in 34–119 ms, and almost never through a wall (2 of 1,000 misses). Its misses are queries that need a detour. Pooled over the 10 houses, by true path ÷ straight line: < 1.1, LBS 93.2 %, RRT-Connect 99.9 %; 1.1–1.5, 51.8 vs 95.8 %; ≥ 1.5, 24.3 vs 85.3 % (ntrl-demo 72.4 / 17.3 / 11.0 %). The field gets straight-line travel right and does not yet hold detours around walls in 3-D.</div></div>',
+         '<div><div class="q">Time limit</div><div class="a">Going from 10 s to 30 s per query moved RRT-Connect from 31 to 85 % on 22 × 22 and from 55 to 98 % on 18 × 18, and LazyPRM from 68 to 99 % on 22 × 22; RRT-Connect on gap × 4 from 86.5 to 96.8 % and on gap × 8 from 78.5 to 85.8 %. The houses and the 10 × 10 maze moved by 5 points or less. LBS has no time limit: MPPI runs until it arrives or its step budget ends; a failed LBS query costs its whole budget, which brings LBS’s mean over all queries (solved or not) to 59 ms on 22 × 22 and 0.33 s in Lakeville.</div></div>',
+         '</div>',
          '<h2 id="setup">What was run</h2><div class="answers">',
          '<div><div class="q">Scenes</div><div class="a"><b>Maze 2-D</b>: 10, 14, 18, 22 cells a side, three mazes each (maze seeds 1000 i + n). <b>Gap maze 2-D</b>: the 10 × 10 maze cut into four blocks pushed apart by an open band of 6 k cells, k = 1, 2, 4, 8 (16, 22, 34, 58 cells a side), three base mazes each. The SE(2) rectangle robot. <b>Gibson 3-D</b>: a point robot flying in a 2 m slab of the main floor of ten houses: the five of the earlier 3-D test and the five houses with the smallest main floors (Collierville, Benevolence, Onaga, Coffeen, Forkland).</div></div>',
          '<div><div class="q">Queries</div><div class="a">500 random (start, goal) pairs per scene: starts uniform over free space at least 0.1 cells from obstacles, goals drawn from the scene’s 48 random goal poses, every pair certified solvable by its ground-truth path. Gap mazes keep their goal mix (half of the goals inside the maze blocks, half in the open band). A table cell pools the three instances: 1,500 queries.</div></div>',
-         '<div><div class="q">Planners</div><div class="a"><b>ntrl-demo</b> and <b>LBS</b>: ntrl-demo’s MPPI on the trained travel-time field (training seed 87358, epoch 5,000), planning seed 0, step budget 3 × the true path. <b>RRT-Connect</b>: OMPL 2.0.1, default range. <b>LazyPRM</b>: a Python port of OMPL’s LazyPRM (k = 5 neighbours, lazy vertex and edge checks, a fresh roadmap per query). Both sampling planners get 10 s per query, then OMPL’s path simplifier.</div></div>',
+         '<div><div class="q">Planners</div><div class="a"><b>ntrl-demo</b> and <b>LBS</b>: MPPI on the trained travel-time field (training seed 87358, epoch 5,000), planning seed 0, step budget 3 × the true path. ntrl-demo: ntrl-demo’s MPPI on the CPU (2 threads). LBS: the fast planner of jeffrey/lbs_fast (<code>fast.Planner</code>, variant goal, CUDA graphs, 8 MPPI steps per call, one random draw per call) on the RTX 5070, which ran nothing else during these runs; the same MPPI with the goal encoded once, so its paths are statistically, not numerically, the CPU planner’s. <b>RRT-Connect</b>: OMPL 2.0.1, default range. <b>LazyPRM</b>: a Python port of OMPL’s LazyPRM (k = 5 neighbours, lazy vertex and edge checks, a fresh roadmap per query). Both sampling planners start every query from scratch (no roadmap or tree kept between queries) and get 30 s per query, then OMPL’s path simplifier. (A first pass with 10 s per query is kept in the registry; the full tables give the share solved within 10 s.)</div></div>',
          '<div><div class="q">Success</div><div class="a">The path reaches the goal and every configuration on it, at 0.005 cells per coordinate, is collision-free under the exact geometry. The sampling planners check motions at that same resolution, so their paths never fail the scorer.</div></div>',
-         '<div><div class="q">Time and length</div><div class="a">Wall time to the finished path (MPPI until it reaches the goal; sampling planners solve plus simplification), on two CPU threads, measured while the GPUs trained other runs. Path length in cells: x-y length for the 2-D robot, x-y-z length in the houses (one cell is 0.25 m). Mean ± standard deviation over each planner’s solved queries.</div></div>',
+         '<div><div class="q">Time and length</div><div class="a">Wall time to the finished path (MPPI until it reaches the goal; sampling planners solve plus simplification). ntrl-demo, RRT-Connect and LazyPRM on two CPU threads while the GPUs trained other runs; LBS on the otherwise idle RTX 5070 (time from start and goal on the GPU to the path back on the CPU; one-off compile of about 20 s per scene not counted). Path length in cells: x-y length for the 2-D robot, x-y-z length in the houses (one cell is 0.25 m). Mean ± standard deviation over each planner’s solved queries.</div></div>',
          '</div>']
     for t in D['tables']:
         h.append(f'<h2 id="{t["key"]}">{esc(t["title"])}</h2>')

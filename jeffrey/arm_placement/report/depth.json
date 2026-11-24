@@ -1,0 +1,1302 @@
+{
+ "base": {
+  "dx": 0.25,
+  "half_spacing": 0.3,
+  "base_height": 0.6,
+  "inside_all": {
+   "n": 1525,
+   "median": 0.14014822244644165,
+   "p90": 0.26747313141822815,
+   "max": 0.4889167547225952,
+   "min": 0.0005874037742614746
+  },
+  "zone_to_zone": {
+   "n": 400,
+   "median": 0.14723917841911316,
+   "p90": 0.24461595714092255,
+   "max": 0.4710491895675659,
+   "min": 0.04012271761894226
+  },
+  "by_depth": {
+   "steps": 2400,
+   "runs_per_query": 3,
+   "bins": [
+    {
+     "label": "no arm inside",
+     "lo": -9.0,
+     "hi": 0.0,
+     "queries": 50,
+     "solved": 96,
+     "runs": 150
+    },
+    {
+     "label": "up to 7 cm inside",
+     "lo": 0.0,
+     "hi": 0.07,
+     "queries": 39,
+     "solved": 84,
+     "runs": 117
+    },
+    {
+     "label": "7 to 13 cm",
+     "lo": 0.07,
+     "hi": 0.13,
+     "queries": 65,
+     "solved": 115,
+     "runs": 195
+    },
+    {
+     "label": "13 to 25 cm",
+     "lo": 0.13,
+     "hi": 0.25,
+     "queries": 288,
+     "solved": 532,
+     "runs": 864
+    },
+    {
+     "label": "deeper than 25 cm",
+     "lo": 0.25,
+     "hi": 9.0,
+     "queries": 158,
+     "solved": 322,
+     "runs": 474
+    }
+   ]
+  }
+ },
+ "p_d085_s20_h60": {
+  "dx": 0.85,
+  "half_spacing": 0.2,
+  "base_height": 0.6,
+  "inside_all": {
+   "n": 607,
+   "median": 0.08126586675643921,
+   "p90": 0.167265847325325,
+   "max": 0.2793642282485962,
+   "min": 0.000518798828125
+  },
+  "zone_to_zone": {
+   "n": 200,
+   "median": 0.0866568386554718,
+   "p90": 0.17958946526050568,
+   "max": 0.2756277322769165,
+   "min": 0.040293216705322266
+  },
+  "by_depth": {
+   "steps": 2400,
+   "runs_per_query": 6,
+   "bins": [
+    {
+     "label": "no arm inside",
+     "lo": -9.0,
+     "hi": 0.0,
+     "queries": 94,
+     "solved": 539,
+     "runs": 564
+    },
+    {
+     "label": "up to 7 cm inside",
+     "lo": 0.0,
+     "hi": 0.07,
+     "queries": 19,
+     "solved": 101,
+     "runs": 114
+    },
+    {
+     "label": "7 to 13 cm",
+     "lo": 0.07,
+     "hi": 0.13,
+     "queries": 89,
+     "solved": 468,
+     "runs": 534
+    },
+    {
+     "label": "13 to 25 cm",
+     "lo": 0.13,
+     "hi": 0.25,
+     "queries": 93,
+     "solved": 442,
+     "runs": 558
+    },
+    {
+     "label": "deeper than 25 cm",
+     "lo": 0.25,
+     "hi": 9.0,
+     "queries": 5,
+     "solved": 14,
+     "runs": 30
+    }
+   ]
+  }
+ },
+ "p_d100_s20_h60": {
+  "dx": 1.0,
+  "half_spacing": 0.2,
+  "base_height": 0.6,
+  "inside_all": {
+   "n": 602,
+   "median": 0.061894893646240234,
+   "p90": 0.09448366612195969,
+   "max": 0.13844072818756104,
+   "min": 0.0039223432540893555
+  },
+  "zone_to_zone": {
+   "n": 200,
+   "median": 0.06662726402282715,
+   "p90": 0.10116270184516907,
+   "max": 0.13844072818756104,
+   "min": 0.04018425941467285
+  },
+  "by_depth": {
+   "steps": 2400,
+   "runs_per_query": 6,
+   "bins": [
+    {
+     "label": "no arm inside",
+     "lo": -9.0,
+     "hi": 0.0,
+     "queries": 98,
+     "solved": 570,
+     "runs": 588
+    },
+    {
+     "label": "up to 7 cm inside",
+     "lo": 0.0,
+     "hi": 0.07,
+     "queries": 55,
+     "solved": 312,
+     "runs": 330
+    },
+    {
+     "label": "7 to 13 cm",
+     "lo": 0.07,
+     "hi": 0.13,
+     "queries": 145,
+     "solved": 813,
+     "runs": 870
+    },
+    {
+     "label": "13 to 25 cm",
+     "lo": 0.13,
+     "hi": 0.25,
+     "queries": 2,
+     "solved": 8,
+     "runs": 12
+    },
+    {
+     "label": "deeper than 25 cm",
+     "lo": 0.25,
+     "hi": 9.0,
+     "queries": 0,
+     "solved": 0,
+     "runs": 0
+    }
+   ]
+  }
+ },
+ "p_d055_s30_h60": {
+  "dx": 0.55,
+  "half_spacing": 0.3,
+  "base_height": 0.6,
+  "inside_all": {
+   "n": 634,
+   "median": 0.11738935112953186,
+   "p90": 0.29268017411231995,
+   "max": 0.4961863160133362,
+   "min": 0.004327714443206787
+  },
+  "zone_to_zone": {
+   "n": 200,
+   "median": 0.12728145718574524,
+   "p90": 0.326486736536026,
+   "max": 0.4961863160133362,
+   "min": 0.04354137182235718
+  },
+  "by_depth": {
+   "steps": 2400,
+   "runs_per_query": 6,
+   "bins": [
+    {
+     "label": "no arm inside",
+     "lo": -9.0,
+     "hi": 0.0,
+     "queries": 72,
+     "solved": 397,
+     "runs": 432
+    },
+    {
+     "label": "up to 7 cm inside",
+     "lo": 0.0,
+     "hi": 0.07,
+     "queries": 7,
+     "solved": 38,
+     "runs": 42
+    },
+    {
+     "label": "7 to 13 cm",
+     "lo": 0.07,
+     "hi": 0.13,
+     "queries": 52,
+     "solved": 264,
+     "runs": 312
+    },
+    {
+     "label": "13 to 25 cm",
+     "lo": 0.13,
+     "hi": 0.25,
+     "queries": 90,
+     "solved": 394,
+     "runs": 540
+    },
+    {
+     "label": "deeper than 25 cm",
+     "lo": 0.25,
+     "hi": 9.0,
+     "queries": 79,
+     "solved": 260,
+     "runs": 474
+    }
+   ]
+  }
+ },
+ "p_d070_s30_h60": {
+  "dx": 0.7,
+  "half_spacing": 0.3,
+  "base_height": 0.6,
+  "inside_all": {
+   "n": 618,
+   "median": 0.10133141279220581,
+   "p90": 0.2251325398683548,
+   "max": 0.3791164755821228,
+   "min": 0.008189201354980469
+  },
+  "zone_to_zone": {
+   "n": 200,
+   "median": 0.10263502597808838,
+   "p90": 0.24444644153118134,
+   "max": 0.3791164755821228,
+   "min": 0.040827810764312744
+  },
+  "by_depth": {
+   "steps": 2400,
+   "runs_per_query": 6,
+   "bins": [
+    {
+     "label": "no arm inside",
+     "lo": -9.0,
+     "hi": 0.0,
+     "queries": 84,
+     "solved": 489,
+     "runs": 504
+    },
+    {
+     "label": "up to 7 cm inside",
+     "lo": 0.0,
+     "hi": 0.07,
+     "queries": 13,
+     "solved": 75,
+     "runs": 78
+    },
+    {
+     "label": "7 to 13 cm",
+     "lo": 0.07,
+     "hi": 0.13,
+     "queries": 54,
+     "solved": 269,
+     "runs": 324
+    },
+    {
+     "label": "13 to 25 cm",
+     "lo": 0.13,
+     "hi": 0.25,
+     "queries": 106,
+     "solved": 466,
+     "runs": 636
+    },
+    {
+     "label": "deeper than 25 cm",
+     "lo": 0.25,
+     "hi": 9.0,
+     "queries": 43,
+     "solved": 128,
+     "runs": 258
+    }
+   ]
+  }
+ },
+ "p_d078_s30_h60": {
+  "dx": 0.78,
+  "half_spacing": 0.3,
+  "base_height": 0.6,
+  "inside_all": {
+   "n": 612,
+   "median": 0.08928242325782776,
+   "p90": 0.19629240036010742,
+   "max": 0.3188955783843994,
+   "min": 8.225440979003906e-06
+  },
+  "zone_to_zone": {
+   "n": 200,
+   "median": 0.09117105603218079,
+   "p90": 0.19730322062969208,
+   "max": 0.3188955783843994,
+   "min": 0.0405346155166626
+  },
+  "by_depth": {
+   "steps": 2400,
+   "runs_per_query": 6,
+   "bins": [
+    {
+     "label": "no arm inside",
+     "lo": -9.0,
+     "hi": 0.0,
+     "queries": 89,
+     "solved": 505,
+     "runs": 534
+    },
+    {
+     "label": "up to 7 cm inside",
+     "lo": 0.0,
+     "hi": 0.07,
+     "queries": 15,
+     "solved": 70,
+     "runs": 90
+    },
+    {
+     "label": "7 to 13 cm",
+     "lo": 0.07,
+     "hi": 0.13,
+     "queries": 63,
+     "solved": 325,
+     "runs": 378
+    },
+    {
+     "label": "13 to 25 cm",
+     "lo": 0.13,
+     "hi": 0.25,
+     "queries": 118,
+     "solved": 600,
+     "runs": 708
+    },
+    {
+     "label": "deeper than 25 cm",
+     "lo": 0.25,
+     "hi": 9.0,
+     "queries": 15,
+     "solved": 74,
+     "runs": 90
+    }
+   ]
+  }
+ },
+ "p_d085_s30_h60": {
+  "dx": 0.85,
+  "half_spacing": 0.3,
+  "base_height": 0.6,
+  "inside_all": {
+   "n": 608,
+   "median": 0.07421401143074036,
+   "p90": 0.15785086154937744,
+   "max": 0.28431570529937744,
+   "min": 5.263090133666992e-05
+  },
+  "zone_to_zone": {
+   "n": 200,
+   "median": 0.07529643177986145,
+   "p90": 0.15588921308517456,
+   "max": 0.24385786056518555,
+   "min": 0.04000437259674072
+  },
+  "by_depth": {
+   "steps": 2400,
+   "runs_per_query": 6,
+   "bins": [
+    {
+     "label": "no arm inside",
+     "lo": -9.0,
+     "hi": 0.0,
+     "queries": 94,
+     "solved": 545,
+     "runs": 564
+    },
+    {
+     "label": "up to 7 cm inside",
+     "lo": 0.0,
+     "hi": 0.07,
+     "queries": 28,
+     "solved": 159,
+     "runs": 168
+    },
+    {
+     "label": "7 to 13 cm",
+     "lo": 0.07,
+     "hi": 0.13,
+     "queries": 94,
+     "solved": 494,
+     "runs": 564
+    },
+    {
+     "label": "13 to 25 cm",
+     "lo": 0.13,
+     "hi": 0.25,
+     "queries": 81,
+     "solved": 402,
+     "runs": 486
+    },
+    {
+     "label": "deeper than 25 cm",
+     "lo": 0.25,
+     "hi": 9.0,
+     "queries": 3,
+     "solved": 18,
+     "runs": 18
+    }
+   ]
+  }
+ },
+ "p_d092_s30_h60": {
+  "dx": 0.92,
+  "half_spacing": 0.3,
+  "base_height": 0.6,
+  "inside_all": {
+   "n": 609,
+   "median": 0.060624003410339355,
+   "p90": 0.11038488149642944,
+   "max": 0.21437686681747437,
+   "min": 0.007126510143280029
+  },
+  "zone_to_zone": {
+   "n": 200,
+   "median": 0.06599125266075134,
+   "p90": 0.11151900142431259,
+   "max": 0.21437686681747437,
+   "min": 0.040145158767700195
+  },
+  "by_depth": {
+   "steps": 2400,
+   "runs_per_query": 6,
+   "bins": [
+    {
+     "label": "no arm inside",
+     "lo": -9.0,
+     "hi": 0.0,
+     "queries": 91,
+     "solved": 525,
+     "runs": 546
+    },
+    {
+     "label": "up to 7 cm inside",
+     "lo": 0.0,
+     "hi": 0.07,
+     "queries": 63,
+     "solved": 343,
+     "runs": 378
+    },
+    {
+     "label": "7 to 13 cm",
+     "lo": 0.07,
+     "hi": 0.13,
+     "queries": 112,
+     "solved": 593,
+     "runs": 672
+    },
+    {
+     "label": "13 to 25 cm",
+     "lo": 0.13,
+     "hi": 0.25,
+     "queries": 34,
+     "solved": 174,
+     "runs": 204
+    },
+    {
+     "label": "deeper than 25 cm",
+     "lo": 0.25,
+     "hi": 9.0,
+     "queries": 0,
+     "solved": 0,
+     "runs": 0
+    }
+   ]
+  }
+ },
+ "p_d100_s30_h60": {
+  "dx": 1.0,
+  "half_spacing": 0.3,
+  "base_height": 0.6,
+  "inside_all": {
+   "n": 601,
+   "median": 0.060649871826171875,
+   "p90": 0.09559440612792969,
+   "max": 0.13514220714569092,
+   "min": 0.019037485122680664
+  },
+  "zone_to_zone": {
+   "n": 200,
+   "median": 0.06093716621398926,
+   "p90": 0.0902569591999054,
+   "max": 0.13065099716186523,
+   "min": 0.04000711441040039
+  },
+  "by_depth": {
+   "steps": 2400,
+   "runs_per_query": 6,
+   "bins": [
+    {
+     "label": "no arm inside",
+     "lo": -9.0,
+     "hi": 0.0,
+     "queries": 99,
+     "solved": 569,
+     "runs": 594
+    },
+    {
+     "label": "up to 7 cm inside",
+     "lo": 0.0,
+     "hi": 0.07,
+     "queries": 64,
+     "solved": 372,
+     "runs": 384
+    },
+    {
+     "label": "7 to 13 cm",
+     "lo": 0.07,
+     "hi": 0.13,
+     "queries": 133,
+     "solved": 737,
+     "runs": 798
+    },
+    {
+     "label": "13 to 25 cm",
+     "lo": 0.13,
+     "hi": 0.25,
+     "queries": 4,
+     "solved": 24,
+     "runs": 24
+    },
+    {
+     "label": "deeper than 25 cm",
+     "lo": 0.25,
+     "hi": 9.0,
+     "queries": 0,
+     "solved": 0,
+     "runs": 0
+    }
+   ]
+  }
+ },
+ "p_d055_s46_h60": {
+  "dx": 0.55,
+  "half_spacing": 0.46,
+  "base_height": 0.6,
+  "inside_all": {
+   "n": 647,
+   "median": 0.10969728231430054,
+   "p90": 0.2608248293399811,
+   "max": 0.5003857016563416,
+   "min": 0.004099130630493164
+  },
+  "zone_to_zone": {
+   "n": 200,
+   "median": 0.11172688007354736,
+   "p90": 0.26322582364082336,
+   "max": 0.5003857016563416,
+   "min": 0.040313780307769775
+  },
+  "by_depth": {
+   "steps": 2400,
+   "runs_per_query": 3,
+   "bins": [
+    {
+     "label": "no arm inside",
+     "lo": -9.0,
+     "hi": 0.0,
+     "queries": 70,
+     "solved": 202,
+     "runs": 210
+    },
+    {
+     "label": "up to 7 cm inside",
+     "lo": 0.0,
+     "hi": 0.07,
+     "queries": 19,
+     "solved": 49,
+     "runs": 57
+    },
+    {
+     "label": "7 to 13 cm",
+     "lo": 0.07,
+     "hi": 0.13,
+     "queries": 52,
+     "solved": 128,
+     "runs": 156
+    },
+    {
+     "label": "13 to 25 cm",
+     "lo": 0.13,
+     "hi": 0.25,
+     "queries": 99,
+     "solved": 228,
+     "runs": 297
+    },
+    {
+     "label": "deeper than 25 cm",
+     "lo": 0.25,
+     "hi": 9.0,
+     "queries": 60,
+     "solved": 126,
+     "runs": 180
+    }
+   ]
+  }
+ },
+ "p_d070_s46_h60": {
+  "dx": 0.7,
+  "half_spacing": 0.46,
+  "base_height": 0.6,
+  "inside_all": {
+   "n": 615,
+   "median": 0.1011168360710144,
+   "p90": 0.22684946656227112,
+   "max": 0.37076181173324585,
+   "min": 0.003713667392730713
+  },
+  "zone_to_zone": {
+   "n": 200,
+   "median": 0.10890483856201172,
+   "p90": 0.21402320265769958,
+   "max": 0.3587034344673157,
+   "min": 0.04058712720870972
+  },
+  "by_depth": {
+   "steps": 2400,
+   "runs_per_query": 6,
+   "bins": [
+    {
+     "label": "no arm inside",
+     "lo": -9.0,
+     "hi": 0.0,
+     "queries": 88,
+     "solved": 510,
+     "runs": 528
+    },
+    {
+     "label": "up to 7 cm inside",
+     "lo": 0.0,
+     "hi": 0.07,
+     "queries": 17,
+     "solved": 102,
+     "runs": 102
+    },
+    {
+     "label": "7 to 13 cm",
+     "lo": 0.07,
+     "hi": 0.13,
+     "queries": 49,
+     "solved": 230,
+     "runs": 294
+    },
+    {
+     "label": "13 to 25 cm",
+     "lo": 0.13,
+     "hi": 0.25,
+     "queries": 109,
+     "solved": 525,
+     "runs": 654
+    },
+    {
+     "label": "deeper than 25 cm",
+     "lo": 0.25,
+     "hi": 9.0,
+     "queries": 37,
+     "solved": 161,
+     "runs": 222
+    }
+   ]
+  }
+ },
+ "p_d085_s46_h60": {
+  "dx": 0.85,
+  "half_spacing": 0.46,
+  "base_height": 0.6,
+  "inside_all": {
+   "n": 610,
+   "median": 0.0726194679737091,
+   "p90": 0.14375513792037964,
+   "max": 0.24286186695098877,
+   "min": 0.004745900630950928
+  },
+  "zone_to_zone": {
+   "n": 200,
+   "median": 0.07892623543739319,
+   "p90": 0.15307378768920898,
+   "max": 0.2363666296005249,
+   "min": 0.04056650400161743
+  },
+  "by_depth": {
+   "steps": 2400,
+   "runs_per_query": 6,
+   "bins": [
+    {
+     "label": "no arm inside",
+     "lo": -9.0,
+     "hi": 0.0,
+     "queries": 95,
+     "solved": 540,
+     "runs": 570
+    },
+    {
+     "label": "up to 7 cm inside",
+     "lo": 0.0,
+     "hi": 0.07,
+     "queries": 35,
+     "solved": 199,
+     "runs": 210
+    },
+    {
+     "label": "7 to 13 cm",
+     "lo": 0.07,
+     "hi": 0.13,
+     "queries": 90,
+     "solved": 451,
+     "runs": 540
+    },
+    {
+     "label": "13 to 25 cm",
+     "lo": 0.13,
+     "hi": 0.25,
+     "queries": 80,
+     "solved": 409,
+     "runs": 480
+    },
+    {
+     "label": "deeper than 25 cm",
+     "lo": 0.25,
+     "hi": 9.0,
+     "queries": 0,
+     "solved": 0,
+     "runs": 0
+    }
+   ]
+  }
+ },
+ "p_d100_s46_h60": {
+  "dx": 1.0,
+  "half_spacing": 0.46,
+  "base_height": 0.6,
+  "inside_all": {
+   "n": 602,
+   "median": 0.05921578407287598,
+   "p90": 0.08609581738710403,
+   "max": 0.1386115550994873,
+   "min": 0.023085594177246094
+  },
+  "zone_to_zone": {
+   "n": 200,
+   "median": 0.059883177280426025,
+   "p90": 0.08889231085777283,
+   "max": 0.12027859687805176,
+   "min": 0.040216922760009766
+  },
+  "by_depth": {
+   "steps": 2400,
+   "runs_per_query": 3,
+   "bins": [
+    {
+     "label": "no arm inside",
+     "lo": -9.0,
+     "hi": 0.0,
+     "queries": 99,
+     "solved": 291,
+     "runs": 297
+    },
+    {
+     "label": "up to 7 cm inside",
+     "lo": 0.0,
+     "hi": 0.07,
+     "queries": 86,
+     "solved": 254,
+     "runs": 258
+    },
+    {
+     "label": "7 to 13 cm",
+     "lo": 0.07,
+     "hi": 0.13,
+     "queries": 114,
+     "solved": 317,
+     "runs": 342
+    },
+    {
+     "label": "13 to 25 cm",
+     "lo": 0.13,
+     "hi": 0.25,
+     "queries": 1,
+     "solved": 3,
+     "runs": 3
+    },
+    {
+     "label": "deeper than 25 cm",
+     "lo": 0.25,
+     "hi": 9.0,
+     "queries": 0,
+     "solved": 0,
+     "runs": 0
+    }
+   ]
+  }
+ },
+ "p_d085_s20_h80": {
+  "dx": 0.85,
+  "half_spacing": 0.2,
+  "base_height": 0.8,
+  "inside_all": {
+   "n": 608,
+   "median": 0.07955574989318848,
+   "p90": 0.16052599251270294,
+   "max": 0.2776097059249878,
+   "min": 0.0036646127700805664
+  },
+  "zone_to_zone": {
+   "n": 200,
+   "median": 0.0813000500202179,
+   "p90": 0.1635139286518097,
+   "max": 0.26879143714904785,
+   "min": 0.040165722370147705
+  },
+  "by_depth": {
+   "steps": 2400,
+   "runs_per_query": 6,
+   "bins": [
+    {
+     "label": "no arm inside",
+     "lo": -9.0,
+     "hi": 0.0,
+     "queries": 93,
+     "solved": 530,
+     "runs": 558
+    },
+    {
+     "label": "up to 7 cm inside",
+     "lo": 0.0,
+     "hi": 0.07,
+     "queries": 21,
+     "solved": 115,
+     "runs": 126
+    },
+    {
+     "label": "7 to 13 cm",
+     "lo": 0.07,
+     "hi": 0.13,
+     "queries": 87,
+     "solved": 441,
+     "runs": 522
+    },
+    {
+     "label": "13 to 25 cm",
+     "lo": 0.13,
+     "hi": 0.25,
+     "queries": 92,
+     "solved": 447,
+     "runs": 552
+    },
+    {
+     "label": "deeper than 25 cm",
+     "lo": 0.25,
+     "hi": 9.0,
+     "queries": 7,
+     "solved": 31,
+     "runs": 42
+    }
+   ]
+  }
+ },
+ "p_d090_s20_h80": {
+  "dx": 0.9,
+  "half_spacing": 0.2,
+  "base_height": 0.8,
+  "inside_all": {
+   "n": 603,
+   "median": 0.07114368677139282,
+   "p90": 0.1337856501340866,
+   "max": 0.22989177703857422,
+   "min": 0.040046751499176025
+  },
+  "zone_to_zone": {
+   "n": 200,
+   "median": 0.07179611921310425,
+   "p90": 0.1356380581855774,
+   "max": 0.22989177703857422,
+   "min": 0.04117560386657715
+  },
+  "by_depth": {
+   "steps": 2400,
+   "runs_per_query": 6,
+   "bins": [
+    {
+     "label": "no arm inside",
+     "lo": -9.0,
+     "hi": 0.0,
+     "queries": 97,
+     "solved": 552,
+     "runs": 582
+    },
+    {
+     "label": "up to 7 cm inside",
+     "lo": 0.0,
+     "hi": 0.07,
+     "queries": 35,
+     "solved": 199,
+     "runs": 210
+    },
+    {
+     "label": "7 to 13 cm",
+     "lo": 0.07,
+     "hi": 0.13,
+     "queries": 105,
+     "solved": 548,
+     "runs": 630
+    },
+    {
+     "label": "13 to 25 cm",
+     "lo": 0.13,
+     "hi": 0.25,
+     "queries": 63,
+     "solved": 323,
+     "runs": 378
+    },
+    {
+     "label": "deeper than 25 cm",
+     "lo": 0.25,
+     "hi": 9.0,
+     "queries": 0,
+     "solved": 0,
+     "runs": 0
+    }
+   ]
+  }
+ },
+ "p_d095_s20_h80": {
+  "dx": 0.95,
+  "half_spacing": 0.2,
+  "base_height": 0.8,
+  "inside_all": {
+   "n": 605,
+   "median": 0.0627337098121643,
+   "p90": 0.107335664331913,
+   "max": 0.1760309338569641,
+   "min": 0.004283130168914795
+  },
+  "zone_to_zone": {
+   "n": 200,
+   "median": 0.06410998106002808,
+   "p90": 0.10915292799472809,
+   "max": 0.161321222782135,
+   "min": 0.040075838565826416
+  },
+  "by_depth": {
+   "steps": 2400,
+   "runs_per_query": 6,
+   "bins": [
+    {
+     "label": "no arm inside",
+     "lo": -9.0,
+     "hi": 0.0,
+     "queries": 97,
+     "solved": 563,
+     "runs": 582
+    },
+    {
+     "label": "up to 7 cm inside",
+     "lo": 0.0,
+     "hi": 0.07,
+     "queries": 58,
+     "solved": 335,
+     "runs": 348
+    },
+    {
+     "label": "7 to 13 cm",
+     "lo": 0.07,
+     "hi": 0.13,
+     "queries": 120,
+     "solved": 695,
+     "runs": 720
+    },
+    {
+     "label": "13 to 25 cm",
+     "lo": 0.13,
+     "hi": 0.25,
+     "queries": 25,
+     "solved": 136,
+     "runs": 150
+    },
+    {
+     "label": "deeper than 25 cm",
+     "lo": 0.25,
+     "hi": 9.0,
+     "queries": 0,
+     "solved": 0,
+     "runs": 0
+    }
+   ]
+  }
+ },
+ "p_d100_s20_h80": {
+  "dx": 1.0,
+  "half_spacing": 0.2,
+  "base_height": 0.8,
+  "inside_all": {
+   "n": 602,
+   "median": 0.05723154544830322,
+   "p90": 0.09578830748796463,
+   "max": 0.13984251022338867,
+   "min": 0.04019975662231445
+  },
+  "zone_to_zone": {
+   "n": 200,
+   "median": 0.05789387226104736,
+   "p90": 0.10030748695135117,
+   "max": 0.12707793712615967,
+   "min": 0.04048264026641846
+  },
+  "by_depth": {
+   "steps": 2400,
+   "runs_per_query": 9,
+   "bins": [
+    {
+     "label": "no arm inside",
+     "lo": -9.0,
+     "hi": 0.0,
+     "queries": 98,
+     "solved": 872,
+     "runs": 882
+    },
+    {
+     "label": "up to 7 cm inside",
+     "lo": 0.0,
+     "hi": 0.07,
+     "queries": 85,
+     "solved": 745,
+     "runs": 765
+    },
+    {
+     "label": "7 to 13 cm",
+     "lo": 0.07,
+     "hi": 0.13,
+     "queries": 115,
+     "solved": 984,
+     "runs": 1035
+    },
+    {
+     "label": "13 to 25 cm",
+     "lo": 0.13,
+     "hi": 0.25,
+     "queries": 2,
+     "solved": 17,
+     "runs": 18
+    },
+    {
+     "label": "deeper than 25 cm",
+     "lo": 0.25,
+     "hi": 9.0,
+     "queries": 0,
+     "solved": 0,
+     "runs": 0
+    }
+   ]
+  }
+ },
+ "p_d085_s30_h80": {
+  "dx": 0.85,
+  "half_spacing": 0.3,
+  "base_height": 0.8,
+  "inside_all": {
+   "n": 614,
+   "median": 0.08297327160835266,
+   "p90": 0.16571813821792603,
+   "max": 0.27231550216674805,
+   "min": 0.0015154480934143066
+  },
+  "zone_to_zone": {
+   "n": 200,
+   "median": 0.08332982659339905,
+   "p90": 0.16483145952224731,
+   "max": 0.2408921718597412,
+   "min": 0.040218472480773926
+  },
+  "by_depth": {
+   "steps": 2400,
+   "runs_per_query": 6,
+   "bins": [
+    {
+     "label": "no arm inside",
+     "lo": -9.0,
+     "hi": 0.0,
+     "queries": 88,
+     "solved": 510,
+     "runs": 528
+    },
+    {
+     "label": "up to 7 cm inside",
+     "lo": 0.0,
+     "hi": 0.07,
+     "queries": 23,
+     "solved": 118,
+     "runs": 138
+    },
+    {
+     "label": "7 to 13 cm",
+     "lo": 0.07,
+     "hi": 0.13,
+     "queries": 90,
+     "solved": 474,
+     "runs": 540
+    },
+    {
+     "label": "13 to 25 cm",
+     "lo": 0.13,
+     "hi": 0.25,
+     "queries": 95,
+     "solved": 492,
+     "runs": 570
+    },
+    {
+     "label": "deeper than 25 cm",
+     "lo": 0.25,
+     "hi": 9.0,
+     "queries": 4,
+     "solved": 21,
+     "runs": 24
+    }
+   ]
+  }
+ },
+ "p_d100_s30_h80": {
+  "dx": 1.0,
+  "half_spacing": 0.3,
+  "base_height": 0.8,
+  "inside_all": {
+   "n": 603,
+   "median": 0.05540812015533447,
+   "p90": 0.08912596106529236,
+   "max": 0.14049553871154785,
+   "min": 0.005209445953369141
+  },
+  "zone_to_zone": {
+   "n": 200,
+   "median": 0.05679202079772949,
+   "p90": 0.09345109760761261,
+   "max": 0.14049553871154785,
+   "min": 0.04009199142456055
+  },
+  "by_depth": {
+   "steps": 2400,
+   "runs_per_query": 6,
+   "bins": [
+    {
+     "label": "no arm inside",
+     "lo": -9.0,
+     "hi": 0.0,
+     "queries": 97,
+     "solved": 562,
+     "runs": 582
+    },
+    {
+     "label": "up to 7 cm inside",
+     "lo": 0.0,
+     "hi": 0.07,
+     "queries": 85,
+     "solved": 482,
+     "runs": 510
+    },
+    {
+     "label": "7 to 13 cm",
+     "lo": 0.07,
+     "hi": 0.13,
+     "queries": 114,
+     "solved": 626,
+     "runs": 684
+    },
+    {
+     "label": "13 to 25 cm",
+     "lo": 0.13,
+     "hi": 0.25,
+     "queries": 4,
+     "solved": 21,
+     "runs": 24
+    },
+    {
+     "label": "deeper than 25 cm",
+     "lo": 0.25,
+     "hi": 9.0,
+     "queries": 0,
+     "solved": 0,
+     "runs": 0
+    }
+   ]
+  }
+ },
+ "p_d100_s20_h100": {
+  "dx": 1.0,
+  "half_spacing": 0.2,
+  "base_height": 1.0,
+  "inside_all": {
+   "n": 601,
+   "median": 0.06104707717895508,
+   "p90": 0.09791743755340576,
+   "max": 0.1371159553527832,
+   "min": 2.9802322387695312e-05
+  },
+  "zone_to_zone": {
+   "n": 200,
+   "median": 0.06292283535003662,
+   "p90": 0.10074575990438461,
+   "max": 0.11748218536376953,
+   "min": 0.040015459060668945
+  },
+  "by_depth": {
+   "steps": 2400,
+   "runs_per_query": 6,
+   "bins": [
+    {
+     "label": "no arm inside",
+     "lo": -9.0,
+     "hi": 0.0,
+     "queries": 99,
+     "solved": 587,
+     "runs": 594
+    },
+    {
+     "label": "up to 7 cm inside",
+     "lo": 0.0,
+     "hi": 0.07,
+     "queries": 65,
+     "solved": 377,
+     "runs": 390
+    },
+    {
+     "label": "7 to 13 cm",
+     "lo": 0.07,
+     "hi": 0.13,
+     "queries": 135,
+     "solved": 778,
+     "runs": 810
+    },
+    {
+     "label": "13 to 25 cm",
+     "lo": 0.13,
+     "hi": 0.25,
+     "queries": 1,
+     "solved": 6,
+     "runs": 6
+    },
+    {
+     "label": "deeper than 25 cm",
+     "lo": 0.25,
+     "hi": 9.0,
+     "queries": 0,
+     "solved": 0,
+     "runs": 0
+    }
+   ]
+  }
+ }
+}

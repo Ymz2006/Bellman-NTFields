@@ -1,0 +1,770 @@
+{
+  "stage": "lbsarm-field",
+  "scene": {
+    "E_cells": 20.7,
+    "pitch": 0.04830917874396135,
+    "margin": 0.008454106280193236,
+    "offset": 0.0008454106280193236,
+    "dim": 12,
+    "lo": [
+      -0.5,
+      -0.5,
+      -0.5,
+      -0.5,
+      -0.5,
+      -0.5,
+      -0.5,
+      -0.5,
+      -0.5,
+      -0.5,
+      -0.5,
+      -0.5
+    ],
+    "hi": [
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5
+    ],
+    "contact_cells": 0.017499999999999998,
+    "variant": "arm_set",
+    "scene": {
+      "kind": "arm_set",
+      "model": "/workspace/Bellman-NTFields/results/registered_20261123T075317Z-6f684541/robot_model.npz",
+      "arms": 2,
+      "E": 20.7,
+      "cell_m": 0.28571428571428575,
+      "margin_m": 0.05,
+      "offset_m": 0.005,
+      "k_self": 5.0,
+      "inter_valid_m": 0.005,
+      "spheres": 106,
+      "self_pairs": 1242,
+      "inter_pairs": 2809,
+      "cuboids": 10,
+      "fit_error_m": 2.7755575615628914e-17
+    }
+  },
+  "seed": 87358,
+  "prepared": "/workspace/Bellman-NTFields/results/registered_20261123T075317Z-6f684541",
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "smoke": false,
+  "config": {
+    "seed": 87358,
+    "lift": "none",
+    "lift_gain": 1.0,
+    "lift_depth": 0.0,
+    "freq": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "epochs": 5000,
+    "start": 2000,
+    "weight": 0.0,
+    "ramp": 500,
+    "refresh": 100,
+    "traversals": 8192,
+    "batch": 8192,
+    "leaf": "min",
+    "leaf_cells": 1.0,
+    "loss": "l1",
+    "nodes": "both",
+    "sub_factor": 1.0,
+    "min_clear": 0.1,
+    "pair_max": 0.6,
+    "pair_cup": 0.0,
+    "pair_data": false,
+    "pool": 200000,
+    "budget_factor": 2.0,
+    "min_steps": 200,
+    "max_steps": 600,
+    "stall_window": 60,
+    "stall_drop_cells": 0.05,
+    "trim_hover": 0.25,
+    "traverse": "safe",
+    "safe_margin": 0.02,
+    "chunk": 524288,
+    "compile": true,
+    "max_rollbacks": 20,
+    "save_at": [
+      500,
+      1000,
+      1500,
+      2000,
+      2500,
+      3000,
+      3500,
+      4000,
+      4500,
+      5000
+    ],
+    "validate_at": [
+      500,
+      1000,
+      1500,
+      2000,
+      2500,
+      3000,
+      3500,
+      4000,
+      4500,
+      5000
+    ],
+    "bell": 0.0,
+    "bell_arg": 0.0,
+    "bell_r": 0.03202898550724638,
+    "bell_k": 16,
+    "bell_cone": 6,
+    "bell_long": 8.0,
+    "bell_n": 512,
+    "bell_goal": false,
+    "td_free": true
+  },
+  "planner": {
+    "sample_num": 50,
+    "horizon": 5,
+    "step": 0.0029710144927536227,
+    "temperature": 252.4390243902439,
+    "tol": 0.0019806763285024156,
+    "steps": 600
+  },
+  "args": {
+    "prepared": "/workspace/Bellman-NTFields/results/registered_20261123T075317Z-6f684541",
+    "seed": 87358,
+    "out": "/workspace/Bellman-NTFields/results/registered_20261123T075650Z-b8d04579",
+    "lift": "none",
+    "lift_gain": 1.0,
+    "freq": [
+      "1"
+    ],
+    "epochs": 5000,
+    "start": 2000,
+    "weight": 0.0,
+    "ramp": 500,
+    "refresh": 100,
+    "traversals": 8192,
+    "batch": 8192,
+    "leaf": "min",
+    "leaf_cells": 1.0,
+    "loss": "l1",
+    "nodes": "both",
+    "sub_factor": 1.0,
+    "min_clear": 0.1,
+    "pair_max": 0.6,
+    "pair_cup": 0.0,
+    "pair_data": false,
+    "pool": 200000,
+    "budget_factor": 2.0,
+    "min_steps": 200,
+    "max_steps": 600,
+    "stall_window": 60,
+    "stall_drop_cells": 0.05,
+    "trim_hover": 0.25,
+    "traverse": "safe",
+    "safe_margin": 0.02,
+    "chunk": 524288,
+    "no_compile": false,
+    "max_rollbacks": 20,
+    "bell": 0.0,
+    "bell_r_cells": 0.663,
+    "bell_k": 16,
+    "bell_cone": 6,
+    "bell_long": 8.0,
+    "bell_n": 512,
+    "bell_goal": false,
+    "td_all": false,
+    "validate_every": 500,
+    "plan_steps": 600,
+    "plan_samples": 50,
+    "plan_horizon": 5,
+    "smoke": false
+  },
+  "arm": {
+    "L": false,
+    "B": false,
+    "S": false
+  },
+  "lift": {
+    "gain": 1.0,
+    "G_max_cells": 2.1430325174898925,
+    "h_range": 0.0,
+    "input_dims": 12
+  },
+  "train_seconds": 2564.080926179886,
+  "final_loss": 0.002781790739390999,
+  "rollbacks": 1,
+  "refresh": [],
+  "validate": [
+    {
+      "success": 13,
+      "runs": 300,
+      "arrived_contact": 147,
+      "not_arrived": 142,
+      "not_arrived_solved": 2,
+      "contact_self": 36,
+      "contact_obstacle": 251,
+      "by_task": {
+        "free_to_free": 4,
+        "free_to_compartment": 1,
+        "compartment_to_free": 1,
+        "compartment_to_compartment": 0,
+        "same_compartment": 0,
+        "anywhere": 7
+      },
+      "line_feasible": [
+        7,
+        59
+      ],
+      "detour": [
+        6,
+        241
+      ],
+      "by_ends_in_cupboard": {
+        "0": [
+          11,
+          86
+        ],
+        "1": [
+          2,
+          112
+        ],
+        "2": [
+          0,
+          102
+        ]
+      },
+      "epoch": 500,
+      "train_seconds": 168.64796662330627
+    },
+    {
+      "success": 12,
+      "runs": 300,
+      "arrived_contact": 133,
+      "not_arrived": 160,
+      "not_arrived_solved": 5,
+      "contact_self": 25,
+      "contact_obstacle": 263,
+      "by_task": {
+        "free_to_free": 4,
+        "free_to_compartment": 0,
+        "compartment_to_free": 0,
+        "compartment_to_compartment": 0,
+        "same_compartment": 1,
+        "anywhere": 7
+      },
+      "line_feasible": [
+        8,
+        59
+      ],
+      "detour": [
+        4,
+        241
+      ],
+      "by_ends_in_cupboard": {
+        "0": [
+          10,
+          86
+        ],
+        "1": [
+          1,
+          112
+        ],
+        "2": [
+          1,
+          102
+        ]
+      },
+      "epoch": 1000,
+      "train_seconds": 333.44598388671875
+    },
+    {
+      "success": 14,
+      "runs": 300,
+      "arrived_contact": 144,
+      "not_arrived": 145,
+      "not_arrived_solved": 3,
+      "contact_self": 26,
+      "contact_obstacle": 260,
+      "by_task": {
+        "free_to_free": 5,
+        "free_to_compartment": 0,
+        "compartment_to_free": 0,
+        "compartment_to_compartment": 0,
+        "same_compartment": 1,
+        "anywhere": 8
+      },
+      "line_feasible": [
+        12,
+        59
+      ],
+      "detour": [
+        2,
+        241
+      ],
+      "by_ends_in_cupboard": {
+        "0": [
+          13,
+          86
+        ],
+        "1": [
+          0,
+          112
+        ],
+        "2": [
+          1,
+          102
+        ]
+      },
+      "epoch": 1500,
+      "train_seconds": 498.15346455574036
+    },
+    {
+      "success": 15,
+      "runs": 300,
+      "arrived_contact": 152,
+      "not_arrived": 136,
+      "not_arrived_solved": 3,
+      "contact_self": 32,
+      "contact_obstacle": 253,
+      "by_task": {
+        "free_to_free": 5,
+        "free_to_compartment": 2,
+        "compartment_to_free": 0,
+        "compartment_to_compartment": 0,
+        "same_compartment": 0,
+        "anywhere": 8
+      },
+      "line_feasible": [
+        10,
+        59
+      ],
+      "detour": [
+        5,
+        241
+      ],
+      "by_ends_in_cupboard": {
+        "0": [
+          13,
+          86
+        ],
+        "1": [
+          2,
+          112
+        ],
+        "2": [
+          0,
+          102
+        ]
+      },
+      "epoch": 2000,
+      "train_seconds": 657.5869483947754
+    },
+    {
+      "success": 20,
+      "runs": 300,
+      "arrived_contact": 147,
+      "not_arrived": 135,
+      "not_arrived_solved": 2,
+      "contact_self": 24,
+      "contact_obstacle": 256,
+      "by_task": {
+        "free_to_free": 10,
+        "free_to_compartment": 0,
+        "compartment_to_free": 0,
+        "compartment_to_compartment": 0,
+        "same_compartment": 0,
+        "anywhere": 10
+      },
+      "line_feasible": [
+        15,
+        59
+      ],
+      "detour": [
+        5,
+        241
+      ],
+      "by_ends_in_cupboard": {
+        "0": [
+          20,
+          86
+        ],
+        "1": [
+          0,
+          112
+        ],
+        "2": [
+          0,
+          102
+        ]
+      },
+      "epoch": 2500,
+      "train_seconds": 819.821916103363
+    },
+    {
+      "success": 16,
+      "runs": 300,
+      "arrived_contact": 153,
+      "not_arrived": 136,
+      "not_arrived_solved": 5,
+      "contact_self": 27,
+      "contact_obstacle": 257,
+      "by_task": {
+        "free_to_free": 8,
+        "free_to_compartment": 0,
+        "compartment_to_free": 1,
+        "compartment_to_compartment": 0,
+        "same_compartment": 1,
+        "anywhere": 6
+      },
+      "line_feasible": [
+        12,
+        59
+      ],
+      "detour": [
+        4,
+        241
+      ],
+      "by_ends_in_cupboard": {
+        "0": [
+          14,
+          86
+        ],
+        "1": [
+          1,
+          112
+        ],
+        "2": [
+          1,
+          102
+        ]
+      },
+      "epoch": 3000,
+      "train_seconds": 982.8081817626953
+    },
+    {
+      "success": 12,
+      "runs": 300,
+      "arrived_contact": 154,
+      "not_arrived": 135,
+      "not_arrived_solved": 1,
+      "contact_self": 24,
+      "contact_obstacle": 264,
+      "by_task": {
+        "free_to_free": 6,
+        "free_to_compartment": 0,
+        "compartment_to_free": 0,
+        "compartment_to_compartment": 0,
+        "same_compartment": 0,
+        "anywhere": 6
+      },
+      "line_feasible": [
+        9,
+        59
+      ],
+      "detour": [
+        3,
+        241
+      ],
+      "by_ends_in_cupboard": {
+        "0": [
+          12,
+          86
+        ],
+        "1": [
+          0,
+          112
+        ],
+        "2": [
+          0,
+          102
+        ]
+      },
+      "epoch": 3500,
+      "train_seconds": 1145.8232779502869
+    },
+    {
+      "success": 14,
+      "runs": 300,
+      "arrived_contact": 162,
+      "not_arrived": 127,
+      "not_arrived_solved": 3,
+      "contact_self": 33,
+      "contact_obstacle": 253,
+      "by_task": {
+        "free_to_free": 5,
+        "free_to_compartment": 0,
+        "compartment_to_free": 0,
+        "compartment_to_compartment": 0,
+        "same_compartment": 1,
+        "anywhere": 8
+      },
+      "line_feasible": [
+        11,
+        59
+      ],
+      "detour": [
+        3,
+        241
+      ],
+      "by_ends_in_cupboard": {
+        "0": [
+          12,
+          86
+        ],
+        "1": [
+          1,
+          112
+        ],
+        "2": [
+          1,
+          102
+        ]
+      },
+      "epoch": 4000,
+      "train_seconds": 1301.52286362648
+    },
+    {
+      "success": 14,
+      "runs": 300,
+      "arrived_contact": 150,
+      "not_arrived": 138,
+      "not_arrived_solved": 2,
+      "contact_self": 29,
+      "contact_obstacle": 257,
+      "by_task": {
+        "free_to_free": 8,
+        "free_to_compartment": 0,
+        "compartment_to_free": 0,
+        "compartment_to_compartment": 0,
+        "same_compartment": 0,
+        "anywhere": 6
+      },
+      "line_feasible": [
+        12,
+        59
+      ],
+      "detour": [
+        2,
+        241
+      ],
+      "by_ends_in_cupboard": {
+        "0": [
+          14,
+          86
+        ],
+        "1": [
+          0,
+          112
+        ],
+        "2": [
+          0,
+          102
+        ]
+      },
+      "epoch": 4500,
+      "train_seconds": 1450.9733633995056
+    },
+    {
+      "success": 14,
+      "runs": 300,
+      "arrived_contact": 162,
+      "not_arrived": 126,
+      "not_arrived_solved": 2,
+      "contact_self": 26,
+      "contact_obstacle": 260,
+      "by_task": {
+        "free_to_free": 5,
+        "free_to_compartment": 0,
+        "compartment_to_free": 1,
+        "compartment_to_compartment": 0,
+        "same_compartment": 0,
+        "anywhere": 8
+      },
+      "line_feasible": [
+        10,
+        59
+      ],
+      "detour": [
+        4,
+        241
+      ],
+      "by_ends_in_cupboard": {
+        "0": [
+          13,
+          86
+        ],
+        "1": [
+          1,
+          112
+        ],
+        "2": [
+          0,
+          102
+        ]
+      },
+      "epoch": 5000,
+      "train_seconds": 1607.368950843811
+    }
+  ],
+  "train_only_seconds": 1607.3933064937592,
+  "evaluator_max_abs_error": 6.556510925292969e-07,
+  "field": {
+    "T_test_queries_median": 0.522200882434845,
+    "T_random_pairs_median": 0.5811509490013123,
+    "distance_test_queries_median": 0.4637119472026825
+  },
+  "plan": {
+    "0": {
+      "success": 14,
+      "runs": 300,
+      "arrived_contact": 162,
+      "not_arrived": 126,
+      "not_arrived_solved": 2,
+      "contact_self": 26,
+      "contact_obstacle": 260,
+      "by_task": {
+        "free_to_free": 5,
+        "free_to_compartment": 0,
+        "compartment_to_free": 1,
+        "compartment_to_compartment": 0,
+        "same_compartment": 0,
+        "anywhere": 8
+      },
+      "line_feasible": [
+        10,
+        59
+      ],
+      "detour": [
+        4,
+        241
+      ],
+      "by_ends_in_cupboard": {
+        "0": [
+          13,
+          86
+        ],
+        "1": [
+          1,
+          112
+        ],
+        "2": [
+          0,
+          102
+        ]
+      }
+    },
+    "1": {
+      "success": 13,
+      "runs": 300,
+      "arrived_contact": 164,
+      "not_arrived": 124,
+      "not_arrived_solved": 1,
+      "contact_self": 25,
+      "contact_obstacle": 262,
+      "by_task": {
+        "free_to_free": 5,
+        "free_to_compartment": 0,
+        "compartment_to_free": 1,
+        "compartment_to_compartment": 0,
+        "same_compartment": 2,
+        "anywhere": 5
+      },
+      "line_feasible": [
+        11,
+        59
+      ],
+      "detour": [
+        2,
+        241
+      ],
+      "by_ends_in_cupboard": {
+        "0": [
+          10,
+          86
+        ],
+        "1": [
+          1,
+          112
+        ],
+        "2": [
+          2,
+          102
+        ]
+      }
+    },
+    "2": {
+      "success": 15,
+      "runs": 300,
+      "arrived_contact": 162,
+      "not_arrived": 125,
+      "not_arrived_solved": 2,
+      "contact_self": 29,
+      "contact_obstacle": 256,
+      "by_task": {
+        "free_to_free": 5,
+        "free_to_compartment": 0,
+        "compartment_to_free": 1,
+        "compartment_to_compartment": 0,
+        "same_compartment": 2,
+        "anywhere": 7
+      },
+      "line_feasible": [
+        11,
+        59
+      ],
+      "detour": [
+        4,
+        241
+      ],
+      "by_ends_in_cupboard": {
+        "0": [
+          12,
+          86
+        ],
+        "1": [
+          1,
+          112
+        ],
+        "2": [
+          2,
+          102
+        ]
+      }
+    }
+  },
+  "success": [
+    42,
+    900
+  ],
+  "success_by_task": {
+    "free_to_free": 15,
+    "free_to_compartment": 0,
+    "compartment_to_free": 3,
+    "compartment_to_compartment": 0,
+    "same_compartment": 4,
+    "anywhere": 20
+  },
+  "detour": [
+    10,
+    723
+  ],
+  "elapsed_seconds": 2813.189143896103
+}

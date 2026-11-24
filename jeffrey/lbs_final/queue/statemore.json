@@ -1,0 +1,46 @@
+{
+ "done": {
+  "prep:Merom3d": "20261124T073827Z-49a7df67",
+  "prep:Ihlen3d": "20261124T073602Z-06150f50",
+  "prep:Hiteman3d": "20261124T074348Z-18b7b715",
+  "prep:Wiconisco3d": "20261124T074438Z-67eac43c"
+ },
+ "failed": {
+  "prep:Wainscott3d": "exit 0"
+ },
+ "info": {
+  "Wainscott3d": {},
+  "Merom3d": {
+   "predicted": 0.5953369424693435,
+   "detour_mix": [
+    0.506,
+    0.298,
+    0.196
+   ]
+  },
+  "Ihlen3d": {
+   "predicted": 0.46169562287019195,
+   "detour_mix": [
+    0.396,
+    0.324,
+    0.28
+   ]
+  },
+  "Hiteman3d": {
+   "predicted": 0.709350608944118,
+   "detour_mix": [
+    0.618,
+    0.294,
+    0.088
+   ]
+  },
+  "Wiconisco3d": {
+   "predicted": 0.7366643193515241,
+   "detour_mix": [
+    0.774,
+    0.178,
+    0.048
+   ]
+  }
+ }
+}

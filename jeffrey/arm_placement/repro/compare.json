@@ -1,0 +1,297 @@
+{
+ "original (4090, original queries)": {
+  "euclid": {
+   "euclid": [
+    153,
+    null
+   ]
+  },
+  "lift": {
+   "forward 600": [
+    474,
+    5
+   ],
+   "reverse 300": [
+    420,
+    0
+   ],
+   "reverse 600": [
+    483,
+    4
+   ],
+   "bidir 300": [
+    582,
+    13
+   ],
+   "bidir 600": [
+    638,
+    20
+   ],
+   "bidir 1200": [
+    698,
+    42
+   ],
+   "bidir 2400": [
+    733,
+    59
+   ]
+  },
+  "ntrl": {
+   "forward 600": [
+    42,
+    0
+   ],
+   "reverse 300": [
+    44,
+    0
+   ],
+   "reverse 600": [
+    44,
+    0
+   ],
+   "bidir 300": [
+    45,
+    0
+   ],
+   "bidir 600": [
+    45,
+    0
+   ],
+   "bidir 1200": [
+    45,
+    0
+   ],
+   "bidir 2400": [
+    45,
+    0
+   ]
+  },
+  "lift2": {},
+  "ntrl2": {
+   "forward 600": [
+    37,
+    0
+   ]
+  }
+ },
+ "original checkpoints re-planned here": {
+  "lift": {
+   "forward 600": [
+    475,
+    6
+   ],
+   "reverse 300": [
+    419,
+    0
+   ],
+   "reverse 600": [
+    490,
+    5
+   ],
+   "bidir 300": [
+    589,
+    18
+   ],
+   "bidir 600": [
+    650,
+    23
+   ],
+   "bidir 1200": [
+    704,
+    43
+   ],
+   "bidir 2400": [
+    742,
+    60
+   ]
+  },
+  "ntrl": {
+   "forward 600": [
+    42,
+    0
+   ],
+   "reverse 300": [
+    50,
+    0
+   ],
+   "reverse 600": [
+    48,
+    0
+   ],
+   "bidir 300": [
+    47,
+    0
+   ],
+   "bidir 600": [
+    47,
+    0
+   ],
+   "bidir 1200": [
+    47,
+    0
+   ],
+   "bidir 2400": [
+    47,
+    0
+   ]
+  }
+ },
+ "retrained here, original data + queries": {
+  "euclid": {
+   "euclid": [
+    151,
+    null
+   ]
+  },
+  "lift": {
+   "forward 600": [
+    464,
+    2
+   ],
+   "reverse 300": [
+    454,
+    0
+   ],
+   "reverse 600": [
+    504,
+    2
+   ],
+   "bidir 300": [
+    602,
+    14
+   ],
+   "bidir 600": [
+    671,
+    27
+   ],
+   "bidir 1200": [
+    704,
+    35
+   ],
+   "bidir 2400": [
+    741,
+    53
+   ]
+  },
+  "ntrl": {
+   "forward 600": [
+    40,
+    0
+   ],
+   "reverse 300": [
+    50,
+    0
+   ],
+   "reverse 600": [
+    43,
+    0
+   ],
+   "bidir 300": [
+    41,
+    0
+   ],
+   "bidir 600": [
+    39,
+    0
+   ],
+   "bidir 1200": [
+    39,
+    0
+   ],
+   "bidir 2400": [
+    39,
+    0
+   ]
+  },
+  "lift2": {},
+  "ntrl2": {}
+ },
+ "re-created from scratch here (new suite)": {
+  "euclid": {
+   "euclid": [
+    210,
+    null
+   ]
+  },
+  "lift": {
+   "forward 600": [
+    527,
+    0
+   ],
+   "reverse 300": [
+    410,
+    0
+   ],
+   "reverse 600": [
+    450,
+    2
+   ],
+   "bidir 300": [
+    557,
+    10
+   ],
+   "bidir 600": [
+    627,
+    27
+   ],
+   "bidir 1200": [
+    674,
+    38
+   ],
+   "bidir 2400": [
+    712,
+    62
+   ]
+  },
+  "ntrl": {
+   "forward 600": [
+    54,
+    0
+   ],
+   "reverse 300": [
+    74,
+    0
+   ],
+   "reverse 600": [
+    65,
+    0
+   ],
+   "bidir 300": [
+    60,
+    0
+   ],
+   "bidir 600": [
+    61,
+    0
+   ],
+   "bidir 1200": [
+    61,
+    0
+   ],
+   "bidir 2400": [
+    61,
+    0
+   ]
+  },
+  "lift2": {
+   "forward 600": [
+    518,
+    5
+   ],
+   "bidir 1200": [
+    674,
+    35
+   ],
+   "bidir 2400": [
+    691,
+    43
+   ]
+  },
+  "ntrl2": {
+   "forward 600": [
+    27,
+    0
+   ]
+  }
+ }
+}

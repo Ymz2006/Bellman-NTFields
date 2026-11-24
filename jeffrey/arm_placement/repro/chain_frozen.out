@@ -1,0 +1,21 @@
+[15:50:01] euclid: start on GPU 1
+[15:50:01] lift_s87358: start on GPU 1
+[15:50:25] euclid: rc 0, run 20261123T205002Z-389ddb9c, 0.4 min
+[15:50:25] ntrl_s87358: start on GPU 1
+[16:05:05] ntrl_s87358: rc 0, run 20261123T205027Z-2401133c, 14.7 min
+[16:15:09] lift_s87358: rc 0, run 20261123T205002Z-e96c3257, 25.1 min
+[16:15:09] plan_lift_s87358: start on GPU 1
+[16:17:54] plan_lift_s87358: rc 0, run 20261123T211509Z-daebfa31, 2.8 min
+[16:17:54] budget_lift_s87358: start on GPU 1
+[16:22:00] budget_lift_s87358: rc 0, run 20261123T211755Z-c33852e1, 4.1 min
+[16:22:00] picks_lift: start on GPU 1
+[16:24:38] picks_lift: rc 0, run 20261123T212201Z-a4632d02, 2.6 min
+[16:24:38] plan_ntrl_s87358: start on GPU 1
+[16:25:42] plan_ntrl_s87358: rc 0, run 20261123T212439Z-36f8b67e, 1.1 min
+[16:25:42] budget_ntrl_s87358: start on GPU 1
+[16:27:41] budget_ntrl_s87358: rc 0, run 20261123T212543Z-fda053f2, 2.0 min
+[16:27:41] picks_ntrl: start on GPU 1
+[16:28:58] picks_ntrl: rc 0, run 20261123T212742Z-c1dc078c, 1.3 min
+[16:28:58] demo: start on GPU 1
+[16:29:23] demo: rc 2, run None, 0.4 min
+[16:29:23] chain done

@@ -1,0 +1,136 @@
+{
+ "E_cells": 20.7,
+ "scene": {
+  "kind": "arm_set",
+  "model": "/workspace/Bellman-NTFields/results/registered_20261123T075317Z-6f684541/robot_model.npz",
+  "arms": 2,
+  "E": 20.7,
+  "cell_m": 0.28571428571428575,
+  "margin_m": 0.05,
+  "offset_m": 0.005,
+  "k_self": 5.0,
+  "inter_valid_m": 0.005,
+  "spheres": 106,
+  "self_pairs": 1242,
+  "inter_pairs": 2809,
+  "cuboids": 10,
+  "fit_error_m": 2.7755575615628914e-17
+ },
+ "describe": {
+  "E_cells": 20.7,
+  "pitch": 0.04830917874396135,
+  "margin": 0.008454106280193236,
+  "offset": 0.0008454106280193236,
+  "dim": 12,
+  "lo": [
+   -0.5,
+   -0.5,
+   -0.5,
+   -0.5,
+   -0.5,
+   -0.5,
+   -0.5,
+   -0.5,
+   -0.5,
+   -0.5,
+   -0.5,
+   -0.5
+  ],
+  "hi": [
+   0.5,
+   0.5,
+   0.5,
+   0.5,
+   0.5,
+   0.5,
+   0.5,
+   0.5,
+   0.5,
+   0.5,
+   0.5,
+   0.5
+  ],
+  "contact_cells": 0.017499999999999998,
+  "variant": "arm_set",
+  "scene": {
+   "kind": "arm_set",
+   "model": "/workspace/Bellman-NTFields/results/registered_20261123T075317Z-6f684541/robot_model.npz",
+   "arms": 2,
+   "E": 20.7,
+   "cell_m": 0.28571428571428575,
+   "margin_m": 0.05,
+   "offset_m": 0.005,
+   "k_self": 5.0,
+   "inter_valid_m": 0.005,
+   "spheres": 106,
+   "self_pairs": 1242,
+   "inter_pairs": 2809,
+   "cuboids": 10,
+   "fit_error_m": 2.7755575615628914e-17
+  }
+ },
+ "measure": {
+  "n": 200000,
+  "norm_quantiles": [
+   7.611632347106934,
+   10.202922821044922,
+   20.725128173828125,
+   29.567764282226562,
+   37.04475784301758
+  ],
+  "norm_mean": 21.407209396362305,
+  "per_joint_rms": [
+   8.817668914794922,
+   10.38580322265625,
+   5.8793158531188965,
+   5.449085712432861,
+   6.824556827545166,
+   2.087636947631836,
+   8.791038513183594,
+   10.470165252685547,
+   5.87879753112793,
+   5.426456928253174,
+   6.857600212097168,
+   2.111790895462036
+  ],
+  "per_joint_abs_median": [
+   0.0,
+   2.2470474050351186e-06,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   2.4343012228200678e-06,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ]
+ },
+ "check": {
+  "n": 200000,
+  "valid_agree": 200000,
+  "valid": 30931,
+  "obs": 1.948154027542337e-07,
+  "self": 2.273903424998558e-07,
+  "inter": 2.2060977022952954e-07,
+  "ee": 2.517707635707467e-07,
+  "fit_error_m": 2.7755575615628914e-17,
+  "fit_error_ee_m": 0.0
+ },
+ "occupancy": {
+  "in_box_of_uniform": 0.08523619174957275,
+  "valid_of_in_box": 0.10039956867694855,
+  "contact_rule_equals_scorer": 1.0,
+  "full_speed_of_valid": 0.47983619570732117
+ },
+ "tests": "/workspace/Bellman-NTFields/results/registered_20261123T065126Z-29d7c61a/tests",
+ "tests_scene": "p_d055_s46_h60",
+ "scene_file": "/home/jeffrey/bellman-ntfield/jeffrey/arm_placement/scenes/p_d055_s46_h60.yml",
+ "arms": [
+  "left",
+  "right"
+ ],
+ "score_step_rad": 0.001
+}

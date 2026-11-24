@@ -1,0 +1,1022 @@
+[
+ {
+  "name": "bench:maze22_1:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze22_1",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze22_1"
+  ]
+ },
+ {
+  "name": "bench:maze22_2:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze22_2",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze22_2"
+  ]
+ },
+ {
+  "name": "bench:maze22_3:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze22_3",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze22_3"
+  ]
+ },
+ {
+  "name": "bench:maze22_1:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze22_1",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze22_1"
+  ]
+ },
+ {
+  "name": "bench:maze22_2:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze22_2",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze22_2"
+  ]
+ },
+ {
+  "name": "bench:maze22_3:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze22_3",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze22_3"
+  ]
+ },
+ {
+  "name": "bench:maze18_1:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze18_1",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze18_1"
+  ]
+ },
+ {
+  "name": "bench:maze18_2:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze18_2",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze18_2"
+  ]
+ },
+ {
+  "name": "bench:maze18_3:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze18_3",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze18_3"
+  ]
+ },
+ {
+  "name": "bench:maze18_1:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze18_1",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze18_1"
+  ]
+ },
+ {
+  "name": "bench:maze18_2:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze18_2",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze18_2"
+  ]
+ },
+ {
+  "name": "bench:maze18_3:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze18_3",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze18_3"
+  ]
+ },
+ {
+  "name": "bench:gap8_1:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap8_1",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap8_1"
+  ]
+ },
+ {
+  "name": "bench:gap8_2:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap8_2",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap8_2"
+  ]
+ },
+ {
+  "name": "bench:gap8_3:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap8_3",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap8_3"
+  ]
+ },
+ {
+  "name": "bench:gap8_1:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap8_1",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap8_1"
+  ]
+ },
+ {
+  "name": "bench:gap8_2:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap8_2",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap8_2"
+  ]
+ },
+ {
+  "name": "bench:gap8_3:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap8_3",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap8_3"
+  ]
+ },
+ {
+  "name": "bench:maze14_1:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze14_1",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze14_1"
+  ]
+ },
+ {
+  "name": "bench:maze14_2:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze14_2",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze14_2"
+  ]
+ },
+ {
+  "name": "bench:maze14_3:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze14_3",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze14_3"
+  ]
+ },
+ {
+  "name": "bench:maze14_1:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze14_1",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze14_1"
+  ]
+ },
+ {
+  "name": "bench:maze14_2:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze14_2",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze14_2"
+  ]
+ },
+ {
+  "name": "bench:maze14_3:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze14_3",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze14_3"
+  ]
+ },
+ {
+  "name": "bench:gap4_1:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap4_1",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap4_1"
+  ]
+ },
+ {
+  "name": "bench:gap4_2:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap4_2",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap4_2"
+  ]
+ },
+ {
+  "name": "bench:gap4_3:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap4_3",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap4_3"
+  ]
+ },
+ {
+  "name": "bench:gap4_1:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap4_1",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap4_1"
+  ]
+ },
+ {
+  "name": "bench:gap4_2:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap4_2",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap4_2"
+  ]
+ },
+ {
+  "name": "bench:gap4_3:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap4_3",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap4_3"
+  ]
+ },
+ {
+  "name": "bench:gap2_1:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap2_1",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap2_1"
+  ]
+ },
+ {
+  "name": "bench:gap2_2:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap2_2",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap2_2"
+  ]
+ },
+ {
+  "name": "bench:gap2_3:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap2_3",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap2_3"
+  ]
+ },
+ {
+  "name": "bench:gap2_1:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap2_1",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap2_1"
+  ]
+ },
+ {
+  "name": "bench:gap2_2:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap2_2",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap2_2"
+  ]
+ },
+ {
+  "name": "bench:gap2_3:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap2_3",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap2_3"
+  ]
+ },
+ {
+  "name": "bench:maze10_1:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze10_1",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze10_1"
+  ]
+ },
+ {
+  "name": "bench:maze10_2:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze10_2",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze10_2"
+  ]
+ },
+ {
+  "name": "bench:maze10_3:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze10_3",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze10_3"
+  ]
+ },
+ {
+  "name": "bench:maze10_1:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze10_1",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze10_1"
+  ]
+ },
+ {
+  "name": "bench:maze10_2:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze10_2",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze10_2"
+  ]
+ },
+ {
+  "name": "bench:maze10_3:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:maze10_3",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:maze10_3"
+  ]
+ },
+ {
+  "name": "bench:gap1_1:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap1_1",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap1_1"
+  ]
+ },
+ {
+  "name": "bench:gap1_2:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap1_2",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap1_2"
+  ]
+ },
+ {
+  "name": "bench:gap1_3:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap1_3",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap1_3"
+  ]
+ },
+ {
+  "name": "bench:gap1_1:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap1_1",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap1_1"
+  ]
+ },
+ {
+  "name": "bench:gap1_2:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap1_2",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap1_2"
+  ]
+ },
+ {
+  "name": "bench:gap1_3:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:gap1_3",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:gap1_3"
+  ]
+ },
+ {
+  "name": "bench:Allensville3d:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Allensville3d",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:Allensville3d"
+  ]
+ },
+ {
+  "name": "bench:Mifflinburg3d:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Mifflinburg3d",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:Mifflinburg3d"
+  ]
+ },
+ {
+  "name": "bench:Noxapater3d:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Noxapater3d",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:Noxapater3d"
+  ]
+ },
+ {
+  "name": "bench:Markleeville3d:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Markleeville3d",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:Markleeville3d"
+  ]
+ },
+ {
+  "name": "bench:Lakeville3d:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Lakeville3d",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:Lakeville3d"
+  ]
+ },
+ {
+  "name": "bench:Collierville3d:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Collierville3d",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:Collierville3d"
+  ]
+ },
+ {
+  "name": "bench:Benevolence3d:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Benevolence3d",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:Benevolence3d"
+  ]
+ },
+ {
+  "name": "bench:Onaga3d:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Onaga3d",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:Onaga3d"
+  ]
+ },
+ {
+  "name": "bench:Coffeen3d:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Coffeen3d",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:Coffeen3d"
+  ]
+ },
+ {
+  "name": "bench:Forkland3d:rrtc30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Forkland3d",
+   "--methods",
+   "rrtc",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:Forkland3d"
+  ]
+ },
+ {
+  "name": "bench:Allensville3d:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Allensville3d",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:Allensville3d"
+  ]
+ },
+ {
+  "name": "bench:Mifflinburg3d:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Mifflinburg3d",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:Mifflinburg3d"
+  ]
+ },
+ {
+  "name": "bench:Noxapater3d:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Noxapater3d",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:Noxapater3d"
+  ]
+ },
+ {
+  "name": "bench:Markleeville3d:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Markleeville3d",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:Markleeville3d"
+  ]
+ },
+ {
+  "name": "bench:Lakeville3d:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Lakeville3d",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:Lakeville3d"
+  ]
+ },
+ {
+  "name": "bench:Collierville3d:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Collierville3d",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:Collierville3d"
+  ]
+ },
+ {
+  "name": "bench:Benevolence3d:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Benevolence3d",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:Benevolence3d"
+  ]
+ },
+ {
+  "name": "bench:Onaga3d:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Onaga3d",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:Onaga3d"
+  ]
+ },
+ {
+  "name": "bench:Coffeen3d:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Coffeen3d",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:Coffeen3d"
+  ]
+ },
+ {
+  "name": "bench:Forkland3d:lazyprm30",
+  "stage": "bench",
+  "args": [
+   "--prepared",
+   "@prep:Forkland3d",
+   "--methods",
+   "lazyprm",
+   "--time-limit",
+   "30"
+  ],
+  "deps": [
+   "prep:Forkland3d"
+  ]
+ }
+]

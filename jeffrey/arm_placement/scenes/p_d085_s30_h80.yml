@@ -1,0 +1,80 @@
+# p_d085_s30_h80: two UR5e + Robotiq 2F-140 in front of the measured cupboard; front face 0.85 m from the bases' axis, bases at y = +-0.3 m,
+# 0.8 m above the floor. Written by jeffrey/arm_placement/place.py; do not edit by hand.
+
+robots:
+- name: left
+  base: [0.0, 0.3, 0.0, 1.0, 0.0, 0.0, 0.0]
+- name: right
+  base: [0.0, -0.3, 0.0, 1.0, 0.0, 0.0, 0.0]
+cuboids:
+- name: floor
+  pose: [0.5, 0.0, -0.825, 1.0, 0.0, 0.0, 0.0]
+  dims: [4.0, 4.0, 0.05]
+  color: [120, 120, 115]
+- name: pedestal_left
+  pose: [0.0, 0.3, -0.42, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.25, 0.25, 0.76]
+  color: [90, 96, 104]
+- name: pedestal_right
+  pose: [0.0, -0.3, -0.42, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.25, 0.25, 0.76]
+  color: [90, 96, 104]
+- name: shelf_bottom
+  pose: [1.13, 0.0, -0.76, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.56, 0.92, 0.08]
+  color: [150, 156, 166]
+- name: shelf_top
+  pose: [1.13, 0.0, 0.98, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.56, 0.92, 0.08]
+  color: [150, 156, 166]
+- name: shelf_back
+  pose: [1.395, 0.0, 0.11, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.03, 0.92, 1.66]
+  color: [150, 156, 166]
+- name: shelf_side_right
+  pose: [1.115, -0.445, 0.11, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.53, 0.03, 1.66]
+  color: [150, 156, 166]
+- name: shelf_side_left
+  pose: [1.115, 0.445, 0.11, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.53, 0.03, 1.66]
+  color: [150, 156, 166]
+- name: shelf_divider_1
+  pose: [1.115, 0.0, -0.171667, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.53, 0.86, 0.03]
+  color: [182, 188, 196]
+- name: shelf_divider_2
+  pose: [1.115, 0.0, 0.391667, 1.0, 0.0, 0.0, 0.0]
+  dims: [0.53, 0.86, 0.03]
+  color: [182, 188, 196]
+sampling:
+  x: [0.08, 1.41]
+  y: [-0.69, 0.69]
+  z: [-0.8, 1.02]
+compartments:
+- name: bottom
+  x: [0.89, 1.38]
+  y: [-0.43, 0.43]
+  z: [-0.72, -0.1867]
+- name: middle
+  x: [0.89, 1.38]
+  y: [-0.43, 0.43]
+  z: [-0.1567, 0.3767]
+- name: top
+  x: [0.89, 1.38]
+  y: [-0.43, 0.43]
+  z: [0.4067, 0.94]
+interiors:
+- name: bottom
+  x: [0.85, 1.38]
+  y: [-0.43, 0.43]
+  z: [-0.72, -0.1867]
+- name: middle
+  x: [0.85, 1.38]
+  y: [-0.43, 0.43]
+  z: [-0.1567, 0.3767]
+- name: top
+  x: [0.85, 1.38]
+  y: [-0.43, 0.43]
+  z: [0.4067, 0.94]
+placement: {dx: 0.85, half_spacing: 0.3, base_height: 0.8}
